@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from astropy.io import fits
 from glob import glob
+from matplotlib.ticker import MaxNLocator
 
 _huge_error = 1e6
 
@@ -41,7 +42,6 @@ def preprocess(spectrum_path, common_wavelengths, continuum_mask, dr4_row,
     # TODO: This will depend on how good the sky subtraction was. Since they
     #       are bright it shouldn't be an issue, but we will see.
 
-
     # For error region plotting:
     x2 = np.repeat(common_wavelengths, 2)[1:]
     xstep = np.repeat((common_wavelengths[1:] - common_wavelengths[:-1]), 2)
@@ -52,14 +52,21 @@ def preprocess(spectrum_path, common_wavelengths, continuum_mask, dr4_row,
     y_lower = np.repeat(flux - error, 2)
     y_upper = np.repeat(flux + error, 2)
 
+    if dr4_row is not None:
+        label = "{0}  {1:.0f}/{2:.2f}/{3:+.2f}  (#{4:.0f})".format(
+                dr4_row["NAME"], dr4_row["TeffK"], dr4_row["loggK"],
+                dr4_row["__M_H_K"], dr4_row["Fiber"])
+
+    else:
+        label = ""
+
+
     # Make a figure.
     if fig is None:
         fig, ax = plt.subplots(figsize=(14.65, 4.5625))
 
         ax.plot(common_wavelengths, flux,
-            label="{0}  {1:.0f}/{2:.2f}/{3:+.2f}  (#{4:.0f})".format(
-                dr4_row["NAME"], dr4_row["TeffK"], dr4_row["loggK"],
-                dr4_row["__M_H_K"], dr4_row["Fiber"]),
+            label=label,
             c='k', drawstyle='steps-mid', zorder=10)
 
         if neighbour is not None and neighbour_path is not None:
@@ -69,6 +76,9 @@ def preprocess(spectrum_path, common_wavelengths, continuum_mask, dr4_row,
                     neighbour_row["loggK"], neighbour_row["__M_H_K"],
                     neighbour_row["Fiber"]),
                 c='r', drawstyle='steps-mid', zorder=-1)
+
+        else:
+            ax.plot([np.nan], [np.nan], c='r', drawstyle='steps-mid', zorder=-1)
 
         # Show continuum regions (from the mask provided).
         _ = np.where(np.diff(continuum_mask))[0]
@@ -80,7 +90,7 @@ def preprocess(spectrum_path, common_wavelengths, continuum_mask, dr4_row,
 
         # Styling.
         ax.axhline(1, c="#666666", linestyle=":", zorder=-10)
-        ax.xaxis.set_major_locator(MaxNLocator(3))
+        ax.xaxis.set_major_locator(MaxNLocator(8))
         ax.yaxis.set_major_locator(MaxNLocator(3))
         
         ax.set_xlim(common_wavelengths[0], common_wavelengths[-1])
@@ -92,15 +102,11 @@ def preprocess(spectrum_path, common_wavelengths, continuum_mask, dr4_row,
         fig.tight_layout()
 
     else:
-        print("Re-using!!")
         ax = fig.axes[0]
 
         # Update figure with this data.
         ax.lines[0].set_data([common_wavelengths, flux])
-        ax.lines[0].set_label(
-            "{0}  {1:.0f}/{2:.2f}/{3:+.2f}  (#{4:.0f})".format(
-                dr4_row["NAME"], dr4_row["TeffK"], dr4_row["loggK"],
-                dr4_row["__M_H_K"], dr4_row["Fiber"]))
+        ax.lines[0].set_label(label)
 
         if neighbour is not None and neighbour_path is not None:
             ax.lines[1].set_data([common_wavelengths, neighbour_flux])
@@ -154,7 +160,7 @@ if __name__ == "__main__":
         continuum_mask[(end >= wavelengths) * (wavelengths >= start)] = True
 
     # Get all the files.
-    paths = glob("../reduced-spectra/20??/20*/*.txt")
+    paths = sorted(glob("../reduced-spectra/20??/20*/*.txt"))[::-1]
     N, fig = len(paths), None
 
     # Load the last data release.
@@ -168,28 +174,40 @@ if __name__ == "__main__":
             path.split("/")[-2], path.split("/")[-1].split(".")[0],
             path.split(".")[-4])
 
-        index = np.where(dr4["NAME"] == name)[0][0]
-        dr4_row = dr4[index]
 
-        if np.isfinite(dr4["TeffK"][index]):
-            distance = (((dr4["TeffK"] - dr4["TeffK"][index])/1000)**2 \
-                       + (dr4["loggK"] - dr4["loggK"][index])**2 \
-                       + (dr4["__M_H_K"] - dr4["__M_H_K"][index])**2)**0.5
+        index = np.where(dr4["NAME"] == name)[0]
 
-            # Check this star has parameters?
-            distance[~np.isfinite(distance)] = 10e6
-            closest_index = np.argpartition(distance, 1)[1]
+        if len(index) > 0:
 
-            neighbour_path = \
-                glob("../reduced-spectra/20??/{0}/{1}.*.{2}.*.txt".format(
-                    *tuple(dr4["NAME"][closest_index].split("_"))))
-            neighbour_path = \
-                None if not neighbour_path else neighbour_path[0]
+            dr4_row = dr4[index[0]]
 
-            neighbour = dr4[closest_index]
+            if np.isfinite(dr4["TeffK"][index]):
+                distances = (((dr4["TeffK"] - dr4["TeffK"][index])/1000)**2 \
+                            + (dr4["loggK"] - dr4["loggK"][index])**2 \
+                            + (dr4["__M_H_K"] - dr4["__M_H_K"][index])**2)**0.5
+
+                # Check this star has parameters?
+                distances[~np.isfinite(distances)] = 10e6
+
+                closest_indices = np.argsort(distances)
+
+                for closest_index in closest_indices[1:]:
+                    neighbour_path = glob(
+                        "../reduced-spectra/20??/{0}/{1}.*.{2}.*.txt".format(
+                            *tuple(dr4["NAME"][closest_index].split("_"))))
+
+                    if len(neighbour_path) > 0 \
+                    and os.path.exists(neighbour_path[0]): break
+
+                neighbour_path = neighbour_path[0]
+
+                neighbour = dr4[closest_index]
+
+            else:
+                neighbour, neighbour_path = None, None
 
         else:
-            neighbour, neighbour_path = None, None
+            dr4_row, neighbour, neighbour_path = None, None, None
 
         # Do the pre-processing.
         flux, ivar, fig = preprocess(path, wavelengths, continuum_mask,
@@ -197,8 +215,9 @@ if __name__ == "__main__":
             neighbour_row=neighbour, neighbour_path=neighbour_path,
             fig=fig)
 
+
         # Save the figure.
-        figure_path = "../snapshots/{0}.png".format(
+        figure_path = "../quicklook/{0}.png".format(
             os.path.splitext(path)[0][len("../reduced-spectra/"):])
         if not os.path.exists(os.path.dirname(figure_path)):
             os.makedirs(os.path.dirname(figure_path))
