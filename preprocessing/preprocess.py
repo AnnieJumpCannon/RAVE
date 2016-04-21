@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 from astropy.io import fits
 from glob import glob
 from matplotlib.ticker import MaxNLocator
+from random import shuffle
 
 _huge_error = 1e6
 
@@ -163,7 +164,8 @@ if __name__ == "__main__":
         continuum_mask[(end >= wavelengths) * (wavelengths >= start)] = True
 
     # Get all the files.
-    paths = sorted(glob("../reduced-spectra/20??/20*/*.txt"))[::-1]
+    paths = glob("../reduced-spectra/20??/20*/*.txt")
+    shuffle(paths)
     N, fig = len(paths), None
 
     # Load the last data release.
