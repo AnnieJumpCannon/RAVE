@@ -215,11 +215,14 @@ if __name__ == "__main__":
             dr4_row, neighbour, neighbour_path = None, None, None
 
         # Do the pre-processing.
-        flux, ivar, fig = preprocess(path, wavelengths, continuum_mask,
+        flux, ivar, fig_ = preprocess(path, wavelengths, continuum_mask,
             dr4_row=dr4_row,
             neighbour_row=neighbour, neighbour_path=neighbour_path,
             fig=fig)
-        if fig is None: continue
+        if fig_ is None:
+            continue
+        else:
+            fig = fig_
 
         # Save the figure.
         figure_path = "../quicklook/{0}.png".format(
