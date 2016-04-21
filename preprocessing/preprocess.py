@@ -154,7 +154,7 @@ if __name__ == "__main__":
     wavelengths = np.arange(8413.30, 8790.04 + 0.375, 0.375)
 
     # Load defined continuum regions.
-    continuum_regions_path = "sample3.list"
+    continuum_regions_path = "continuum_regions.list"
     with open(continuum_regions_path, "r") as fp:
         regions = [map(float, l.strip().split(":")) for l in fp.readlines()]
 
