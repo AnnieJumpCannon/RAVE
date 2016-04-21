@@ -12,7 +12,8 @@ _huge_error = 1e6
 
 
 def preprocess(spectrum_path, common_wavelengths, continuum_mask, dr4_row,
-    neighbour_row=None, neighbour_path=None, output_path=None, fig=None):
+    neighbour_row=None, neighbour_path=None, output_path=None, fig=None,
+    clobber=False):
     """
     Perform preprocessing steps on a RAVE spectrum so that it can be used with
     The Cannon.
@@ -20,6 +21,9 @@ def preprocess(spectrum_path, common_wavelengths, continuum_mask, dr4_row,
     :param spectrum_path:
         The path of the spectrum.
     """
+    output_path = output_path or os.path.splitext(spectrum_path)[0] + ".pkl"
+    if os.path.exists(output_path) and not clobber:
+        return (None, None, None)
 
     # Interpolate to common wavelength scale.
     data = np.loadtxt(spectrum_path)
@@ -135,7 +139,6 @@ def preprocess(spectrum_path, common_wavelengths, continuum_mask, dr4_row,
     ivar[non_finite] = 0
 
     # Write the output spectrum to disk.
-    output_path = output_path or os.path.splitext(spectrum_path)[0] + ".pkl"
     with open(output_path, "wb") as fp:
         pickle.dump((flux, ivar), fp, -1)
 
@@ -214,7 +217,7 @@ if __name__ == "__main__":
             dr4_row=dr4_row,
             neighbour_row=neighbour, neighbour_path=neighbour_path,
             fig=fig)
-
+        if fig is None: continue
 
         # Save the figure.
         figure_path = "../quicklook/{0}.png".format(
