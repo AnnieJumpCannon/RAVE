@@ -1,2 +1,5 @@
 reduced-spectra/
 original-data-transfer/
+quicklook/
+
+*.fits
