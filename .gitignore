@@ -3,3 +3,8 @@ original-data-transfer/
 quicklook/
 
 *.fits
+
+*.aux
+*.log
+*.pdf
+vc.tex
