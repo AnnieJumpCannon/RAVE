@@ -8,3 +8,8 @@ quicklook/
 *.log
 *.pdf
 vc.tex
+
+*.pyc
+
+*.png
+

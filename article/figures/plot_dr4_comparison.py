@@ -3,30 +3,55 @@
 Produce plots comparing the RAVE DR4 parmeters to the Cannon/RAVE labels.
 """
 
+
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib.colors import LogNorm
+from matplotlib.ticker import MaxNLocator
 
 try:
-    rave_cannon_dr1
+    combined_table
 
 except NameError:
     from rave_io import (rave_kordopatis_dr4, rave_cannon_dr1)
 
+    from astropy.table import join
+
+    combined_table = join(rave_cannon_dr1, rave_kordopatis_dr4, keys=("Name", ))
+
 else:
     print("Warning: Using pre-loaded data!")
 
+QC = combined_table["OK"] * (combined_table["QK"] == 0)
+combined_table = combined_table[QC]
 
-fig, axes = plt.subplots(2, 3)
+
+K, factor = (3, 3.5)
+lbdim = 0.2 * factor
+trdim = 0.1 * factor
+whspace = 0.05
+yspace = factor
+xspace = factor * K + factor * (K - 1) * whspace + lbdim * (K - 1)
+xdim = lbdim + xspace + trdim
+ydim = lbdim + yspace + trdim
+
+fig, axes = plt.subplots(1, 3, figsize=(xdim, ydim))
+fig.subplots_adjust(
+    left=lbdim/xdim, bottom=lbdim/ydim, right=(xspace + lbdim)/xdim,
+    top=(yspace + lbdim)/ydim, wspace=whspace, hspace=whspace)
+
+N_bins = 50
 
 labels = [
     # RAVE label, DR4 label
     ("TEFF", "TeffK"),
     ("LOGG", "loggK"),
-    ("FEH", "__M_H_K"),
+    ("FE_H", "__M_H_K"),
 ]
-limits = {
-    "TEFF": (3500, 7000),
+label_limits = {
+    "TEFF": (3000, 8000),
     "LOGG": (0, 5),
+    "FE_H": (-2, 0.75)
 }
 latex_labels = (r"$T_{\rm eff}$", r"$\log{g}$", r"$[{\rm Fe/H}]$")
 
@@ -34,23 +59,27 @@ for i, ((cannon_label, dr4_label), latex_label) \
 in enumerate(zip(labels, latex_labels)):
 
 
-    x = rave_cannon_dr1[cannon_label]._data
-    #xerr = rave_cannon_dr1["E_{}".format(cannon_label)]
-    y = rave_cannon_dr1[dr4_label]._data
-    #yerr = rave_kordopatis_dr4["E_{}".format(dr4_label)]
+    ax = axes[i]
 
-    #axes[i, 0].scatter(x, y, facecolor="#000000", alpha=0.1)
+    x = combined_table[cannon_label]._data
+    y = combined_table[dr4_label]._data
+    
     finite = np.isfinite(x*y)
-    axes[i, 0].hist2d(x[finite], y[finite], bins=50, norm=LogNorm())
+    limits = label_limits[cannon_label]
+    bins = np.linspace(limits[0], limits[1], N_bins + 1)
+    ax.set_axis_bgcolor("#CCCCCC")
+    ax.hist2d(x[finite], y[finite], bins=(bins, bins), norm=LogNorm(),
+        cmap="viridis")
 
     # Common limits, labels.
-    axes[i, 0].set_xlim(limits[cannon_label])
-    axes[i, 0].set_ylim(limits[cannon_label])
-    axes[i, 0].set_xlabel("{} (This study)".format(latex_label))
-    axes[i, 0].set_ylabel("{} (RAVE DR4)".format(latex_label))
+    ax.set_xlim(limits)
+    ax.set_ylim(limits)
+    ax.xaxis.set_major_locator(MaxNLocator(6))
+    ax.yaxis.set_major_locator(MaxNLocator(6))
+    ax.set_xlabel("{} (UNRAVE)".format(latex_label))
+    ax.set_ylabel("{} (RAVE DR4)".format(latex_label))
 
-    axes[i, 1].scatter(x, y - x)
-    axes[i, 1].set_xlim(limits[cannon_label])
+fig.tight_layout()
 
-
-    raise a
+fig.savefig("dr4-comparison.pdf", dpi=300)
+fig.savefig("dr4-comparison.png", dpi=300)
