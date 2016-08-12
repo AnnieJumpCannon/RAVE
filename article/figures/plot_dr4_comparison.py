@@ -25,8 +25,24 @@ else:
 QC = combined_table["OK"] * (combined_table["QK"] == 0)
 combined_table = combined_table[QC]
 
+N_bins = 50
 
-K, factor = (3, 3.5)
+all_columns = [
+    # RAVE label, DR4 label
+    ("TEFF", "TeffK"),
+    ("LOGG", "loggK"),
+    ("FE_H", "__M_H_K"),
+]
+label_limits = {
+    "TEFF": (3000, 8000),
+    "LOGG": (0, 5),
+    "FE_H": (-2, 0.75)
+}
+latex_labels = (r"$T_{\rm eff}$", r"$\log{g}$", r"$[{\rm Fe/H}]$")
+
+
+
+K, factor = (len(all_columns), 3.5)
 lbdim = 0.2 * factor
 trdim = 0.1 * factor
 whspace = 0.05
@@ -40,26 +56,9 @@ fig.subplots_adjust(
     left=lbdim/xdim, bottom=lbdim/ydim, right=(xspace + lbdim)/xdim,
     top=(yspace + lbdim)/ydim, wspace=whspace, hspace=whspace)
 
-N_bins = 50
+for i, (ax, columns, latex_label) in enumerate(zip(axes, all_columns, latex_labels)):
 
-labels = [
-    # RAVE label, DR4 label
-    ("TEFF", "TeffK"),
-    ("LOGG", "loggK"),
-    ("FE_H", "__M_H_K"),
-]
-label_limits = {
-    "TEFF": (3000, 8000),
-    "LOGG": (0, 5),
-    "FE_H": (-2, 0.75)
-}
-latex_labels = (r"$T_{\rm eff}$", r"$\log{g}$", r"$[{\rm Fe/H}]$")
-
-for i, ((cannon_label, dr4_label), latex_label) \
-in enumerate(zip(labels, latex_labels)):
-
-
-    ax = axes[i]
+    cannon_label, dr4_label = columns
 
     x = combined_table[cannon_label]._data
     y = combined_table[dr4_label]._data
@@ -76,8 +75,11 @@ in enumerate(zip(labels, latex_labels)):
     ax.set_ylim(limits)
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))
-    ax.set_xlabel("{} (UNRAVE)".format(latex_label))
-    ax.set_ylabel("{} (RAVE DR4)".format(latex_label))
+    ax.set_xlabel(" ".join([latex_label, r"$({\rm UNRAVE})$"]))
+    ax.set_ylabel(" ".join([latex_label, r"$({\rm RAVE}$ ${\rm DR4})$"]))
+
+    [_.set_rotation(30) for _ in ax.get_xticklabels()]
+    [_.set_rotation(30) for _ in ax.get_yticklabels()]
 
 fig.tight_layout()
 
