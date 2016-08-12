@@ -14,6 +14,8 @@
 \newcommand{\teff}{T_{\mathrm{eff}}}
 \newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\,}
 
+\newcommand{\Nstars}{483,330}
+
 %\AuthorCallLimit=10
 
 \begin{document}
@@ -23,12 +25,13 @@
 \author{Andrew R. Casey}
 \affil{Institute of Astronomy, Madingley Road, Cambridge CB3 0HA}
 
-\author{Some combination of: Gerry Gilmore, Keith Hawkins, David W. Hogg, Gal Matijevic, Melissa Ness, Hans Walter-Rix, and the \project{RAVE} collaboration}
+\author{Some combination of: Harry Enke, Gerry Gilmore, Keith Hawkins, David W. Hogg, Gal Matijevic, Melissa Ness, Jason Sanders, Hans Walter-Rix, and any other  \project{RAVE} people who have contributed to the data analysis}
 %\altaffiltext{3}{\texttt{arc@ast.cam.ac.uk}}
 
+\author{and the \project{RAVE} collaboration}
+
 \begin{abstract}
-On 14 September 2016 the \project{Gaia} mission will release positions, proper motions, and parallaxes for about two million stars.  Most studies intending to make use of those data would benefit enormously from stellar chemical abundances.
-  The RAdial Velocity Experiment (\project{RAVE}) survey has acquired spectra for approximately 280,000 stars in common with the first \project{Gaia} data release, constituting the largest overlap of any stellar spectroscopic sample.  Here we perform an independent analysis of the \project{RAVE} spectra using a new non-parametric version of \thecannon.  We deliver stellar astrophysical parameters ($\teff$, $\logg$) and chemical abundances of up to 8 elements (Fe, Na, Mg, Al, C, N, Ti, Ca) for X stars.  The typical precision in abundances is $X.XX$~dex.  We validate our results internally from repeat visits, and externally against existing high-resolution spectroscopic surveys. 
+On 14 September 2016 the \project{Gaia} mission will release positions, proper motions, and parallaxes for about two million stars.  Most studies intending to make use of those data would benefit enormously from stellar chemical abundances.  The RAdial Velocity Experiment (\project{RAVE}) survey has acquired spectra for approximately 280,000 stars in common with the first \project{Gaia} data release, constituting the largest overlap of any stellar spectroscopic sample.  Here we perform an independent analysis of the \project{RAVE} spectra using a new non-parametric implementation of \thecannon\ that employs prior probabilities on atomic line formation and stellar astrophysical parameters.  We deliver effective temperature $\teff$, surface gravity $\logg$, and chemical abundances of up to 8 elements (Fe, Na, Mg, Al, C, N, Ti, Ca) for \Nstars\ stars.  We validate our results internally from repeat visits, and externally against existing high-resolution spectroscopic surveys.  The typical precision in chemical abundances is $X.XX$~dex.  
 \end{abstract}
 
 \keywords{}
@@ -36,28 +39,73 @@ On 14 September 2016 the \project{Gaia} mission will release positions, proper m
 \section{Introduction} 
 \label{sec:introduction}
 
+% Chemistry and kinematics are essential for unfolding the Galaxy.
+
+% Gaia will do this, and until Gaia releases abundances for stars from RVS spectra, we rely on ground-based surveys to provide chemical abundances.
+% This includes GES, APOGEE, etc.
+
+% We examined the overlap between different surveys and found RAVE to have the largest overlap with Gaia DR1.
+% RAVE observed from X to Y, given blah blah blah resolution, etc
+% RAVE was a radial velocity survey, so the S/N peaks at ~40
+% Typically lower than the requisite S/N ratio required for chemical abundances.
+
+
+\section{Data}
+\label{sec:data}
+
+% How many spectra, acquired over what time
+% Data reduction
+% Normalization
+% Flux errors.
 
 \section{Methods}
 \label{sec:methods}
+
+% Describe The Cannon briefly
+% Initial tests using a single model for all RAVE spectra
+% Complex structure led us to ivnestigate other models.
+% Non-parametric form
+% Censoring masks
+% Priors on astrophysical parameters from isochrones
 
 
 \section{Validation}
 \label{sec:validation}
 
+% Chi-sq of the sample.
+% Identify outliers.
+% Stars with morphological classification
+
+% Internal validation:
+% --> repeat visits: are our formal errors reasonable?
+% --> bootstrap resampling of the training set?
+
+% External validation: 
+% --> RAVE Data Release 4
+% --> Gaia-ESO Survey
+% --> Asteroseismic nu_max and delta_nu available anywhere?
+% --> Furhman and other studies in Kordopatis+ 2014
+
+% Astrophysical validation:
+% --> Identify open clusters and look at their metallicity spreads
+% --> Identify globular clusters and look to see whether we capture "expected" abundance trends/spreads that are seen elsewhere in the literature
+% --> Residuals as a function of galactic position? (DIBS)
 
 \section{Conclusion}
 \label{sec:conclusion}
 
+% We have introduced a non-parametric version of The Cannon that uses strict priors on line formation (censoring masks), and prior probability distributions on astrophysical parameters, using isochrones.
+% We ran it on the entire RAVE spectra.
+% We deliver effective temperature, surface gravity, and abundances of up to 8 elements for \Nstars.  Our internal and external validation tests suggest that we achieve a typical precision of X~K in $\teff$, 0.0X~dex in $\logg$, and $\approx{}X.XX$ in individual chemical abundances.  This catalog constitutes the largest collection of stellar abundances for stars in the first \project{Gaia} data release.  When combined with positions and 3D velocities from \project{Gaia}, the \project{UNRAVE} catalog will likely be crucial for understanding our local place in the Milky Way.
 
 \acknowledgements
-% We thank,......
-
+We thank Sven Buder (MPIA), others??.
 This research made use of: Astropy, a community-developed core Python package for
 Astronomy \citep{astropy}, NASA's Astrophysics Data System Bibliographic Services;
  and \project{TOPCAT} \citep{Taylor2005}.
 This work was partly supported by the European Union FP7 programme through ERC 
 grant number 320360.
-Funding for RAVE has been provided by: the Australian Astronomical Observatory; the Leibniz-Institut fuer Astrophysik Potsdam (AIP); the Australian National University; the Australian Research Council; the French National Research Agency; the German Research Foundation (SPP 1177 and SFB 881); the European Research Council (ERC-StG 240271 Galactica); the Istituto Nazionale di Astrofisica at Padova; The Johns Hopkins University; the National Science Foundation of the USA (AST-0908326); the W. M. Keck foundation; the Macquarie University; the Netherlands Research School for Astronomy; the Natural Sciences and Engineering Research Council of Canada; the Slovenian Research Agency; the Swiss National Science Foundation; the Science \& Technology Facilities Council of the UK; Opticon; Strasbourg Observatory; and the Universities of Groningen, Heidelberg and Sydney. The RAVE web site is at https://www.rave-survey.org.  
+Funding for RAVE has been provided by: the Australian Astronomical Observatory; the Leibniz-Institut fuer Astrophysik Potsdam (AIP); the Australian National University; the Australian Research Council; the French National Research Agency; the German Research Foundation (SPP 1177 and SFB 881); the European Research Council (ERC-StG 240271 Galactica); the Istituto Nazionale di Astrofisica at Padova; The Johns Hopkins University; the National Science Foundation of the USA (AST-0908326); the W. M. Keck foundation; the Macquarie University; the Netherlands Research School for Astronomy; the Natural Sciences and Engineering Research Council of Canada; the Slovenian Research Agency; the Swiss National Science Foundation; the Science \& Technology Facilities Council of the UK; Opticon; Strasbourg Observatory; and the Universities of Groningen, Heidelberg and Sydney. The RAVE web site is https://www.rave-survey.org.  
 
 
 
@@ -72,10 +120,19 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \clearpage
 
 %\begin{figure}[p]
-%\caption{Choose two wavelengths (one continuum and one interesting)
-%  and plot some scatter plots of flux vs various parameters, and also
-%  cross-validation results for the
-%  hyper-parameters.\label{fig:onewavelength}}
+%\caption{A H-R diagram showing the training set labels.\label{fig:training-set-hrd}}
+%\end{figure}
+
+%\begin{figure}[p]
+%\caption{A H-R diagram showing the test set labels.\label{fig:test-set-hrd}}
+%\end{figure}
+
+%\begin{figure}[p]
+%\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fourth data release.\label{fig:dr4-comparison}}
+%\end{figure}
+
+%\begin{figure}[p]
+%\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fourth data release.\label{fig:dr4-comparison}}
 %\end{figure}
 
 
