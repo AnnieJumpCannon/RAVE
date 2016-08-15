@@ -1,6 +1,8 @@
 %% This file is part of the UNRAVE Project 
 %% Copyright 2016 the authors.  All rights reserved.
 
+% Look for \stub{}s. If you can expand it, do so!
+
 \documentclass[preprint2,trackchanges]{aastex}
 
 \usepackage{amsmath,amssymb}
@@ -31,7 +33,20 @@
 \author{and the \project{RAVE} collaboration}
 
 \begin{abstract}
-On 14 September 2016 the \project{Gaia} mission will release positions, proper motions, and parallaxes for about two million stars.  Most studies intending to make use of those data would benefit enormously from stellar chemical abundances.  The RAdial Velocity Experiment (\project{RAVE}) survey has acquired spectra for approximately 290,000 stars in common with the first \project{Gaia} data release, constituting the largest overlap of any stellar spectroscopic sample.  Here we perform an independent analysis of the \project{RAVE} spectra using a new non-parametric implementation of \thecannon\ that employs prior probabilities on atomic line formation and stellar astrophysical parameters.  We deliver effective temperature $\teff$, surface gravity $\logg$, and chemical abundances of up to seven elements (Mg, Al, Si, Ca, Ti, Fe, Ni) for \Nstars\ stars.  We validate our results internally from repeat visits, and externally against existing high-resolution spectroscopic surveys.  The typical precision in chemical abundances is $X.XX$~dex.  
+On 14 September 2016 the \project{Gaia} mission will release positions, proper 
+motions, and parallaxes for about two million stars.  Most studies intending to
+make use of those data would benefit enormously by coupling that astrometry with
+stellar chemical abundances.  The RAdial Velocity Experiment (\project{RAVE}) 
+survey has acquired spectra for approximately 290,000 stars in common with the 
+first \project{Gaia} data release, constituting the largest overlap of any 
+stellar spectroscopic sample.  Here we perform an independent analysis of the 
+\project{RAVE} spectra using a new non-parametric implementation of \thecannon\ 
+that employs prior probabilities on atomic line formation and stellar 
+astrophysical parameters.  We deliver effective temperature $\teff$, surface 
+gravity $\logg$, and chemical abundances of up to seven elements (Mg, Al, Si, 
+Ca, Ti, Fe, Ni) for \Nstars\ stars.  We validate our results internally from 
+repeat visits, and externally against existing high-resolution spectroscopic 
+surveys.  The typical precision in chemical abundances is $X.XX$~dex.  
 \end{abstract}
 
 \keywords{}
@@ -66,6 +81,7 @@ stars likely to have better proper motions (137,211 stars).  This motivated us t
 examine what chemical abundance information is currently available for \rave, and
 to evaluate whether we could contribute to this existing set.
 
+
 We briefly describe the \rave\ data in Section \ref{sec:data}, before explaining
 the model we employ in Section \ref{sec:model}.  In Section \ref{sec:validation}
 we outline a number of validation experiments, including: internal sanity checks,
@@ -85,6 +101,7 @@ robotic fibre positioner made for very efficient observing: up to 150 targets
 could be simultaneously obtained.  When observations concluded in April 2013, a 
 total of 574,630 spectra had been collected of 483,330 unique objects.
 
+
 RAVE is a magnitude-limited survey, targeting stars with apparent $I$-band
 magnitudes between $9 < I < 13$.  The $I$ band was used as the selection
 magnitude because it overlaps with the wavelength range that \rave\ operates in:
@@ -92,21 +109,6 @@ magnitude because it overlaps with the wavelength range that \rave\ operates in:
 strong stellar absorption lines that are visible even in very low S/N data 
 (i.e., they are very useful for radial velocity determination).  
 
-
-% When did RAVE observe?
-% Where from
-
-% target selection.
-% wavelength range
-
-
-% How many data releases
-% What was in previous data releases?
-
-
-% Data reduction
-% Normalization
-% Flux errors
 
 As the name implies, the \rave\ survey was principally designed to obtain radial
 velocity measurements for up to $10^6$ stars.  Detailed chemical abundances were
