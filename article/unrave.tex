@@ -22,7 +22,7 @@
 
 \begin{document}
 
-\title{The \project{UNRAVE} catalog}
+\title{The \project{unRAVE} catalog}
 
 \author{Andrew R. Casey}
 \affil{Institute of Astronomy, Madingley Road, Cambridge CB3 0HA}
@@ -46,7 +46,7 @@ astrophysical parameters.  We deliver effective temperature $\teff$, surface
 gravity $\logg$, and chemical abundances of up to seven elements (Mg, Al, Si, 
 Ca, Ti, Fe, Ni) for \Nstars\ stars.  We validate our results internally from 
 repeat visits, and externally against existing high-resolution spectroscopic 
-surveys.  The typical precision in chemical abundances is $X.XX$~dex.  
+surveys.  The typical precision in chemical abundances is X.XX~dex.  
 \end{abstract}
 
 \keywords{}
@@ -111,10 +111,10 @@ strong stellar absorption lines that are visible even in very low S/N data
 
 
 As the name implies, the \rave\ survey was principally designed to obtain radial
-velocity measurements for up to $10^6$ stars.  Detailed chemical abundances were
-a secondary science goal of the survey.  For this reason the distribution
-of S/N ratios for \rave\ spectra is considerably lower than stellar 
-spectroscopic surveys where chemical abundances are the defining objective.  The 
+velocity measurements.  Detailed chemical abundances were a secondary science 
+goal of the survey.  For this reason the distribution of S/N ratios for \rave\ 
+spectra is considerably lower than stellar spectroscopic surveys where chemical
+abundances are the defining objective.  The 
 \rave\ spectra cover $\approx38$~nm in the infrared with an effective resolution
 $\mathcal{R} \approx 7500$, and the S/N peaks at $\approx$50~per~pixel$^{-1}$.
 For comparison, the \project{GALAH} survey \citep{DeSilva_2015} --- which was 
@@ -159,6 +159,8 @@ data-driven model (rather than a physics-driven model) for this analysis.
 % Describe The Cannon briefly
 % training set from APOGEE
 
+% Inserting 2MASS photometry as fake pixels
+
 % Initial tests using a single model for all RAVE spectra
 % Censoring masks
 % Priors on astrophysical parameters from isochrones
@@ -172,7 +174,7 @@ data-driven model (rather than a physics-driven model) for this analysis.
 
 % Chi-sq of the sample.
 % Identify outliers.
-% Convex hull?
+% Convex hull? Distance to plane?
 
 % Stars with morphological classification
 
@@ -198,14 +200,26 @@ data-driven model (rather than a physics-driven model) for this analysis.
 % We ran it on the entire RAVE spectra.
 % We deliver effective temperature, surface gravity, and abundances of up to 8 elements for \Nstars.  Our internal and external validation tests suggest that we achieve a typical precision of X~K in $\teff$, 0.0X~dex in $\logg$, and $\approx{}X.XX$ in individual chemical abundances.  This catalog constitutes the largest collection of stellar abundances for stars in the first \project{Gaia} data release.  When combined with positions and 3D velocities from \project{Gaia}, the \project{UNRAVE} catalog will likely be crucial for understanding our local place in the Milky Way.
 
+
 \acknowledgements
 We thank Sven Buder (MPIA), others??.
 This research made use of: Astropy, a community-developed core Python package for
 Astronomy \citep{astropy}, NASA's Astrophysics Data System Bibliographic Services;
- and \project{TOPCAT} \citep{Taylor2005}.
+and \project{TOPCAT} \citep{Taylor_2005}.
 This work was partly supported by the European Union FP7 programme through ERC 
 grant number 320360.
-Funding for RAVE has been provided by: the Australian Astronomical Observatory; the Leibniz-Institut fuer Astrophysik Potsdam (AIP); the Australian National University; the Australian Research Council; the French National Research Agency; the German Research Foundation (SPP 1177 and SFB 881); the European Research Council (ERC-StG 240271 Galactica); the Istituto Nazionale di Astrofisica at Padova; The Johns Hopkins University; the National Science Foundation of the USA (AST-0908326); the W. M. Keck foundation; the Macquarie University; the Netherlands Research School for Astronomy; the Natural Sciences and Engineering Research Council of Canada; the Slovenian Research Agency; the Swiss National Science Foundation; the Science \& Technology Facilities Council of the UK; Opticon; Strasbourg Observatory; and the Universities of Groningen, Heidelberg and Sydney. The RAVE web site is https://www.rave-survey.org.  
+Funding for RAVE has been provided by: the Australian Astronomical Observatory; 
+the Leibniz-Institut fuer Astrophysik Potsdam (AIP); the Australian National 
+University; the Australian Research Council; the French National Research Agency;
+the German Research Foundation (SPP 1177 and SFB 881); the European Research 
+Council (ERC-StG 240271 Galactica); the Istituto Nazionale di Astrofisica at 
+Padova; The Johns Hopkins University; the National Science Foundation of the USA
+(AST-0908326); the W. M. Keck foundation; the Macquarie University; the 
+Netherlands Research School for Astronomy; the Natural Sciences and Engineering 
+Research Council of Canada; the Slovenian Research Agency; the Swiss National 
+Science Foundation; the Science \& Technology Facilities Council of the UK; 
+Opticon; Strasbourg Observatory; and the Universities of Groningen, Heidelberg 
+and Sydney. The RAVE web site is https://www.rave-survey.org.  
 
 
 
@@ -235,7 +249,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Steinmetz et al.(2006)]{Steinmetz_2006} Steinmetz, M., Zwitter, T., Siebert, A., et al.\ 2006, \aj, 132, 1645 
 
-\bibitem[Taylor(2005)]{Taylor2005} Taylor, M.~B.\ 2005, Astronomical Data Analysis Software and Systems XIV, 347, 29 
+\bibitem[Taylor(2005)]{Taylor_2005} Taylor, M.~B.\ 2005, Astronomical Data Analysis Software and Systems XIV, 347, 29 
 
 \bibitem[Zasowski et al.(2013)]{Zasowski_2013} Zasowski, G., Johnson, J.~A., Frinchaboy, P.~M., et al.\ 2013, \aj, 146, 81 
 
@@ -253,20 +267,20 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \caption{A H-R diagram showing the test set labels.\label{fig:test-set-hrd}}
 \end{figure}
 
-\begin{figure}[p]
+\begin{figure*}[p]
 \caption{The RMS of the test set labels as a function of S/N ratio for repeated stars in the test set.\label{fig:test-set-repeats}}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[p]
-\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fourth data release.\label{fig:dr4-comparison}}
-\end{figure}
+\begin{figure*}[p]
+\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fourth data release.\label{fig:rave-dr4-comparison}}
+\end{figure*}
 
-\begin{figure}[p]
-\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{Gaia-ESO Survey} fourth internal data release.\label{fig:dr4-comparison}}
-\end{figure}
+\begin{figure*}[p]
+\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{Gaia-ESO Survey} fourth internal data release.\label{fig:ges-dr4-comparison}}
+\end{figure*}
 
-\begin{figure}[p]
+\begin{figure*}[p]
 \caption{Stellar label comparisons between the \project{UNRAVE} catalog and the samples discussed in \citep{Kordopatis_2013}}
-\end{figure}
+\end{figure*}
 
 \end{document}
