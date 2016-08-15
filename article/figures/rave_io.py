@@ -7,3 +7,5 @@ DATA_PATH = "/data/gaia-eso/arc/rave-data-files/"
 
 rave_kordopatis_dr4 = Table.read(os.path.join(DATA_PATH, "RAVE-DR4.fits"))
 rave_cannon_dr1 = Table.read(os.path.join(DATA_PATH, "rave-tgas-v1.fits"))
+
+literature_pastel = Table.read(os.path.join(DATA_PATH, "literature-pastel-database-xm.fits"))
