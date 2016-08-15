@@ -6,7 +6,7 @@ from matplotlib.colors import LogNorm
 from matplotlib.ticker import MaxNLocator
 
 try:
-    combined_tabledata_table
+    data_table
 
 except NameError:
     from rave_io import (rave_cannon_dr1, literature_pastel)
