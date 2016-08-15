@@ -63,14 +63,14 @@ This includes GES, APOGEE, etc.
 }
 
 The first \project{Gaia} data release includes positions, proper motions, and 
-parallaxes for approximately two million stars in the Tycho-2 catalog \citep{tycho2}.  
+parallaxes for approximately two million stars in the Tycho-2 catalog \citep{Hog_2000}.  
 After cross-matching all major stellar spectroscopic surveys\footnote{Specifically 
-we cross-matched the Tycho-2 catalog against {APOGEE} \citep{apogee}, 
-\project{GALAH} \citep{galah}, \project{Gaia-ESO} \citep{ges}, \project{LAMOST}
-\citep{lamost}, and \project{RAVE} \citep{rave}}, we found the RAdial Velocity
+we cross-matched the Tycho-2 catalog against {APOGEE} \citep{Zasowski_2013}, 
+\project{GALAH} \citep{DeSilva_2015}, \project{Gaia-ESO} \citep{Gilmore_2012,Randich_2013}, \project{LAMOST}
+\citep{Cui_2012}, and \project{RAVE} \citep{Steinmetz_2006}}, we found the RAdial Velocity
 Experiment (hereafter \rave) 
 survey to have the largest overlap with the first \project{Gaia} data release: 
-292,036 stars.  We then used the \project{Gaia} universe model \citep{GUMS} to 
+292,036 stars.  We then used the \project{Gaia} universe model \citep{Robin_2012} to 
 estimate the precision in parallax and proper motions that will be available in 
 \project{Gaia} DR1 for every star in these cross-matches.  Comparing the 
 expected precision to what is currently available, we further found that the 
@@ -117,7 +117,7 @@ of S/N ratios for \rave\ spectra is considerably lower than stellar
 spectroscopic surveys where chemical abundances are the defining objective.  The 
 \rave\ spectra cover $\approx38$~nm in the infrared with an effective resolution
 $\mathcal{R} \approx 7500$, and the S/N peaks at $\approx$50~per~pixel$^{-1}$.
-For comparison, the \project{GALAH} survey \citep{DaSilva_2015} --- which was 
+For comparison, the \project{GALAH} survey \citep{DeSilva_2015} --- which was 
 specifically constructed for detailed chemical abundance analyses --- includes a
 wavelength range about 2.5 times larger at resolution $\mathcal{R} \approx 28,000$,
 and target for S/N $\gtrsim100$.
@@ -127,7 +127,7 @@ Despite the relatively low resolution and S/N of the spectra, the \rave\ data
 releases have demonstrated the team's enormous success in deriving radial 
 velocities, stellar astrophysical parameters ($\teff$, $\logg$), as well as 
 individual chemical abundances \citep{Steinmetz_2006,Zwitter_2008,Siebert_2011,
-Kordopatis_2014, Kunder_2016}.  The data used for this analysis are the result
+Kordopatis_2013, Kunder_2016}.  The data used for this analysis are the result
 of a thorough reprocessing of all survey data.  This includes a detailed
 re-reduction of the original data frames, an updated continuum-normalization
 procedure, as well as an improvement on the quantification of flux errors in
@@ -144,7 +144,7 @@ analysis.  We re-sampled all spectra onto a common rest-wavelength map.
 Depending on the fibre used and stellar radial velocity, the rest-frame wavelength
 range varied for each star.  Given that fluxes were unavailable in the edge
 pixels for most stars, we excluded pixels outside of the rest wavelength range
-$8423.2{\rm \AA} < \lambda < 8777.6{\rm \AA}$.
+$8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.
 
 
 \section{Model}
@@ -213,7 +213,33 @@ Funding for RAVE has been provided by: the Australian Astronomical Observatory; 
 \bibitem[Astropy Collaboration et 
 al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, Astronomy \& Astrophysics, 558, AA33
 
+\bibitem[Cui et al.(2012)]{Cui_2012} Cui, X.-Q., Zhao, Y.-H., Chu, Y.-Q., et al.\ 2012, Research in Astronomy and Astrophysics, 12, 1197 
+
+\bibitem[De Silva et al.(2015)]{DeSilva_2015} De Silva, G.~M., Freeman, K.~C., Bland-Hawthorn, J., et al.\ 2015, \mnras, 449, 2604 
+
+\bibitem[Gilmore et al.(2012)]{Gilmore_2012} Gilmore, G., Randich, S., Asplund, M., et al.\ 2012, The Messenger, 147, 25 
+
+\bibitem[H{\o}g et al.(2000)]{Hog_2000} H{\o}g, E., Fabricius, C., Makarov, V.~V., et al.\ 2000, \aap, 355, L27 
+
+\bibitem[Kordopatis et al.(2013)]{Kordopatis_2013} Kordopatis, G., Gilmore, G., Steinmetz, M., et al.\ 2013, \aj, 146, 134 
+
+\bibitem[Kunder et al.(2016)]{Kunder_2016} Kunder, A., et al.\ 2016, in preparation
+
+\bibitem[Ness et al.(2015)]{Ness_2015} Ness, M., Hogg, D.~W., Rix, H.-W., Ho, A.~Y.~Q., \& Zasowski, G.\ 2015, \apj, 808, 16 
+
+\bibitem[Randich et al.(2013)]{Randich_2013} Randich, S., Gilmore, G., \& Gaia-ESO Consortium 2013, The Messenger, 154, 47 
+
+\bibitem[Robin et al.(2012)]{Robin_2012} Robin, A.~C., Luri, X., Reyl{\'e}, C., et al.\ 2012, \aap, 543, A100 
+
+\bibitem[Siebert et al.(2011)]{Siebert_2011} Siebert, A., Williams, M.~E.~K., Siviero, A., et al.\ 2011, \aj, 141, 187 
+
+\bibitem[Steinmetz et al.(2006)]{Steinmetz_2006} Steinmetz, M., Zwitter, T., Siebert, A., et al.\ 2006, \aj, 132, 1645 
+
 \bibitem[Taylor(2005)]{Taylor2005} Taylor, M.~B.\ 2005, Astronomical Data Analysis Software and Systems XIV, 347, 29 
+
+\bibitem[Zasowski et al.(2013)]{Zasowski_2013} Zasowski, G., Johnson, J.~A., Frinchaboy, P.~M., et al.\ 2013, \aj, 146, 81 
+
+\bibitem[Zwitter et al.(2008)]{Zwitter_2008} Zwitter, T., Siebert, A., Munari, U., et al.\ 2008, \aj, 136, 421 
 
 \end{thebibliography}
 
@@ -240,7 +266,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure}
 
 \begin{figure}[p]
-\caption{Stellar label comparisons between the \project{UNRAVE} catalog and the samples discussed in \citep{kordopatis_2014}}
+\caption{Stellar label comparisons between the \project{UNRAVE} catalog and the samples discussed in \citep{Kordopatis_2013}}
 \end{figure}
 
 \end{document}
