@@ -64,8 +64,8 @@ stellar chemical abundances.  The RAdial Velocity Experiment (\project{RAVE})
 survey has acquired spectra for 292,036 stars in common with the 
 first \project{Gaia} data release, constituting the largest overlap of any 
 stellar spectroscopic sample.  Here we perform an independent analysis of the 
-\project{RAVE} spectra using a new non-parametric implementation of \thecannon\ 
-that employs prior probabilities on atomic line formation and stellar 
+\project{RAVE} spectra using an implementation of \thecannon\ 
+that uses prior probabilities on atomic line formation and stellar 
 astrophysical parameters.  We deliver effective temperature $\teff$, surface 
 gravity $\logg$, and chemical abundances of up to seven elements (Mg, Al, Si, 
 Ca, Ti, Fe, Ni) for \Nstars\ stars.  We validate our results internally from 
@@ -81,8 +81,21 @@ data release.
 \section{Introduction} 
 \label{sec:introduction}
 
-The Milky Way is considered to be the best laboratory for understanding galaxy formation and evolution.  This premise depends on the ability to precisely measure the position, motion, and chemistry of (many) individual stars, and to infer the structure, kinematics, and chemical enrichment of the Galaxy from those data \citep[e.g.,][]{Deason_2011,Ness_2012,Ness_2013a,Ness_2013b,Casey_2012,Casey_2013,Casey_2014a,Casey_2014b}.  % include references on: disk chemistry, halo structures
-However, these quantities are not known for even 1\% of stars in the Milky Way.  Stellar distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,Jofre_2015,Madler_2016}, proper motions are frequently plagued by unquantified systematics from the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and stellar spectroscopists frequently report significantly different chemical abundance patterns \citep{Smiljanic_2014}.  If these measurements were known with high fidelity then \stub{xyz}.
+The Milky Way is considered to be the best laboratory for understanding galaxy
+formation and evolution.  This premise hinges on the ability to precisely measure 
+the position, motion, and chemistry of (many) individual stars, and to infer the 
+structure, kinematics, and chemical enrichment of the Galaxy from those data 
+\citep[e.g.,][]{Deason_2011,Ness_2012,Ness_2013a,Ness_2013b,Casey_2012,Casey_2013,
+Casey_2014a,Casey_2014b}.  % include references on: disk chemistry, halo structures
+However, these quantities are not known for even 1\% of stars in the Milky Way.  
+Stellar distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,
+Jofre_2015,Madler_2016}, proper motions can be plagued by unquantified systematics
+from the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and 
+stellar spectroscopists frequently report significantly different chemical 
+abundance patterns \citep{Smiljanic_2014}.  Countless long-standing scientific
+questions could be definitively answered if these measurements were known with
+high fidelity: \stub{x? \citep{someone}; y; and z, to list just a few}.
+
 
 
 % Introducing Gaia
@@ -95,23 +108,24 @@ However, these quantities are not known for even 1\% of stars in the Milky Way. 
 
 
 The first \project{Gaia} data release will include positions, proper motions, and 
-parallaxes for approximately two million stars in the Tycho-2 \citep{Hog_2000} catalog \citep{Michalik_2015a,Michalik_2015b}.  
-After cross-matching all major stellar spectroscopic surveys\footnote{Specifically 
-we cross-matched the Tycho-2 catalog against the \project{APOGEE} \citep{Zasowski_2013}, 
-\project{GALAH} \citep{DeSilva_2015}, \project{Gaia-ESO} \citep{Gilmore_2012,Randich_2013}, \project{LAMOST}
-\citep{Cui_2012}, and \project{RAVE} \citep{Steinmetz_2006} surveys}, we found the RAdial Velocity
-Experiment (hereafter \rave) 
-survey to have the largest overlap with the first \project{Gaia} data release: 
-292,036 stars.  We then used the \project{Gaia} universe model \citep{Robin_2012} to 
+parallaxes for approximately two million stars in the Tycho-2 \citep{Hog_2000} 
+catalog \citep{Michalik_2015a,Michalik_2015b}.  After cross-matching all major 
+stellar spectroscopic surveys\footnote{Specifically we cross-matched the Tycho-2
+catalog against the \project{APOGEE} \citep{Zasowski_2013}, \project{GALAH} 
+\citep{DeSilva_2015}, \project{Gaia-ESO} \citep{Gilmore_2012,Randich_2013}, 
+\project{LAMOST} \citep{Cui_2012}, and \project{RAVE} \citep{Steinmetz_2006} 
+surveys}, we found the RAdial Velocity Experiment (hereafter \rave) survey to 
+have the largest overlap with the first \project{Gaia} data release: 292,036 
+stars.  We then used the \project{Gaia} universe model \citep{Robin_2012} to 
 estimate the precision in parallax and proper motions that will be available in 
-\project{Gaia} DR1 for every star in these cross-matches.  Comparing the 
-expected precision to what is currently available, we further found that the 
-\project{RAVE} survey will benefit most from \project{Gaia} DR1.  The distances
-of 63\% of the \project{RAVE}--\project{Gaia} DR1 overlap sample (182,862 stars)
-are expected to improve with the first \project{Gaia} data release, and 47\% of
-stars likely to have better proper motions (137,211 stars).  This motivated us to
-examine what chemical abundance information is currently available for \rave, and
-to evaluate whether we could contribute to this existing set.
+\project{Gaia} DR1 for every star in these cross-matches.  Comparing the expected
+precision to what is currently available, we further found that the \project{RAVE}
+survey will benefit most from \project{Gaia} DR1.  The distances of 63\% of the 
+\project{RAVE}--\project{Gaia} DR1 overlap sample (182,862 stars) are expected to
+improve with the first \project{Gaia} data release, and 47\% of stars likely to
+have better proper motions (137,211 stars).  This motivated us to examine what 
+chemical abundance information is currently available for \rave, and to evaluate
+whether we could contribute to this existing set.
 
 
 We briefly describe the \rave\ data in Section \ref{sec:data}, before explaining
