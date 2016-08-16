@@ -162,10 +162,10 @@ coverage is comparable to the Radial Velocity Spectrometer on board the \project
 space telescope \citep{Recio-Blanco_2016}.
 
 
-The exposure times (and resultant S/N ratios) for \rave\ were optimised to obtain
-radial velocities for as many stars as possible.  Detailed chemical abundances were
+The exposure times for \rave\ observations were optimised to obtain radial 
+velocities for as many stars as possible.  Detailed chemical abundances were
 always an important science goal of the survey, but this was a secondary objective.  
-For this reason the distribution of S/N ratios of \rave\ spectra is considerably 
+For this reason the distribution of S/N ratios in \rave\ spectra is considerably 
 lower than other stellar spectroscopic surveys where chemical abundances are the 
 primary motivation.  The \rave\ spectra have an effective resolution 
 $\mathcal{R} \approx 7500$ and the distribution of S/N ratios peaks at 
@@ -202,7 +202,8 @@ arrays onto a common rest-wavelength map for all stars.  Depending on the fibre
 used and the stellar radial velocity, the range of rest-frame wavelength values
 varied for each star.  Given that fluxes were unavailable in the edge pixels for 
 most stars, we excluded pixels outside of the rest wavelength range 
-$8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.
+$8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.  This corresponds to about
+30~pixels excluded on either side of the common wavelength array.
 
 
 \section{Model}
@@ -260,6 +261,14 @@ data-driven model (rather than a physics-driven model) for this analysis.
 % We have introduced a non-parametric version of The Cannon that uses strict priors on line formation (censoring masks), and prior probability distributions on astrophysical parameters, using isochrones.
 % We ran it on the entire RAVE spectra.
 % We deliver effective temperature, surface gravity, and abundances of up to 8 elements for \Nstars.  Our internal and external validation tests suggest that we achieve a typical precision of X~K in $\teff$, 0.0X~dex in $\logg$, and $\approx{}X.XX$ in individual chemical abundances.  This catalog constitutes the largest collection of stellar abundances for stars in the first \project{Gaia} data release.  When combined with positions and 3D velocities from \project{Gaia}, the \project{UNRAVE} catalog will likely be crucial for understanding our local place in the Milky Way.
+
+
+\subsection*{Access the results electronically}
+
+% TODO: Replace ZENODO-URL with a data url
+Source code for this project is available at \texttt{\url{https://www.github.com/AnnieJumpCannon/RAVE}}.  This document was compiled from revision hash \githash\
+in that repository.
+Inferred labels and covariance matrices are available with associated metadata electronically at \texttt{\url{ZENODO-URL}}.  Please note that it is a condition of using these results that the fifth \rave\ data release by \citet{Kunder_2016} must (also) be cited, as the work presented here would not have been possible without the tireless efforts of the entire \rave\ collaboration, past and present.
 
 
 \acknowledgements
