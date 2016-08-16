@@ -83,8 +83,8 @@ data release.
 
 The Milky Way is considered to be the best laboratory for understanding galaxy
 formation and evolution.  This premise hinges on the ability to precisely measure 
-the position, motion, and chemistry of (many) individual stars, and to infer the 
-structure, kinematics, and chemical enrichment of the Galaxy from those data 
+the position, motion, and chemistry of (many) individual stars, and use those data 
+to infer the structure, kinematics, and chemical enrichment of the Galaxy 
 \citep[e.g.,][]{Deason_2011,Ness_2012,Ness_2013a,Ness_2013b,Casey_2012,Casey_2013,
 Casey_2014a,Casey_2014b}.  % include references on: disk chemistry, halo structures
 However, these quantities are not known for even 1\% of stars in the Milky Way.  
@@ -92,20 +92,18 @@ Stellar distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,
 Jofre_2015,Madler_2016}, proper motions can be plagued by unquantified systematics
 from the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and 
 stellar spectroscopists frequently report significantly different chemical 
-abundance patterns \citep{Smiljanic_2014}.  Countless long-standing scientific
-questions could be definitively answered if these measurements were known with
-high fidelity: \stub{x? \citep{someone}; y; and z, to list just a few}.
+abundance patterns \citep{Smiljanic_2014}.  Countless long-standing astrophysics
+problems could be resolved if those measurements were known with high fidelity: 
+\stub{x? \citep{someone}; y; and z, to list just a few}.
 
 
-
+\stub{Introducing Gaia; rely on ground-based spectroscopic surveys for chemistry}
 % Introducing Gaia
 % Gaia will produce a very clear snapshot, producing astrometry space motions
 % What will Gaia provide eventually.
 % In the first data release what do we get.
 % While this is an order of magnitude better than Hipparcos, if we want to use these data to understand the chemical evolution of the galaxy then we need additional information.
 % until abundances are available from gaia RVS, we rely on ground-based spectroscopic surveys to provide the chemistry
-
-
 
 The first \project{Gaia} data release will include positions, proper motions, and 
 parallaxes for approximately two million stars in the Tycho-2 \citep{Hog_2000} 
@@ -124,99 +122,116 @@ survey will benefit most from \project{Gaia} DR1.  The distances of 63\% of the
 \project{RAVE}--\project{Gaia} DR1 overlap sample (182,862 stars) are expected to
 improve with the first \project{Gaia} data release, and 47\% of stars likely to
 have better proper motions (137,211 stars).  This motivated us to examine what 
-chemical abundance information is currently available for \rave, and to evaluate
-whether we could contribute to this existing set.
+chemical abundance information was available for \rave, and to evaluate whether 
+we could enable new chemodynamic studies by contributing to this existing set of
+chemical abundances.
 
 
-We briefly describe the \rave\ data in Section \ref{sec:data}, before explaining
-the model we employ in Section \ref{sec:model}.  In Section \ref{sec:validation}
+We briefly describe the \rave\ data in section \ref{sec:data}, before explaining
+the model we employ in section \ref{sec:model}.  In section \ref{sec:validation}
 we outline a number of validation experiments, including: internal sanity checks,
 comparisons with literature samples, and investigations to ensure our results
 are consistent with expectations from astrophysics.  We provide concluding
-remarks in Section \ref{sec:conclusion}, as well as a description of how to
-access the data.
+remarks in section \ref{sec:conclusion}, as well as a description of how to
+access our results electronically.
 
 
 \section{Data}
 \label{sec:data}
 
-The \rave\ survey started observations using the 6dF system on the 1.2~m UK 
-Schmidt telescope at the Australian Astronomical Observatory\footnote{Formerly 
-the Anglo-Australian Observatory}.  The large 5.7~degree field-of-view and 
-robotic fibre positioner made for very efficient observing: up to 150 targets 
-could be simultaneously obtained.  When observations concluded in April 2013, a 
-total of 574,630 spectra had been collected of 483,330 unique objects.
+
+\rave\ is a magnitude-limited stellar spectroscopic survey of the (nearby) Milky Way,
+principally designed to measure radial velocities for up to $10^6$ stars.
+Observations were conducted on the 1.2~m UK Schmidt telescope at the Australian 
+Astronomical Observatory\footnote{Formerly the Anglo-Australian Observatory} from 
+2003--2013.  The large 5.7~degree field-of-view and robotic fibre positioner (6dF)
+made for very efficient observing: spectra for up to 150 targets could be 
+simultaneously acquired.  When observations concluded in April 2013, a total of 
+574,630 spectra had been collected of 483,330 unique objects. 
 
 
-RAVE is a magnitude-limited survey, targeting stars with apparent $I$-band
-magnitudes between $9 < I < 13$.  The $I$ band was used as the selection
-magnitude because it overlaps with the wavelength range that \rave\ operates in:
-8410--8795~\AA.  This setup includes the \ion{Ca}{2} near-infrared triplet,
-strong stellar absorption lines that are visible even in very low S/N data 
-(i.e., they are very useful for radial velocity determination).  
+The target selection for \rave\ is solely based on the $I$-band apparent magnitude: 
+$9 < I < 13$.  The $I$ band was used because it overlaps with the wavelength range 
+that \rave\ operates in:  8410--8795~\AA.  This setup includes the \ion{Ca}{2} 
+near-infrared triplet.  These stellar absorption lines are dominated by pressure 
+broadening, which makes them strong and therefore visible even in very low S/N data
+or metal-poor stars.  This spectral region is also well-studied.  It is one of the
+key setups used for the ground-based high-resolution \project{Gaia-ESO} survey
+\citep{Gilmore_2012,Randich_2013}, and the \rave\ resolution and wavelength
+coverage is comparable to the Radial Velocity Spectrometer on board the \project{Gaia}
+space telescope \citep{Recio-Blanco_2016}.
 
 
-As the name implies, the \rave\ survey was principally designed to obtain radial
-velocity measurements.  Detailed chemical abundances were a secondary science 
-goal of the survey.  For this reason the distribution of S/N ratios for \rave\ 
-spectra is considerably lower than stellar spectroscopic surveys where chemical
-abundances are the defining objective.  The 
-\rave\ spectra cover $\approx38$~nm in the infrared with an effective resolution
-$\mathcal{R} \approx 7500$, and the S/N peaks at $\approx$50~per~pixel$^{-1}$.
-For comparison, the \project{GALAH} survey \citep{DeSilva_2015} --- which was 
-specifically constructed for detailed chemical abundance analyses --- includes a
-wavelength range about 2.5 times larger at resolution $\mathcal{R} \approx 28,000$,
-and target for S/N $\gtrsim100$.
+The exposure times (and resultant S/N ratios) for \rave\ were optimised to obtain
+radial velocities for as many stars as possible.  Detailed chemical abundances were
+always an important science goal of the survey, but this was a secondary objective.  
+For this reason the distribution of S/N ratios of \rave\ spectra is considerably 
+lower than other stellar spectroscopic surveys where chemical abundances are the 
+primary motivation.  The \rave\ spectra have an effective resolution 
+$\mathcal{R} \approx 7500$ and the distribution of S/N ratios peaks at 
+$\approx$50~per~pixel$^{-1}$.  For comparison, the \project{GALAH} survey 
+\citep{DeSilva_2015} --- which was specifically constructed for detailed chemical 
+abundance analyses --- includes a wavelength range about 2.5 times larger at 
+resolution $\mathcal{R} \approx 28,000$, and yet the \project{GALAH} project still 
+targets for S/N $\gtrsim100$.
 
 
-Despite the relatively low resolution and S/N of the spectra, the \rave\ data
-releases have demonstrated the team's enormous success in deriving radial 
-velocities, stellar astrophysical parameters ($\teff$, $\logg$), as well as 
-individual chemical abundances \citep{Steinmetz_2006,Zwitter_2008,Siebert_2011,
-Kordopatis_2013, Kunder_2016}.  The data used for this analysis are the result
-of a thorough reprocessing of all survey data.  This includes a detailed
-re-reduction of the original data frames, an updated continuum-normalization
-procedure, as well as an improvement on the quantification of flux errors in
-each pixel.  At the end of this processing for each survey observation we are 
-provided with: wavelengths, continuum-normalized fluxes, as well as 
-$1\sigma$ uncertainties in flux values.  We refer the reader to the official 
-fifth data release paper of the \rave\ survey, as presented by
-\citet{Kunder_2016}, for more details of this reprocessing.
+Despite the relatively low resolution and S/N of the spectra compared to other
+surveys, the \rave\ data releases have demonstrated the team's enormous success 
+in deriving radial velocities, stellar astrophysical parameters ($\teff$, $\logg$),
+as well as individual chemical abundances \citep{Steinmetz_2006,Zwitter_2008,
+Siebert_2011,Kordopatis_2013, Kunder_2016}.  In this work we make use of spectra
+that has been reprocessed for the fifth \rave\ data release.  These re-processing
+steps include: a detailed re-reduction of all the original data frames, with flux
+variances propagated at every step; an updated continuum-normalization procedure;
+as well as revised determinations of stellar radial velocities and morphological
+classifications. At the end of this processing for each survey observation we are 
+provided with: rest-frame wavelengths, continuum-normalized fluxes, fractional 
+uncertainties in continuum-normalized flux values, as well as relevant metadata.  
+We refer the reader to the official fifth data release paper of the \rave\ survey, 
+as presented by \citet{Kunder_2016}, for more details of this re-processing.
 
 
-We chose not to re-normalize the spectra, as our tests proved to us that the
-normalization procedure outlined in \citet{Kunder_2016} is sufficient for our
-analysis.  We re-sampled all spectra onto a common rest-wavelength map.
-Depending on the fibre used and stellar radial velocity, the rest-frame wavelength
-range varied for each star.  Given that fluxes were unavailable in the edge
-pixels for most stars, we excluded pixels outside of the rest wavelength range
+Given the high-quality of the normalization performed by the \rave\ team, we chose
+not to re-normalize the spectra.  Our tests demonstrated that the procedure 
+outlined in \citet{Kunder_2016} is sufficient for our analysis procedure. Therefore,
+there is a limited number of pre-processing steps that we conducted before our
+analysis could begin.  Firstly, we calculated inverse variance arrays from the
+fractional uncertainties provided, then re-sampled the flux and inverse variance
+arrays onto a common rest-wavelength map for all stars.  Depending on the fibre 
+used and the stellar radial velocity, the range of rest-frame wavelength values
+varied for each star.  Given that fluxes were unavailable in the edge pixels for 
+most stars, we excluded pixels outside of the rest wavelength range 
 $8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.
 
 
 \section{Model}
 \label{sec:model}
 
+
 Given the relatively low S/N ratios in the \rave\ spectra, we chose to adopt a 
 data-driven model (rather than a physics-driven model) for this analysis.
 
+\stub{data-driven goodness}
+% Describe The Cannon briefly, refer to Ness.
 
 
+\subsection{The training set}
+\label{sec:the-training-set}
 
-% Describe The Cannon briefly
-% training set from APOGEE
+% training set from APOGEE or K2/EPIC?!!
 
 % Inserting 2MASS photometry as fake pixels
 
-% Initial tests using a single model for all RAVE spectra
-% Censoring masks
+% Censoring masks on abundance labels
 % Priors on astrophysical parameters from isochrones
 
 % Include velocities at test time?
-% Train on fibre number? Fit for spectral resolution at test time?
 
 
 \section{Validation}
 \label{sec:validation}
+
 
 % Chi-sq of the sample.
 % Identify outliers.
@@ -248,7 +263,7 @@ data-driven model (rather than a physics-driven model) for this analysis.
 
 
 \acknowledgements
-We thank Jonathan Bird (Vanderbilt), Sven Buder (MPIA), others??.
+A.~R.~C. warmly thanks Jonathan Bird (Vanderbilt) and Sven Buder (MPIA).
 This research made use of: Astropy, a community-developed core Python package for
 Astronomy \citep{astropy}, NASA's Astrophysics Data System Bibliographic Services;
 and \project{TOPCAT} \citep{Taylor_2005}.
@@ -266,8 +281,6 @@ Research Council of Canada; the Slovenian Research Agency; the Swiss National
 Science Foundation; the Science \& Technology Facilities Council of the UK; 
 Opticon; Strasbourg Observatory; and the Universities of Groningen, Heidelberg 
 and Sydney. The RAVE web site is https://www.rave-survey.org.  
-
-
 
 \begin{thebibliography}{dummy}
 \bibitem[Astropy Collaboration et 
@@ -317,6 +330,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Ness et al.(2015)]{Ness_2015} Ness, M., Hogg, D.~W., Rix, H.-W., Ho, A.~Y.~Q., \& Zasowski, G.\ 2015, \apj, 808, 16 
 
 \bibitem[Randich et al.(2013)]{Randich_2013} Randich, S., Gilmore, G., \& Gaia-ESO Consortium 2013, The Messenger, 154, 47 
+
+\bibitem[Recio-Blanco et al.(2016)]{Recio-Blanco_2016} Recio-Blanco, A., de Laverny, P., Allende Prieto, C., et al.\ 2016, \aap, 585, A93 
 
 \bibitem[Robin et al.(2012)]{Robin_2012} Robin, A.~C., Luri, X., Reyl{\'e}, C., et al.\ 2012, \aap, 543, A100 
 
