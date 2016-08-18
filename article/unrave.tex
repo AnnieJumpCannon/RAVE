@@ -274,13 +274,25 @@ Hertsprung-Russell diagram.  The \project{GALAH} survey has a good overlap with 
 but results from that sample are not yet precise enough for our purposes.
 
 
-% These restrictions forced us to use a heterogeneous training set.
-% 
+These constraints forced us to construct a heterogeneous training set.  Given previous
+successes in transferring high S/N ratio labels from \project{APOGEE} \citep{Ness_2015,
+Ness_2016,Ho_2016,Casey_2016b}, we chose to use the 1,355 stars in the \project{APOGEE}
+---\rave\ overlap sample for giant star labels in the training set.  Of these, about
+900 are giants according to \project{APOGEE}.  From this sample we selected stars to
+have: metallicity determinations ([Fe/H] $> -5$); high S/N ratios in both the 
+\project{APOGEE} and \rave\ spectra ($>200$ in \project{APOGEE}; $>50$ in \rave); and
+we further required that the \project{ASPCAP} pipeline did not report any peculiar
+flags (\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 357 stars along the
+giant branch, with metallicities ranging from [Fe/H] $= -1.62$ to 0.32.
 
-\stub{We used the APOGEE DR13 cross-over for training set stars on the giant branch with cuts XYZ}
+
+Assembling a training set for the main-sequence and sub-giant branch was not as
+straightforward.
+% training set from K2/EPIC?!!
+
+% Identifying obviously bad stars that have been mis-classified by K2/EPIC
 
 
-% training set from APOGEE or K2/EPIC?!!
 
 % Inserting 2MASS photometry as fake pixels
 
