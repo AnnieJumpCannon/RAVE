@@ -346,9 +346,35 @@ these values should be normally distributed with a zero mean and unit variance.
 \subsection{External validation}
 \label{sec:external-validation}
 
+Here we cross-match our results against literature samples to verify that
+our labels are accurate.  Because this work is an independent analysis, our
+first point of reference is against the official \rave\ data releases.  These
+comparisons are shown in Figures \ref{fig:rave-dr4-comparison} and 
+\ref{fig:rave-dr5-comparison}, where we show our labels with respect to the
+results in the fourth and fifth \rave\ data releases, respectively.  In order
+to provide a fair comparison we only show stars that meet a number of quality
+flags in both samples. 
+\stub{What selections qualify as a fair comparison in both samples?}
+There is very good agreement in $\teff$, with a bias
+and RMS of just XX~K and XXX~K, respectively.  We find our $\logg$ values are
+closest to the `calibrated' \rave\ surface gravities, which make use of 
+asteroseismic information to correct (increase) the $\logg$ values along the
+giant branch.  The calibrated \rave\ surface gravities also correct the 
+location of the red clump (by $\sim0.5$~dex) to be in the same position in our
+results.  However, while our $\logg$ values generally agree with the calibrated
+\rave\ values along the giant branch, our $\logg$ values do differ slightly 
+along the main-sequence.  This is principally because the main-sequence in 
+this work tends to taper down towards higher $\logg$ values at cooler 
+temperatures, whereas the comparison sample tend to have a slightly flatter
+main-sequence.  This difference is not likely to have a very significant 
+effect on the detailed abundance or spectrophotometric distance determinations
+between these studies.
+
+\stub{What abundances are available?}
+\stub{Any differences in RAVE abundances?}
+
 
 % External validation: 
-% --> RAVE Data Release 4
 % --> Gaia-ESO Survey
 % --> APOGEE / EPIC (whichever was not used)
 % --> Literature studies presented in Kordopatis+ 2014
@@ -365,7 +391,7 @@ survey we found 70 stars with positions and radial velocities that are
 consistent with being members of globular clusters.  Specifically we identified
 49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde
 globular cluster NGC~3201, and 10 members of NGC~362.  
-% TODO: Were any of these stars unintentionally in the training set?
+\stub{Were any of these stars unintentionally in the training set?}
 All of these systems are well-studied and exhibit abundance anti-correlations 
 in Na--O and Mg--Al \citep{people}.  Other correlations are also present 
 (e.g., C--N), but those relationships are less relevant for this work because 
@@ -397,6 +423,7 @@ even for stars with low S/N ratios.
 
 \section{Discussion}
 \label{sec:discussion}
+
 
 
 
@@ -540,7 +567,12 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure*}
 
 \begin{figure*}[p]
-\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fourth data release.\label{fig:rave-dr4-comparison}}
+\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fourth data release \citep{Kordopatis_2014}.\label{fig:rave-dr4-comparison}}
+\end{figure*}
+
+
+\begin{figure*}[p]
+\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fifth data release \citep{Kunder_2016}.\label{fig:rave-dr5-comparison}}
 \end{figure*}
 
 \begin{figure*}[p]
@@ -548,7 +580,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure*}
 
 \begin{figure*}[p]
-\caption{Stellar label comparisons between the \project{UNRAVE} catalog and the samples discussed in \citep{Kordopatis_2013}}
+\caption{Stellar label comparisons between the \project{UNRAVE} catalog and the samples discussed in \citep{Kordopatis_2014}}
 \end{figure*}
 
 \end{document}
