@@ -231,6 +231,31 @@ data-driven model (rather than a physics-driven model) for this analysis.
 \subsection{The training set}
 \label{sec:the-training-set}
 
+We sought to construct a training set consisting of stars across the main-sequence,
+sub-giant, and the red giant branch.  We require stars with precisely measured
+effective temperature $\teff$, surface gravity $\logg$, and elemental abundances
+of Fe, Mg, Si, Ti, Ca, Al, and Ni.  This proved to be difficult because the magnitude
+range of \rave\ does not overlap substantially with high-resolution spectroscopic
+surveys.  The fourth data release of the \project{Gaia-ESO} survey includes giant
+and main-sequence stars, but only 142 overlap with \rave.  The most recent 
+\project{APOGEE} data release \citep{apogee_dr13} reports labels for stars on the
+giant branch and (uncalibrated values for) the main-sequence, but our tests indicated
+that the main-sequence labels suffered from unexpected systematic effects.  A flat, 
+then `up-turning' main-sequence is present, and the metallicity gradient trends in 
+the opposite direction with respect to $\logg$ on the main-sequence (i.e., metal-poor
+stars sit above the isochrones, not below).  If we move to lower-resolution studies,
+there are 2,369 stars that overlap with \project{LAMOST} --- of which 2,213 have positive
+S/N ratios in the $g$-band (\texttt{snrg}).  However, similar systematic effects are 
+seen in the main-sequence, the labels are expectedly less precise given the lower
+resolution, no detailed abundance information is available\footnote{Abundance 
+information is available for \project{LAMOST} stars from \citet{Ho_2015}, but that 
+sample contains only giant stars}, and there is only sparse sampling across the 
+Hertsprung-Russell diagram.  The \project{GALAH} survey has a good overlap with \rave,
+but results from that sample are not yet precise enough for our purposes.
+
+
+
+
 % training set from APOGEE or K2/EPIC?!!
 
 % Inserting 2MASS photometry as fake pixels
