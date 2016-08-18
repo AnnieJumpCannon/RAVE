@@ -159,7 +159,9 @@ simultaneously acquired.  When observations concluded in April 2013, a total of
 
 
 The target selection for \rave\ is based on the $I$-band apparent magnitude,
-$9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge.
+$9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge\footnote{
+However, see the works of \citet{Kunder_2016} and \citet{Kordopatis_2013} for 
+subtleties of the selection function}.
 The $I$ band was used because it overlaps with the wavelength range 
 that \rave\ operates in:  8410--8795~\AA.  This setup includes the \ion{Ca}{2} 
 near-infrared triplet.  These stellar absorption lines are dominated by pressure 
@@ -239,28 +241,60 @@ data-driven model (rather than a physics-driven model) for this analysis.
 % Include velocities at test time?
 
 
-\section{Validation}
+\section{Validation experiments}
 \label{sec:validation}
 
 
-% Chi-sq of the sample.
-% Identify outliers.
-% Convex hull? Distance to plane?
+\subsection{Internal validation}
+We first conducted leave-one-out cross-validation to validate our results.
+For each training set star we removed that star from the training set and
+then re-trained the model.  Using that re-trained model, we then treated
+the excluded star as a test star and compared our inferred labels to the
+test set labels.  We show the results of this experiment in Figure
+\ref{fig:loocv-comparison}.  The bias and root mean square (RMS) error in 
+$\teff$ is XX~K and XX~K, and in $\logg$ is X.XX~dex and X.XX~dex,
+respectively.  The bias in abundance labels is negligible --- between
+X.XX to X.XX --- and the RMS varies from X.XX ([XX/H]) to X.XX ([XX/H]).
 
-% Stars with morphological classification
+
+The \rave\ survey performed repeat observations for 23,288 stars  with time 
+intervals ranging from a few hours to up to four years.  This timing was 
+constructed to be quasi-logarithmic such that spectroscopic binaries could
+be optimally identified. Most of the stars that were observed multiple times
+were only observed twice, with thirteen visits being the maximum number 
+of observations for any target.  These repeat observations allow us to 
+quantify the level of (in)correctness in our formal errors.  For every star
+with multiple visits we constructed a high S/N stacked spectrum for that
+star, weighted by the inverse variances in the individual visit spectra,
+which then served as the basis of comparison to all individual visits.  
+Figure \ref{fig:formal-errors-comparison} shows the difference in labels 
+between the comparison spectrum and a repeat visit, normalized by their 
+formal errors summed in quadrature (e.g., $\Delta\logg/\sqrt{\sigma_{\logg,stacked}^2 + \sigma_{\logg,visit}^2}$).
+If our measurements were unbiased by S/N and the errors were representative, 
+these values should be normally distributed with a zero mean and unit variance.
+\stub{Are they? Should we inflate our formal errors?}
+
 
 % Internal validation:
-% --> repeat visits: are our formal errors reasonable?
 % --> bootstrap resampling of the training set?
+
+% Identify outliers:
+% --> Chi-sq of the sample.
+% --> Convex hull? Distance to plane?
+% --> Stars with morphological classification
+% --> Anything else?
+
+\subsection{External validation}
 
 % External validation: 
 % --> RAVE Data Release 4
 % --> Gaia-ESO Survey
 % --> APOGEE / EPIC (whichever was not used)
 % --> Literature studies presented in Kordopatis+ 2014
+% --> Gold standards (incl. exoplanet host star studies): Reddy (2003, 2006), Bensby (2014), Valenti & Fischer (2005)
 
+\subsection{Astrophysical validation}
 % Astrophysical validation:
-% --> Identify open clusters and look at their metallicity spreads
 % --> Identify globular clusters and look to see whether we capture "expected" abundance trends/spreads that are seen elsewhere in the literature
 % --> Residuals as a function of galactic position? (DIBS)
 
@@ -285,10 +319,11 @@ data-driven model (rather than a physics-driven model) for this analysis.
 Source code for this project is available at \texttt{\url{https://www.github.com/AnnieJumpCannon/RAVE}}.  
 This document was compiled from revision hash \texttt{\githash} in that repository.
 Inferred labels and covariance matrices are available electronically with 
-associated metadata at \texttt{\url{ZENODO-URL}}.  Please note that it is a condition
-of using these results that the fifth \rave\ data release by \citet{Kunder_2016} 
-must (also) be cited, as the work presented here would not have been possible 
-without the tireless efforts of the entire \rave\ collaboration, past and present.
+associated metadata at \texttt{\url{ZENODO-URL}} \citep{DATA_REPOSITORY}.  
+Please note that it is a condition of using these results that the fifth \rave\ 
+data release by \citet{Kunder_2016} must (also) be cited, as the work presented 
+here would not have been possible without the tireless efforts of the entire 
+\rave\ collaboration, past and present.
 
 
 \acknowledgements
