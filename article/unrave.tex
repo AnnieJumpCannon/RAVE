@@ -223,29 +223,30 @@ $8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.  This corresponds to abou
 
 We chose to adopt a data-driven model --- rather than a physics-driven model ---
 for this analysis.  Specifically we will use an implementation of \thecannon\
-\citep{Ness_2015}.  Although this choice complicated the construction of our model
-(e.g., see Section \ref{sec:the-training-set}), a data-driven model makes
-use of all available information in the spectrum, and lowers the S/N ratio at
-which systematic effects begin to dominate.  In other words, a well-constructed
+\citep{Ness_2015,Ness_2016}.  Although this choice complicated the construction 
+of our model (e.g., see Section \ref{sec:the-training-set}), a data-driven model 
+makes use of all available information in the spectrum, and lowers the S/N ratio 
+at which systematic effects begin to dominate.  In other words, a well-constructed
 data-driven model will yield more precise labels (e.g., stellar parameters and
 chemical abundances) at low S/N ratios than most physics-driven models\footnote{
-However, see \citet{Casey_2016}}.  This is particularly relevant for the 
+However, see \citet{Casey_2016a}}.  This is particularly relevant for the 
 low-resolution \rave\ data analysed here, because about half of the spectra have
 S/N $\lesssim 50$. 
 
 
 Throughout this work we adopt the assumptions and nomenclature as set out in
-\citet{Casey_2016}.  One distinction here is that the \emph{labelled} set and
-the \emph{training} set in this work will be the same set.  In \citet{Casey_2016}
-the labelled set contained two sub-sets: the training set and a distinct
+\citet{Casey_2016b}.  One distinction here is that the \emph{labelled} set and
+the \emph{training} set in this work will be the same set.  In \citet{Casey_2016b}
+the labelled set contained two subsets: the training set and a distinct
 validation set, allowing us to train on the \emph{training set} and then test
 on the \emph{validation set}, a subset of the labelled set.  However in this work
 the labelled set is relatively small, about an order of magnitude smaller than 
-what was available in \citet{Casey_2016}, and therefore we will use all labelled 
+what was available in \citet{Casey_2016b}, and therefore we will use all labelled 
 set stars in the training step and supplement our validation experiments with 
 literature comparisons.  Thus, throughout this work we will use the terms 
 \emph{labelled set} and \emph{training set} interchangeably.  Below we describe 
-how the training set was constructed before outlining the model we adopt.
+how we constructed the training set, before we outline the model that we adopt.
+
 
 \subsection{The training set}
 \label{sec:the-training-set}
@@ -408,7 +409,9 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Casey \& Schlaufman(2015)]{Casey_Schlaufman_2015} Casey, A.~R., \& Schlaufman, K.~C.\ 2015, \apj, 809, 110 
 
-\bibitem[Casey et al.(2016)]{Casey_2016} Casey, A.~R., Hogg, D.~W., Ness, M., et al.\ 2016, arXiv:1603.03040 
+\bibitem[Casey(2016)]{Casey_2016a} Casey, A.~R.\ 2016, \apjs, 223, 8 
+
+\bibitem[Casey et al.(2016)]{Casey_2016b} Casey, A.~R., Hogg, D.~W., Ness, M., et al.\ 2016, arXiv:1603.03040 
 
 \bibitem[Cui et al.(2012)]{Cui_2012} Cui, X.-Q., Zhao, Y.-H., Chu, Y.-Q., et al.\ 2012, Research in Astronomy and Astrophysics, 12, 1197 
 
@@ -440,8 +443,9 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Ness et al.(2013b)]{Ness_2013b} Ness, M., Freeman, K., Athanassoula, E., et al.\ 2013, \mnras, 432, 2092 
 
-
 \bibitem[Ness et al.(2015)]{Ness_2015} Ness, M., Hogg, D.~W., Rix, H.-W., Ho, A.~Y.~Q., \& Zasowski, G.\ 2015, \apj, 808, 16 
+
+\bibitem[Ness et al.(2016)]{Ness_2016} Ness, M., Hogg, D.~W., Rix, H.-W., et al.\ 2016, \apj, 823, 114 
 
 \bibitem[Randich et al.(2013)]{Randich_2013} Randich, S., Gilmore, G., \& Gaia-ESO Consortium 2013, The Messenger, 154, 47 
 
