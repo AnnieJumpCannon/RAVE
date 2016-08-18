@@ -286,13 +286,11 @@ flags (\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 357 stars alon
 giant branch, with metallicities ranging from [Fe/H] $= -1.62$ to 0.32.
 
 
-Assembling a training set for the main-sequence and sub-giant branch was not as
-straightforward.
+Assembling a training set for the main-sequence and sub-giant branch was more complex.
 % training set from K2/EPIC?!!
-
 % Identifying obviously bad stars that have been mis-classified by K2/EPIC
 
-
+% Magic wizardry for missing and imperfect labels.
 
 % Inserting 2MASS photometry as fake pixels
 
@@ -346,6 +344,8 @@ these values should be normally distributed with a zero mean and unit variance.
 % --> Anything else?
 
 \subsection{External validation}
+\label{sec:external-validation}
+
 
 % External validation: 
 % --> RAVE Data Release 4
@@ -355,9 +355,44 @@ these values should be normally distributed with a zero mean and unit variance.
 % --> Gold standards (incl. exoplanet host star studies): Reddy (2003, 2006), Bensby (2014), Valenti & Fischer (2005)
 
 \subsection{Astrophysical validation}
+
+After verifying that our stellar labels are comparable with other
+high-resolution studies, here we verify that the abundance labels we find
+are consistent with expectations from astrophysics.  One example is stars in
+globular clusters, which show anti-correlations in light element abundances 
+\citep[e.g.,][and references therein]{Da_Costa,Carretta_2009}.  In the \rave\
+survey we found 70 stars with positions and radial velocities that are
+consistent with being members of globular clusters.  Specifically we identified
+49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde
+globular cluster NGC~3201, and 10 members of NGC~362.  
+% TODO: Were any of these stars unintentionally in the training set?
+All of these systems are well-studied and exhibit abundance anti-correlations 
+in Na--O and Mg--Al \citep{people}.  Other correlations are also present 
+(e.g., C--N), but those relationships are less relevant for this work because 
+we do not measure C and N abundances here.
+
+
+We show the detailed abundances for these globular cluster members in
+Figure \ref{fig:globular-cluster-abundances}.  For comparison purposes we
+have included abundances from the high-resolution studies of \citep{people}.
+\stub{What do we find?}
+
+% Assuming we recover these relationships...
+Indeed, this demonstrates that our abundance labels can be used to identify
+globular cluster members that are now tidally disrupted \citep{Anguiano_2016,Kuzma_2016,Navin_2016},
+even for stars with low S/N ratios.
+
+% Some literature notes:
+% See http://iopscience.iop.org/article/10.1088/0004-637X/731/1/64/pdf
+% NGC 3201 has Na-O anti-correlation: Carretta et al. (2009)
+% NGC 362 has "two discrete groups along the Na-O anti-correlation": https://arxiv.org/abs/1307.4085
+% NGC 362 has Mg-Al relationship (low Mg scatter, large Al scatter) --> Carretta (2013)
+% NGC 3201 has Mg-Al relationship (http://arxiv.org/pdf/1305.3645.pdf and references therein)
+
+
 % Astrophysical validation:
-% --> Identify globular clusters and look to see whether we capture "expected" abundance trends/spreads that are seen elsewhere in the literature
 % --> Residuals as a function of galactic position? (DIBS)
+
 
 
 \section{Discussion}
@@ -408,6 +443,9 @@ Opticon; Strasbourg Observatory; and the Universities of Groningen, Heidelberg
 and Sydney. The RAVE web site is https://www.rave-survey.org.  
 
 \begin{thebibliography}{dummy}
+
+\bibitem[Anguiano et al.(2016)]{Anguiano_2016} Anguiano, B., De Silva, G.~M., Freeman, K., et al.\ 2016, \mnras, 457, 2078 
+
 \bibitem[Astropy Collaboration et 
 al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, Astronomy \& Astrophysics, 558, AA33
 
@@ -443,11 +481,15 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Kunder et al.(2016)]{Kunder_2016} Kunder, A., et al.\ 2016, in preparation
 
+\bibitem[Kuzma et al.(2016)]{Kuzma_2016} Kuzma, P.~B., Da Costa, G.~S., Mackey, A.~D., \& Roderick, T.~A.\ 2016, \mnras, 461, 3639 
+
 \bibitem[M{\"a}dler et al.(2016)]{Madler_2016} M{\"a}dler, T., Jofr{\'e}, P., Gilmore, G., et al.\ 2016, arXiv:1606.03015 
 
 \bibitem[Michalik et al.(2015a)]{Michalik_2015a} Michalik, D., Lindegren, L., \& Hobbs, D.\ 2015, \aap, 574, A115 
 
 \bibitem[Michalik et al.(2015b)]{Michalik_2015b} Michalik, D., Lindegren, L., Hobbs, D., \& Butkevich, A.~G.\ 2015, \aap, 583, A68 
+
+\bibitem[Navin et al.(2016)]{Navin_2016} Navin, C.~A., Martell, S.~L., \& Zucker, D.~B.\ 2016, arXiv:1606.06430 
 
 \bibitem[Ness et al.(2012)]{Ness_2012} Ness, M., Freeman, K., Athanassoula, E., et al.\ 2012, \apj, 756, 22 
 
