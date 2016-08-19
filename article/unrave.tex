@@ -26,7 +26,8 @@
 }
 % ------------------------------------------
 
-\input{vc.tex}
+\newcommand{\githash}{UNKNOWN}
+%\input{vc.tex}
 
 \newcommand{\project}[1]{\textsl{#1}}
 \newcommand{\thecannon}{\project{The~Cannon}}
@@ -37,7 +38,7 @@
 \newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\,}
 \newcommand{\stub}[1]{\textbf{#1}}
 \newcommand{\Nstars}{483,330}
-
+\newcommand{\gaia}{\project{Gaia}}
 
 
 %\AuthorCallLimit=10
@@ -65,23 +66,27 @@
 
 
 \begin{abstract}
-On 14 September 2016 the \project{Gaia} mission will release positions, proper 
-motions, and parallaxes for about two million stars.  Most studies intending to
-make use of those data would benefit enormously by coupling that astrometry with
-stellar chemical abundances.  The RAdial Velocity Experiment (\project{RAVE}) 
-survey has acquired spectra for 292,036 stars in common with the 
-first \project{Gaia} data release, constituting the largest overlap of any 
-stellar spectroscopic sample.  Here we perform an independent analysis of the 
-\project{RAVE} spectra using an implementation of \thecannon\ 
-that uses prior probabilities on atomic line formation and stellar 
-astrophysical parameters.  We deliver effective temperature $\teff$, surface 
-gravity $\logg$, and chemical abundances of up to seven elements (Mg, Al, Si, 
-Ca, Ti, Fe, Ni) for \Nstars\ stars.  We validate our results internally from 
-repeat visits, and externally against existing high-resolution spectroscopic 
-surveys.  The typical precision in chemical abundances is X.XX~dex.  
-We provide improved distances by isochrone-fitting for \project{RAVE} stars
-where astrometric solutions are not available in the first \project{Gaia}
-data release.
+
+The Milky Way may be our greatest laboratory for understanding galaxy formation.
+This premise relies on the ability to measure [1] 3D positions and motions, and
+[2] detailed chemical abundances, for large numbers of individual stars.  On 14
+September 2016 the \gaia\ mission will release the former for $\approx2\times10^6$
+stars.  However, a catalog of precise chemical abundances to complement that data
+release is currently lacking.  The RAdial Velocity Experiment (\rave) survey has 
+acquired spectra for 292,036 stars in common with the first \gaia\ data release, 
+constituting the largest overlap of any stellar spectroscopic sample.  Here we 
+perform an independent analysis of \rave\ spectra using an implementation of 
+\thecannon\ that uses prior probabilities on atomic line formation and stellar
+astrophysical parameters.  Our approach yields precise stellar labels at lower
+S/N ratios than most \emph{ab initio} approaches, allowing us to deliver
+improved radial velocities, effective temperature $\teff$, surface gravity $\logg$,
+and chemical abundances of up to seven elements (Mg, Al, Si, Ca, Ti, Fe, Ni) 
+for \Nstars\ stars.  We validate our results internally from repeat visits, 
+and externally against existing high-resolution spectroscopic surveys.  The 
+typical precision in chemical abundances is X.XX~dex.  We provide 
+spectrophotometric distances based on our labels, improving upon the parallax
+distances available for the fainter targets in the first \gaia\ data release.
+% A one-line science result based on RAVE/Hipparcos overlap.
 \end{abstract}
 
 \keywords{}
