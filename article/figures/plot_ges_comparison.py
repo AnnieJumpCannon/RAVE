@@ -21,7 +21,7 @@ else:
 
 # Plot labels against literature.
 
-label_names = ("TEFF_1", "LOGG_2", "FE_H")
+label_names = ("TEFF_1", "LOGG_1", "FE_H")
 ges_label_names = {
     "TEFF_1": "TEFF_2",
     "LOGG_1": "LOGG_2",
@@ -29,7 +29,7 @@ ges_label_names = {
 }
 
 label_limits = {
-    "TEFF_1": (3000, 8000),
+    "TEFF_1": (3000, 6500),
     "LOGG_1": (0, 5),
     "FE_H": (-2, 0.75)
 }
@@ -42,7 +42,8 @@ latex_labels = {
 
 
 # Exclude ones we think are bad.
-ok = data_table["OK"]
+#ok = data_table["OK"]
+ok = data_table["R_CHI_SQ"] < 3
 
 data_table = data_table[ok]
 
@@ -69,11 +70,15 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     y = data_table[ges_label_names[label_name]]
     # yerr
 
-    ax.scatter(x, y, c=data_table["SNRK"], alpha=0.75, s=50, 
+    scat = ax.scatter(x, y, c=[[0, 1][each.startswith("U5")] for each in data_table["REC_SETUP"]], 
+        alpha=0.75, s=50, 
         linewidths=0.5, edgecolors="#000000")
 
-    ax.set_xlim(limits[label_name])
-    ax.set_ylim(limits[label_name])
+    limits = label_limits[label_name]
+    ax.plot(limits, limits, c="#666666", linestyle=":", zorder=-1)
+
+    ax.set_xlim(limits)
+    ax.set_ylim(limits)
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))
     ax.set_xlabel(" ".join([latex_labels[label_name], r"$({\rm UNRAVE})$"]))
@@ -81,6 +86,10 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
 
     [_.set_rotation(30) for _ in ax.get_xticklabels()]
     [_.set_rotation(30) for _ in ax.get_yticklabels()]
+
+    diff = y - x
+    print(label_name, np.nanmean(diff), np.nanstd(diff))
+
 
 fig.tight_layout()
 
