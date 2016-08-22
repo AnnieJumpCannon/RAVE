@@ -51,13 +51,15 @@ latex_labels = {
     "FE_H": r"$[{\rm Fe/H}]$"
 }
 
+"""
 exclude_comparisons = ("2013MNRAS.429..126R", )
 ok = np.ones(len(data_table), dtype=bool)
 for bibcode in exclude_comparisons:
     ok *= (data_table["bibcode"] != bibcode)
+"""
 
 # Exclude ones we think are bad.
-ok *= data_table["OK"]
+ok = data_table["OK"]
 
 data_table = data_table[ok]
 
@@ -118,4 +120,4 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
 fig.tight_layout()
 
 fig.savefig("literature-comparison.pdf", dpi=300)
-fig.savefig("literature-comparison.png", dpi=300)
+fig.savefig("literature-comparison.png")

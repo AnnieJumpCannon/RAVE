@@ -70,8 +70,7 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     y = data_table[ges_label_names[label_name]]
     # yerr
 
-    scat = ax.scatter(x, y, c=[[0, 1][each.startswith("U5")] for each in data_table["REC_SETUP"]], 
-        alpha=0.75, s=50, 
+    scat = ax.scatter(x, y, c=data_table["SNRK"], alpha=0.75, s=50, 
         linewidths=0.5, edgecolors="#000000")
 
     limits = label_limits[label_name]
@@ -90,8 +89,9 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     diff = y - x
     print(label_name, np.nanmean(diff), np.nanstd(diff))
 
-
+cbar = plt.colorbar(scat)
+cbar.set_label(r"$S/N$")
 fig.tight_layout()
 
 fig.savefig("ges-comparison.pdf", dpi=300)
-fig.savefig("ges-comparison.png", dpi=300)
+fig.savefig("ges-comparison.png")

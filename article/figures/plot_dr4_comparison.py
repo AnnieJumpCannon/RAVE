@@ -22,24 +22,23 @@ except NameError:
 else:
     print("Warning: Using pre-loaded data!")
 
-QC = combined_table["OK"] * (combined_table["QK"] == 0)
+QC = combined_table["OK"] * (combined_table["QK_1"] == 0)
 combined_table = combined_table[QC]
 
 N_bins = 50
 
 all_columns = [
     # RAVE label, DR4 label
-    ("TEFF", "TeffK"),
-    ("LOGG", "loggK"),
-    ("FE_H", "__M_H_K"),
+    ("TEFF", "TeffK_1"),
+    ("LOGG", "loggK_1"),
+    ("FE_H", "__M_H_K_1"),
 ]
 label_limits = {
     "TEFF": (3000, 8000),
     "LOGG": (0, 5),
-    "FE_H": (-2, 0.75)
+    "FE_H": (-2.5, 0.75)
 }
 latex_labels = (r"$T_{\rm eff}$", r"$\log{g}$", r"$[{\rm Fe/H}]$")
-
 
 
 K, factor = (len(all_columns), 3.5)
@@ -81,7 +80,10 @@ for i, (ax, columns, latex_label) in enumerate(zip(axes, all_columns, latex_labe
     [_.set_rotation(30) for _ in ax.get_xticklabels()]
     [_.set_rotation(30) for _ in ax.get_yticklabels()]
 
+    diff = y - x
+    print(latex_labels, np.nanmean(diff), np.nanstd(diff))
+
 fig.tight_layout()
 
 fig.savefig("dr4-comparison.pdf", dpi=300)
-fig.savefig("dr4-comparison.png", dpi=300)
+fig.savefig("dr4-comparison.png")
