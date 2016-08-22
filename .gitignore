@@ -9,6 +9,7 @@ quicklook/
 *.pdf
 vc.tex
 *.synctex.gz
+*.bib
 
 *.pyc
 

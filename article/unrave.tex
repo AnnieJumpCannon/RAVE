@@ -26,8 +26,7 @@
 }
 % ------------------------------------------
 
-\newcommand{\githash}{UNKNOWN}
-%\input{vc.tex}
+\IfFileExists{vc.tex}{\input{vc.tex}}{\newcommand{\githash}{UNKNOWN}}
 
 \newcommand{\project}[1]{\textsl{#1}}
 \newcommand{\gaia}{\project{Gaia}}
