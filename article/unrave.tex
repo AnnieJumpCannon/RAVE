@@ -37,7 +37,7 @@
 \newcommand{\apogee}{\project{\acronymn{APOGEE}}}
 \newcommand{\lamost}{\project{\acronymn{LAMOST}}}
 \newcommand{\hipparcos}{\project{Hipparcos}}
-
+\newcommand{\epic}{\project{K2/EPIC}}
 
 \newcommand{\stub}[1]{\textbf{#1}}
 
@@ -178,11 +178,9 @@ simultaneously acquired.  When observations concluded in April 2013, a total of
 
 
 The target selection for \rave\ is based on the $I$-band apparent magnitude,
-$9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge\footnote{
-However, see the works of \citet{Kunder_2016} and \citet{Kordopatis_2013} for 
-subtleties of the selection function}.
-The $I$ band was used because it overlaps with the wavelength range 
-that \rave\ operates in:  8410--8795~\AA.  This setup includes the \ion{Ca}{2} 
+$9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge \citep{Wonjo_2016}.  
+The $I$ band was used because it overlaps with the wavelength range that \rave\ 
+operates in:  8410--8795~\AA.  This setup includes the \ion{Ca}{2} 
 near-infrared triplet.  These stellar absorption lines are dominated by pressure 
 broadening, which makes them strong and therefore visible even in very low S/N data
 or metal-poor stars.  This spectral region is also well-studied.  It is one of the
@@ -210,7 +208,7 @@ Despite the relatively low resolution and S/N of the spectra compared to other
 surveys, the \rave\ data releases have demonstrated the team's enormous success 
 in deriving radial velocities, stellar astrophysical parameters ($\teff$, $\logg$),
 as well as individual chemical abundances \citep{Steinmetz_2006,Zwitter_2008,
-Siebert_2011,Kordopatis_2013, Kunder_2016}.  In this work we make use of spectra
+Siebert_2011,Kordopatis_2013,Kunder_2016}.  In this work we make use of spectra
 that has been reprocessed for the fifth \rave\ data release.  These re-processing
 steps include: a detailed re-reduction of all the original data frames, with flux
 variances propagated at every step; an updated continuum-normalization procedure;
@@ -244,7 +242,7 @@ We chose to adopt a data-driven model --- rather than a physics-driven model ---
 for this analysis.  Specifically we will use an implementation of \thecannon\
 \citep{Ness_2015,Ness_2016}.  Although this choice complicated the construction 
 of our model (e.g., see Section \ref{sec:the-training-set}), a data-driven model 
-makes use of all available information in the spectrum, and lowers the S/N ratio 
+makes use of all available information in the spectrum and lowers the S/N ratio 
 at which systematic effects begin to dominate.  In other words, a well-constructed
 data-driven model will yield more precise labels (e.g., stellar parameters and
 chemical abundances) at low S/N ratios than most physics-driven models\footnote{
@@ -253,18 +251,19 @@ low-resolution \rave\ data analysed here, because about half of the spectra have
 S/N $\lesssim 50$. 
 
 
-Throughout this work we adopt the assumptions and nomenclature as set out in
-\citet{Casey_2016b}.  One distinction here is that the \emph{labelled} set and
-the \emph{training} set in this work will be the same set.  In \citet{Casey_2016b}
-the labelled set contained two subsets: the training set and a distinct
-validation set, allowing us to train on the \emph{training set} and then test
-on the \emph{validation set}, a subset of the labelled set.  However in this work
-the labelled set is relatively small, about an order of magnitude smaller than 
-what was available in \citet{Casey_2016b}, and therefore we will use all labelled 
-set stars in the training step and supplement our validation experiments with 
-literature comparisons.  Thus, throughout this work we will use the terms 
-\emph{labelled set} and \emph{training set} interchangeably.  Below we describe 
-how we constructed the training set, before we outline the model that we adopt.
+Throughout this work we adopt the assumptions and nomenclature first set out in
+\citet{Ness_2015}, and extended in \citet{Casey_2016b}.  However, one distinction 
+here with \citet{Caset_2016} is that in this work the \emph{labelled} set and the
+\emph{training} set will be the same set.  In \citet{Casey_2016b} the labelled set
+contained two subsets: the training set and a distinct validation set, allowing us
+to train on the \emph{training set} and then test on the \emph{validation set}, a 
+subset of the labelled set.  However in this work the labelled set is relatively 
+small, about an order of magnitude smaller than what was available in 
+\citet{Casey_2016b}, and therefore we will use all labelled set stars in the 
+training step and supplement our validation experiments with literature comparisons.
+Thus, throughout this work we will use the terms \emph{labelled set} and 
+\emph{training set} interchangeably.  Below we describe how we constructed the 
+training set, before we outline the model that we adopt.
 
 
 \subsection{The training set}
@@ -282,15 +281,16 @@ giant branch and (uncalibrated values for) the main-sequence, but our tests indi
 that the main-sequence labels suffered from unexpected systematic effects.  A flat, 
 then `up-turning' main-sequence is present, and the metallicity gradient trends in 
 the opposite direction with respect to $\logg$ on the main-sequence (i.e., metal-poor
-stars sit above the isochrones, not below).  If we move to lower-resolution studies,
-there are 2,369 stars that overlap with \project{LAMOST} --- of which 2,213 have positive
-S/N ratios in the $g$-band (\texttt{snrg}).  However, similar systematic effects are 
-seen on the main-sequence: the labels are expectedly less precise given the lower
-resolution, no detailed abundance information is available\footnote{Abundance 
-information is available for \project{LAMOST} stars from \citet{Ho_2016}, but that 
-sample contains only giant stars}, and there is only sparse sampling across the 
-Hertsprung-Russell diagram.  The \project{GALAH} survey has a good overlap with \rave,
-but results from that sample are not yet precise enough for our purposes.
+stars incorrectly sit above the isochrones in a classical Hertzsprung-Russell diagram)
+If we consider lower-resolution studies, there are 2,369 stars that overlap with 
+\project{LAMOST} --- of which 2,213 have positive S/N ratios in the $g$-band 
+(\texttt{snrg}).  However, similar systematic effects are seen on the main-sequence: 
+the labels are expectedly less precise given the lower resolution, no detailed 
+abundance information is available\footnote{Abundance information is available for 
+\project{LAMOST} stars from \citet{Ho_2016}, but that sample contains only giant stars},
+and there is only sparse sampling across the Hertzsprung-Russell diagram.  The 
+\project{GALAH} survey has a good overlap with \rave, but results from that sample 
+are not yet precise enough for our purposes.
 
 
 These constraints forced us to construct a heterogeneous training set.  Given previous
@@ -302,14 +302,26 @@ have: metallicity determinations ([Fe/H] $> -5$); high S/N ratios in both the
 \project{APOGEE} and \rave\ spectra ($>200$ in \project{APOGEE}; $>50$ in \rave); and
 we further required that the \project{ASPCAP} pipeline did not report any peculiar
 flags (\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 357 stars along the
-giant branch, with metallicities ranging from [Fe/H] $= -1.62$ to 0.32.
+giant branch, with metallicities ranging from $[{\rm Fe/H}] = -1.62$ to 0.32.  Our tests
+showed that the metallicity range of the training set needed to extend below
+$[{\rm Fe/H}] \lesssim -2$, and thus below we describe how we supplemented this
+sample with giant stars from the \epic\ catalog \citep{Huber_2016}. 
 
 
 Assembling a training set for the main-sequence and sub-giant branch was more complex.
 % training set from K2/EPIC?!!
 % Identifying obviously bad stars that have been mis-classified by K2/EPIC
+
+% Giant stars of low metallicity.
+
 % Refer to the training set figure.
 % Two separate models, with an overlap region.
+% Worry later about label offsets.
+
+
+
+
+
 
 % Initially we train on three labels.
 
@@ -321,6 +333,10 @@ Assembling a training set for the main-sequence and sub-giant branch was more co
 % Priors on astrophysical parameters from isochrones
 
 % Include velocities and rotational velocities at test time?
+
+
+\subsection{The model}
+\label{sec:the-model}
 
 
 \section{Validation experiments}
@@ -539,11 +555,13 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
  
 \bibitem[H{\o}g et al.(2000)]{Hog_2000} H{\o}g, E., Fabricius, C., Makarov, V.~V., et al.\ 2000, \aap, 355, L27 
 
+\bibitem[Huber et al.(2016)]{Huber_2016} Huber, D., Bryson, S.~T., Haas, M.~R., et al.\ 2016, \apjs, 224, 2 
+
 \bibitem[Jofr{\'e} et al.(2015)]{Jofre_2015} Jofr{\'e}, P., M{\"a}dler, T., Gilmore, G., et al.\ 2015, \mnras, 453, 1428 
 
 \bibitem[Kordopatis et al.(2013)]{Kordopatis_2013} Kordopatis, G., Gilmore, G., Steinmetz, M., et al.\ 2013, \aj, 146, 134 
 
-\bibitem[Kunder et al.(2016)]{Kunder_2016} Kunder, A., et al.\ 2016, in preparation
+\bibitem[Kunder et al.(2016)]{Kunder_2016} Kunder, A., et al.\ 2016, submitted
 
 \bibitem[Kuzma et al.(2016)]{Kuzma_2016} Kuzma, P.~B., Da Costa, G.~S., Mackey, A.~D., \& Roderick, T.~A.\ 2016, \mnras, 461, 3639 
 
@@ -584,6 +602,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Taylor(2005)]{Taylor_2005} Taylor, M.~B.\ 2005, Astronomical Data Analysis Software and Systems XIV, 347, 29 
 
 \bibitem[van Leeuwen(2007)]{van_Leeuwen_2007} van Leeuwen, F.\ 2007, \aap, 474, 653 
+
+\bibitem[Wonjo et al.(2016)]{Wonjo_2016} Wonjo, J., et al.\ 2016, submitted
 
 \bibitem[Zasowski et al.(2013)]{Zasowski_2013} Zasowski, G., Johnson, J.~A., Frinchaboy, P.~M., et al.\ 2013, \aj, 146, 81 
 
