@@ -309,7 +309,32 @@ sample with giant stars from the \epic\ catalog \citep{Huber_2016}.
 
 
 Assembling a training set for the main-sequence and sub-giant branch was more complex.
-% training set from K2/EPIC?!!
+There are no spectroscopic studies that have a large enough overlap with \rave, and
+also cover our required range of stellar parameters (e.g., FGKM-type stars).  Moreover,
+most of the spectroscopic studies we considered exhibit a flat lower main-sequence, a
+consequence of violating the assumption of local thermal equilibrium 
+\citep[e.g., see][for a discussion]{Bensby_2014}.  For these reasons we chose to make
+use of the \epic\ catalog \citep{Huber_2016} for the training set labels.  The \epic\
+catalog follows from the successful \project{Kepler} input catalog \citep{Brown_2011},
+and provides probabilistic stellar classifications for $\gtrsim180{,}000$ stars in 
+the \project{K2} fields based on the astrometric, photometric, and spectroscopic
+information available.  There are 4,611 stars that overlap between \epic\ and \rave.
+
+
+When the \epic\ posteriors are narrow (i.e., the uncertainties on labels are small),
+\citet{Huber_2016} show that the labels are accurate and trustworthy.  However,
+\epic\ differs from the \project{Kepler} input catalog because \epic\ does not
+benefit from having narrow-band $DDO_{51}$ photometry in order to aid dwarf/giant
+classification.  For this reason there are a number of stars that are mis-classified
+in the \epic\ catalog.  \citet{Huber_2016} acknowledges this, noting: the fraction 
+of X classified as Y could be as much as Z\%; up to Z2\% of X2 could be marked as Y2, 
+and \stub{other things}.  In other words, the \epic\ labels are usually of high 
+fidelity, and mis-classifications are clearly detectable if spectra are available.
+As we will show, when the mis-classifications can be identified from \rave\ spectra, 
+the \epic\ catalog makes a suitable training set for the main-sequence and sub-giant
+branch in \rave.
+
+
 % Identifying obviously bad stars that have been mis-classified by K2/EPIC
 
 % Giant stars of low metallicity.
@@ -523,7 +548,11 @@ and Sydney. The RAVE web site is https://www.rave-survey.org.
 \bibitem[Astropy Collaboration et 
 al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, Astronomy \& Astrophysics, 558, AA33
 
+\bibitem[Bensby et al.(2014)]{Bensby_2014} Bensby, T., Feltzing, S., \& Oey, M.~S.\ 2014, \aap, 562, A71 
+
 \bibitem[Bovy et al.(2016)]{Bovy_2016} Bovy, J., Rix, H.-W., Schlafly, E.~F., et al.\ 2016, \apj, 823, 30 
+
+\bibitem[Brown et al.(2011)]{Brown_2011} Brown, T.~M., Latham, D.~W., Everett, M.~E., \& Esquerdo, G.~A.\ 2011, \aj, 142, 112 
 
 \bibitem[Casey et al.(2012)]{Casey_2012} Casey, A.~R., Keller, S.~C., \& Da Costa, G.\ 2012, \aj, 143, 88 
 
