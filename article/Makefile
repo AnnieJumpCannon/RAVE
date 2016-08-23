@@ -9,6 +9,9 @@ vc.tex: ../.git/logs/HEAD
 	git config --get remote.origin.url | sed "s/\.git$$//" | sed "s/ssh:\/\/git\@/https:\/\/www\./" >> vc.tex
 	echo '}}' >> vc.tex
 	git log -1 --date=short --format="format:\\newcommand{\\githash}{%h}\\newcommand{\\gitdate}{%ad}\\newcommand{\\gitauthor}{%an}" >> vc.tex
+	# Safely replace newline character if it exists
+	cat vc.tex | sed "s/^ewcommand/\\\newcommand/" > vc_safe.tex
+	mv vc_safe.tex vc.tex
 
 %.pdf: %.tex vc.tex
 	${LATEX} $<
