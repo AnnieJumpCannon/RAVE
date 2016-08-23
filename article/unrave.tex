@@ -28,12 +28,16 @@
 
 \IfFileExists{vc.tex}{\input{vc.tex}}{\newcommand{\githash}{UNKNOWN}}
 
+\newcommand{\acronym}[1]{{\small{#1}}}
+
 \newcommand{\project}[1]{\textsl{#1}}
 \newcommand{\gaia}{\project{Gaia}}
 \newcommand{\thecannon}{\project{The~Cannon}}
 \newcommand{\rave}{\project{\acronym{RAVE}}}
+\newcommand{\apogee}{\project{\acronymn{APOGEE}}}
+\newcommand{\lamost}{\project{\acronymn{LAMOST}}}
+\newcommand{\hipparcos}{\project{Hipparcos}}
 
-\newcommand{\acronym}[1]{{\small{#1}}}
 
 \newcommand{\stub}[1]{\textbf{#1}}
 
@@ -70,10 +74,10 @@
 
 \begin{abstract}
 The Milky Way may be our greatest laboratory for understanding galaxy formation.
-This premise relies on the ability to measure [1] 3D positions and motions, and
-[2] detailed chemical abundances, for large numbers of individual stars.  On 14
-September 2016 the \gaia\ mission will release the former for $\approx2\times10^6$
-stars.  However, a catalog of precise chemical abundances to complement that data
+This premise relies on the ability to measure --- for large numbers of stars ---
+3D positions and motions, and their detailed chemical abundances.  On 14 September
+2016 the \gaia\ mission will release the former for $\approx2\times10^6$ stars.
+However, a catalog of precise chemical abundances to complement that data
 release is currently lacking.  The RAdial Velocity Experiment (\rave) survey has 
 acquired spectra for 292,036 stars in common with the first \gaia\ data release, 
 constituting the largest overlap of any stellar spectroscopic sample.  Here we 
@@ -98,27 +102,36 @@ distances available for the fainter targets in the first \gaia\ data release.
 
 The Milky Way is considered to be the best laboratory for understanding galaxy
 formation and evolution.  This premise hinges on the ability to precisely measure 
-the position, motion, and chemistry of (many) individual stars, and use those data 
+the astrometry and chemistry for (many) individual stars, and to use those data 
 to infer the structure, kinematics, and chemical enrichment of the Galaxy 
-\citep[e.g.,][]{Deason_2011,Ness_2012,Ness_2013a,Ness_2013b,Casey_2012,Casey_2013,
-Casey_2014a,Casey_2014b}.  % include references on: disk chemistry, halo structures
-However, these quantities are not known for even 1\% of stars in the Milky Way.  
-Stellar distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,
-Jofre_2015,Madler_2016}, proper motions can be plagued by unquantified systematics
-from the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and 
+\citep[e.g.,][]{Schlaufman_2009,Deason_2011,Ness_2012,Ness_2013a,Ness_2013b,
+Casey_2012,Casey_2013,Casey_2014a,Casey_2014b,Bovy_2016}.  However, these 
+quantities are not known for even 1\% of stars in the Milky Way.  Stellar 
+distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,Jofre_2015,
+Madler_2016}, proper motions can be plagued by unquantified systematics from 
+the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and 
 stellar spectroscopists frequently report significantly different chemical 
-abundance patterns \citep{Smiljanic_2014}.  Countless long-standing astrophysics
-problems could be resolved if those measurements were known with high fidelity: 
-\stub{x? \citep{someone}; y; and z, to list just a few}.
+abundance patterns \citep{Smiljanic_2014}.  The impact this lack of data has on
+scientific inferences cannot be understated.  It limits our understanding on a
+number of sub-fields in astrophysics, including the properties of exoplanet host
+stars, the formation (and destruction) of stars and clusters, as well as the 
+structure of the Galactic disk, to name a few.
 
 
-\stub{Introducing Gaia; rely on ground-based spectroscopic surveys for chemistry}
-% Introducing Gaia
-% Gaia will produce a very clear snapshot, producing astrometry space motions
-% What will Gaia provide eventually.
-% In the first data release what do we get.
-% While this is an order of magnitude better than Hipparcos, if we want to use these data to understand the chemical evolution of the galaxy then we need additional information.
-% until abundances are available from gaia RVS, we rely on ground-based spectroscopic surveys to provide the chemistry
+These formed just some of the scientific drivers for the \gaia\ space telescope.
+\gaia\ is primarily an astrometric mission, providing precise positions,
+parallaxes and proper motions for more than $10^9$ stars in its final data
+release, scheduled for 2022.  While this is a sample size about three orders 
+of magnitude larger than its predecessor \hipparcos, both astrometry and 
+chemistry are required to fully characterize the formation and evolution of our Galaxy.  
+For this reason \gaia\ will also provide radial velocities, stellar parameters 
+and chemical abundances for a subset of brighter stars, primarily from the on-board
+radial velocity spectrometer.  However, those chemical abundances will not be 
+available until later releases.  Until those abundances are available,
+astronomers seeking to use chemistry and kinematic measurements are reliant on 
+ground-based spectroscopic surveys in order to complement the available astrometry
+from \gaia.
+
 
 The first \project{Gaia} data release will include positions, proper motions, and 
 parallaxes for approximately two million stars in the Tycho-2 \citep{Hog_2000} 
@@ -224,8 +237,8 @@ $8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.  This corresponds to abou
 945~pixels for science.
 
 
-\section{Model}
-\label{sec:model}
+\section{Method}
+\label{sec:method}
 
 We chose to adopt a data-driven model --- rather than a physics-driven model ---
 for this analysis.  Specifically we will use an implementation of \thecannon\
@@ -260,9 +273,7 @@ how we constructed the training set, before we outline the model that we adopt.
 We sought to construct a training set consisting of stars across the main-sequence,
 sub-giant, and the red giant branch.  We require stars with precisely measured
 effective temperature $\teff$, surface gravity $\logg$, and elemental abundances
-of Fe, Mg, Si, Ti, Ca, Al, and Ni. We note that the while Ti can be measured, its values in both 
-APOGEE DR12 and DR13 are known to not follow the expected Galactic trends \citep{Holtzman_2015, Hawkins_2016}.
-This proved to be difficult because the magnitude
+of Fe, Mg, Si, Ti, Ca, Al, and Ni.  This proved to be difficult because the magnitude
 range of \rave\ does not overlap substantially with high-resolution spectroscopic
 surveys.  The fourth internal data release of the \project{Gaia-ESO} survey includes 
 giant and main-sequence stars, but only 142 overlap with \rave.  The most recent 
@@ -297,11 +308,15 @@ giant branch, with metallicities ranging from [Fe/H] $= -1.62$ to 0.32.
 Assembling a training set for the main-sequence and sub-giant branch was more complex.
 % training set from K2/EPIC?!!
 % Identifying obviously bad stars that have been mis-classified by K2/EPIC
+% Refer to the training set figure.
+% Two separate models, with an overlap region.
 
-% Magic wizardry for missing and imperfect labels.
+% Initially we train on three labels.
 
 % Inserting 2MASS photometry as fake pixels
 
+
+% Magic wizardry for missing and imperfect labels.
 % Censoring masks on abundance labels
 % Priors on astrophysical parameters from isochrones
 
@@ -379,6 +394,11 @@ effect on the detailed abundance or spectrophotometric distance determinations
 between these studies.
 
 \stub{What abundances are available?}
+
+% This is more relevant for the discussion, not description of the training set.
+We note that the while Ti can be measured, its values in both 
+APOGEE DR12 and DR13 are known to not follow the expected Galactic trends \citep{Holtzman_2015, Hawkins_2016}.
+
 \stub{Any differences in RAVE abundances?}
 
 
@@ -487,6 +507,8 @@ and Sydney. The RAVE web site is https://www.rave-survey.org.
 \bibitem[Astropy Collaboration et 
 al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, Astronomy \& Astrophysics, 558, AA33
 
+\bibitem[Bovy et al.(2016)]{Bovy_2016} Bovy, J., Rix, H.-W., Schlafly, E.~F., et al.\ 2016, \apj, 823, 30 
+
 \bibitem[Casey et al.(2012)]{Casey_2012} Casey, A.~R., Keller, S.~C., \& Da Costa, G.\ 2012, \aj, 143, 88 
 
 \bibitem[Casey et al.(2013)]{Casey_2013} Casey, A.~R., Da Costa, G., Keller, S.~C., \& Maunder, E.\ 2013, \apj, 764, 39 
@@ -549,6 +571,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Robin et al.(2012)]{Robin_2012} Robin, A.~C., Luri, X., Reyl{\'e}, C., et al.\ 2012, \aap, 543, A100 
 
+\bibitem[Schlaufman et al.(2009)]{Schlaufman_2009} Schlaufman, K.~C., Rockosi, C.~M., Allende Prieto, C., et al.\ 2009, \apj, 703, 2177 
+
 \bibitem[Siebert et al.(2011)]{Siebert_2011} Siebert, A., Williams, M.~E.~K., Siviero, A., et al.\ 2011, \aj, 141, 187 
 
 \bibitem[SDSS Collaboration et al.(2016)]{sloan_dr13} SDSS Collaboration, Albareti, F.~D., Allende Prieto, C., et al.\ 2016, arXiv:1608.02013 
@@ -574,7 +598,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure}
 
 \begin{figure}[p]
-\caption{A H-R diagram showing the test set labels.\label{fig:test-set-hrd}}
+\includegraphics[width=\textwidth]{figures/hrd-test-set.pdf}
+\caption{A `spectroscopic' Hertzsprung-Russell diagram showing the effective temperature $\teff$ and surface gravity $\logg$ for stars in the test set.  Only stars with $\chi_r < 3$ are shown, and each panel shows stars that meet a threshold in $S/N$ ratio.\label{fig:test-set-hrd}}
 \end{figure}
 
 \begin{figure*}[p]
