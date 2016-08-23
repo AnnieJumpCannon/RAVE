@@ -9,8 +9,13 @@ rave_kordopatis_dr4 = Table.read(os.path.join(DATA_PATH, "RAVE-DR4.fits"))
 rave_cannon_dr1 = Table.read(os.path.join(DATA_PATH, "rave-tgas-v1.fits"))
 
 if "OK" not in rave_cannon_dr1.dtype.names:
-    rave_cannon_dr1["OK"] = (rave_cannon_dr1["SNRK"] > 50) * (rave_cannon_dr1["R_CHI_SQ"] < 3)
-    print("Setting OK as stars with S/N > 50 and R_CHI_SQ < 3")
+    try:
+        rave_cannon_dr1["OK"] = (rave_cannon_dr1["SNRK"] > 50) * (rave_cannon_dr1["R_CHI_SQ"] < 3)
+    except KeyError:
+        print("No 'OK' subset")
+
+    else:
+        print("Setting OK as stars with S/N > 50 and R_CHI_SQ < 3")
 
 else:
     print("Using pre-defined subset of 'OK'")
