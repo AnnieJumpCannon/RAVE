@@ -26,7 +26,7 @@
 }
 % ------------------------------------------
 
-\IfFileExists{vc.tex}{\input{vc.tex}}{\newcommand{\githash}{UNKNOWN}}
+\IfFileExists{vc.tex}{\input{vc.tex}}{\newcommand{\githash}{UNKNOWN}\newcommand{\giturl}{UNKNOWN}}
 
 \newcommand{\acronym}[1]{{\small{#1}}}
 
@@ -485,7 +485,7 @@ even for stars with low S/N ratios.
 \subsection*{Access the results electronically}
 
 % TODO: Replace ZENODO-URL with a data url
-Source code for this project is available at \texttt{\url{https://www.github.com/AnnieJumpCannon/RAVE}}.  
+Source code for this project is available at \texttt{\giturl}.
 This document was compiled from revision hash \texttt{\githash} in that repository.
 Inferred labels and covariance matrices are available electronically with 
 associated metadata at \texttt{\url{ZENODO-URL}} \citep{DATA_REPOSITORY}.  
