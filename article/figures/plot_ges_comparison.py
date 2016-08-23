@@ -29,7 +29,7 @@ ges_label_names = {
 }
 
 label_limits = {
-    "TEFF_1": (3000, 6500),
+    "TEFF_1": (3500, 7000),
     "LOGG_1": (0, 5),
     "FE_H": (-2, 0.75)
 }
@@ -43,7 +43,7 @@ latex_labels = {
 
 # Exclude ones we think are bad.
 #ok = data_table["OK"]
-ok = data_table["R_CHI_SQ"] < 3
+ok = (data_table["R_CHI_SQ"] < 3) * (data_table["SNRK"] > 50)
 
 data_table = data_table[ok]
 
@@ -70,7 +70,7 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     y = data_table[ges_label_names[label_name]]
     # yerr
 
-    scat = ax.scatter(x, y, c=data_table["SNRK"], alpha=0.75, s=50, 
+    scat = ax.scatter(x, y, facecolor="#666666", alpha=0.5, s=50, 
         linewidths=0.5, edgecolors="#000000")
 
     limits = label_limits[label_name]
@@ -89,8 +89,8 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     diff = y - x
     print(label_name, np.nanmean(diff), np.nanstd(diff))
 
-cbar = plt.colorbar(scat)
-cbar.set_label(r"$S/N$")
+#cbar = plt.colorbar(scat)
+#cbar.set_label(r"$S/N$")
 fig.tight_layout()
 
 fig.savefig("ges-comparison.pdf", dpi=300)

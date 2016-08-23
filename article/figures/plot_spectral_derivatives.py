@@ -22,7 +22,7 @@ ms_model.vectorizer._label_names = ["TEFF", "LOGG", "FE_H", "VSINI"]
 
 models = (giant_model, ms_model)
 
-comparison_model = tc.load_model("/data/gaia-eso/arc/rave/rave-tgas-v23all.model")   # both
+comparison_model = tc.load_model("/data/gaia-eso/arc/rave/rave-tgas-v26.model")   # both
 
 N = comparison_model.theta.shape[1]
 
@@ -101,6 +101,8 @@ for i in range(N):
 fig.tight_layout()
 fig.subplots_adjust(wspace=0, hspace=0)
 
+
+raise a
 
 def objective_function(xdata, a, b):
     y = xdata * a + b

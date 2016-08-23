@@ -46,11 +46,11 @@ fig.subplots_adjust(
 
 for ax, snr in zip(axes, snrs):
     
-    ok = (t["SNRK"] > snr) * (t["r_chi_sq_ms"] < 3) * (t["r_chi_sq_giant"] < 3)
-
-    ax.hexbin(t["WEIGHTED_TEFF"][ok], t["WEIGHTED_LOGG"][ok], gridsize=N,
+    ok = (t["SNRK"] > snr) * (t["R_CHI_SQ"] < 3)
+    
+    ax.hexbin(t["TEFF"][ok], t["LOGG"][ok], gridsize=N,
         extent=(3500, 7000, 0.5, 5),
-        cmap="Blues", norm=LogNorm(), edgecolor="#eeeeee", linewidths=0.1)
+        cmap="Blues", norm=LogNorm(), edgecolor="#ffffff", linewidths=0.25)
 
 
     K = locale.format("%d", sum(ok), grouping=True).replace(",", "$,$")
