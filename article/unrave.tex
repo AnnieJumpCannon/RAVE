@@ -72,11 +72,18 @@
 \author{and the \rave\ collaboration}
 
 
+% Stubs for discussion & analysis.
+% TODO: Inserting 2MASS photometry as fake pixels
+% TODO: Censoring masks on abundance labels
+% TODO: Priors on astrophysical parameters from isochrones
+% TODO: Include velocities and rotational velocities at test time?
+
+
 \begin{abstract}
 The Milky Way may be our greatest laboratory for understanding galaxy formation.
 This premise relies on the ability to measure --- for large numbers of stars ---
-3D positions and motions, and their detailed chemical abundances.  On 14 September
-2016 the \gaia\ mission will release the former for $\approx2\times10^6$ stars.
+their detailed chemical abundances, and their 3D positions and motions.  On 14 September
+2016 the \gaia\ mission will release the latter for $\approx2\times10^6$ stars.
 However, a catalog of precise chemical abundances to complement that data
 release is currently lacking.  The RAdial Velocity Experiment (\rave) survey has 
 acquired spectra for 292,036 stars in common with the first \gaia\ data release, 
@@ -334,35 +341,56 @@ As we will show, when the mis-classifications can be identified from \rave\ spec
 the \epic\ catalog makes a suitable training set for the main-sequence and sub-giant
 branch in \rave.
 
-
 % Identifying obviously bad stars that have been mis-classified by K2/EPIC
-
-% Giant stars of low metallicity.
-
-% Refer to the training set figure.
-% Two separate models, with an overlap region.
-% Worry later about label offsets.
+% Requiring stars with narrow posteriors.
 % Make sure you mention the lack of abundance information in K2/EPIC
 
 
+% Including Giant stars of low metallicity.
+% Refer to the training set figure.
+% Worry later about label offsets.
 
-
-
-% Initially we train on three labels.
-
-% Inserting 2MASS photometry as fake pixels
-
-
-% Magic wizardry for missing and imperfect labels.
-% Censoring masks on abundance labels
-% Priors on astrophysical parameters from isochrones
-
-% Include velocities and rotational velocities at test time?
 
 
 \subsection{The model}
 \label{sec:the-model}
 
+% Describe The Cannon basic model, vectorizer, etc.
+% Fitting time errors, etc.
+
+
+
+% Here we will first consider only a three parameter model.
+% APOGEE used only quadratic model, worked for giants
+% We experimented with a quadratic model only. 
+% Useful for identifying mis-classifications but the structure wasn't all there..
+% worked but didn't show the structure in detail.
+% Split into two different models with partial overlap.
+% One for giants and one for dwarfs.
+% The labels for stars in the training sets are shown in Figure X.
+
+
+% We trained all three models.
+% Note the differences in metallicity scales.
+% The K2/EPIC stuff is accurate but imprecise, whereas the APOGEE stuff is precise, usually precise (except Ti?)
+% Look at spectral derivatives.
+% Show the model internals are relatable.
+% Map spectral derivatives from giant model to main-sequence model.
+% Update the model with those new spectral derivatives.
+
+
+% We ran all three models on all spectra.
+% How we combined the results into one.
+% Refer to test set HRD.
+
+
+% Restricted to 3-label model, but the giant set includes abundance labels.
+% The spectral range covered by \rave\ includes atomic transitions of X, Y, Z elements.
+% The strongest lines are indicated in Figure XXX.
+
+
+% Censoring masks
+% Transfering coefficients, etc.
 
 \section{Validation experiments}
 \label{sec:validation}
@@ -378,6 +406,7 @@ test set labels.  We show the results of this experiment in Figure
 $\teff$ is XX~K and XX~K, and in $\logg$ is X.XX~dex and X.XX~dex,
 respectively.  The bias in abundance labels is negligible --- between
 X.XX to X.XX --- and the RMS varies from X.XX ([XX/H]) to X.XX ([XX/H]).
+% Fill this in tomorrow.
 
 
 The \rave\ survey performed repeat observations for 23,288 stars  with time 
@@ -405,7 +434,8 @@ these values should be normally distributed with a zero mean and unit variance.
 % --> Chi-sq of the sample.
 % --> Convex hull? Distance to plane?
 % --> Stars with morphological classification
-% --> Anything else?
+% --> Some rogue gallery of a few high S/N cases that have clearly gone haywire?
+
 
 \subsection{External validation}
 \label{sec:external-validation}
@@ -521,7 +551,8 @@ here would not have been possible without the tireless efforts of the entire
 
 
 \acknowledgements
-A.~R.~C. warmly thanks Jonathan Bird (Vanderbilt) and Sven Buder (MPIA).
+A.~R.~C. warmly thanks Jonathan Bird (Vanderbilt), Sergey Koposov (Cambridge),
+and Sven Buder (MPIA).
 This research made use of: Astropy, a community-developed core Python package for
 Astronomy \citep{astropy}, NASA's Astrophysics Data System Bibliographic Services;
 and \project{TOPCAT} \citep{Taylor_2005}.
