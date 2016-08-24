@@ -34,8 +34,11 @@
 \newcommand{\gaia}{\project{Gaia}}
 \newcommand{\thecannon}{\project{The~Cannon}}
 \newcommand{\rave}{\project{\acronym{RAVE}}}
-\newcommand{\apogee}{\project{\acronymn{APOGEE}}}
-\newcommand{\lamost}{\project{\acronymn{LAMOST}}}
+\newcommand{\galah}{\project{\acronym{GALAH}}}
+\newcommand{\ges}{\project{Gaia-ESO}}
+\newcommand{\apogee}{\project{\acronym{APOGEE}}}
+\newcommand{\aspcap}{\project{\acronym{ASPCAP}}}
+\newcommand{\lamost}{\project{\acronym{LAMOST}}}
 \newcommand{\hipparcos}{\project{Hipparcos}}
 \newcommand{\epic}{\project{K2/EPIC}}
 
@@ -81,25 +84,26 @@
 
 \begin{abstract}
 The Milky Way may be our greatest laboratory for understanding galaxy formation.
-This premise relies on the ability to measure --- for large numbers of stars ---
-their detailed chemical abundances, and their 3D positions and motions.  On 14 September
-2016 the \gaia\ mission will release the latter for $\approx2\times10^6$ stars.
-However, a catalog of precise chemical abundances to complement that data
-release is currently lacking.  The RAdial Velocity Experiment (\rave) survey has 
-acquired spectra for 292,036 stars in common with the first \gaia\ data release, 
-constituting the largest overlap of any stellar spectroscopic sample.  Here we 
-perform an independent analysis of \rave\ spectra using an implementation of 
-\thecannon\ that uses prior probabilities on atomic line formation and stellar
-astrophysical parameters.  Our approach yields precise stellar labels at lower
-S/N ratios than most \emph{ab initio} approaches, allowing us to deliver
-improved radial velocities, effective temperature $\teff$, surface gravity $\logg$,
-and chemical abundances of up to seven elements (Mg, Al, Si, Ca, Ti, Fe, Ni) 
-for \Nstars\ stars.  We validate our results internally from repeat visits, 
-and externally against existing high-resolution spectroscopic surveys.  The 
-typical precision in chemical abundances is X.XX~dex.  We provide 
-spectrophotometric distances based on our labels, improving upon the parallax
-distances available for the fainter targets in the first \gaia\ data release.
-\stub{A one-line science result based on RAVE/Hipparcos overlap}
+This premise relies on the ability to precisely determine the astrometry and
+chemistry for many individual stars, and to use those data to make inferences
+about the Galaxy's formation and evolution. On 14 September 2016 the \gaia\ 
+mission will release precise astrometry for $\approx2\times10^6$ stars.  
+However, a comprehensive catalog of detailed chemical abundances to complement
+those data is currently lacking.  The RAdial Velocity Experiment (\rave) survey 
+has acquired spectra for 292,036 stars in common with the first \gaia\ data 
+release, constituting the largest overlap of any stellar spectroscopic sample.  
+Here we perform an independent analysis of \rave\ spectra using an implementation
+of \thecannon\ that uses prior probabilities on atomic line formation and stellar
+astrophysical parameters.  Our approach yields precise stellar labels at lower 
+S/N ratios than most \emph{ab initio} approaches, allowing us to deliver improved
+radial velocities, effective temperature $\teff$, surface gravity $\logg$, and 
+chemical abundances of up to seven elements (Mg, Al, Si, Ca, Ti, Fe, Ni) for 
+\Nstars\ stars.  We validate our results internally from repeat visits, and 
+externally against existing high-resolution spectroscopic surveys.  The typical
+precision in chemical abundances is X.XX~dex.  We provide spectrophotometric 
+distances based on our labels, improving upon the parallax distances available
+for the fainter targets in the first \gaia\ data release. \stub{A one-line 
+science result based on RAVE/Hipparcos overlap}
 \end{abstract}
 
 \keywords{}
@@ -118,8 +122,8 @@ distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,Jofre_2015,
 Madler_2016}, proper motions can be plagued by unquantified systematics from 
 the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and 
 stellar spectroscopists frequently report significantly different chemical 
-abundance patterns \citep{Smiljanic_2014}.  The impact this lack of data has on
-scientific inferences cannot be understated.  It limits our understanding on a
+abundance patterns \citep{Smiljanic_2014}.  The impact these issues have on our
+scientific inferences cannot be understated.  They limit our understanding on a
 number of sub-fields in astrophysics, including the properties of exoplanet host
 stars, the formation (and destruction) of stars and clusters, as well as the 
 structure of the Galactic disk, to name a few.
@@ -128,47 +132,47 @@ structure of the Galactic disk, to name a few.
 These formed just some of the scientific drivers for the \gaia\ space telescope.
 \gaia\ is primarily an astrometric mission, providing precise positions,
 parallaxes and proper motions for more than $10^9$ stars in its final data
-release, scheduled for 2022.  While this is a sample size about three orders 
-of magnitude larger than its predecessor \hipparcos, both astrometry and 
-chemistry are required to fully characterize the formation and evolution of our Galaxy.  
-For this reason \gaia\ will also provide radial velocities, stellar parameters 
-and chemical abundances for a subset of brighter stars, primarily from the on-board
-radial velocity spectrometer.  However, those chemical abundances will not be 
-available until later releases.  Until those abundances are available,
+release in 2022.  While this is a sample size about three orders of magnitude 
+larger than its predecessor \hipparcos, both astrometry and chemistry are 
+required to fully characterize the formation and evolution of our Galaxy.  For
+this reason \gaia\ will also provide radial velocities, stellar parameters and
+chemical abundances for a subset of brighter stars.  While astrometry for bright
+and nearby stars will be imminently available, chemical abundances from \gaia\ 
+will not be available until later releases.  Until those abundances are available,
 astronomers seeking to use chemistry and kinematic measurements are reliant on 
-ground-based spectroscopic surveys in order to complement the available astrometry
-from \gaia.
+ground-based spectroscopic surveys in order to complement the available astrometry.
 
 
 The first \project{Gaia} data release will include positions, proper motions, and 
 parallaxes for approximately two million stars in the Tycho-2 \citep{Hog_2000} 
 catalog \citep{Michalik_2015a,Michalik_2015b}.  After cross-matching all major 
 stellar spectroscopic surveys\footnote{Specifically we cross-matched the Tycho-2
-catalog against the \project{APOGEE} \citep{Zasowski_2013}, \project{Gaia-ESO} 
-\citep{Gilmore_2012,Randich_2013}, \project{GALAH} \citep{DeSilva_2015},
-\project{LAMOST} \citep{Cui_2012}, and \project{RAVE} \citep{Steinmetz_2006} 
+catalog against the \apogee\ \citep{Zasowski_2013}, \ges\
+\citep{Gilmore_2012,Randich_2013}, \galah\ \citep{DeSilva_2015},
+\lamost\ \citep{Cui_2012}, and \rave\ \citep{Steinmetz_2006} 
 surveys}, we found the RAdial Velocity Experiment (hereafter \rave) survey to 
-have the largest overlap with the first \project{Gaia} data release: 292,036 
-stars.  We then used the \project{Gaia} universe model \citep{Robin_2012} to 
+have the largest overlap with the first \gaia\ data release: 292,036 
+stars.  We then used the \gaia\ universe model snapshot \citep{Robin_2012} to 
 estimate the precision in parallax and proper motions that will be available in 
-\project{Gaia} DR1 for every star in these cross-matches.  Comparing the expected
-precision to what is currently available, we further found that the \project{RAVE}
-survey will benefit most from \project{Gaia} DR1.  The distances of 63\% of the 
-\project{RAVE}--\project{Gaia} DR1 overlap sample (182,862 stars) are expected to
-improve with the first \project{Gaia} data release, and 47\% of stars likely to
-have better proper motions (137,211 stars).  This motivated us to examine what 
-chemical abundance information was available for \rave, and to evaluate whether 
-we could enable new chemodynamic studies by contributing to this existing set of
-chemical abundances.
+the first \gaia\ data release (DR1) for stars in those overlap samples. Comparing
+the expected precision to what is currently available, we further found that the
+\rave\ survey will benefit most from \gaia\ DR1.  The distances of 63\% of the 
+\rave--\gaia\ DR1 overlap sample (182,862 stars) are expected to improve with 
+the first \gaia\ data release, and 47\% of stars are likely to have better 
+proper motions (137,211 stars).  This motivated us to examine what chemical 
+abundance information was available for \rave, and to evaluate whether we could
+enable new chemodynamic studies by contributing to this existing set of chemical
+abundances.
 
 
-We briefly describe the \rave\ data in section \ref{sec:data}, before explaining
-the model we employ in section \ref{sec:model}.  In section \ref{sec:validation}
+We briefly describe the \rave\ data in Section~\ref{sec:data}, before explaining
+our method in Section~\ref{sec:method}.  In Section~\ref{sec:validation}
 we outline a number of validation experiments, including: internal sanity checks,
 comparisons with literature samples, and investigations to ensure our results
-are consistent with expectations from astrophysics.  We provide concluding
-remarks in section \ref{sec:conclusion}, as well as a description of how to
-access our results electronically.
+are consistent with expectations from astrophysics.  We discuss these results in
+Section~\ref{sec:discussion}, and in Section~\ref{sec:conclusion} we provide 
+concluding remarks as well as a description of how to access our results electronically.
+
 
 \section{Data}
 \label{sec:data}
@@ -179,21 +183,22 @@ principally designed to measure radial velocities for up to $10^6$ stars.
 Observations were conducted on the 1.2~m UK Schmidt telescope at the Australian 
 Astronomical Observatory\footnote{Formerly the Anglo-Australian Observatory} from 
 2003--2013.  The large 5.7~degree field-of-view and robotic fibre positioner (6dF)
-made for very efficient observing: spectra for up to 150 targets could be 
-simultaneously acquired.  When observations concluded in April 2013, a total of 
-574,630 spectra had been collected of 483,330 unique objects. 
+made for very efficient observing.  Spectra for up to 150 targets were simultaneously
+acquired, and when observations concluded in April 2013, a total of 574,630 spectra
+had been collected of 483,330 unique objects. 
 
 
 The target selection for \rave\ is based on the $I$-band apparent magnitude,
 $9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge \citep{Wonjo_2016}.  
-The $I$ band was used because it overlaps with the wavelength range that \rave\ 
-operates in:  8410--8795~\AA.  This setup includes the \ion{Ca}{2} 
-near-infrared triplet.  These stellar absorption lines are dominated by pressure 
-broadening, which makes them strong and therefore visible even in very low S/N data
-or metal-poor stars.  This spectral region is also well-studied.  It is one of the
-key setups used for the ground-based high-resolution \project{Gaia-ESO} survey
+The $I$ band was selected because it overlaps with the wavelength range that \rave\ 
+operates in:  8410--8795~\AA.  This setup includes the \ion{Ca}{2} near-infrared 
+triplet, and a number of atomic transitions of light-, $\alpha$-, and Fe-peak elements.
+The \ion{Ca}{2} near infrared triplet lines are dominated by pressure broadening, 
+which makes them strong and therefore visible even in very low S/N data or 
+metal-poor stars.  This spectral region is also very well-studied.  It is one of the
+key setups used for the ground-based high-resolution \ges\ survey
 \citep{Gilmore_2012,Randich_2013}, and the \rave\ resolution and wavelength
-coverage is comparable to the Radial Velocity Spectrometer on board the \project{Gaia}
+coverage is comparable to the Radial Velocity Spectrometer on board the \gaia\
 space telescope \citep{Recio-Blanco_2016}.
 
 
@@ -204,10 +209,10 @@ For this reason the distribution of S/N ratios in \rave\ spectra is considerably
 lower than other stellar spectroscopic surveys where chemical abundances are the 
 primary motivation.  The \rave\ spectra have an effective resolution 
 $\mathcal{R} \approx 7500$ and the distribution of S/N ratios peaks at 
-$\approx$50~per~pixel$^{-1}$.  For comparison, the \project{GALAH} survey 
+$\approx$50~per~pixel$^{-1}$.  For comparison, the \galah\ survey 
 \citep{DeSilva_2015} --- which was specifically constructed for detailed chemical 
 abundance analyses --- includes a wavelength range about 2.5 times larger at 
-resolution $\mathcal{R} \approx 28,000$, and yet the \project{GALAH} project still 
+resolution $\mathcal{R} \approx 28,000$, and yet the \galah\ project still 
 targets for S/N $\gtrsim100$.
 
 
@@ -239,7 +244,7 @@ varied for each star.  Given that fluxes were unavailable in the edge pixels for
 most stars, we excluded pixels outside of the rest wavelength range 
 $8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.  This corresponds to about
 30~pixels excluded on either side of the common wavelength array, leaving us with
-945~pixels for science.
+945~pixels per spectrum for science.
 
 
 \section{Method}
@@ -266,83 +271,107 @@ the labelled set were defined: the training set and a distinct validation set.
 This allowing us to train on the \emph{training set} and then test on the 
 \emph{validation set}.  However in this work the labelled set is relatively 
 small, about an order of magnitude smaller than what was available in 
-\citet{Casey_2016b}, and therefore we will use all labelled set stars in the 
-training step and supplement our validation experiments with literature comparisons.
-Thus, throughout this work we will use the terms \emph{labelled set} and 
-\emph{training set} interchangeably.  Below we describe how we constructed the 
-training set, before we outline the model that we adopt.
+\citet{Casey_2016b}, and therefore no validation set exists. We will use all 
+labelled set stars in the training step and supplement our validation experiments 
+with literature comparisons.  Thus, throughout this work we will use the terms 
+\emph{labelled set} and \emph{training set} interchangeably.  Below we describe 
+how we constructed the training set, before we outline the model that we adopt.
 
 
 \subsection{The training set}
 \label{sec:the-training-set}
 
 We sought to construct a training set consisting of stars across the main-sequence,
-sub-giant, and the red giant branch.  We require stars with precisely measured
+sub-giant, and the red giant branch.  We required stars with precisely measured
 effective temperature $\teff$, surface gravity $\logg$, and elemental abundances
 of Fe, Mg, Si, Ti, Ca, Al, and Ni.  This proved to be difficult because the magnitude
 range of \rave\ does not overlap substantially with high-resolution spectroscopic
-surveys.  The fourth internal data release of the \project{Gaia-ESO} survey includes 
+surveys.  The fourth internal data release of the \ges\ survey includes 
 giant and main-sequence stars, but only 142 overlap with \rave.  The most recent 
-\project{APOGEE} data release \citep{sloan_dr13} reports labels for stars on the
+\apogee\ data release \citep{sloan_dr13} reports labels for stars on the
 giant branch and (uncalibrated values for) the main-sequence, but our tests indicated
-that the main-sequence labels suffered from unexpected systematic effects.  A flat, 
+that the main-sequence labels suffered from significant systematic effects.  A flat, 
 then `up-turning' main-sequence is present, and the metallicity gradient trends in 
 the opposite direction with respect to $\logg$ on the main-sequence (i.e., metal-poor
 stars incorrectly sit above the isochrones in a classical Hertzsprung-Russell diagram)
 If we consider lower-resolution studies, there are 2,369 stars that overlap with 
-\project{LAMOST} --- of which 2,213 have positive S/N ratios in the $g$-band 
-(\texttt{snrg}).  However, similar systematic effects are seen on the main-sequence: 
-the labels are expectedly less precise given the lower resolution, no detailed 
-abundance information is available\footnote{Abundance information is available for 
-\project{LAMOST} stars from \citet{Ho_2016}, but that sample contains only giant stars},
-and there is only sparse sampling across the Hertzsprung-Russell diagram.  The 
-\project{GALAH} survey has a good overlap with \rave, but results from that sample 
-are not yet precise enough for our purposes.
+\lamost\ --- of which 2,213 have positive S/N ratios in the $g$-band 
+(\texttt{snrg}).  However, the labels are expectedly less precise given the lower 
+resolution, no detailed abundance information is available for main-sequence stars
+\footnote{Abundance information is available for \lamost\ stars from \citet{Ho_2016},
+but that sample contains only giant stars}, and similar systematic trends are apparent
+in the lower main-sequence.  The \galah\ survey has a good overlap with \rave, but 
+results from that sample are not yet precise enough for our purposes.
 
 
 These constraints forced us to construct a heterogeneous training set.  Given previous
-successes in transferring high S/N ratio labels from \project{APOGEE} \citep{Ness_2015,
-Ness_2016,Ho_2016,Casey_2016b}, we chose to use the 1,355 stars in the \project{APOGEE}
----\rave\ overlap sample for giant star labels in the training set.  Of these, about
-900 are giants according to \project{APOGEE}.  From this sample we selected stars to
-have: metallicity determinations ([Fe/H] $> -5$); high S/N ratios in both the 
-\project{APOGEE} and \rave\ spectra ($>200$ in \project{APOGEE}; $>50$ in \rave); and
-we further required that the \project{ASPCAP} pipeline did not report any peculiar
-flags (\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 357 stars along the
-giant branch, with metallicities ranging from $[{\rm Fe/H}] = -1.62$ to 0.32.  Our tests
-showed that the metallicity range of the training set needed to extend below
-$[{\rm Fe/H}] \lesssim -2$, and thus below we describe how we supplemented this
-sample with giant stars from the \epic\ catalog \citep{Huber_2016}. 
+successes in transferring high S/N ratio labels from \apogee\ \citep{Ness_2015,
+Ness_2016,Ho_2016,Casey_2016b}, we chose to use the 1,355 stars in the \apogee---\rave\ 
+overlap sample for giant star labels in the training set.  Of these, about 900 are 
+giants according to \apogee.  From this sample we selected stars to have: metallicity
+determinations ([Fe/H] $> -5$); high S/N ratios in both the \apogee\ and \rave\ spectra
+($>200$ in \apogee; $>50$ in \rave); and we further required that the \aspcap\ pipeline 
+did not report any peculiar flags (\texttt{ASPCAPFLAG = 0}).  These restrictions left 
+us with 357 stars along the giant branch, with metallicities ranging from 
+$[{\rm Fe/H}] = -1.62$ to 0.32.  Intermediate tests with globular cluster members showed
+that the metallicity range of the training set needed to extend below 
+$[{\rm Fe/H}] \lesssim -2$ in order for our catalog to be practically useful.
+Therefore, as we will describe in more detail below, we supplemented this sample with 
+giant stars from the \epic\ catalog \citep{Huber_2016}.
 
 
 Assembling a training set for the main-sequence and sub-giant branch was more complex.
-There are no spectroscopic studies that have a large enough overlap with \rave, and
-also cover our required range of stellar parameters (e.g., FGKM-type stars).  Moreover,
-most of the spectroscopic studies we considered exhibit a flat lower main-sequence, a
-consequence of violating the assumption of local thermal equilibrium 
-\citep[e.g., see][for a discussion]{Bensby_2014}.  For these reasons we chose to make
-use of the \epic\ catalog \citep{Huber_2016} for the training set labels.  The \epic\
-catalog follows from the successful \project{Kepler} input catalog \citep{Brown_2011},
-and provides probabilistic stellar classifications for $\gtrsim180{,}000$ stars in 
-the \project{K2} fields based on the astrometric, photometric, and spectroscopic
-information available.  There are 4,611 stars that overlap between \epic\ and \rave.
+There are no spectroscopic studies that have a large enough sample size that overlap 
+with \rave, and which also cover our required range in stellar parameters 
+(e.g., FGKM-type stars).  Moreover, most of the spectroscopic studies we considered 
+exhibit a flat lower main-sequence, a systematic consequence of the analysis method 
+adopted \citep[e.g., see][for a discussion]{Bensby_2014}.  For these reasons we chose
+to make use of the \epic\ catalog \citep{Huber_2016} for the training set labels on
+the main-sequence and sub-giant branch.  The \epic\ catalog follows from the successful
+\project{Kepler} input catalog \citep{Brown_2011}, and provides probabilistic stellar 
+classifications for 138,600 stars in the \project{K2} fields based on the 
+astrometric, asteroseismic, photometric, and spectroscopic information available for
+every star.  There are 4,611 stars that overlap between \epic\ and \rave.
 
 
-When the \epic\ posteriors are narrow (i.e., the uncertainties on labels are small),
-\citet{Huber_2016} show that the labels are accurate and trustworthy.  However,
-\epic\ differs from the \project{Kepler} input catalog because \epic\ does not
-benefit from having narrow-band $DDO_{51}$ photometry in order to aid dwarf/giant
-classification.  For this reason there are a number of stars that are mis-classified
-in the \epic\ catalog.  \citet{Huber_2016} acknowledges this, noting: the fraction 
-of X classified as Y could be as much as Z\%; up to Z2\% of X2 could be marked as Y2, 
-and \stub{other things}.  In other words, the \epic\ labels are usually of high 
-fidelity, and mis-classifications are clearly detectable if spectra are available.
-As we will show, when the mis-classifications can be identified from \rave\ spectra, 
-the \epic\ catalog makes a suitable training set for the main-sequence and sub-giant
-branch in \rave.
+\epic\ differs from the \project{Kepler} input catalog because \epic\ does not 
+benefit from having narrow-band $DDO_{51}$ photometry in order to aid dwarf/giant 
+classification.  Despite this limitation the labels in the \epic\ catalog have 
+already been shown to be accurate and trustworthy \citep{Huber_2016}.  However, 
+when the posteriors are wide (i.e., the quoted confidence intervals are large) 
+due to limited information available, it is possible that a star has been 
+mis-classified.  This is most prevalent for sub-giants, where \citet{Huber_2016} 
+note that $\approx55-70$\% of sub-giants are misclassified as dwarfs.  The 
+probability of misclassification is usually quantified in the uncertainties of 
+each star; most sub-giants that could be dwarfs have large confidence intervals.  
+Therefore, requiring low uncertainties will decrease the total sample size, but 
+will remove most misclassifications.  The situation is far more favourable for 
+dwarfs and giants.  Only 1-4\% of giant stars are misclassified as dwarfs, and 
+about 7\% of dwarfs are misclassified as giants.  To summarise, the \epic\ labels 
+with narrow confidence intervals are usually of high fidelity, and any spurious 
+misclassifications would be clearly distinguishable if spectra were available. 
 
-% Identifying obviously bad stars that have been mis-classified by K2/EPIC
-% Requiring stars with narrow posteriors.
+
+We sought to have a small overlap between our giant and main-sequence star training
+sets.  Most of our giant training set is encapsulated within $0 < \logg < 3.5$, 
+however there is a sparse sampling of stars reaching to $\logg \approx 4$.  For
+the \epic\ main-sequence/sub-giant star training set we required $\logg > 3.5$,
+allowing for $\approx0.5$~dex of overlap between the two training sets.  We further
+employed the following quality constraints: the upper and lower confidence intervals 
+in $\teff$ must be below 150~K; the upper and lower confidence intervals in $\logg$ 
+must be less than 0.15~dex; the $S/N$ of the \rave\ spectra must exceed 
+30~per~pixel$^{-1}$; and $\teff \leqslant 6750$.  Unfortunately these strict constraints
+removed most metal-poor stars, which we later found to cause the test labels to have
+under-predicted abundances for dwarfs of low metallicity.  For this reason we relaxed
+(ignored) those quality constraints for stars in the \epic\ catalog with 
+$[{\rm Fe/H}] < -1$.  Of the stars we forcibly included with $[{\rm Fe/H}] < -1$,
+none were classified as being sub-giants in \epic, therefore they have a low (7\%)
+likelihood of misclassification.  The distilled sample of the \rave--\epic\ overlap
+catalog contains 583 stars (of 4,611).
+
+
+% We can also identify misclassified stars by cross-validation.
+
 % Make sure you mention the lack of abundance information in K2/EPIC
 
 
