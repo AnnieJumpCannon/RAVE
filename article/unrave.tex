@@ -346,7 +346,7 @@ probability of misclassification is usually quantified in the uncertainties of
 each star; most sub-giants that could be dwarfs have large confidence intervals.  
 Therefore, requiring low uncertainties will decrease the total sample size, but 
 will remove most misclassifications.  The situation is far more favourable for 
-dwarfs and giants.  Only 1-4\% of giant stars are misclassified as dwarfs, and 
+dwarfs and giants.  Only $1-4$\% of giant stars are misclassified as dwarfs, and 
 about 7\% of dwarfs are misclassified as giants.  To summarise, the \epic\ labels 
 with narrow confidence intervals are usually of high fidelity, and any spurious 
 misclassifications would be clearly distinguishable if spectra were available. 
@@ -360,25 +360,45 @@ allowing for $\approx0.5$~dex of overlap between the two training sets.  We furt
 employed the following quality constraints: the upper and lower confidence intervals 
 in $\teff$ must be below 150~K; the upper and lower confidence intervals in $\logg$ 
 must be less than 0.15~dex; the $S/N$ of the \rave\ spectra must exceed 
-30~per~pixel$^{-1}$; and $\teff \leqslant 6750$.  Unfortunately these strict constraints
+30~per~pixel$^{-1}$; and $\teff \leqslant 6750$~K.  Unfortunately these strict constraints
 removed most metal-poor stars, which we later found to cause the test labels to have
 under-predicted abundances for dwarfs of low metallicity.  For this reason we relaxed
 (ignored) those quality constraints for stars in the \epic\ catalog with 
 $[{\rm Fe/H}] < -1$.  Of the stars we forcibly included with $[{\rm Fe/H}] < -1$,
 none were classified as being sub-giants in \epic, therefore they have a low (7\%)
-likelihood of misclassification.  The distilled sample of the \rave--\epic\ overlap
-catalog contains 583 stars (of 4,611).
+likelihood of misclassification.  After training a model based on main-sequence and
+giant stars (Section \ref{sec:the-model}), we found we could further identify 
+misclassifications by leave-one-out cross-validation (iteratively, even).  However,
+we chose not to do this because the number of likely misclassifications in the training
+set was negligible ($\approx1$\%), and the improvement in main-sequence test set labels
+was minimal.  The distilled sample of the \rave--\epic\ overlap catalog contains 583 
+stars (of 4,611).
 
 
-% We can also identify misclassified stars by cross-validation.
+We previously alluded to including giant stars from \epic\ in our training set based 
+on \apogee\ labels.  This was principally to ensure an adequate balance of metal-poor
+giant stars in the training set.  Without this inclusion, we again found that the
+abundances of giant stars would be under-predicted at low metallicity, critically 
+affecting any inferences we wish to make with low metallicity stars (e.g., globular
+clusters).  The metallicities in the \epic\ catalog come from a variety of spectroscopic
+sources, or photometrically-selected when no spectroscopic information is available.
+While these heterogeneous metallicities may introduce scaling differences, on balance we
+later found that it was more important to include reasonably accurate (albeit imprecise)
+metallicities of metal-poor stars in the training set rather than excluding metal-poor
+stars entirely.  In Section~\ref{sec:validation} we show that these potential issues
+have a negligible impact on the test set labels, and we further show that our abundances
+are consistent with high-resolution studies in the literature.
 
-% Make sure you mention the lack of abundance information in K2/EPIC
 
-
-% Including Giant stars of low metallicity.
-% Refer to the training set figure.
-% Worry later about label offsets.
-
+We have constructed a justified training set for stars across the main-sequence, sub-giant,
+and red giant branch.  However the lack of overlap between \rave\ and other works have
+resulted in a somewhat peculiar situation. Detailed abundances are available from \apogee\
+for all giant stars in our sample, but only imprecise metallicities are available from
+\epic\ for stars on the main-sequence and the sub-giant branch.  In the following section
+we will construct a simplified model that does not include detailed abundances, before
+demonstrating how we (1) improve upon the imprecise metallicities for main-sequence/sub-giant
+stars, and (2) translate abundances from the giant branch stars to the main-sequence/sub-giant
+branch sample.
 
 
 \subsection{The model}
