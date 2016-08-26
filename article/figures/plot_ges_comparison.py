@@ -9,11 +9,11 @@ try:
     data_table
 
 except NameError:
-    from rave_io import (rave_cannon_dr1, ges_idr4)
+    from rave_io import (get_cannon_dr1, get_ges_idr4)
 
     from astropy.table import join
 
-    data_table = join(rave_cannon_dr1, ges_idr4, keys=("Name", ))
+    data_table = join(get_cannon_dr1(), get_ges_idr4(), keys=("Name", ))
 
 else:
     print("Warning: Using pre-loaded data!")
@@ -65,12 +65,12 @@ fig.subplots_adjust(
 
 for i, (ax, label_name) in enumerate(zip(axes, label_names)):
 
-    x = data_table[label_name]
+    y = data_table[label_name]
     #xerr
-    y = data_table[ges_label_names[label_name]]
+    x = data_table[ges_label_names[label_name]]
     # yerr
 
-    scat = ax.scatter(x, y, facecolor="#666666", alpha=0.5, s=50, 
+    scat = ax.scatter(x, y, c=data_table[ges_label_names["LOGG_1"]], facecolor="#666666", alpha=0.5, s=50, 
         linewidths=0.5, edgecolors="#000000")
 
     limits = label_limits[label_name]
@@ -80,8 +80,8 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     ax.set_ylim(limits)
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))
-    ax.set_xlabel(" ".join([latex_labels[label_name], r"$({\rm UNRAVE})$"]))
-    ax.set_ylabel(" ".join([latex_labels[label_name], r"$({\rm GES})$"]))
+    ax.set_ylabel(" ".join([latex_labels[label_name], r"$({\rm UNRAVE})$"]))
+    ax.set_xlabel(" ".join([latex_labels[label_name], r"$({\rm GES})$"]))
 
     [_.set_rotation(30) for _ in ax.get_xticklabels()]
     [_.set_rotation(30) for _ in ax.get_yticklabels()]
