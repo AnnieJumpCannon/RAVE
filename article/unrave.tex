@@ -49,6 +49,9 @@
 
 \newcommand{\Nstars}{483,330}
 
+\newcommand{\Dvector}[1]{\boldsymbol{#1}}
+\newcommand{\vectheta}{\Dvector{\theta}}
+\newcommand{\vecv}{\Dvector{v}}
 \newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\,}
 
 
@@ -160,9 +163,8 @@ the expected precision to what is currently available, we further found that the
 \rave--\gaia\ DR1 overlap sample (182,862 stars) are expected to improve with 
 the first \gaia\ data release, and 47\% of stars are likely to have better 
 proper motions (137,211 stars).  This motivated us to examine what chemical 
-abundance information was available for \rave, and to evaluate whether we could
-enable new chemodynamic studies by contributing to this existing set of chemical
-abundances.
+abundances were available for \rave, and to evaluate whether we could enable new 
+chemodynamic studies by contributing to this existing set of chemical abundances.
 
 
 We briefly describe the \rave\ data in Section~\ref{sec:data}, before explaining
@@ -405,43 +407,91 @@ to the main-sequence/sub-giant branch sample.
 \subsection{The model}
 \label{sec:the-model}
 
+\noindent{}The model we adopt is
+\begin{eqnarray}\label{eq:model}
+y_{jn} & = & \vecv(\ell_n)\cdot\vectheta_j + e_{jn}\quad ,
+\end{eqnarray}
 
-% Describe The Cannon basic model, vectorizer, etc.
-% Fitting time errors, etc.
+\noindent{}where $y_{jn}$ is the pseudo-continuum-normalized flux for star $n$ at wavelength pixel
+$j$, $\vecv(\ell_n)$ is the vectorizing function that takes as input the $K$ labels
+$\ell_n$ for star $n$ and outputs functions of those labels as a vector of length
+$D>K$, $\vectheta_j$ is a vector of length $D$ of parameters influencing the model at
+wavelength pixel $j$, and $e_{jn}$ is the residual (noise).  Here we will only consider
+vectorizing functions with polynomial expansions (e.g., $\teff^2$, see Section 
+\ref{sec:a-simple-model}).  The noise values $e_{jn}$ can be considered to be drawn 
+from a Gaussian distribution with zero mean and variance $\sigma_{jn}^2 + s_j^2$, where
+$\sigma_{jn}^2$ is the variance in flux $y_{jn}$ and $s_j^2$ describes the excess 
+variance at the $j$-th wavelength pixel.  We direct the reader to \citet{Ness_2015} for
+a more detailed introduction and justification of \thecannon.
 
 
+At the training step we fix the $K$-lists of labels for all the training set stars $n$.
+At each wavelength pixel $j$, we then calculate the parameters $\vectheta_j$ and $s_j^2$
+by optimizing the likelihood function:
+\begin{eqnarray}\label{eq:train}
+\vectheta_j,s^2_j &\leftarrow& \argmin{\vectheta,s}\left[
+    \sum_{n=0}^{N-1} \frac{[y_{jn}-\vecv(\ell_n)\cdot\vectheta]^2}{\sigma^2_{jn}+s^2}
+    + \sum_{n=0}^{N-1} \ln(\sigma^2_{jn}+s^2)
+    \right]
+  \quad .
+\end{eqnarray}
 
-% Here we will first consider only a three parameter model.
-% APOGEE used only quadratic model, worked for giants
-% We experimented with a quadratic model only. 
-% Useful for identifying mis-classifications but the structure wasn't all there..
+In practice this is achieved by fixing $s_j^2 = 0$ to make equation~\ref{eq:train} a
+convex optimization problem, then we optimize for $\vectheta_j$, before solving for $s_j^2$.
+We can also adopt strict priors on $\vectheta$ such that labels can only make non-zero
+contributions to the data in certain wavelength ranges.  That is to say, we can specify
+that certain labels (e.g., [Al/H]) can only contribute to the model at wavelength pixels
+where we know an aluminium transition exists.  This method, which we call \emph{censoring},
+is described in Section~\ref{sec:censoring} and \citet{Ness_2016b}. 
+
+
+The \emph{test step} is where we fix the parameters $\vectheta_j,s_j^2$ at all wavelength
+pixels $j$, and optimize the $K$-list of labels $\ell_m$ for each test set star $m$.  Here
+the likelihood function is:
+\begin{eqnarray}\label{eq:test}
+  \ell_m &\leftarrow& \argmin{\ell}\left[
+    \sum_{j=0}^{J-1} \frac{[y_{jm}-\vecv(\ell)\cdot\vectheta_j]^2}{\sigma_{jm}^2 + s_j^2}
+    \right]
+  \quad .
+\end{eqnarray}
+
+At the test step optimization we store the covariance matrix $\bm{\Sigma}$ for the labels
+$\ell$, which provides us with the formal errors on $\ell$.  We judge the veracity of these
+formal errors in our validation experiments in Section \ref{sec:validation}.  
+
+
+\subsection{Three-label models ($\teff$, $\logg$, [Fe/H])}
+\label{sec:a-simple-model}
+
+% Given previous successes, we will first adopt a three-parameter model for giants + dwarfs.
+% Polynomial thing --> expand out \vectheta
 % worked but didn't show the structure in detail.
 % Split into two different models with partial overlap.
 % One for giants and one for dwarfs.
 % The labels for stars in the training sets are shown in Figure X.
 
-
 % We trained all three models.
 % Note the differences in metallicity scales.
-% The K2/EPIC stuff is accurate but imprecise, whereas the APOGEE stuff is precise, usually precise (except Ti?)
 % Look at spectral derivatives.
 % Show the model internals are relatable.
 % Map spectral derivatives from giant model to main-sequence model.
 % Update the model with those new spectral derivatives.
 
 
-% We ran all three models on all spectra.
 % How we combined the results into one.
 % Refer to test set HRD.
 
 
+\subsection{A 10-label model for detailed abundances of giant stars}
+\label{sec:giant-abundance-model}
 % Restricted to 3-label model, but the giant set includes abundance labels.
 % The spectral range covered by \rave\ includes atomic transitions of X, Y, Z elements.
 % The strongest lines are indicated in Figure XXX.
-
-
 % Censoring masks
-% Transfering coefficients, etc.
+
+% Train
+
+
 
 \section{Validation experiments}
 \label{sec:validation}
