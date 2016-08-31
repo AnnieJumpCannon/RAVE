@@ -16,9 +16,16 @@ From your terminal:
 
 The manuscript will now be compiled to `unrave.pdf`
 
+If you have used `git` before, then please make your changes to the manuscript
+**directly** in LaTeX and create a pull request. If you are not familiar with
+`git`, then please make your manuscript suggestions in the form of a 
+[GitHub issue](https://www.github.com/AnnieJumpCannon/RAVE/issues/new).
+That way your comments can be included (on short notice!) in parallel, and
+everyone can see the contributions from each co-author.
 
-Make suggested changes to the manuscript
-========================================
+
+Instructions for making changes directly to the LaTeX
+=====================================================
 
 1. Fork this repository on GitHub
 
