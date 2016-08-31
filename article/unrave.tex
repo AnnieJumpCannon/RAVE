@@ -518,42 +518,80 @@ model experiments:
 % Refer to test set HRD.
 
 
-\subsection{A 10-label model for detailed abundances of giant stars}
+\subsection{A 9-label model for detailed abundances of giant stars}
 \label{sec:giant-abundance-model}
 
 The giant stars in our training set have stellar parameters and up to 15 
 individual abundances from the \apogee\ \aspcap.  Only a subset of these
-elements have atomic transitions in the \rave\ wavelength region.
+elements have atomic transitions in the \rave\ wavelength region: 
+\ion{O}{1}, \ion{Mg}{1}, \ion{Al}{1}, \ion{Si}{1}, \ion{Ca}{2}, \ion{Ti}{1}, 
+\ion{Fe}{1}, and \ion{Ni}{1}.  We excluded [Ti/H] from our abundance list 
+because of systematics in the training set \citep{Holtzman_2015,Hawkins_2016}.
+Therefore we are left with nine labels in our giant star model: $\teff$, 
+$\logg$, and seven individual abundances.  
 
-% The giant training set has many abundances.
-% Which elements?
-% Tests involving censoring? --> Just indicates that many of these lines are blended.
-% So we will use regularization instead of censoring
 
-% Set hyper-parameters by LOO-CV
+% ARC asks: Should we discuss any tests done with censoring? 
+%  			Do we feel like we need to defend our choice to use regularization
+%           over censoring? The key result from the censoring tests that I did
+%			is that there are a lot of atomic transitions here, but they are
+% 			mostly blended. We *need* those blended lines because if you
+%			censor all but the strongest line(s) for individual elements then
+% 			you are left with a poor predictor of abundance labels.
 
-% Trained this and rain it on all RAVE spectra.
+
+We used a second-order (i.e., $\teff^2$ is the highest term) polynomial 
+vectorizer for the giant star model.  We set the regularization hyperparameter
+by performing a grid search of 30 $\Lambda$ points logarithmically spaced from 
+$10^{-3}$ to $10^{3}$.  We performed leave-one-out cross-validation on the
+training set for each value of $\Lambda$.  Specifically, we removed one star
+from the training set, then trained the model, and inferred labels for the 
+star that was removed from the training set.  We repeated this procedure for
+every star in the training set (for every model with a different $\Lambda$)
+and compared the inferred labels against the training set values.  For
+comparison purposes, we also performed cross-validation on an unregularized 
+($\Lambda = 0$) model using the same training set.  We calculated the bias
+and root-mean-square (RMS) deviation between the input labels and those inferred
+by cross-validation for every model.  The biases were negligible across all
+models.  In Figure \ref{fig:giant-model-hyperparameter-search} we show the
+RMS difference in label recovery compared to the unregularized model as a 
+percentage improvement.  The enveloped region represents the minimum and 
+maximum changes for any label with respect to the unregularized model.
+Depending on the regularization strength $\Lambda$, the RMS in a given label
+can decrease by $\approx30$\% with respect to the unregularized case.  At the
+point of maximum improvement, near $\Lambda = X.XX$, the RMS in all labels has
+decreased by at least $X$\%.  As expected the regularization produces a 
+sparser matrix of $\vectheta$, with a $\approx20$\% increase in the fraction
+of zero-valued entries, particularly for the cross-terms (Figure 
+\ref{fig:giant-model-sparsity}, third panel).  Based on the improvement in 
+RMS by cross-validation, we adopt $\Lambda = X.XX$ for our giant star model.
+
+
+Results from cross-validation on our regularized model imply that the precision
+in labels is XXX~K in $\teff$, X.XX~dex in $\logg$, and varies between X.XX~dex
+and X.XX~dex depending on the elemental abundance.  We made no prior judgement
+on whether a star was likely a giant or not; we used this model (and all other
+models) to test all XXX,XXX \rave\ spectra.  Figure \ref{fig:test-set-hrd} (left
+panel) shows the inferred $\teff$ and $\logg$ values for all \rave\ spectra with
+S/N $\geqslant 50$.  This panel undoubtedly includes dwarf stars that cannot be
+appropriately classified by our giant model.  In Section \ref{sec:joining-the-models}
+we will heuristically combine these results with the main-sequence star model
+described in \ref{sec:main-sequence-model}.
+
+
 
 \subsection{Joining the models}\label{sec:joining-the-models}
+
+% All them hax.
 
 
 
 \section{Validation experiments}
 \label{sec:validation}
 
+Here we describe a 
 
-\subsection{Internal validation}
-We first conducted leave-one-out cross-validation to validate our results.
-For each training set star we removed that star from the training set and
-then re-trained the model.  Using that re-trained model, we then treated
-the excluded star as a test star and compared our inferred labels to the
-test set labels.  We show the results of this experiment in Figure
-\ref{fig:loocv-comparison}.  The bias and root mean square (RMS) error in 
-$\teff$ is XX~K and XX~K, and in $\logg$ is X.XX~dex and X.XX~dex,
-respectively.  The bias in abundance labels is negligible --- between
-X.XX to X.XX --- and the RMS varies from X.XX ([XX/H]) to X.XX ([XX/H]).
-% Fill this in tomorrow.
-
+\subsection{Multi-epoch observations}\label{sec:repeat-observations}
 
 The \rave\ survey performed repeat observations for 23,288 stars  with time 
 intervals ranging from a few hours to up to four years.  This timing was 
