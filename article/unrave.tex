@@ -464,8 +464,9 @@ the objective function is:
 \end{eqnarray}
 
 At the test step optimization we store the covariance matrix $\bm{\Sigma}$ for the labels
-$\ell$, which provides us with the formal errors on $\ell$.  We judge the veracity of these
-formal errors in our validation experiments in Section \ref{sec:validation}.  
+$\ell$, which provides us with the formal errors on $\ell$.  The formal errors are expected
+to be underestimated, and in Section \ref{sec:validation} we judge the veracity of these 
+errors through validation experiments.
 
 
 \subsection{Three-label models ($\teff$, $\logg$, $\feh$)}
@@ -582,14 +583,17 @@ described in \ref{sec:main-sequence-model}.
 
 \subsection{Joining the models}\label{sec:joining-the-models}
 
-% All them hax.
+% All them hax used to combine all the results.
+
+% --> Chi-sq of the sample.
+% --> Convex hull? Distance to plane?
 
 
+\section{Validation experiments}\label{sec:validation}
 
-\section{Validation experiments}
-\label{sec:validation}
-
-Here we describe a 
+We have already performed leave-one-out cross-validation on all of our models
+as part of the hyperparameter selection.  Here we describe the results from our
+internal, external and astrophysical validation checks.
 
 \subsection{Multi-epoch observations}\label{sec:repeat-observations}
 
@@ -605,7 +609,8 @@ star, weighted by the inverse variances in the individual visit spectra,
 which then served as the basis of comparison to all individual visits.  
 Figure \ref{fig:formal-errors-comparison} shows the difference in labels 
 between the comparison spectrum and a repeat visit, normalized by their 
-formal errors summed in quadrature (e.g., $\Delta\logg/\sqrt{\sigma_{\logg,stacked}^2 + \sigma_{\logg,visit}^2}$).
+formal errors summed in quadrature (e.g., 
+$\Delta\logg/\sqrt{\sigma_{\logg,stacked}^2 + \sigma_{\logg,visit}^2}$).
 If our measurements were unbiased by S/N and the errors were representative, 
 these values should be normally distributed with a zero mean and unit variance.
 \stub{Are they? Should we inflate our formal errors?}
@@ -615,8 +620,6 @@ these values should be normally distributed with a zero mean and unit variance.
 % --> bootstrap resampling of the training set?
 
 % Identify outliers:
-% --> Chi-sq of the sample.
-% --> Convex hull? Distance to plane?
 % --> Stars with morphological classification
 % --> Some rogue gallery of a few high S/N cases that have clearly gone haywire?
 
@@ -656,10 +659,8 @@ APOGEE DR12 and DR13 are known to not follow the expected Galactic trends \citep
 
 \stub{Any differences in RAVE abundances?}
 
-
 % External validation: 
 % --> Gaia-ESO Survey
-% --> APOGEE / EPIC (whichever was not used)
 % --> Literature studies presented in Kordopatis+ 2014
 % --> Gold standards (incl. exoplanet host star studies): Reddy (2003, 2006), Bensby (2014), Valenti & Fischer (2005)
 
