@@ -12,8 +12,12 @@ except NameError:
     from rave_io import (get_cannon_dr1, get_ges_idr4)
 
     from astropy.table import join
+    dr1 = get_cannon_dr1()
+    #dr1["TEFF"] = dr1["EPIC_TEFF"]
+    #dr1["LOGG"] = dr1["EPIC_LOGG"]
+    #dr1["FE_H"] = dr1["EPIC_FEH"]
 
-    data_table = join(get_cannon_dr1(), get_ges_idr4(), keys=("Name", ))
+    data_table = join(dr1, get_ges_idr4(), keys=("Name", ))
 
 else:
     print("Warning: Using pre-loaded data!")
@@ -42,8 +46,10 @@ latex_labels = {
 
 
 # Exclude ones we think are bad.
-#ok = data_table["OK"]
-ok = (data_table["R_CHI_SQ"] < 3) * (data_table["SNRK"] > 50)
+#ok = data_table["OK"] 
+ok = (data_table["r_chi_sq"] < 3) * (data_table["snr"] > 15)
+
+#ok *= np.isfinite(data_table["TEFF_1"] * data_table["TEFF_2"] * data_table["LOGG_1"] * data_table["LOGG_2"] * data_table["FE_H"] * data_table["FEH"])
 
 data_table = data_table[ok]
 
@@ -69,18 +75,34 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     #xerr
     x = data_table[ges_label_names[label_name]]
     # yerr
+    c = data_table["snr"]
 
-    scat = ax.scatter(x, y, c=data_table[ges_label_names["LOGG_1"]], facecolor="#666666", alpha=0.5, s=50, 
-        linewidths=0.5, edgecolors="#000000")
+
+    scat = ax.scatter(x, y, c=data_table["snr"], s=75, cmap="plasma") 
 
     limits = label_limits[label_name]
     ax.plot(limits, limits, c="#666666", linestyle=":", zorder=-1)
+
+    Nstars = np.isfinite(x*y).sum()
+    ax.text(0.05, 0.90, r"${:.0f}$".format(Nstars) + r" ${\rm stars}$",
+        transform=ax.transAxes)
+
+    if label_name.startswith("TEFF"):
+        ax.text(0.05, 0.82, r"${\rm Bias:}$ " + r"${:.0f}$".format(np.nanmean(y-x)) + r" ${\rm K}$",
+            transform=ax.transAxes)
+        ax.text(0.05, 0.74, r"${\rm RMS:}$ " + r"${0:.0f}$".format(np.nanstd(y-x)) + r" ${\rm K}$",
+            transform=ax.transAxes)
+    else:
+        ax.text(0.05, 0.82, r"${\rm Bias:}$ " + r"${0:.2f}$".format(np.nanmean(y-x)) + r" ${\rm dex}$",
+            transform=ax.transAxes)
+        ax.text(0.05, 0.74, r"${\rm RMS:}$ " + r"${0:.2f}$".format(np.nanstd(y-x)) + r" ${\rm dex}$",
+            transform=ax.transAxes)
 
     ax.set_xlim(limits)
     ax.set_ylim(limits)
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))
-    ax.set_ylabel(" ".join([latex_labels[label_name], r"$({\rm UNRAVE})$"]))
+    ax.set_ylabel(" ".join([latex_labels[label_name], r"$({\rm unRAVE})$"]))
     ax.set_xlabel(" ".join([latex_labels[label_name], r"$({\rm GES})$"]))
 
     [_.set_rotation(30) for _ in ax.get_xticklabels()]
@@ -91,7 +113,14 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
 
 #cbar = plt.colorbar(scat)
 #cbar.set_label(r"$S/N$")
+
 fig.tight_layout()
+
+
+cbar = plt.colorbar(scat, cax=fig.add_axes([0.93,fig.subplotpars.bottom,0.02,0.9 - fig.subplotpars.bottom]))
+cbar.set_label(r"${\rm RAVE}$ $S/N$ $[{\rm pixel}^{-1}]$")
+
+fig.subplots_adjust(top=0.90, right=0.91)
 
 fig.savefig("ges-comparison.pdf", dpi=300)
 fig.savefig("ges-comparison.png")
