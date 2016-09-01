@@ -22,7 +22,26 @@ def get_cannon_dr1(filename=None):
     filename = filename or "unrave-v0.7-37_36.fits.gz"
 
     rave_cannon_dr1 = Table.read(os.path.join(DATA_PATH, filename))
+
+    if "Name" not in rave_cannon_dr1.dtype.names:
+        rave_cannon_dr1["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-")[0] for each in rave_cannon_dr1["FILENAME"]]
+
     
+    if filename == "rave-tgas-v37.fits.gz":
+        rave_cannon_dr1["TEFF"] = rave_cannon_dr1["EPIC_TEFF"]
+        rave_cannon_dr1["LOGG"] = rave_cannon_dr1["EPIC_LOGG"]
+        rave_cannon_dr1["FE_H"] = rave_cannon_dr1["EPIC_FEH"]
+
+        from astropy.table import join
+        rave_cannon_dr1 = join(rave_cannon_dr1, get_rave_kordopatis_dr4(), keys=("Name", ))
+
+
+    if "snr" not in rave_cannon_dr1.dtype.names and "snr_ms" in rave_cannon_dr1.dtype.names:
+        rave_cannon_dr1["snr"] = rave_cannon_dr1["snr_ms"]
+
+    if "r_chi_sq" not in rave_cannon_dr1.dtype.names and "R_CHI_SQ" in rave_cannon_dr1.dtype.names:
+        rave_cannon_dr1["r_chi_sq"] = rave_cannon_dr1["R_CHI_SQ"]
+
     #rave_cannon_dr1["TEFF"] = rave_cannon_dr1["EPIC_TEFF"]
     #rave_cannon_dr1["LOGG"] = rave_cannon_dr1["EPIC_LOGG"]
     #rave_cannon_dr1["FE_H"] = rave_cannon_dr1["EPIC_FEH"]
