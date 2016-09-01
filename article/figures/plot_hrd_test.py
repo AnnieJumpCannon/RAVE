@@ -26,8 +26,8 @@ else:
 t = cannon_dr1
 
 snrs = (100, 50, 10)
-M, N = (len(snrs), 75)
-extent = (3500, 7500, 0, 5.5)
+M = len(snrs)
+
 
 factor = 3.5
 lbdim = 0.2 * factor
@@ -43,7 +43,7 @@ fig.subplots_adjust(
     left=lbdim/xdim, bottom=lbdim/ydim, right=(xspace + lbdim)/xdim,
     top=(yspace + lbdim)/ydim, wspace=whspace, hspace=whspace)
 
-kwds = dict(gridsize=N, extent=extent, edgecolor="#ffffff", linewidths=0.1)
+kwds = dict(rasterized=True, gridsize=65, extent=(3500, 7500, 0, 5.5), edgecolor="none", linewidths=0)
 
 for i, snr in enumerate(snrs):
     # On top figure show density.
