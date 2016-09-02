@@ -46,13 +46,15 @@
 \newcommand{\epic}{\project{K2/EPIC}}
 \newcommand{\sdss}{\project{\acronym{SDSS}}}
 
-\newcommand{\stub}[1]{\textbf{#1}}
+\newcommand{\stub}[1]{{\color{blue} \textbf{#1}}}
 
 \newcommand{\teff}{T_{\mathrm{eff}}}
 \newcommand{\logg}{\log g}
 \newcommand{\feh}{[\mathrm{Fe/H}]}
 
-\newcommand{\Nstars}{483,330}
+\newcommand{\Nspectra}{520,782}
+\newcommand{\Nstars}{457,589}
+
 
 \newcommand{\Dvector}[1]{\boldsymbol{#1}}
 \newcommand{\vectheta}{\Dvector{\theta}}
@@ -104,7 +106,7 @@ externally against existing high-resolution spectroscopic surveys.  The typical
 precision in chemical abundances is X.XX~dex.  We provide spectrophotometric 
 distances based on our labels, improving upon the parallax distances available
 for the fainter targets in the first \gaia\ data release. \stub{A one-line 
-science result based on RAVE/Hipparcos overlap}
+science result based on RAVE/Hipparcos overlap.}
 \end{abstract}
 
 \keywords{}
@@ -182,10 +184,10 @@ concluding remarks as well as a description of how to access our results electro
 principally designed to measure radial velocities for up to $10^6$ stars.
 Observations were conducted on the 1.2~m UK Schmidt telescope at the Australian 
 Astronomical Observatory\footnote{Formerly the Anglo-Australian Observatory} from 
-2003--2013.  The large 5.7~degree field-of-view and robotic fibre positioner (6dF)
-made for very efficient observing.  Spectra for up to 150 targets were simultaneously
-acquired, and when observations concluded in April 2013, a total of 574,630 spectra
-had been collected of 483,330 unique objects. 
+2003--2013.  A large 5.7~degree field-of-view and robotic fibre positioner 
+made for very efficient observing;  spectra for up to 150 targets could be simultaneously
+acquired.  When observations concluded in April 2013, a total of \Nspectra\ useful spectra
+had been collected of \Nstars\ unique objects. 
 
 
 The target selection for \rave\ is based on the $I$-band apparent magnitude,
@@ -498,8 +500,7 @@ Given previous successes using a second-order (quadratic) polynomial model
 \citep{Ness_2015,Ness_2016,Ho_2016,Casey_2016b}, we will first adopt a three-label ($\teff$, $\logg$, [Fe/H]) model for all (giant and main-sequence) stars. Thus, for our first set of
 model experiments,
 \begin{eqnarray}\label{eq:vectorizer-three-label}
-\vecv(\ell_n) & \rightarrow & \left[1, T_{{\rm eff},n}, \logg_n, [{\rm Fe/H}]_n, T_{{\rm eff},n}^2, \logg_n\cdot{}T_{{\rm eff},n}, \feh_n\cdot{}T_{{\rm eff},n}, \logg_n^2, \feh_n\cdot\logg_n, \feh_n^2\right]
-\quad ,
+\vecv(\ell_n) \rightarrow \left[1, T_{{\rm eff},n}, \logg_n, [{\rm Fe/H}]_n, T_{{\rm eff},n}^2, \logg_n\cdot{}T_{{\rm eff},n}, \feh_n\cdot{}T_{{\rm eff},n}, \logg_n^2, \feh_n\cdot\logg_n, \feh_n^2\right]
 \end{eqnarray}
 
 \noindent{}such that $\vecv(\ell)$ produces the design matrix:
@@ -507,7 +508,7 @@ model experiments,
 	\vecv(\ell) \rightarrow \begin{bmatrix} \vecv(\ell_0) \\ \vdots \\ \vecv(\ell_{N-1}) \end{bmatrix} \quad .
 \end{eqnarray}
 
-\stub{We trained the model initially with no regularization. Could reproduce general structure of a main-sequence and HRD, but the intricacies of the structure was gone. Model appeared to be too simple. However we can use this model to identify dwarfs/giants,etc. We may revisit this model later}
+\stub{We trained the model initially with no regularization. Could reproduce general structure of a main-sequence and HRD, but the intricacies of the structure was gone. Model appeared to be too simple.  However we can use this model to identify dwarfs/giants,etc. Rather than go to a very complex model, we opted to use two models: one for the main-sequence and one for the giant branch.}
 
 
 \subsection{A 3-label model for unevolved stars}
@@ -516,7 +517,7 @@ model experiments,
 We constructed a three-label quadratic model for the main-sequence and sub-giant
 stars in the \epic\ training set.  In order to set the regularization hyperparameter
 $\Lambda$ for this model, we trained 30 models with different regularization strengths,
-spaced evenly in logarithmic space between $\Lambda = 10^{-3}$ to $\Lambda = 10^{3}$.
+spaced evenly in logarithmic steps between $\Lambda = 10^{-3}$ to $\Lambda = 10^{3}$.
 We then performed leave-one-out cross-validation for each model.  Specifically, for 
 each star in the training set: we removed the star; trained the model; and then 
 inferred labels from the removed star as if it was a test object. We also performed 
@@ -569,17 +570,19 @@ set \citep{Holtzman_2015,Hawkins_2016}.  Therefore we are left with nine labels
 in our giant star model: $\teff$, $\logg$, and seven individual abundances.  
 
 
-We used a quadratic vectorizer for the giant star model, and set the regularization
-hyperparameter $\Lambda$ in the same way described in Section \ref{sec:ms-model}.
+We used a quadratic vectorizer for the giant star model, where the quadratic and
+cross-terms are expanded in the same way as \ref{eq:vectorizer-three-label}, only
+with nine labels.  The regularization hyperparameter $\Lambda$ was set in the same
+way described in Section \ref{sec:ms-model}, using the same 30 trials of $\Lambda$.
 The results are shown in Figure \ref{fig:set-giant-model-hyperparameters}, where
-again the enveloped region represents the minimum and maximum change for any label
-with respect to the unregularized case.  At the point of maximum improvement 
+again the enveloped region represents the minimum and maximum change in RMS label
+deviation with respect to the unregularized case.  At the point of maximum improvement 
 near $\Lambda = X.XX$, the RMS in all nine labels has decreased by at least $X$\%, 
 and up to $X$\%.  Here the regularization strength also produces a sparser matrix
 of $\vectheta$, with a $\approx20$\% increase in the fraction of zero-valued 
 entries, particularly for the cross-terms (Figure \ref{fig:giant-model-sparsity},
-third panel).  Based on decreasing RMS deviation in the labels, we adopt 
-$\Lambda = X.XX$ for our giant star model.
+third panel).  Based on the increased model sparsity and decreasing RMS deviation
+in the labels, we adopt $\Lambda = X.XX$ for our giant star model.
 
 
 Results from cross-validation on our regularized model imply that the precision
@@ -600,13 +603,15 @@ Artefacts due to dwarf stars in the test set are also present.
 % --> Convex hull? Distance to plane?
 
 
-\section{Validation experiments}\label{sec:validation}
+\section{Validation experiments}
+\label{sec:validation}
 
-We have already performed leave-one-out cross-validation on all of our models
-as part of the hyperparameter selection.  Here we describe the results from our
-internal, external and astrophysical validation checks.
+In addition to the cross-validation tests that we have previously described, 
+we conducted a number of internal and external validation experiments to 
+test the validity of our results.
 
-\subsection{Multi-epoch observations}\label{sec:repeat-observations}
+\subsection{Multi-epoch observations}
+\label{sec:repeat-observations}
 
 The \rave\ survey performed repeat observations for 43,918 stars with time 
 intervals ranging from a few hours to up to four years.  This timing was 
@@ -616,23 +621,32 @@ were only observed twice, with thirteen visits being the maximum number
 of observations for any target.  These repeat observations allow us to 
 quantify the level of (in)correctness in our formal errors.  For every star
 with multiple visits we constructed a high S/N stacked spectrum for that
-star, weighted by the inverse variances in the individual visit spectra,
-which then served as the basis of comparison to all individual visits.  
-Figure \ref{fig:formal-errors-comparison} shows the difference in labels 
+star, weighted by the inverse variances in the individual visit spectra.
+
+
+We treated the stacked spectra as normal survey stars.  We inferred labels
+using all models and joined the results as per Section \ref{sec:joining-the-models}.  The labels inferred from the stacked spectra served as the basis
+of comparison for all individual visits to that object.  Figure 
+\ref{fig:formal-errors-comparison} shows the difference in labels 
 between the comparison spectrum and a repeat visit, normalized by their 
 formal errors summed in quadrature (e.g., 
 $\Delta\logg/\sqrt{\sigma_{\logg,stacked}^2 + \sigma_{\logg,visit}^2}$).
-If our measurements were unbiased by S/N and the errors were representative, 
-these values should be normally distributed with a zero mean and unit variance.
-\stub{Are they? Should we inflate our formal errors?}
+If our measurements were unbiased by S/N and the formal errors were 
+representative, these values should be normally distributed with a zero 
+mean and unit variance.
+\stub{Are they? (Probably). How much should we inflate our formal errors, and should this be as a function of S/N? Note that in all Figures and tables,
+we show these inflated errors only, as we gauge them to be more representative.}
+
+\stub{Covariances between these parameters are accessible through the matrix of correlation coefficients in the associated results file.}
 
 
-% Internal validation:
-% --> bootstrap resampling of the training set?
+\subsection{Jackknifing the training set}
+\label{sec:jackknife}
 
-% Identify outliers:
-% --> Stars with morphological classification
-% --> Some rogue gallery of a few high S/N cases that have clearly gone haywire?
+\stub{Should we?}
+
+\subsection{Quality control}
+\stub{What should we adopt as recommended QC? Show rogue gallery of a few "high s/n cases" where things went haywire?}
 
 
 \subsection{External validation}
@@ -662,20 +676,14 @@ main-sequence.  This difference is not likely to have a very significant
 effect on the detailed abundance or spectrophotometric distance determinations
 between these studies.
 
-\stub{What abundances are available?}
+\stub{Discuss comparisons with: GES; calibration sources used in \citet{Kordopatis_2013}; and `gold-standard' studies: Reddy, Bensby, Valenti \& Fischer}
 
-% This is more relevant for the discussion, not description of the training set.
-We note that the while Ti can be measured, its values in both 
-APOGEE DR12 and DR13 are known to not follow the expected Galactic trends \citep{Holtzman_2015, Hawkins_2016}.
+\stub{Any differences in RAVE abundances? Corrections or caution required?}
 
-\stub{Any differences in RAVE abundances?}
-
-% External validation: 
-% --> Gaia-ESO Survey
-% --> Literature studies presented in Kordopatis+ 2014
-% --> Gold standards (incl. exoplanet host star studies): Reddy (2003, 2006), Bensby (2014), Valenti & Fischer (2005)
 
 \subsection{Astrophysical validation}
+\label{sec:astrophysical-validation}
+
 
 After verifying that our stellar labels are comparable with other
 high-resolution studies, here we verify that the abundance labels we find
@@ -686,11 +694,11 @@ survey, \cite{Anguiano_2015} found 70 stars with positions and radial velocities
 consistent with being members of globular clusters.  We have used that sample
 Specifically, this GC sample includes 49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde
 globular cluster NGC~3201, and 10 members of NGC~362.  
-\stub{Were any of these stars unintentionally in the training set? \\ KH: Not using my training sets.}
 All of these systems are well-studied and exhibit abundance anti-correlations 
 in Na--O and Mg--Al \citep{people}.  Other correlations are also present 
 (e.g., C--N), but those relationships are less relevant for this work because 
-we do not measure C and N abundances here.
+we do not measure C and N abundances here.  We note that \emph{none} of these 
+cluster stars are present in our training set.
 
 
 We show the detailed abundances for these globular cluster members in
@@ -722,7 +730,11 @@ even for stars with low S/N ratios.
 \label{sec:discussion}
 
 
+\stub{Chemistry + Kinematics = Stockholm}
 
+\stub{What do the two provide us with?}
+
+\stub{What is one interesting science result should we show based on these abundances and Hipparcos results, which was not known previously?}
 
 
 \section{Conclusion}
@@ -739,12 +751,11 @@ even for stars with low S/N ratios.
 \noindent\colorbox{unoffensive-warning}{\parbox{\dimexpr\linewidth-2\fboxsep}{
 \noindent{}Source code for this project is available at \texttt{\giturl}\hspace{-0.5em},
 and this document was compiled from revision hash \texttt{\githash} in that repository.
-Inferred labels and covariance matrices are available electronically with 
-associated metadata at \texttt{\url{ZENODO-URL}} \citep{DATA_REPOSITORY}.  
-Please note that it is a condition of using these results that the fifth \rave\ 
-data release by \citet{Kunder_2016} must (also) be cited, as the work presented 
-here would not have been possible without the tireless efforts of the entire 
-\rave\ collaboration, past and present.
+Inferred labels, covariance matrices, and relevant metadata are available electronically
+at \texttt{\url{ZENODO-URL}} \citep{DATA_REPOSITORY}.  Please note that it is a condition
+of using these results that the fifth \rave\ data release by \citet{Kunder_2016} must 
+also be cited, as the work presented here would not have been possible without the 
+tireless efforts of the entire \rave\ collaboration, past and present.
 }}
 
     
@@ -875,13 +886,16 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \clearpage
 
 \begin{figure}[p]
+\includegraphics[width=\textwidth]{figures/hrd-train-set.pdf}
 \caption{A H-R diagram showing the training set labels.\label{fig:training-set-hrd}}
 \end{figure}
 
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-test-set.pdf}
-\caption{A `spectroscopic' Hertzsprung-Russell diagram showing the effective temperature $\teff$ and surface gravity $\logg$ for stars in the test set.  Only stars with $\chi_r < 3$ are shown, and each panel shows stars that meet a threshold in $S/N$ ratio.\label{fig:test-set-hrd}}
+\caption{The effective temperature $\teff$ and surface gravity $\logg$ for \rave\ stars after combining labels from the main-sequence and giant star models.  Only stars with $v\sin{i} < 1$~km~s$^{-1}$ and $\chi_{red} < 3$ are shown.  The top three panels show logarithmic density, and bins in the lower three panels are colored by the median metallicity in each bin.\label{fig:test-set-hrd}}
 \end{figure}
+
+
 
 \begin{figure*}[p]
 \caption{The RMS of the test set labels as a function of S/N ratio for repeated stars in the test set.\label{fig:test-set-repeats}}
@@ -893,18 +907,41 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure*}
 
 
-\begin{figure*}[p]
-\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fifth data release \citep{Kunder_2016}.\label{fig:rave-dr5-comparison}}
-\end{figure*}
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/ges-comparison.pdf}
-\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{Gaia-ESO Survey} fourth internal data release.\label{fig:ges-dr4-comparison}}
+\caption{Stellar label comparison between the \project{unRAVE} catalog and the \ges\ fourth internal data release.\label{fig:ges-stellar-parameters}}
+\end{figure*}
+
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/ges-abundances.pdf}
+\caption{Individual chemical abundances in \project{unRAVE} compared to \ges.\label{fig:ges-abundances}}
+\end{figure*}
+
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/gold-standard-comparison.pdf}
+\caption{Stellar parameter comparisons for stars in common between this work and studies using high-resolution, high S/N spectra and \hipparcos\ parallaxes.\label{fig:gold-standard-comparison}}
 \end{figure*}
 
 \begin{figure*}[p]
-\includegraphics[width=\textwidth]{figures/literature-comparison.png}
-\caption{Stellar label comparisons between the \project{UNRAVE} catalog and the samples discussed in \citep{Kordopatis_2013}}
+\includegraphics[width=\textwidth]{figures/gold-standard-hrd.pdf}
+\caption{HRD of gold standard comparisons.\label{fig:gold-standard-hrd}}
 \end{figure*}
+
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/kordopatis-calibration.pdf}
+\caption{Comparison with the calibration (literature) samples used by \citet{Kordopatis_2013} and \citet{Kunder_2016}.\label{fig:kordopatis-calibration}}
+\end{figure*}
+
+\begin{figure}[p]
+\includegraphics[width=0.5\textwidth]{figures/gce.pdf}
+\caption{Giant star abundances ([X/Fe]) with respect to [Fe/H], showing the Galactic chemical evolution trend for individual elements.\label{fig:gce}}
+\end{figure}
+
+
+
 
 \end{document}
