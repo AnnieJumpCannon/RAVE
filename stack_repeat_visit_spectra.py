@@ -44,6 +44,7 @@ for group in dr5.group_by("GroupID").groups:
         if not os.path.exists(spectrum_path):
             print("Could not find {} in group {}".format(spectrum_path, group_id))
             subset[i] = False
+            raise WTFError
             continue
 
         with open(spectrum_path, "rb") as fp:
@@ -65,6 +66,11 @@ for group in dr5.group_by("GroupID").groups:
     stacked_flux = np.sum(flux * ivar, axis=0)/stacked_ivar
 
     assert np.any(np.isfinite(stacked_flux))
+    if not np.all(np.isfinite(stacked_ivar)):
+        print("Warning: {} pixels in {} had non-finite inverse variance".format(
+            np.sum(~np.isfinite(stacked_ivar)), group["RAVEID"][0]))
+        stacked_ivar[~np.isfinite(stacked_ivar)] = 0
+
     assert np.all(np.isfinite(stacked_ivar))
 
     stacked_spectrum_path = os.path.join(

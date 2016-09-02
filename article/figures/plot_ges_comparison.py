@@ -77,8 +77,11 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     # yerr
     c = data_table["snr"]
 
+    uves = np.array([_.startswith("u") for _ in data_table["FILENAME"]])
 
-    scat = ax.scatter(x, y, c=data_table["snr"], s=75, cmap="plasma") 
+    #scat = ax.scatter(x[uves], y[uves], c=data_table["snr"][uves], s=75, marker="s", vmin=np.nanmin(data_table["snr"]), vmax=np.nanmax(data_table["snr"]), cmap="plasma")
+    #ax.scatter(x[~uves], y[~uves], c=data_table["snr"][~uves], s=75, marker="o", vmin=np.nanmin(data_table["snr"]), vmax=np.nanmax(data_table["snr"]), cmap="plasma") 
+    scat = ax.scatter(x, y, c=data_table["snr"], s=75, cmap="plasma")
 
     limits = label_limits[label_name]
     ax.plot(limits, limits, c="#666666", linestyle=":", zorder=-1)

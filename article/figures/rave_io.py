@@ -2,12 +2,25 @@
 import os
 import numpy as np
 from astropy.table import Table
+from scipy.io import readsav
 
 DATA_PATH = "/data/gaia-eso/arc/rave-data-files/"
 
 
 def get_rave_kordopatis_dr4():
     return Table.read(os.path.join(DATA_PATH, "RAVE-DR4.fits"))
+
+def get_kordopatis_comparisons():
+    data = readsav(os.path.join(DATA_PATH, "RAVE_DR5_calibration_data.save"))
+    
+    return Table(data={
+        "TEFF": data["calibration_data"]["TEFF"][0],
+        "LOGG": data["calibration_data"]["LOGG"][0],
+        "FEH": data["calibration_data"]["FEH"][0],
+        "REF": data["calibration_data"]["REF"][0],
+        "Name": [each.strip() for each in data["calibration_data"]["DR5_OBS_ID"][0]]
+        })
+
 
 
 
@@ -27,7 +40,7 @@ def get_cannon_dr1(filename=None):
         rave_cannon_dr1["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-")[0] for each in rave_cannon_dr1["FILENAME"]]
 
     
-    if filename == "rave-tgas-v37.fits.gz":
+    if filename in ("rave-tgas-v37.fits.gz", "rave-tgas-v31.fits.gz"):
         rave_cannon_dr1["TEFF"] = rave_cannon_dr1["EPIC_TEFF"]
         rave_cannon_dr1["LOGG"] = rave_cannon_dr1["EPIC_LOGG"]
         rave_cannon_dr1["FE_H"] = rave_cannon_dr1["EPIC_FEH"]
@@ -38,6 +51,9 @@ def get_cannon_dr1(filename=None):
 
     if "snr" not in rave_cannon_dr1.dtype.names and "snr_ms" in rave_cannon_dr1.dtype.names:
         rave_cannon_dr1["snr"] = rave_cannon_dr1["snr_ms"]
+
+    if "snr" not in rave_cannon_dr1.dtype.names and "SNRK" in rave_cannon_dr1.dtype.names:
+        rave_cannon_dr1["snr"] = rave_cannon_dr1["SNRK"]
 
     if "r_chi_sq" not in rave_cannon_dr1.dtype.names and "R_CHI_SQ" in rave_cannon_dr1.dtype.names:
         rave_cannon_dr1["r_chi_sq"] = rave_cannon_dr1["R_CHI_SQ"]
