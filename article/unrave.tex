@@ -891,9 +891,17 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure}
 
 \begin{figure}[p]
+\includegraphics[width=\textwidth]{figures/set-giant-regularization.pdf}
+\caption{The fractional improvement in RMS deviation between inferred and training labels for the 9-label giant model at different regularization strengths.  The RMS values were calculated by leave-one-out cross-validation.  The points and solid line indicate the mean improvement across all labels. The filled area represents the minimum and maximum improvements across all labels.  The maximum improvement (decrease) in RMS label deviations occurs at $\Lambda \approx 0.3$, and this improvement persists until $\Lambda \approx 0.6$.}
+\end{figure}
+
+\begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-test-set.pdf}
 \caption{The effective temperature $\teff$ and surface gravity $\logg$ for \rave\ stars after combining labels from the main-sequence and giant star models.  Only stars with $v\sin{i} < 1$~km~s$^{-1}$ and $\chi_{red} < 3$ are shown.  The top three panels show logarithmic density, and bins in the lower three panels are colored by the median metallicity in each bin.\label{fig:test-set-hrd}}
 \end{figure}
+
+
+
 
 
 
