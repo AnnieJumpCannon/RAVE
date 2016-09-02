@@ -62,7 +62,7 @@
 
 \begin{document}
 % Remove at submission:
-\slugcomment{{\color{red} \textbf{To appear on arXiv on 9 September 2016 (\difftoday{2016}{9}{7}away)}}}
+\slugcomment{{\color{red} \textbf{To appear on arXiv on 13 September 2016 (\difftoday{2016}{9}{7}away)}}}
 
 
 \title{The \project{unRAVE} catalog}
@@ -78,14 +78,6 @@
 \author{Luca Casagrande, Cristina Chiappini, Andrea Kunder, Paul McMillan, Alessandro Siviero, Marica Valentini, Jennifer Wojno, Toma{\^z} Zwitter}
 
 \author{and the \rave\ collaboration}
-
-
-% Stubs for discussion & analysis.
-% TODO: Inserting 2MASS photometry as fake pixels
-% TODO: Censoring masks on abundance labels
-% TODO: Priors on astrophysical parameters from isochrones
-% TODO: Include velocities and rotational velocities at test time?
-
 
 \begin{abstract}
 The Milky Way may be our greatest laboratory for understanding galaxy formation.
@@ -442,7 +434,7 @@ by optimizing the penalized likelihood function:
 for each model in later sections, and $Q(\vectheta)$ is a regularizing function that 
 encourages $\vectheta$ values to take on zero values without breaking convexity:
 \begin{eqnarray}\label{eq:regularization-function}
-	Q(\vectheta) = \sum_{d=1}^{D-1} |{\theta_d}|
+	Q(\vectheta) = \sum_{d=1}^{D-1} |{\theta_d}| \quad .
 \end{eqnarray}
 
 Note that the $d$ subscript here is zero-indexed; the function $Q(\vectheta)$ does not act
@@ -597,7 +589,7 @@ internal, external and astrophysical validation checks.
 
 \subsection{Multi-epoch observations}\label{sec:repeat-observations}
 
-The \rave\ survey performed repeat observations for 23,288 stars  with time 
+The \rave\ survey performed repeat observations for 43,918 stars with time 
 intervals ranging from a few hours to up to four years.  This timing was 
 constructed to be quasi-logarithmic such that spectroscopic binaries could
 be optimally identified. Most of the stars that were observed multiple times
@@ -882,7 +874,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure*}
 
 \begin{figure*}[p]
-\includegraphics[width=\textwidth]{figures/ges-comparison.png}
+\includegraphics[width=\textwidth]{figures/ges-comparison.pdf}
 \caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{Gaia-ESO Survey} fourth internal data release.\label{fig:ges-dr4-comparison}}
 \end{figure*}
 
