@@ -57,8 +57,9 @@
 \newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\,}
 
 
+% For AASTeX v6
 %\AuthorCallLimit=10
-
+%\fullcollaborationName{The \rave\ Collaboration}
 
 \begin{document}
 % Remove at submission:
@@ -94,7 +95,7 @@ of \thecannon\ that uses prior probabilities on atomic line formation and stella
 astrophysical parameters.  Our approach yields precise stellar labels at lower 
 S/N ratios than most \emph{ab initio} approaches, allowing us to deliver improved
 radial velocities, effective temperature $\teff$, surface gravity $\logg$, and 
-chemical abundances of up to seven elements (Mg, Al, Si, Ca, Ti, Fe, Ni) for 
+chemical abundances of up to seven elements (O, Mg, Al, Si, Ca, Fe, Ni) for 
 \Nstars\ stars.  We validate our results internally from repeat visits, and 
 externally against existing high-resolution spectroscopic surveys.  The typical
 precision in chemical abundances is X.XX~dex.  We provide spectrophotometric 
@@ -256,22 +257,45 @@ data-driven model will yield more precise labels (e.g., stellar parameters and
 chemical abundances) at low S/N ratios than most physics-driven models\footnote{
 However, see \citet{Casey_2016a}}.  This is particularly relevant for the 
 low-resolution \rave\ data analysed here, because about half of the spectra have
-S/N $\lesssim 50$. 
+S/N $\lesssim 50$.  
 
 
-Throughout this work we adopt the assumptions and nomenclature first set out in
-\citet{Ness_2015}, and extended in \citet{Casey_2016b}.  However, one distinction 
-here with \citet{Casey_2016b} is that in this work the \emph{labelled} set and the
-\emph{training} set will be the same set.  In \citet{Casey_2016b} two subsets of
-the labelled set were defined: the training set and a distinct validation set.
-This allowing us to train on the \emph{training set} and then test on the 
-\emph{validation set}.  However in this work the labelled set is relatively 
-small, about an order of magnitude smaller than what was available in 
-\citet{Casey_2016b}, and therefore no validation set exists. We will use all 
-labelled set stars in the training step and supplement our validation experiments 
-with literature comparisons.  Thus, throughout this work we will use the terms 
-\emph{labelled set} and \emph{training set} interchangeably.  Below we describe 
-how we constructed the training set, before we outline the models that we adopt.
+\noindent{}Our work makes the following assumptions about the \rave\ spectra and \thecannon:
+
+\begin{itemize}
+\item We will assume that any fibre- and time-dependent variations in spectral
+resolution in the \rave\ spectra are negligible.
+\item The \rave\ noise variances are approximately correct, independent between
+pixels, and normally distributed.
+\item We assume that the normalization procedure employed by the \rave\ pipeline
+is invariant with respect to the labels, and invariant with respect to the S/N
+ratio.
+\item We assume that stars with similar labels ($\teff$, $\logg$, and abundances)
+have similar spectra.
+\item A stellar spectrum is a smooth function of the label values for that star,
+and we assume that the function is smooth enough within a sub-space of the labels
+(e.g., the giant branch or the main-sequence) that it can be reasonably approximated 
+with a low-order polynomial in label space.
+\item We have constructed a training set of stars with mean accurate labels.  Note
+that we do not assume that \emph{every} label in the training is accurate -- we can
+afford to have a small fraction of inaccurate labels (e.g., unambiguous misclassifications
+present in the training set).
+\item We assume our training set is representative of the test set (the \rave\ survey).
+\end{itemize}
+
+
+We adopt the nomenclature first set out in \citet{Ness_2015}, and extended in 
+\citet{Casey_2016b}.  However, one distinction here with \citet{Casey_2016b} is 
+that in this work the \emph{labelled} set and the \emph{training} set will be 
+the same set.  In \citet{Casey_2016b} two subsets of the labelled set were 
+defined: the training set and a distinct validation set.  This allowing us to 
+train on the \emph{training set} and then test on the \emph{validation set}.  
+However in this work the labelled set is relatively small, about an order of 
+magnitude smaller than what was available in \citet{Casey_2016b}, and therefore 
+no validation set exists. We will use all labelled set stars in the training 
+step and supplement our validation experiments with literature comparisons.  
+Thus, throughout this work we will use the terms \emph{labelled set} and 
+\emph{training set} interchangeably. 
 
 
 \subsection{The training set}
