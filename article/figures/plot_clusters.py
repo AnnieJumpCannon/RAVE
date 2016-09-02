@@ -13,25 +13,31 @@ from astropy.table import Table
 
 
 
-rave_cannon_dr1 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/rave-tgas-v1.fits')
-RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_GC.fits')
-data_table = join(rave_cannon_dr1, RAVEDR4_GC, keys=("Name",))
-RAVEDR4 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVE-DR4.fits')
-DR4_cannon = join(rave_cannon_dr1, RAVEDR4, keys=("Name",))
+#rave_cannon_dr1 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/rave-tgas-v1.fits')
+#RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_GC.fits')
+#data_table = join(rave_cannon_dr1, RAVEDR4_GC, keys=("Name",))
+#RAVEDR4 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVE-DR4.fits')
+#DR4_cannon = join(rave_cannon_dr1, RAVEDR4, keys=("Name",))
 
 
 try:
     data_table
 
 except NameError:
-    from rave_io import (rave_cannon_dr1, RAVEDR_clusters)
+    from rave_io import get_cannon_dr1 
 
+    RAVEDR4_GC = Table.read('/data/gaia-eso/kh536/RAVEDR4_GC.fits')
+    keep = ("Name", "NGC", "RAVEID")
+    for column in RAVEDR4_GC.dtype.names:
+        if column not in keep:
+            del RAVEDR4_GC[column]
 
-    data_table = join(rave_cannon_dr1, literature_pastel, keys=("Name",))
+    data_table = join(get_cannon_dr1(), RAVEDR4_GC, keys=("Name",))
 
 else:
     print("Warning: Using pre-loaded data!")
 
+DR4_cannon = data_table
 
 
 #---define unique clusters
@@ -58,7 +64,8 @@ for i in np.arange(K):
   cind = np.where(data_table['NGC'] == clusters[i])[0] #find the cluster stars
   #plot the cannon
   ax = axes[i][0]
-  ax.scatter(data_table['TEFF'][cind], data_table['LOGG'][cind], c=data_table['FE_H'][cind] )
+  vmin, vmax = -2, 0.5
+  scat = ax.scatter(data_table['TEFF'][cind], data_table['LOGG'][cind], c=data_table['FE_H'][cind], vmin=vmin, vmax=vmax)
   ax.set_xlim(limits[0])
   ax.set_ylim(limits[1])
   ax.xaxis.set_major_locator(MaxNLocator(6))
@@ -75,7 +82,7 @@ for i in np.arange(K):
 
   ax = axes[i][1]
   #plot the RAVE DR4
-  ax.scatter(data_table['TeffK'][cind], data_table['loggK'][cind], c=data_table['__M_H_K'][cind] )
+  ax.scatter(data_table['TeffK'][cind], data_table['loggK'][cind], c=data_table['__M_H_K'][cind], vmin=vmin, vmax=vmax)
   ax.set_xlim(limits[0])
   ax.set_ylim(limits[1])
   ax.xaxis.set_major_locator(MaxNLocator(6))
@@ -87,6 +94,8 @@ for i in np.arange(K):
   if i == K-1: 
     ax.set_xlabel(r"$T_{\rm eff}$") 
     ax.get_yaxis().set_visible(False)
+
+plt.colorbar(scat)
 
 def generate_cluster_abundance_plot(cluster=clusters[0]):
   all_columns = [ 
@@ -163,7 +172,7 @@ def generate_cluster_memebership(cluster=clusters[0]):
 
 
 for i in np.arange(len(clusters)):
-  generate_cluster_abundance_plot(cluster=clusters[i])
+  #generate_cluster_abundance_plot(cluster=clusters[i])
   generate_cluster_memebership(cluster=clusters[i])
 
 
