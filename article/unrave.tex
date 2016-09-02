@@ -489,12 +489,12 @@ to be underestimated, and in Section \ref{sec:validation} we judge the veracity 
 errors through validation experiments.
 
 
-\subsection{Three-label models ($\teff$, $\logg$, $\feh$)}
+\subsection{A 3-label model ($\teff$, $\logg$, $\feh$) for all stars}
 \label{sec:a-simple-model}
 
 The model we have introduced is generic in the sense that there is no description for how
 complex the vectorizing function $\vecv(\ell)$ should be, or how many $K$ labels are used.
-Given previous successes using a second-order polynomial model 
+Given previous successes using a second-order (quadratic) polynomial model 
 \citep{Ness_2015,Ness_2016,Ho_2016,Casey_2016b}, we will first adopt a three-label ($\teff$, $\logg$, [Fe/H]) model for all (giant and main-sequence) stars. Thus, for our first set of
 model experiments,
 \begin{eqnarray}\label{eq:vectorizer-three-label}
@@ -510,7 +510,7 @@ model experiments,
 \stub{We trained the model initially with no regularization. Could reproduce general structure of a main-sequence and HRD, but the intricacies of the structure was gone. Model appeared to be too simple. However we can use this model to identify dwarfs/giants,etc. We may revisit this model later}
 
 
-\subsubsection{A 3-label model for the main-sequence}
+\subsection{A 3-label model for unevolved stars}
 \label{sec:the-ms-model}
 
 We constructed a three-label quadratic model for the main-sequence and sub-giant
@@ -542,86 +542,57 @@ for $\logg$, with $X.XX$~dex and $X.XX$~dex for [Fe/H].
 We made no \emph{a priori} judgements on whether a star was likely a giant
 or a dwarf star; we inferred labels for all \rave\ spectra using this 
 main-sequence model.  The resulting labels for the survey sample are shown
-in Figure \ref{fig:hrd-from-individual-models}.  Significant structure is 
+in Figure \ref{fig:hrd-from-individual-models}, where significant structure is 
 visible.  The increased density of Solar-type stars is consistent with \rave\
 observing stars in the local neighbourhood, and the high number of turnoff
 and main-sequence stars relative to the subgiant branch is expected from 
 the relative lifetimes of these evolutionary phases.  An overdensity
-of stars near the giant branch clump is visible, which is likely due to
-giant stars existing in the test set, but not in the training set.  In
-later sections we will describe how our results from multiple models were
-compiled to produce a single catalog.
-
-
-\subsubsection{A 3-label model for the main-sequence and giant branch}
-\label{sec:the-joint-model}
-
-% Chose the regularization hyperparameter.
+of stars near the giant branch clump is also present.  This artefact is due 
+to having giant stars in the test set, but not in the training set, and the
+model is (poorly) extrapolating outside the convex hull of the training set.
+In Section \ref{sec:joining-the-models} we describe how results from multiple
+models are combined to produce a single catalog.
 
 
 \subsection{A 9-label model for detailed abundances of giant stars}
 \label{sec:giant-abundance-model}
 
-The giant stars in our training set have stellar parameters and up to 15 
-individual abundances from the \apogee\ \aspcap.  Only a subset of these
-elements have atomic transitions in the \rave\ wavelength region: 
-\ion{O}{1}, \ion{Mg}{1}, \ion{Al}{1}, \ion{Si}{1}, \ion{Ca}{2}, \ion{Ti}{1}, 
-\ion{Fe}{1}, and \ion{Ni}{1}.  We excluded [Ti/H] from our abundance list 
-because of systematics in the training set \citep{Holtzman_2015,Hawkins_2016}.
-Therefore we are left with nine labels in our giant star model: $\teff$, 
-$\logg$, and seven individual abundances.  
+
+We only have $\teff$, $\logg$, and [Fe/H] for unevolved stars in our training
+set from the \epic\ catalog \citep{Huber_2016}.  However, the giant stars 
+have stellar parameters ($\teff$, $\logg$) and up to 15 individual abundances
+from the \aspcap\ \citep{aspcap_paper}.  A subset of these elements have atomic
+transitions in the \rave\ wavelength region: \ion{O}{1}, \ion{Mg}{1}, 
+\ion{Al}{1}, \ion{Si}{1}, \ion{Ca}{2}, \ion{Ti}{1}, \ion{Fe}{1}, and \ion{Ni}{1}.  
+We excluded [Ti/H] from our abundance list because of systematics in the training
+set \citep{Holtzman_2015,Hawkins_2016}.  Therefore we are left with nine labels 
+in our giant star model: $\teff$, $\logg$, and seven individual abundances.  
 
 
-% ARC asks: Should we discuss any tests done with censoring? 
-%  			Do we feel like we need to defend our choice to use regularization
-%           over censoring? The key result from the censoring tests that I did
-%			is that there are a lot of atomic transitions here, but they are
-% 			mostly blended. We *need* those blended lines because if you
-%			censor all but the strongest line(s) for individual elements then
-% 			you are left with a poor predictor of abundance labels.
-
-
-We used a second-order (i.e., $\teff^2$ is the highest term) polynomial 
-vectorizer for the giant star model.  We set the regularization hyperparameter
-by performing a grid search of 30 $\Lambda$ points logarithmically spaced from 
-$10^{-3}$ to $10^{3}$.  We performed leave-one-out cross-validation on the
-training set for each value of $\Lambda$.  Specifically, we removed one star
-from the training set, then trained the model, and inferred labels for the 
-star that was removed from the training set.  We repeated this procedure for
-every star in the training set (for every model with a different $\Lambda$)
-and compared the inferred labels against the training set values.  For
-comparison purposes, we also performed cross-validation on an unregularized 
-($\Lambda = 0$) model using the same training set.  We calculated the bias
-and root-mean-square (RMS) deviation between the input labels and those inferred
-by cross-validation for every model.  The biases were negligible across all
-models.  In Figure \ref{fig:giant-model-hyperparameter-search} we show the
-RMS difference in label recovery compared to the unregularized model as a 
-percentage improvement.  The enveloped region represents the minimum and 
-maximum changes for any label with respect to the unregularized model.
-Depending on the regularization strength $\Lambda$, the RMS in a given label
-can decrease by $\approx30$\% with respect to the unregularized case.  At the
-point of maximum improvement, near $\Lambda = X.XX$, the RMS in all labels has
-decreased by at least $X$\%.  As expected the regularization produces a 
-sparser matrix of $\vectheta$, with a $\approx20$\% increase in the fraction
-of zero-valued entries, particularly for the cross-terms (Figure 
-\ref{fig:giant-model-sparsity}, third panel).  Based on the improvement in 
-RMS by cross-validation, we adopt $\Lambda = X.XX$ for our giant star model.
+We used a quadratic vectorizer for the giant star model, and set the regularization
+hyperparameter $\Lambda$ in the same way described in Section \ref{sec:ms-model}.
+The results are shown in Figure \ref{fig:set-giant-model-hyperparameters}, where
+again the enveloped region represents the minimum and maximum change for any label
+with respect to the unregularized case.  At the point of maximum improvement 
+near $\Lambda = X.XX$, the RMS in all nine labels has decreased by at least $X$\%, 
+and up to $X$\%.  Here the regularization strength also produces a sparser matrix
+of $\vectheta$, with a $\approx20$\% increase in the fraction of zero-valued 
+entries, particularly for the cross-terms (Figure \ref{fig:giant-model-sparsity},
+third panel).  Based on decreasing RMS deviation in the labels, we adopt 
+$\Lambda = X.XX$ for our giant star model.
 
 
 Results from cross-validation on our regularized model imply that the precision
-in labels is XXX~K in $\teff$, X.XX~dex in $\logg$, and varies between X.XX~dex
-and X.XX~dex depending on the elemental abundance.  We made no prior judgement
-on whether a star was likely a giant or not; we used this model (and all other
-models) to test all XXX,XXX \rave\ spectra.  Figure \ref{fig:test-set-hrd} (left
-panel) shows the inferred $\teff$ and $\logg$ values for all \rave\ spectra with
-S/N $\geqslant 50$.  This panel undoubtedly includes dwarf stars that cannot be
-appropriately classified by our giant model.  In Section \ref{sec:joining-the-models}
-we will heuristically combine these results with the main-sequence star model
-described in \ref{sec:main-sequence-model}.
+in labels is XXX~K in $\teff$, X.XX~dex in $\logg$, and X.XX~dex (EL) and 
+X.XX~dex (EL) depending on the elemental abundance.  We inferred labels for all
+XXX,XXX \rave\ spectra using this model, and these results are summarized in
+Figure \ref{fig:test-set-hrd} (middle panel).  The red clump is clearly visible
+and in the expected location, without requiring any post-analysis calibration.
+Artefacts due to dwarf stars in the test set are also present.
 
 
-
-\subsection{Joining the models}\label{sec:joining-the-models}
+\subsection{Joining the models}
+\label{sec:joining-the-models}
 
 % All them hax used to combine all the results.
 
