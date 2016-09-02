@@ -9,10 +9,13 @@
 
 \usepackage{amsmath}
 \usepackage{bm}
+\usepackage{xcolor}
+
+\definecolor{unoffensive-warning}{HTML}{B4DCED}
 
 % This section can be removed at submission.
 % ------------------------------------------
-\usepackage{color}
+%\usepackage{color}
 \usepackage{datenumber}
 
 \newcounter{dateone}
@@ -301,6 +304,7 @@ Thus, throughout this work we will use the terms \emph{labelled set} and
 \subsection{The training set}
 \label{sec:the-training-set}
 
+
 We sought to construct a training set consisting of stars across the main-sequence,
 sub-giant, and the red giant branch.  We required stars with precisely measured
 effective temperature $\teff$, surface gravity $\logg$, and elemental abundances
@@ -492,47 +496,67 @@ The model we have introduced is generic in the sense that there is no descriptio
 complex the vectorizing function $\vecv(\ell)$ should be, or how many $K$ labels are used.
 Given previous successes using a second-order polynomial model 
 \citep{Ness_2015,Ness_2016,Ho_2016,Casey_2016b}, we will first adopt a three-label ($\teff$, $\logg$, [Fe/H]) model for all (giant and main-sequence) stars. Thus, for our first set of
-model experiments:
+model experiments,
 \begin{eqnarray}\label{eq:vectorizer-three-label}
 \vecv(\ell_n) & \rightarrow & \left[1, T_{{\rm eff},n}, \logg_n, [{\rm Fe/H}]_n, T_{{\rm eff},n}^2, \logg_n\cdot{}T_{{\rm eff},n}, \feh_n\cdot{}T_{{\rm eff},n}, \logg_n^2, \feh_n\cdot\logg_n, \feh_n^2\right]
 \quad ,
 \end{eqnarray}
 
 \noindent{}such that $\vecv(\ell)$ produces the design matrix:
-\begin{tiny}
-\begin{equation}\label{eq:vectorizer-three-label-design-matrix}
-\vecv(\ell) \rightarrow \begin{bmatrix}
-	1 & T_{{\rm eff},0} & \logg_{0} & [{\rm Fe/H}]_{0} & T_{{\rm eff},0}^2 & \logg_{0}\cdot{}T_{{\rm eff},0} & [{\rm Fe/H}]_{0}\cdot{}T_{{\rm eff},0} & \logg_{0}^2 & [{\rm Fe/H}]_{0}\cdot{}\logg_1 & [{\rm Fe/H}]_1^2 \\
-	\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-	1 & T_{{\rm eff},n} & \logg_{n} & [{\rm Fe/H}]_{n} & T_{{\rm eff},n}^2 & \logg_{n}\cdot{}T_{{\rm eff},n} & [{\rm Fe/H}]_{n}\cdot{}T_{{\rm eff},n} & \logg_{n}^2 & [{\rm Fe/H}]_{n}\cdot{}\logg_n & [{\rm Fe/H}]_n^2 \\
-	\vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
-	1 & T_{{\rm eff},N-1} & \logg_{N-1} & [{\rm Fe/H}]_{N-1} & T_{{\rm eff},N-1}^2 & \logg_{N-1}\cdot{}T_{{\rm eff},N-1} & [{\rm Fe/H}]_{N-1}\cdot{}T_{{\rm eff},N-1} & \logg_{N-1}^2 & [{\rm Fe/H}]_{N-1}\cdot{}\logg_{N-1} & [{\rm Fe/H}]_{N-1}^2
-\end{bmatrix}\quad .
-\end{equation}
-\end{tiny}
+\begin{eqnarray}
+	\vecv(\ell) \rightarrow \begin{bmatrix} \vecv(\ell_0) \\ \vdots \\ \vecv(\ell_{N-1}) \end{bmatrix} \quad .
+\end{eqnarray}
 
-\subsubsection{A three-label model for main-sequence and giant stars}\label{sec:a-simple-joint-model}
-
-\subsubsection{A three-label model for main-sequence stars}\label{sec:a-simple-model-ms-stars}
+\stub{We trained the model initially with no regularization. Could reproduce general structure of a main-sequence and HRD, but the intricacies of the structure was gone. Model appeared to be too simple. However we can use this model to identify dwarfs/giants,etc. We may revisit this model later}
 
 
+\subsubsection{A 3-label model for the main-sequence}
+\label{sec:the-ms-model}
+
+We constructed a three-label quadratic model for the main-sequence and sub-giant
+stars in the \epic\ training set.  In order to set the regularization hyperparameter
+$\Lambda$ for this model, we trained 30 models with different regularization strengths,
+spaced evenly in logarithmic space between $\Lambda = 10^{-3}$ to $\Lambda = 10^{3}$.
+We then performed leave-one-out cross-validation for each model.  Specifically, for 
+each star in the training set: we removed the star; trained the model; and then 
+inferred labels from the removed star as if it was a test object. We also performed 
+leave-one-out cross-validation on an unregularized ($\Lambda = 0$) model, which we 
+will use as the basis for comparison.  For every model we calculated the bias and
+root-mean-square (RMS) deviation between the input labels and those inferred through
+cross-validation. 
 
 
-% worked but didn't show the structure in detail.
-% Split into two different models with partial overlap.
-% One for giants and one for dwarfs.
-% The labels for stars in the training sets are shown in Figure X.
+We show the \emph{percentage difference} in the RMS deviation of the labels with respect
+to the unregularized model in Figure \ref{fig:set-ms-model-hyperparameter}.  The upper 
+and lower envelope represent the boundaries across all labels, showing that the RMS
+decreased in \emph{all} labels with increasing regularization.  We found similar
+improvements in the bias values, however these were already minimal in the unregularized
+case.  The improvement in RMS reaches a minimum value near $\Lambda = X.XX$, where
+we achieve RMS deviations that are about 30\% better than the unregularized model.
+Based on this improvement we set $\Lambda = X.XX$ for the three-label main-sequence model.
+At this regularization strength, the bias and RMS values found by leave-one-out
+cross validation are, respectively: $X$~K and $XX$~K for $\teff$, $X.XX$~dex and $X.XX$~dex
+for $\logg$, with $X.XX$~dex and $X.XX$~dex for [Fe/H].
 
-% We trained all three models.
-% Note the differences in metallicity scales.
-% Look at spectral derivatives.
-% Show the model internals are relatable.
-% Map spectral derivatives from giant model to main-sequence model.
-% Update the model with those new spectral derivatives.
+
+We made no \emph{a priori} judgements on whether a star was likely a giant
+or a dwarf star; we inferred labels for all \rave\ spectra using this 
+main-sequence model.  The resulting labels for the survey sample are shown
+in Figure \ref{fig:hrd-from-individual-models}.  Significant structure is 
+visible.  The increased density of Solar-type stars is consistent with \rave\
+observing stars in the local neighbourhood, and the high number of turnoff
+and main-sequence stars relative to the subgiant branch is expected from 
+the relative lifetimes of these evolutionary phases.  An overdensity
+of stars near the giant branch clump is visible, which is likely due to
+giant stars existing in the test set, but not in the training set.  In
+later sections we will describe how our results from multiple models were
+compiled to produce a single catalog.
 
 
-% How we combined the results into one.
-% Refer to test set HRD.
+\subsubsection{A 3-label model for the main-sequence and giant branch}
+\label{sec:the-joint-model}
+
+% Chose the regularization hyperparameter.
 
 
 \subsection{A 9-label model for detailed abundances of giant stars}
@@ -741,19 +765,24 @@ even for stars with low S/N ratios.
 \subsection*{Access the results electronically}
 
 % TODO: Replace ZENODO-URL with a data url
-\noindent{}Source code for this project is available at \texttt{\giturl}.
-This document was compiled from revision hash \texttt{\githash} in that repository.
+\noindent\colorbox{unoffensive-warning}{\parbox{\dimexpr\linewidth-2\fboxsep}{
+\noindent{}Source code for this project is available at \texttt{\giturl}\hspace{-0.5em},
+and this document was compiled from revision hash \texttt{\githash} in that repository.
 Inferred labels and covariance matrices are available electronically with 
 associated metadata at \texttt{\url{ZENODO-URL}} \citep{DATA_REPOSITORY}.  
 Please note that it is a condition of using these results that the fifth \rave\ 
 data release by \citet{Kunder_2016} must (also) be cited, as the work presented 
 here would not have been possible without the tireless efforts of the entire 
 \rave\ collaboration, past and present.
+}}
+
+    
+
 
 
 \acknowledgements
-A.~R.~C. warmly thanks Jonathan Bird (Vanderbilt), Sergey Koposov (Cambridge),
-and Sven Buder (MPIA).
+A.~R.~C. warmly thanks Jonathan Bird (Vanderbilt), Sven Buder (MPIA), and
+Sergey Koposov (Cambridge).
 This research made use of: Astropy, a community-developed core Python package for
 Astronomy \citep{astropy}, NASA's Astrophysics Data System Bibliographic Services;
 and \project{TOPCAT} \citep{Taylor_2005}.
