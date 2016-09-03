@@ -95,37 +95,37 @@ However, a comprehensive catalog of detailed chemical abundances to complement
 those data is currently lacking.  The RAdial Velocity Experiment (\rave) survey 
 has acquired spectra for 292,036 stars in common with the first \gaia\ data 
 release, constituting the largest overlap of any stellar spectroscopic sample.  
-Here we perform an independent analysis of \rave\ spectra using an implementation
-of \thecannon\ that uses prior probabilities on atomic line formation and stellar
-astrophysical parameters.  Our approach yields precise stellar labels at lower 
-S/N ratios than most \emph{ab initio} approaches, allowing us to deliver improved
-radial velocities, effective temperature $\teff$, surface gravity $\logg$, and 
-chemical abundances of up to seven elements (O, Mg, Al, Si, Ca, Fe, Ni) for 
-\Nstars\ stars.  We validate our results internally from repeat visits, and 
-externally against existing high-resolution spectroscopic surveys.  The typical
-precision in chemical abundances is X.XX~dex.  We provide spectrophotometric 
-distances based on our labels, improving upon the parallax distances available
-for the fainter targets in the first \gaia\ data release. \stub{A one-line 
-science result based on RAVE/Hipparcos overlap.}
+We have performed an independent analysis of \rave\ spectra using \thecannon,
+and here we report effective temperature $\teff$, surface gravity $\logg$, 
+as well as chemical abundances of up to seven elements (O, Mg, Al, Si, Ca, Fe, 
+Ni) for \Nstars\ stars.  We validate our results internally from repeat visits, 
+and externally against existing high-resolution spectroscopic surveys.  The 
+typical precision is XXX~K in $\teff$, X.XX~dex in $\logg$, and X.XX~dex for
+detailed abundances.  We provide spectrophotometric distances based on our
+labels, improving upon the parallax-based distances available for distant 
+giants in the first \gaia\ data release.
+\stub{A one-line science result based on RAVE/Hipparcos overlap.}
+
 \end{abstract}
 
-\keywords{}
+\keywords{\vspace{5em}}
+
+
 
 \section{Introduction} 
 \label{sec:introduction}
 
-The Milky Way is considered to be the best laboratory for understanding galaxy
+The Milky Way is considered to be our best laboratory for understanding galaxy
 formation and evolution.  This premise hinges on the ability to precisely measure 
 the astrometry and chemistry for (many) individual stars, and to use those data 
 to infer the structure, kinematics, and chemical enrichment of the Galaxy 
 \citep[e.g.,][]{Schlaufman_2009,Deason_2011,Ness_2012,Ness_2013a,Ness_2013b,
-Casey_2012,Casey_2013,Casey_2014a,Casey_2014b,Bovy_2016}.  However, these 
-quantities are not known for even 1\% of stars in the Milky Way.  Stellar 
-distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,Jofre_2015,
-Madler_2016}, proper motions can be plagued by unquantified systematics from 
-the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and 
+Casey_2012,Casey_2013,Casey_2014a,Casey_2014b,Kordopatis_2015,Bovy_2016}.  
+However, these quantities are not known for even 1\% of stars in the Milky Way.  Stellar distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,
+Jofre_2015,Madler_2016}, proper motions can be plagued by unquantified systematics 
+from the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and 
 stellar spectroscopists frequently report significantly different chemical 
-abundance patterns for the same star \citep{Smiljanic_2014}.  The impact 
+abundance patterns from the same spectrum \citep{Smiljanic_2014}.  The impact 
 these issues have on scientific inferences cannot be understated.  Imperfect 
 astrometry or chemistry limits understanding in a number of sub-fields in
 astrophysics, including the properties of exoplanet host stars, the formation 
@@ -134,7 +134,7 @@ Galactic disk, to name a few.
 
 
 These formed just some of the scientific drivers for the \gaia\ space telescope.
-\gaia\ is primarily an astrometric mission, providing precise positions,
+\gaia\ is primarily an astrometric mission, and will provide precise positions,
 parallaxes and proper motions for more than $10^9$ stars in its final data
 release in 2022.  While this is a sample size about three orders of magnitude 
 larger than its predecessor \hipparcos, both astrometry and chemistry are 
@@ -142,11 +142,12 @@ required to fully characterize the formation and evolution of our Galaxy.
 \gaia\ will also provide radial velocities, stellar parameters and chemical 
 abundances for a subset of brighter stars, but these measurements will not be 
 available in the first few data releases. Until those abundances are available,
-astronomers seeking to use chemistry and kinematic measurements are reliant on 
-ground-based spectroscopic surveys in order to complement the available astrometry.
+astronomers seeking to simultaneously use chemical and dynamical information are
+reliant on ground-based spectroscopic surveys in order to complement the 
+available \gaia\ astrometry.
 
 
-The first \project{Gaia} data release will include positions, proper motions, and 
+The first \gaia\ data release will include positions, proper motions, and 
 parallaxes for approximately two million stars in the Tycho-2 \citep{Hog_2000} 
 catalog \citep{Michalik_2015a,Michalik_2015b}.  After cross-matching all major 
 stellar spectroscopic surveys\footnote{Specifically we cross-matched the Tycho-2
@@ -157,23 +158,29 @@ surveys}, we found the RAdial Velocity Experiment (hereafter \rave) survey to
 have the largest overlap with the first \gaia\ data release: 292,036 
 stars.  We then used the \gaia\ universe model snapshot \citep{Robin_2012} to 
 estimate the precision in parallax and proper motions that will be available in 
-the first \gaia\ data release (DR1) for stars in those overlap samples. Comparing
+the first \gaia\ data release (DR1) for stars in those overlap samples.  Comparing
 the expected precision to what is currently available, we further found that the
 \rave\ survey will benefit most from \gaia\ DR1.  The distances of 63\% of the 
 \rave--\gaia\ DR1 overlap sample (182,862 stars) are expected to improve with 
 the first \gaia\ data release, and 47\% of stars are likely to have better 
-proper motions (137,211 stars).  This motivated us to examine what chemical 
-abundances were available for \rave, and to evaluate whether we could enable new 
-chemodynamic studies by contributing to this existing set of chemical abundances.
+proper motions (137,211 stars).  Although the \gaia\ universe model assumes 
+end-of-mission uncertainties --- and does not account for systematics in the first
+data release --- this calculation still provides intuition for the relative 
+improvement the first \gaia\ data release can make to ground-based surveys.  The 
+expected improvements for \rave\ motivated us to examine what chemical abundances
+were available from those data, and to evaluate whether we could enable new 
+chemodynamic studies by contributing to the existing set of chemical abundances.
 
 
 We briefly describe the \rave\ data in Section~\ref{sec:data}, before explaining
 our methods in Section~\ref{sec:method}.  In Section~\ref{sec:validation}
 we outline a number of validation experiments, including: internal sanity checks,
 comparisons with literature samples, and investigations to ensure our results
-are consistent with expectations from astrophysics.  We discuss these results in
-Section~\ref{sec:discussion}, and in Section~\ref{sec:conclusion} we provide 
-concluding remarks as well as a description of how to access our results electronically.
+are consistent with expectations from astrophysics.  We discuss the implications
+of these comparisons and our results in Section~\ref{sec:discussion}.  We provide
+concluding remarks in Section~\ref{sec:conclusion}, as well as a description for
+how to access our results electronically.
+
 
 
 \section{Data}
@@ -184,24 +191,24 @@ concluding remarks as well as a description of how to access our results electro
 principally designed to measure radial velocities for up to $10^6$ stars.
 Observations were conducted on the 1.2~m UK Schmidt telescope at the Australian 
 Astronomical Observatory\footnote{Formerly the Anglo-Australian Observatory} from 
-2003--2013.  A large 5.7~degree field-of-view and robotic fibre positioner 
-made for very efficient observing;  spectra for up to 150 targets could be simultaneously
-acquired.  When observations concluded in April 2013, a total of \Nspectra\ useful spectra
-had been collected of \Nstars\ unique objects. 
+2003--2013.  A large 5.7~degree field-of-view and robotic fibre positioner made for 
+very efficient observing:  spectra for up to 150 targets could be simultaneously
+acquired.  When observations concluded in April 2013, a total of \Nspectra\ useful 
+spectra had been collected of \Nstars\ unique objects. 
 
 
 The target selection for \rave\ is based on the $I$-band apparent magnitude,
 $9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge \citep{Wonjo_2016}.  
-The $I$ band was selected because it overlaps with the wavelength range that \rave\ 
-operates in:  8410--8795~\AA.  This spectral region is very well-studied.  It is one 
-of the key setups used for the ground-based high-resolution \ges\ survey
-\citep{Gilmore_2012,Randich_2013}, and the \rave\ resolution and wavelength
-coverage is comparable to the Radial Velocity Spectrometer on board the \gaia\
-space telescope \citep{Recio-Blanco_2016}.  The region includes the \ion{Ca}{2} 
-near infrared triplet lines, strong transitions that are dominated by pressure 
-broadening, which are visible even in very low S/N data or metal-poor stars.  
-Atomic transitions of light-, $\alpha$-, and Fe-peak elements are also present, 
-allowing for detailed chemical abundance studies.
+The $I$ band was used for the target selection because it has a good overlap with the
+wavelength range that \rave\ operates in:  8410--8795~\AA.  This spectral region 
+is very well-studied.  It is one of the key setups used for the ground-based 
+high-resolution \ges\ survey \citep{Gilmore_2012,Randich_2013}, and the 
+\rave\ resolution and wavelength coverage is comparable to the Radial Velocity 
+Spectrometer on board the \gaia\ space telescope \citep{Kordopatis_2011,Recio-Blanco_2016}.  
+The region includes the \ion{Ca}{2} near infrared triplet lines --- strong 
+transitions that are dominated by pressure broadening --- which are visible even 
+in very low S/N data or metal-poor stars.  Atomic transitions of light-, $\alpha$-, 
+and Fe-peak elements are also present, allowing for detailed chemical abundance studies.
 
 
 The exposure times for \rave\ observations were optimised to obtain radial 
@@ -316,10 +323,10 @@ surveys.  The fourth internal data release of the \ges\ survey includes
 giant and main-sequence stars, but only 142 overlap with \rave.  The thirteenth data 
 release from \sdss\ \citep{sloan_dr13} includes labels for \apogee\ stars on the
 giant branch and (uncalibrated values for) the main-sequence, but our tests indicated
-that the main-sequence labels suffered from significant systematic effects.  A flat, 
+that the \apogee\ main-sequence labels suffered from significant systematic effects.  A flat, 
 then `up-turning' main-sequence is present, and the metallicity gradient trends in 
 the opposite direction with respect to $\logg$ on the main-sequence (i.e., metal-poor
-stars incorrectly sit above the isochrones in a classical Hertzsprung-Russell diagram)
+stars incorrectly sit above the isochrones in a classical Hertzsprung-Russell diagram).
 If we consider lower-resolution studies as potential training sets, there are 2,369
 stars that overlap with \lamost\ --- of which 2,213 have positive S/N ratios in the 
 $g$-band (\texttt{snrg}).  However, the labels are expectedly less precise given the
@@ -371,7 +378,7 @@ note that $\approx55-70$\% of sub-giants are misclassified as dwarfs.  The
 probability of misclassification is usually quantified in the uncertainties of 
 each star; most sub-giants that could be dwarfs have large confidence intervals.  
 Therefore, requiring low uncertainties will decrease the total sample size, but 
-will remove most misclassifications.  The situation is far more favourable for 
+in practice it removes most misclassifications.  The situation is far more favourable for 
 dwarfs and giants.  Only $1-4$\% of giant stars are misclassified as dwarfs, and 
 about 7\% of dwarfs are misclassified as giants.  To summarise, the \epic\ labels 
 with narrow confidence intervals are usually of high fidelity, and any spurious 
@@ -674,7 +681,11 @@ this work tends to taper down towards higher $\logg$ values at cooler
 temperatures, whereas the comparison sample tend to have a slightly flatter
 main-sequence.  This difference is not likely to have a very significant 
 effect on the detailed abundance or spectrophotometric distance determinations
-between these studies.
+between these studies \citep{Binney_2014}.
+
+
+
+
 
 \stub{Discuss comparisons with: GES; calibration sources used in \citet{Kordopatis_2013}; and `gold-standard' studies: Reddy, Bensby, Valenti \& Fischer}
 
@@ -791,6 +802,8 @@ and Sydney. The RAVE web site is https://www.rave-survey.org.
 \bibitem[Astropy Collaboration et 
 al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., et al.\ 2013, Astronomy \& Astrophysics, 558, AA33
 
+\bibitem[Binney et al.(2014)]{Binney_2014} Binney, J., Burnett, B., Kordopatis, G., et al.\ 2014, \mnras, 437, 351 
+
 \bibitem[Bensby et al.(2014)]{Bensby_2014} Bensby, T., Feltzing, S., \& Oey, M.~S.\ 2014, \aap, 562, A71 
 
 \bibitem[Bovy et al.(2016)]{Bovy_2016} Bovy, J., Rix, H.-W., Schlafly, E.~F., et al.\ 2016, \apj, 823, 30 
@@ -831,7 +844,11 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Jofr{\'e} et al.(2015)]{Jofre_2015} Jofr{\'e}, P., M{\"a}dler, T., Gilmore, G., et al.\ 2015, \mnras, 453, 1428 
 
+\bibitem[Kordopatis et al.(2011)]{Kordopatis_2011} Kordopatis, G., Recio-Blanco, A., de Laverny, P., et al.\ 2011, \aap, 535, A106 
+
 \bibitem[Kordopatis et al.(2013)]{Kordopatis_2013} Kordopatis, G., Gilmore, G., Steinmetz, M., et al.\ 2013, \aj, 146, 134 
+
+\bibitem[Kordopatis et al.(2015)]{Kordopatis_2015} Kordopatis, G., Binney, J., Gilmore, G., et al.\ 2015, \mnras, 447, 3526 
 
 \bibitem[Kunder et al.(2016)]{Kunder_2016} Kunder, A., et al.\ 2016, submitted
 
