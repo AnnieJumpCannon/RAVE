@@ -132,7 +132,7 @@ y = ((ms_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
 ticks = (-10, -5, 0, 5, 10)
 
 kwds = dict(extent=(-10, 10, -10, 10), gridsize=25, linewidths=0.1, 
-    edgecolor="#000000", cmap="plasma", norm=LogNorm())
+    edgecolor="#000000", cmap="Blues", norm=LogNorm())
 
 axes[0].hexbin(x, y, **kwds)
 #axes[0].axhline(0, c="#FFFFFF", linewidth=0.5, linestyle="-")

@@ -54,7 +54,7 @@ after_success: |
         git rm -rf .
         git add -f article/unrave.pdf
         git -c user.name='travis' -c user.email='travis' commit -m init
-        git push -q -f https://andycasey:$GITHUB_API_KEY@github.com/AnnieJumpCannon/RAVE $TRAVIS_BRANCH-pdf
+        git push -q -f https://andycasey:$GITHUB_API_KEY@github.com/$TRAVIS_REPO_SLUG $TRAVIS_BRANCH-pdf
     fi
 
 notifications:
