@@ -1,30 +1,11 @@
 The *unRAVE* catalog
 ==================
 
+[![Build Status](https://travis-ci.org/AnnieJumpCannon/RAVE.svg?branch=master)](https://travis-ci.org/AnnieJumpCannon/RAVE)
+
 An independent data-driven analysis of *RAVE* spectra in anticipation of the *Gaia/TGAS* data release.
 
-Compile the manuscript
-======================
-
-From your terminal:
-
-````
-  git clone https://github.com/AnnieJumpCannon/RAVE.git rave 
-  cd rave/article
-  make
-````
-
-The manuscript will now be compiled to `unrave.pdf`
-
-If you have used `git` before, then **please make your changes to the manuscript
-directly in LaTeX and create a pull request**. There are instructions below on
-how to do this. If you have questions, Google or Andy will answer.
-
-If you are not familiar with
-`git`, then please make your manuscript suggestions in the form of a 
-[GitHub issue](https://www.github.com/AnnieJumpCannon/RAVE/issues/new).
-That way your comments can be included (on short notice!) in parallel, and
-everyone can see the contributions from each co-author.
+**[Download the most recent PDF](https://raw.githubusercontent.com/AnnieJumpCannon/RAVE/master-pdf/unrave/unrave.pdf)**
 
 
 Instructions for making changes directly to the LaTeX
