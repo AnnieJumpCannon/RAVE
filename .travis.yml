@@ -1,29 +1,56 @@
-language: python
-python:
-  - 2.7
-  - 3.4
-notifications:
-  email: true
+# This configuration file will make Travis CI compile our PDF and force-push it
+# back to the repository. 
+
+# This *wonderful* hack is credited to Dan Foreman-Mackey (GitHub: @dfm / Twitter: @exoplaneteer)
+# and David W. Hogg (GitHub/Twitter: @davidwhogg) on the repository:
+#    https://github.com/davidwhogg/mcmc/
+
+# This hack has been modified slightly to push pdfs to <branch>-pdf
 
 sudo: false
-before_install:
-  - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
-  - chmod +x miniconda.sh
-  - ./miniconda.sh -b
-  - export PATH=/home/travis/miniconda2/bin:$PATH
-  - conda update --yes conda
-  # The next couple lines fix a crash with multiprocessing on Travis and are not
-  # specific to using Miniconda.
-  # (Note: I have commented these out because this repository is not using 
-  #        multiprocessing in testing at the moment and if we can get away
-  #        without using sudo then we can use Travis containers, which are
-  #        way betterrer)
-  #- sudo rm -rf /dev/shm
-  #- sudo ln -s /run/shm /dev/shm
-install: 
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib nose six coverage
-  - pip install coveralls
-#script:
-#  - nosetests --with-coverage --cover-package=AnniesLasso 
-after_success:
-  coveralls
+
+language: python
+
+env:
+    matrix:
+        - PYTHON_VERSION=2.7
+        - PYTHON_VERSION=3.5
+
+addons:
+    apt:
+        packages:
+            - texlive-latex-recommended
+            - texlive-latex-extra
+            - texlive-fonts-recommended
+            - texlive-fonts-extra
+            - dvipng
+
+install:
+    - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    - bash miniconda.sh -b -p $HOME/miniconda
+    - export PATH=$HOME/miniconda/bin:$PATH
+    - hash -r
+    - conda config --set always_yes yes --set changeps1 no
+    - conda update -q conda
+    - conda info -a
+
+    - conda create --yes -n test python=$PYTHON_VERSION numpy scipy matplotlib
+    - source activate test
+
+before_script: # configure a headless display to test plot generation
+    - "export DISPLAY=:99.0"
+    - "sh -e /etc/init.d/xvfb start"
+    - sleep 3 # give xvfb some time to start
+
+script:
+    - cd article
+    - make
+
+after_success: |
+    if [[ "$PYTHON_VERSION" == "2.7" ]] && [ -n "$GITHUB_API_KEY" ]; then
+        git checkout --orphan $TRAVIS_BRANCH-pdf
+        git rm -rf .
+        git add -f article/unrave.pdf
+        git -c user.name='travis' -c user.email='travis' commit -m init
+        git push -q -f https://andycasey:$GITHUB_API_KEY@github.com/AnnieJumpCannon/RAVE $TRAVIS_BRANCH-pdf
+    fi
