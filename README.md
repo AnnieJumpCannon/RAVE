@@ -1,7 +1,7 @@
-*The Cannon* with RAVE
-======================
+The *unRAVE* catalog
+==================
 
-An independent data-driven analysis of **RAVE** spectra in anticipation of the **Gaia/TGAS** data release.
+An independent data-driven analysis of *RAVE* spectra in anticipation of the *Gaia/TGAS* data release.
 
 Compile the manuscript
 ======================
