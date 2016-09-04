@@ -152,7 +152,7 @@ fig, axes = plt.subplots(1, 2, figsize=(11.55, 4.55))
 
 
 x_mu, y_mu = (0, 0)
-x_sigma, y_sigma = (100, 0.15)
+x_sigma, y_sigma = (90, 0.15)
 x = ((ms_results["TEFF"] - joint_results["TEFF"]) - x_mu)/x_sigma
 y = ((ms_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
 
@@ -160,27 +160,17 @@ y = ((ms_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
 axes[0].hexbin(x, y, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), linewidths=0.1)
 
 
-x_mu, y_mu = (0, 0)
+# TODO WITHOUT THIS PENALISATION TERM THE GOLD STANDARD COMPARISON IS BAD.
+x_mu, y_mu = (0, 1.0)
 x_sigma, y_sigma = (50, 0.15)
-
-#a = (np.cos(theta)**2)/(2*sigma_x**2) + (np.sin(theta)**2)/(2*sigma_y**2)
-#b = -(np.sin(2*theta))/(4*sigma_x**2) + (np.sin(2*theta))/(4*sigma_y**2)
-#c = (np.sin(theta)**2)/(2*sigma_x**2) + (np.cos(theta)**2)/(2*sigma_y**2)
 
 x2 = ((giant_results["TEFF"] - joint_results["TEFF"]) - x_mu)/x_sigma
 y2 = ((giant_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
 
-#y = m * x + y
 
 axes[1].hexbin(x2, y2, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), linewidths=0.1)
 
 
-
-
-
-
-#x_scale = (334.677 - 233.871)
-#y_scale = (0.4375 + 0.3125)
 
 ms_distance = np.sqrt(x**2 + y**2)
 giant_distance = np.sqrt(x2**2 + y2**2)
@@ -193,11 +183,11 @@ combined_data = {
     "r_chi_sq": joint_results["r_chi_sq"]
 }
 
-w1 = np.exp(-0.5 * ms_distance**2)
-w2 = np.exp(-0.5 * (giant_distance**2))
+#w1 = np.exp(-0.5 * ms_distance**2)
+#w2 = np.exp(-0.5 * (giant_distance**2))
 
 w1 = 1.0/((ms_distance)**2)
-w2 = 1.0/((giant_distance)**2 + 10**2)
+w2 = 1.0/((giant_distance)**2)# + 10**2)
 
 #assert np.isfinite(ms_distance).sum() == np.isfinite(w1).sum()
 #assert np.isfinite(giant_distance).sum() == np.isfinite(w2).sum()
@@ -208,8 +198,8 @@ weights[~np.isfinite(weights)] = 0
 weights = weights/np.sum(weights, axis=0)
 
 
-ms_bad = ms_distance > 100
-giant_bad = giant_distance > 100
+ms_bad = ms_distance > 10
+giant_bad = giant_distance > 10
 
 
 for label_name in label_names:
@@ -226,6 +216,7 @@ for label_name in label_names:
     weights2[~np.isfinite(foo)] = 0
 
     combined_data[label_name] = np.nansum(foo, axis=0)/np.sum(weights2, axis=0)
+
 
 
 combined_table = Table(data=combined_data)
