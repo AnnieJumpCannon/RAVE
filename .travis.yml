@@ -48,6 +48,8 @@ script:
 
 after_success: |
     if [[ "$PYTHON_VERSION" == "2.7" ]] && [ -n "$GITHUB_API_KEY" ]; then
+        # make sure we are in the parent directory of the repository
+        cd $TRAVIS_BUILD_DIR
         git checkout --orphan $TRAVIS_BRANCH-pdf
         git rm -rf .
         git add -f article/unrave.pdf
