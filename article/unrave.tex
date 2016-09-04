@@ -46,6 +46,7 @@
 \newcommand{\epic}{\project{K2/EPIC}}
 \newcommand{\sdss}{\project{\acronym{SDSS}}}
 \newcommand{\tgas}{\project{\acronym{TGAS}}}
+\newcommand{\unrave}{\project{unRAVE}}
 
 \newcommand{\stub}[1]{{\color{blue} \textbf{#1}}}
 
@@ -70,7 +71,7 @@
 
 \begin{document}
 % Remove at submission:
-\slugcomment{{\color{red} \textbf{To appear on arXiv on 13 September 2016 (\difftoday{2016}{9}{7}away)}}}
+\slugcomment{{\color{red} \textbf{To appear on arXiv on 13 September 2016 (\difftoday{2016}{9}{9}away)}}}
 
 
 \title{The \project{unRAVE} catalog}
@@ -105,7 +106,7 @@ Al, Si, Ca, Fe, Ni) for \Nstarsqc\ stars.  The typical precision in chemical
 abundances is X.XX~dex for stars on the giant branch.  We provide 
 spectrophotometric distances based on our stellar parameters, which should 
 be superior to the parallax-based distances for faint or distant objects in
-\tgas.  The unRAVE catalog presented here, in conjunction with \tgas, will 
+\tgas.  The \unrave\ catalog presented here, in conjunction with \tgas, will 
 be the most powerful data set for chemo-orbital analysis at the dawn of 
 broadly available \gaia\ data.
 \end{abstract}
@@ -139,40 +140,40 @@ Galactic disk, to name a few.
 These formed just some of the scientific drivers for the \gaia\ space telescope.
 \gaia\ is primarily an astrometric mission, and will provide precise positions,
 parallaxes and proper motions for more than $10^9$ stars in its final data
-release in 2022.  While this is a sample size about three orders of magnitude 
+release in 2022.  While this is a sample size about four orders of magnitude 
 larger than its predecessor \hipparcos, both astrometry and chemistry are 
 required to fully characterize the formation and evolution of our Galaxy. 
 \gaia\ will also provide radial velocities, stellar parameters and chemical 
 abundances for a subset of brighter stars, but these measurements will not be 
 available in the first few data releases. Until those abundances are available,
 astronomers seeking to simultaneously use chemical and dynamical information are
-reliant on ground-based spectroscopic surveys in order to complement the 
-available \gaia\ astrometry.
+reliant on ground-based spectroscopic surveys to complement the available 
+\gaia\ astrometry.
 
 
-The first \gaia\ data release will include positions, proper motions, and 
-parallaxes for approximately two million stars in the Tycho-2 \citep{Hog_2000} 
-catalog \citep{Michalik_2015a,Michalik_2015b}.  After cross-matching all major 
-stellar spectroscopic surveys\footnote{Specifically we cross-matched the Tycho-2
-catalog against the \apogee\ \citep{Zasowski_2013}, \ges\
-\citep{Gilmore_2012,Randich_2013}, \galah\ \citep{DeSilva_2015},
-\lamost\ \citep{Cui_2012}, and \rave\ \citep{Steinmetz_2006} 
-surveys}, we found the RAdial Velocity Experiment (hereafter \rave) survey to 
-have the largest overlap with the first \gaia\ data release: 292,036 
-stars.  We then used the \gaia\ universe model snapshot \citep{Robin_2012} to 
-estimate the precision in parallax and proper motions that will be available in 
-the first \gaia\ data release (DR1) for stars in those overlap samples.  Comparing
-the expected precision to what is currently available, we further found that the
-\rave\ survey will benefit most from \gaia\ DR1.  The distances of 63\% of the 
-\rave--\gaia\ DR1 overlap sample (182,862 stars) are expected to improve with 
-the first \gaia\ data release, and 47\% of stars are likely to have better 
-proper motions (137,211 stars).  Although the \gaia\ universe model assumes 
-end-of-mission uncertainties --- and does not account for systematics in the first
-data release --- this calculation still provides intuition for the relative 
-improvement the first \gaia\ data release can make to ground-based surveys.  The 
-expected improvements for \rave\ motivated us to examine what chemical abundances
+The first \gaia\ data release will include the Tycho-Gaia Astrometric Solution
+\citep[hereafter \tgas;][]{Michalik_2015a,Michalik_2015b}: positions, proper 
+motions, and parallaxes for approximately two million stars in the Tycho-2 
+\citep{Hog_2000} catalog.  After cross-matching all major stellar spectroscopic 
+surveys\footnote{Specifically we cross-matched the Tycho-2 catalog against the 
+\apogee\ \citep{Zasowski_2013}, \ges\ \citep{Gilmore_2012,Randich_2013}, 
+\galah\ \citep{DeSilva_2015}, \lamost\ \citep{Cui_2012}, and \rave\ 
+\citep{Steinmetz_2006} surveys}, we found the RAdial Velocity Experiment 
+(\rave) survey to have the largest overlap with the first \gaia\ data release: 
+292,036 stars.  We then used the \gaia\ universe model snapshot 
+\citep{Robin_2012} to estimate the precision in parallax and proper motions that
+will be available in the first \gaia\ data release (DR1) for stars in those 
+overlap samples.  Comparing the expected precision to what is currently available, 
+we further found that the \rave\ survey will benefit most from \gaia\ DR1.  The 
+distances of 63\% of the \rave--\gaia\ DR1 overlap sample (182,862 stars) are 
+expected to improve with the first \gaia\ data release, and 47\% of stars are 
+likely to have better proper motions (137,211 stars).  Although the \gaia\ universe
+model assumes end-of-mission uncertainties --- and does not account for systematics
+in the first data release --- this calculation still provides intuition for the 
+relative improvement the first \gaia\ data release can make to ground-based surveys.  
+The expected improvements for \rave\ motivated us to examine what chemical abundances
 were available from those data, and to evaluate whether we could enable new 
-chemodynamic studies by contributing to the existing set of chemical abundances.
+chemo-dynamic studies by contributing to the existing set of chemical abundances.
 
 
 We briefly describe the \rave\ data in Section~\ref{sec:data}, before explaining
@@ -181,9 +182,8 @@ we outline a number of validation experiments, including: internal sanity checks
 comparisons with literature samples, and investigations to ensure our results
 are consistent with expectations from astrophysics.  We discuss the implications
 of these comparisons and our results in Section~\ref{sec:discussion}.  We provide
-concluding remarks in Section~\ref{sec:conclusion}, as well as a description for
-how to access our results electronically.
-
+concluding remarks in Section~\ref{sec:conclusion}, and describe how to access our
+results electronically.
 
 
 \section{Data}
@@ -249,8 +249,8 @@ for more details of this re-processing.
 Given the high-quality of the normalization performed by the \rave\ team, we chose
 not to re-normalize the spectra.  Our tests demonstrated that the procedure 
 outlined in \citet{Kunder_2016} is sufficient for our analysis procedure. Therefore,
-there is a limited number of pre-processing steps that we conducted before our
-analysis began.  First, we calculated inverse variance arrays from the $1\sigma$ 
+there is a limited number of pre-processing steps that we performed before starting
+our analysis.  First, we calculated inverse variance arrays from the $1\sigma$ 
 uncertainties provided, and then we re-sampled the flux and inverse variance
 arrays onto a common rest-wavelength map for all stars.  Depending on the fibre 
 used and the stellar radial velocity, the range of rest-frame wavelength values
@@ -279,9 +279,10 @@ spectra have S/N $\lesssim 50$.
 
 
 There are two main analysis steps when using \thecannon: the \emph{training} 
-step and the \emph{test} step.  These stages are briefly described in the
-following section, and a more thorough introduction can be found in \citet{Ness_2015}.
-We make the following explicit assumptions about the \rave\ spectra and \thecannon:
+step and the \emph{test} step.  We describe these stages in the context of our
+model in the following section, and a more thorough introduction can be found
+in \citet{Ness_2015}.  We make the following explicit assumptions about the 
+\rave\ spectra and \thecannon:
 
 \begin{itemize}
 \item We assume that any fibre- and time-dependent variations in spectral
@@ -289,38 +290,25 @@ resolution in the \rave\ spectra are negligible.
 \item The \rave\ noise variances are approximately correct, independent between
 pixels, and normally distributed.
 \item We assume that the normalization procedure employed by the \rave\ pipeline
-is invariant with respect to the labels we seek to measure, and invariant with 
-respect to the S/N ratio.
+is invariant with respect to the labels we seek to measure (e.g., $\teff$, $\logg$,
+or [Fe/H]), and invariant with respect to the S/N ratio.
 \item We assume that stars with similar labels ($\teff$, $\logg$, and abundances)
 have similar spectra.
 \item A stellar spectrum is a smooth function of the label values for that star,
 and we assume that the function is smooth enough within a sub-space of the labels
 (e.g., the giant branch or the main-sequence) that it can be reasonably approximated 
 with a low-order polynomial in label space.
-\item The training set has mean accurate labels.  Note
-that we do not assume that \emph{every} label in the training is accurate -- we can
-afford to have a small fraction of inaccurate labels (e.g., a few obvious 
+\item The training set (Section~\ref{sec:the-training-set}) has mean accurate labels.
+Note that we do not assume that \emph{every} label in the training is accurate -- we
+can afford to have a small fraction of inaccurate labels (e.g., a few obvious 
 misclassifications in the training set are affordable).
 \item We assume the training set is representative of the test set (the \rave\ survey).
 \end{itemize}
 
 
-%We adopt the nomenclature first set out in \citet{Ness_2015}, and extended in 
-%\citet{Casey_2016b}.  However, one distinction here with \citet{Casey_2016b} is 
-%that in this work the \emph{labelled} set and the \emph{training} set will be 
-%the same set.  In \citet{Casey_2016b} two subsets of the labelled set were 
-%defined: the training set and a distinct validation set.  This allowing us to 
-%train on the \emph{training set} and then test on the \emph{validation set}.  
-%However in this work the labelled set is relatively small, about an order of 
-%magnitude smaller than what was available in \citet{Casey_2016b}, and therefore 
-%no validation set exists. We will use all labelled set stars in the training 
-%step and supplement our validation experiments with literature comparisons.  
-%Thus, throughout this work we will use the terms \emph{labelled set} and 
-%\emph{training set} interchangeably. 
-
-
 \subsection{The model}
 \label{sec:the-model}
+
 
 \noindent{}Given our assumptions, the model we adopt is
 \begin{eqnarray}\label{eq:model}
@@ -341,7 +329,7 @@ $s_j^2$ describes the excess variance at the $j$-th wavelength pixel.
 
 At the \emph{training} step we fix the $K$-lists of labels for the $n$ training set.
 At each wavelength pixel $j$, we then find the parameters $\vectheta_j$ and $s_j^2$
-by optimizing the penalized likelihood function:
+by optimizing the penalized likelihood function
 \begin{eqnarray}\label{eq:train}
 \vectheta_j,s^2_j &\leftarrow& \argmin{\vectheta,s}\left[
     \sum_{n=0}^{N-1} \frac{[y_{jn}-\vecv(\ell_n)\cdot\vectheta]^2}{\sigma^2_{jn}+s^2}
@@ -360,9 +348,9 @@ $\vectheta$ values to take on zero values without breaking convexity:
 Note that the $d$ subscript here is zero-indexed; the function $Q(\vectheta)$ does not act
 on the (first) $\theta_0$ coefficient, as this is a `pivot point' (mean flux value) that 
 we do not expect to diminish with increasing regularization (e.g., see equation 
-\ref{eq:vectorizer-three-label}).  In practice equation \ref{eq:train} is 
-optimized by fixing $s_j^2 = 0$ to make equation~\ref{eq:train} a convex optimization 
-problem, then we optimize for $\vectheta_j$, before solving for $s_j^2$.  
+\ref{eq:vectorizer-three-label}).  In practice we first fix $s_j^2 = 0$ to make equation
+\ref{eq:train} a convex optimization problem, then we optimize for $\vectheta_j$, before 
+solving for $s_j^2$.  
 
 
 The \emph{test step} is where we fix the parameters $\vectheta_j,s_j^2$ at all wavelength
@@ -403,7 +391,7 @@ stars incorrectly sit above an isochrone in a classical Hertzsprung-Russell diag
 If we consider lower-resolution studies as potential training sets, there are 2,369
 stars that overlap with \lamost\ --- of which 2,213 have positive S/N ratios in the 
 $g$-band (\texttt{snrg}).  However, the labels are expectedly less precise given the
-lower resolution, no detailed abundance information is available for main-sequence 
+lower resolution, there are no elemental abundances available for the main-sequence 
 stars\footnote{Abundance information is available for \lamost\ stars from \citet{Ho_2016},
 but that sample contains only giant stars}, and the \lamost\ lower main-sequence suffers
 from the same systematic effects seen in \apogee\ data.  The \galah\ survey has a good 
@@ -418,20 +406,20 @@ overlap sample for giant star labels in the training set.  Of these, about 900 a
 giants according to \apogee.  From this sample we selected stars to have: metallicity
 determinations ([Fe/H] $> -5$); S/N ratios of $>$200 in \apogee\ and $>$25 in \rave; and 
 we further required that \aspcap\ did not report any peculiar flags 
-(\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 357 stars along the giant 
-branch, with metallicities ranging from $[{\rm Fe/H}] = -1.62$ to 0.32.  Intermediate 
+(\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 536 stars along the giant 
+branch, with metallicities ranging from $[{\rm Fe/H}] = -1.79$ to 0.26.  Intermediate 
 tests with globular cluster members showed that the metallicity range of the training 
 set needed to extend below $[{\rm Fe/H}] \lesssim -2$ in order for our catalog to be 
-practically useful.  Therefore, as we will describe in more detail below, we 
-supplemented this sample with giant stars from the \epic\ catalog \citep{Huber_2016}.
+practically useful.  \stub{Supplemented this sample with known metal-poor stars in \rave}.
+
 
 
 Assembling a suitable training set for the main-sequence and sub-giant branch was less
-trivial.  There are no spectroscopic studies that both extend the range of stellar types
-we are interested in (e.g., FGKM-type stars), and have a large enough sample size that
+trivial.  There are no spectroscopic studies that extend the range of stellar types we 
+are interested in (e.g., FGKM-type stars), and also have a large enough sample size that
 overlaps with \rave.  Moreover, most of the spectroscopic studies we considered also 
 showed a flat lower main-sequence, a systematic consequence of the analysis method adopted 
-\citep[e.g., see][for a discussion]{Bensby_2014}.  For these reasons we chose to make 
+\citep[see][for discussion on this issue]{Bensby_2014}.  For these reasons we chose to make 
 use of the \epic\ catalog \citep{Huber_2016} for the training set labels on the 
 main-sequence and sub-giant branch.  The \epic\ catalog follows from the successful
 \project{Kepler} input catalog \citep{Brown_2011}, and provides probabilistic stellar 
@@ -455,9 +443,8 @@ the total sample size, but in practice it removes most misclassifications.  The
 situation is far more favourable for dwarfs and giants.  Only $1-4$\% of giant 
 stars are misclassified as dwarfs, and about 7\% of dwarfs are misclassified as 
 giants.  To summarise, the \epic\ labels with narrow confidence intervals are 
-usually of high fidelity, and any spurious misclassifications could be identified
-if spectra were available.
-
+usually of high fidelity, and given that we have spectra, we can identify any
+spurious misclassifications.
 
 
 We sought to have a small overlap between our giant and main-sequence star training
@@ -471,7 +458,8 @@ must be less than 0.15~dex; the $S/N$ of the \rave\ spectra must exceed
 30~pixel$^{-1}$; and $\teff \leqslant 6750$~K.  Unfortunately these strict constraints
 removed most metal-poor stars, which we later found to cause the test labels to have
 under-predicted abundances for dwarfs of low metallicity.  For this reason we relaxed
-(ignored) those quality constraints for stars with $[{\rm Fe/H}] < -1$.  After training
+(ignored) those quality constraints for stars with $[{\rm Fe/H}] < -1$.  
+\stub{Include known metal-poor stars in \rave?}. After training
 a model based on main-sequence and giant stars (Section \ref{sec:the-model}), we found 
 we could identify misclassifications by leave-one-out cross-validation.  However, we 
 chose not to do this because the number of likely misclassifications in the training
@@ -480,41 +468,19 @@ was minimal.  The distilled sample of the \rave--\epic\ overlap catalog contains
 stars (of 4,611).
 
 
-We previously alluded to including giant stars from \epic\ in our training set based 
-on \apogee\ labels.  This was principally to ensure an adequate balance of metal-poor
-giant stars in the training set.  Without this inclusion, we again found that the
-abundances of giant stars would be under-predicted at low metallicity, critically 
-affecting any inferences we wish to make with low metallicity stars (e.g., globular
-clusters).  The metallicities in the \epic\ catalog come from a variety of spectroscopic
-sources, or photometrically-selected when no spectroscopic information is available.
-While these heterogeneous metallicities may introduce scaling differences, on balance we
-later found that it was more important to include reasonably accurate (albeit imprecise)
-metallicities of metal-poor stars in the training set rather than excluding metal-poor
-stars entirely.  In Section~\ref{sec:validation} we show that these potential issues
-have a negligible impact on the test set labels, and we further show that our abundances
-are consistent with high-resolution studies in the literature.
+\subsection{A 3-label model ($\teff$, $\logg$, $\feh$) for all stars}
+\label{sec:a-simple-model}
 
 
 We have constructed a justified training set for stars across the main-sequence, sub-giant,
 and red giant branch.  However the lack of overlap between \rave\ and other works have
 resulted in a somewhat peculiar situation.  Detailed abundances are available from \apogee\
 for all giant stars in our sample, but only imprecise metallicities are available from
-\epic\ for stars on the main-sequence and the sub-giant branch.  In the following section 
-we will construct separate models for the giant branch and main-sequence.  We will
-demonstrate the abundance labels are on the same scale, before combining the results from
-multiple models to produce a single catalog.
-
-
-\subsection{A 3-label model ($\teff$, $\logg$, $\feh$) for all stars}
-\label{sec:a-simple-model}
-
-
-The model we introduced in Section~\ref{sec:the-model} is generic in the sense that there 
-is no description for how complex the vectorizing function $\vecv(\ell)$ should be, or how
-many $K$ labels are used.  Given previous successes using a second-order (quadratic) 
-polynomial model \citep{Ness_2015,Ness_2016,Ho_2016,Casey_2016b}, we will first adopt a 
-three-label ($\teff$, $\logg$, [Fe/H]) model for all (main-sequence and giant) stars. Thus, 
-for our first set of model experiments the vectorizer $\vecv(\ell_n)$ expands as,
+\epic\ for stars on the main-sequence and the sub-giant branch.  Here we will construct 
+a simple model for \emph{all} stars that only makes use of three labels ($\teff$, $\logg$, 
+[Fe/H]), before we outline how we derive abundances for giant branch stars.  The complexity
+for this model will be quadratic ($\teff^2$ is the highest term), where the vectorizer 
+$\vecv(\ell_n)$ expands as,
 \begin{eqnarray}\label{eq:vectorizer-three-label}
 \vecv(\ell_n) \rightarrow \left[1, T_{{\rm eff},n}, \logg_n, [{\rm Fe/H}]_n, T_{{\rm eff},n}^2, \logg_n\cdot{}T_{{\rm eff},n}, \feh_n\cdot{}T_{{\rm eff},n}, \logg_n^2, \feh_n\cdot\logg_n, \feh_n^2\right]
 \end{eqnarray}
@@ -526,31 +492,31 @@ for our first set of model experiments the vectorizer $\vecv(\ell_n)$ expands as
 
 
 We used no regularization ($\Lambda = 0$) for this model.  After training the model we
-treated all \Nspectra\ spectra as test set objects.  In Figure \ref{fig:3label-test-set}
-we show the two-dimensional distribution of effective temperatures $\teff$ and surface 
-gravities $\logg$ for all spectra with $\chi_{r}^2 < 3$ and $S/N > 10$.  The main-sequence
-and red giant branch are clearly visible.  However, the details of stellar evolution are
-no longer present: the sub-giant branch is not discernible, and there are a number of
-systematic artefacts (over-densities) in the label space of the test set.  These artefacts
-disappear when we require additional quality constraints (e.g., no peculiar morphological
-classifications), but the details of the Hertzsprung-Russell diagram are still not
-present.  Thus, we concluded that while this model is useful for discerning stellar
-classifications (e.g., F2-type giant), the labels are too imprecise.
+treated all \Nspectra\ spectra as test set objects.  In the right-hand panel of Figure 
+\ref{fig:tes-set-density} we show the effective temperature $\teff$ and surface gravity 
+$\logg$ for all spectra.  The main-sequence and red giant branch are clearly visible.  
+However, the details of stellar evolution are no longer present: the sub-giant branch is 
+not discernible, and there are a number of systematic artefacts (over-densities) present
+in label space.  These artefacts disappear when we require additional quality constraints 
+(e.g., no peculiar morphological classifications), but the complexity of the 
+Hertzsprung-Russell diagram is still not present.  Thus, we concluded that while this 
+model could be useful for deriving stellar classifications (e.g., F2-type giant), the 
+labels are too imprecise.
 
 
-We chose to adopt a separate model for the main-sequence and the giant branch rather
-than switch to a single, higher order model.  This choice allows us to infer
-detailed abundance labels for giant stars, and to infer metallicity labels for stars
-on the main-sequence and sub-giant branch.  However, adopting two separate models
-introduces the challenge of how to combine the results from two models, or how to
-assign one star as being a main-sequence/giant star.  In Section~\ref{sec:joining-the-models}
+We chose to adopt separate models for the main-sequence and the red giant branch rather
+than switch to a single model with more complexity.  This choice allowed us to derive
+stellar parameters for stars on the main-sequence and sub-giant branch, as well as 
+detailed elemental abundances for red giant branch stars.  However, adopting two separate
+models introduces the challenge of how to combine the results from two models, or how to
+assign one star as `belonging' to a single model.  In Section~\ref{sec:joining-the-models}
 we describe how we will use the 3-label model of the main-sequence and giant branch
-(introduced in this section) to discriminate between results from the 3-label 
-main-sequence model in Section \ref{sec:unevolved-star-model} and the 9-label giant 
+(introduced in this section) to discriminate between results from a 3-label 
+main-sequence model in Section \ref{sec:unevolved-star-model} and a 9-label giant 
 star model in Section \ref{sec:evolved-star-model}.
 
 
-\subsection{A 3-label model for unevolved stars}
+\subsection{A 3-label model ($\teff$, $\logg$, $\feh$) for unevolved stars}
 \label{sec:unevolved-star-model}
 
 
@@ -568,20 +534,21 @@ through cross-validation.
 
 
 We show the \emph{percentage difference} in the RMS deviation of the labels with respect
-to the unregularized model in Figure \ref{fig:set-ms-model-hyperparameter}.  The upper 
+to the unregularized model in Figure \ref{fig:set-hyperparameters}.  The upper 
 and lower envelope represent the boundaries across all labels, showing that with increasing
 regularization, the RMS decreased in \emph{all} labels.  We found similar
 improvements in the biases, however these were already minimal in the unregularized
 case.  The improvement in RMS reaches a minimum value near $\Lambda = X.XX$, where
+%3.56224789e+01
 we achieve RMS deviations that are about 30\% better than the unregularized case.
-Based on this improvement we set $\Lambda = X.XX$ for the three-label main-sequence model.
-At this regularization strength, the bias and RMS values found by leave-one-out
+Based on this improvement we set $\Lambda = X.XX$ for this model.  At this regularization 
+strength, the bias and RMS values found by leave-one-out
 cross validation are, respectively: $X$~K and $XX$~K for $\teff$, $X.XX$~dex and $X.XX$~dex
 for $\logg$, with $X.XX$~dex and $X.XX$~dex for [Fe/H].
 
 
-We inferred labels for all \rave\ spectra using this main-sequence model.  
-The resulting labels for the survey sample are shown in Figure \ref{fig:hrd-from-individual-models}.  
+We inferred labels for all \rave\ spectra using this main-sequence/sub-giant star model.  
+The results for the survey sample are shown in the left panel of Figure \ref{fig:test-set-density}.  
 The increased density of Solar-type stars is consistent with \rave\
 observing stars in the local neighbourhood, and the high number of turn-off
 and main-sequence stars relative to the sub-giant branch is expected from 
@@ -594,38 +561,36 @@ model is (poorly) extrapolating outside the convex hull of the training set.
 \subsection{A 9-label model for detailed abundances of giant stars}
 \label{sec:evolved-star-model}
 
-
-We only have $\teff$, $\logg$, and [Fe/H] for unevolved stars in our training
-set from the \epic\ catalog \citep{Huber_2016}.  However, the giant stars 
-have stellar parameters ($\teff$, $\logg$) and up to 15 individual abundances
-from the \aspcap\ \citep{aspcap_paper}.  A subset of these elements have atomic
-transitions in the \rave\ wavelength region: \ion{O}{1}, \ion{Mg}{1}, 
-\ion{Al}{1}, \ion{Si}{1}, \ion{Ca}{2}, \ion{Ti}{1}, \ion{Fe}{1}, and \ion{Ni}{1}.  
-We excluded [Ti/H] from our abundance list because of systematics in the training
+The red giant branch stars in our training set have have stellar parameters 
+($\teff$, $\logg$) and up to 15 individual abundances from the \aspcap\ 
+\citep{aspcap_paper}.  A subset of these elements have atomic transitions in the 
+\rave\ wavelength region: \ion{O}{1}, \ion{Mg}{1}, \ion{Al}{1}, \ion{Si}{1}, 
+\ion{Ca}{2}, \ion{Ti}{1}, \ion{Fe}{1}, and \ion{Ni}{1}.  However, we 
+excluded [Ti/H] from our abundance list because of systematics in the training
 set \citep{Holtzman_2015,Hawkins_2016}.  Therefore we are left with nine labels 
-in our giant star model: $\teff$, $\logg$, and seven individual abundances.  
+in our giant star model: $\teff$, $\logg$, and seven elemental abundances.  
 
 
-We used a quadratic vectorizer for the giant star model, where the quadratic and
-cross-terms are expanded in the same way as \ref{eq:vectorizer-three-label}, only
-with nine labels.  The regularization hyperparameter $\Lambda$ was set in the same
-way described in Section \ref{sec:unevolved-star-model}, using the same 30 trials of $\Lambda$.
-The results are shown in Figure \ref{fig:set-giant-model-hyperparameters}, where
+Similar to Sections \ref{sec:a-simple-model} and \ref{sec:unevolved-star-model},
+we used a quadratic vectorizer for the giant star model.  Here the terms are 
+expanded in the same way as equation \ref{eq:vectorizer-three-label}, only
+with nine labels instead of three.  We set the regularization hyperparameter $\Lambda$
+in the same way described in Section \ref{sec:unevolved-star-model}, using the same 30 trials of $\Lambda$.
+The results are shown in Figure \ref{fig:set-hyperparameters}, where
 again the enveloped region represents the minimum and maximum change in RMS label
 deviation with respect to the unregularized case.  At the point of maximum improvement 
 near $\Lambda = X.XX$, the RMS in all nine labels has decreased by at least $X$\%, 
 and up to $X$\%.  Here the regularization strength also produces a sparser matrix
-of $\vectheta$, with a $\approx20$\% increase in the fraction of zero-valued 
-entries, particularly for the cross-terms (Figure \ref{fig:giant-model-sparsity},
-third panel).  Based on the increased model sparsity and decreasing RMS deviation
-in the labels, we adopt $\Lambda = X.XX$ for our giant star model.
+of $\vectheta$, with $\approx20$\% more terms (mostly cross-terms) having zero-valued entries.
+Based on the increased model sparsity and decreasing RMS deviation in the labels, 
+we adopt $\Lambda = X.XX$ for the giant star model.
 
 
 Results from cross-validation on our regularized model imply that the precision
-in labels is XXX~K in $\teff$, X.XX~dex in $\logg$, and X.XX~dex (EL) and 
+in labels is XXX~K in $\teff$, X.XX~dex in $\logg$, and between X.XX~dex (EL) and 
 X.XX~dex (EL) depending on the elemental abundance.  We inferred labels for all
-XXX,XXX \rave\ spectra using this model, and these results are summarized in
-Figure \ref{fig:test-set-hrd} (middle panel).  The red clump is clearly visible
+\Nspectra\ \rave\ spectra using this model, and these results are summarized in
+Figure \ref{fig:test-set-density} (middle panel).  The red clump is clearly visible
 and in the expected location, without requiring any post-analysis calibration.
 Artefacts due to dwarf stars in the test set are also present.
 
@@ -633,10 +598,29 @@ Artefacts due to dwarf stars in the test set are also present.
 \subsection{Joining the models}
 \label{sec:joining-the-models}
 
+% For each spectrum we have results from three different models, described in the previous sections
 
-% The single model.
+% the artefacts show that the models poorly extrapolate outside the training set.
+% the joint model shows that a single quadratic model is too simple to apply to the entire rave data
 
-test
+% we cannot just use reduced chi sq to exclude stars, nor can we just exclude things that are
+% outside the range of values in the training set --> stars project back into the label space
+
+% therefore we will use the joint model to inform us as to whether we should adopt
+% results from the giant star model, the dwarf model, or a linear combination of the two.
+
+
+% Show results compared to the joint model.
+% Central density of points that agree well with the joint model.
+% Sigmas chosen to scale both models so that the central densities are approximately isotropic.
+% The artefacts in the previous figures appear here too, in strange locations.
+
+% Equations for calculating weights
+
+% Summing bsaed on weights
+
+% Show HRD with mean weight fraction
+
 
 
 \begin{figure*}[t!]
@@ -961,7 +945,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/set-giant-regularization.pdf}
-\caption{The fractional improvement in RMS deviation between inferred and training labels for the 9-label giant model at different regularization strengths.  The RMS values were calculated by leave-one-out cross-validation.  The points and solid line indicate the mean improvement across all labels. The filled area represents the minimum and maximum improvements across all labels.  The maximum improvement (decrease) in RMS label deviations occurs at $\Lambda \approx 0.3$, and this improvement persists until $\Lambda \approx 0.6$.}
+\caption{The fractional improvement in RMS deviation between inferred and training labels for the 9-label giant model at different regularization strengths.  The RMS values were calculated by leave-one-out cross-validation.  The points and solid line indicate the mean improvement across all labels. The filled area represents the minimum and maximum improvements across all labels.  The maximum improvement (decrease) in RMS label deviations occurs at $\Lambda \approx 0.3$, and this improvement persists until $\Lambda \approx 0.6$.\label{fig:set-hyperparameters}}
 \end{figure}
 
 \begin{figure}[p]
