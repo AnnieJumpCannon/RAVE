@@ -1,7 +1,7 @@
 *The Cannon* with RAVE
 ======================
 
-Some info.
+An independent data-driven analysis of **RAVE** spectra in anticipation of the **Gaia/TGAS** data release.
 
 Compile the manuscript
 ======================
@@ -60,4 +60,4 @@ git push
 
 License
 ======= 
-Copyright 2016. All rights reserved.
+Copyright 2016 the authors. All rights reserved.
