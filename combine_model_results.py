@@ -236,14 +236,42 @@ ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], gridsize=N,
 
 
 
-N = 70
-fig, ax = plt.subplots()
+# Plot log(density) of the three models.
+K = 1
+factor = 3.5
+lbdim = 0.2 * factor
+tdim = 0.1 * factor
+rdim = 0.25 * factor
+whspace = 0.05
+xspace = factor
+yspace = factor * K + factor * (K - 1) * whspace + lbdim * (K - 1)
+xdim = lbdim + xspace + rdim
+ydim = lbdim + yspace + tdim
+
+fig, ax = plt.subplots(K, 1, figsize=(xdim, ydim))
+fig.subplots_adjust(
+    left=lbdim/xdim, bottom=lbdim/ydim, right=(xspace + lbdim)/xdim,
+    top=(yspace + lbdim)/ydim, wspace=whspace, hspace=whspace)
+
+
+N = 35
 
 ok = combined_table["snr"] > 10
-ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], gridsize=N,
-    extent=(3000, 7500, 0, 5.5), C=weights2[0][ok], edgecolor="#ffffff", linewidths=0.0)
+_ = ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], gridsize=N,
+    extent=(3000, 8000, 0, 5.5), C=weights2[0][ok], edgecolor="#ffffff", linewidths=0.1,
+    cmap="Spectral")
 
+ax.set_xlim(ax.get_xlim()[::-1])
+ax.set_ylim(ax.get_ylim()[::-1])
+ax.set_xlabel(r"$T_{\rm eff}$ $[{\rm K}]$")
+ax.set_ylabel(r"$\log{g}$")
 
+cbar = plt.colorbar(_, ticks=[0, 0.25, 0.5, 0.75, 1.0])
+cbar.set_label(r"$w_{ms}/(w_{ms} + w_{giant})$")
+
+fig.tight_layout()
+fig.savefig("article/figures/model-weights.pdf", dpi=300)
+fig.savefig("article/figures/model-weights.png", dpi=300)
 
 
 raise a

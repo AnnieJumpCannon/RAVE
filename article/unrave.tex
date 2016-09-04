@@ -210,7 +210,8 @@ high-resolution \ges\ survey \citep{Gilmore_2012,Randich_2013}, and the
 Spectrometer on board the \gaia\ space telescope \citep{Kordopatis_2011,Recio-Blanco_2016}.  
 The region includes the \ion{Ca}{2} near infrared triplet lines --- strong 
 transitions that are dominated by pressure broadening --- which are visible even 
-in very low signal-to-noise (S/N) data or metal-poor stars.  Atomic transitions of 
+in metal-poor stars or spectra with very low signal-to-noise (S/N) ratios.
+Atomic transitions of 
 light-, $\alpha$-, and Fe-peak elements are also present, allowing for detailed 
 chemical abundance studies.
 
@@ -562,13 +563,14 @@ model is (poorly) extrapolating outside the convex hull of the training set.
 \label{sec:evolved-star-model}
 
 The red giant branch stars in our training set have have stellar parameters 
-($\teff$, $\logg$) and up to 15 individual abundances from the \aspcap\ 
-\citep{aspcap_paper}.  A subset of these elements have atomic transitions in the 
+($\teff$, $\logg$) and up to 15 elemental abundances from the \aspcap\ 
+\citep{Garcia_Perez_2016}.  A subset of these elements have atomic transitions in the 
 \rave\ wavelength region: \ion{O}{1}, \ion{Mg}{1}, \ion{Al}{1}, \ion{Si}{1}, 
 \ion{Ca}{2}, \ion{Ti}{1}, \ion{Fe}{1}, and \ion{Ni}{1}.  However, we 
-excluded [Ti/H] from our abundance list because of systematics in the training
-set \citep{Holtzman_2015,Hawkins_2016}.  Therefore we are left with nine labels 
-in our giant star model: $\teff$, $\logg$, and seven elemental abundances.  
+excluded [Ti/H] from our abundance list because of systematics in the \aspcap\
+[Ti/H] abundances \citep{Holtzman_2015,Hawkins_2016}.  Therefore we are left 
+with nine labels in our giant star model: $\teff$, $\logg$, and seven elemental 
+abundances.  
 
 
 Similar to Sections \ref{sec:a-simple-model} and \ref{sec:unevolved-star-model},
@@ -598,50 +600,98 @@ Artefacts due to dwarf stars in the test set are also present.
 \subsection{Joining the models}
 \label{sec:joining-the-models}
 
-% For each spectrum we have results from three different models, described in the previous sections
-
-% the artefacts show that the models poorly extrapolate outside the training set.
-% the joint model shows that a single quadratic model is too simple to apply to the entire rave data
-
-% we cannot just use reduced chi sq to exclude stars, nor can we just exclude things that are
-% outside the range of values in the training set --> stars project back into the label space
-
-% therefore we will use the joint model to inform us as to whether we should adopt
-% results from the giant star model, the dwarf model, or a linear combination of the two.
+We have derived labels for all \Nspectra\ \rave\ spectra using the three models
+described in previous sections.  The results from the joint model --- that includes 
+the main-sequence, sub-giant and red giant branch --- shows that a single quadratic
+model is too simple for the \rave\ spectral range.  The other models have problems,
+too: unrealistic over-densities in label space show that the main-sequence model and
+the giant model make very poor extrapolations for stars outside their respective
+training sets.  For these reasons we were forced to exclude or severely penalize 
+incorrect results from both models.
 
 
-% Show results compared to the joint model.
-% Central density of points that agree well with the joint model.
-% Sigmas chosen to scale both models so that the central densities are approximately isotropic.
-% The artefacts in the previous figures appear here too, in strange locations.
+Before attempting to join the results from different models, we excluded results
+in either model that had a reduced $\chi_{r}^2 > 3$.  We further discarded stars with
+labels that are outside the extent of the training set.  Specifically for the
+results from the giant model we (conservatively) excluded stars with derived 
+$\logg > 3.5$, and for the results from the main-sequence model we excluded 
+sub-giant stars ($\logg < 4$ and $\teff < 5000$~K) that were outside the 
+two-dimensional ($\teff$, $\logg$) convex hull of the training set used for the main-sequence model.  Unfortunately these restrictions did not remove all spurious
+results.  The reason for this can be explained with an example:  consider that our 
+giant star model was trained with only giant stars but tested with both giant 
+stars and dwarf stars.  Some classes of stars (e.g., metal-poor dwarfs) can 
+project into a region of label space that would suggest it is a giant 
+(e.g., a clump star).  These objects could have relatively low $\chi_{r}^2$ values
+(e.g., $\chi_{r}^2 < 3$) and in this example, they would appear as bonafide red clump 
+stars.  These incorrect projections are extrapolation errors in high dimensions that
+project to `normal' parts of the label space in two dimensions.  For these reasons 
+we also made use of the joint model in Section~\ref{sec:a-simple-model}
+to inform whether we should adopt results from: the red giant branch model; the
+main-sequence/sub-giant model; or a linear combination of the two. 
 
-% Equations for calculating weights
+In Figure \ref{fig:joint-model-differences} we show the differences in effective temperature
+$\teff$ and surface gravity $\logg$ between: the main-sequence model and the joint
+model; and the differences between the red giant branch model and the joint model. We have scaled
+the differences in $\teff$ and $\logg$ to make the central peak near $(0, 0)$ to 
+% ARC to HOGG: This is a total hack. Should we fit for these and \rho_{\teff,\logg} or are you content with the hack?
+be approximately isotropic by setting
+	$\delta_{T_{\rm eff}} = 90$~K for the main-sequence model, 
+	$\delta_{T_{\rm eff}} = 50$~K for the giant model, and 
+	$\delta_{\log{g}} = 0.15$~dex for both models.
+The stars within the peak at $(0, 0)$ represent objects where
+the joint model and the comparison model both report similar labels.  The artefacts 
+seen in the Hertszprung-Russell diagrams in Figure \ref{fig:test-set-density} are
+also present in Figure \ref{fig:joint-model-differences} as over-densities far away
+from the central peak.  Therefore, we can 
+adopt the scaled distance in labels $\teff$ and $\logg$ from the joint model,
+% ARC to HOGG: Please suggest any nomenclature or definition changes as you see fit!
+\begin{eqnarray}
+	d_{ms} & = & \left(\frac{T_{{\rm eff},ms} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},ms}}}\right)^2 + \left(\frac{\log{g}_{ms} - \log{g}_{joint}}{\delta_{\log{g},ms}}\right)^2   \nonumber \\
+	d_{giant} & = & \left(\frac{T_{{\rm eff},giant} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},giant}}}\right)^2 + \left(\frac{\log{g}_{giant} - \log{g}_{joint}}{\delta_{\log{g},giant}}\right)^2   \quad ,
+\end{eqnarray}
 
-% Summing bsaed on weights
+\noindent{}as a metric to derive the weights,
+\begin{eqnarray}
+	w_{ms} = \frac{1}{{d_{ms}}^2} & \text{and} & w_{giant} = \frac{1}{{d_{giant}}^2} \quad ,
+\end{eqnarray}
 
-% Show HRD with mean weight fraction
+\noindent{}and produce the weighted labels $\hat\ell$:
+\begin{eqnarray}
+	\hat\ell = \frac{w_{ms}\ell_{ms} + w_{giant}\ell_{giant}}{w_{ms} + w_{giant}} \quad .
+\end{eqnarray}
+
+We calculate weighted errors of $\hat\ell$ and correlation coefficients in 
+the same manner.  In Figure \ref{fig:model-weights} we show the mean relative
+weight $w_{ms}/(w_{ms} + w_{giant})$ within each two-dimensional bin of 
+$\hat\teff$ and $\hat\logg$.  For giant stars the relative weight of 
+the main-sequence model is zero, and vice-versa for main-sequence stars.
+The relative weights smoothly transition from 0 to 1 on the sub-giant branch
+near $\log{g} \approx 3.5$, in the training set overlap region of both models.
+For abundance labels in the giant model that are not in the main-sequence
+model (e.g., [O/H], [Mg/H]), we only report abundances if there was no contribution
+from the main-sequence model: $w_{ms} = 0$.
 
 
-
-\begin{figure*}[t!]
-\includegraphics[width=\textwidth]{figures/test-set-density.pdf}
-\caption{\label{fig:test-set-density}}
-\end{figure*}
-
-
-\begin{figure}[h!]
-\includegraphics[width=0.5\textwidth]{figures/joint-model-differences.pdf}
-\caption{\label{fig:joint-model-differences}}
-\end{figure}
-
+Our catalog now contains entries of $XXX$ stars with effective temperature $\teff$,
+surface gravity $\logg$, iron abundance [Fe/H], and $XXX$ of those stars are giants
+with elemental abundances of [O/H], [Al/H], [Mg/H], [Ca/H], [Si/H], and [Ni/H].
+In total, this leads to a catalog of X.XX million stellar abundances. 
+The weighted $\teff$ and $\logg$ values for stars meeting different
+S/N constraints are shown in Figure \ref{fig:test-set-hrd}, both in logarithmic density
+and mean metallicity.  The artefacts from individual models are no longer 
+apparent, and the rich structure of the Hertzsprung-Russell is visible.
 
 
 \section{Validation experiments}
 \label{sec:validation}
 
+
 In addition to the cross-validation tests that we have previously described, 
-we conducted a number of internal and external validation experiments to 
-test the validity of our results.
+we have conducted a number of internal and external validation experiments to 
+test the validity of our results.  We will begin by describing internal validation
+tests based on repeat observations, before evaluating our accuracy based on
+high-resolution literature comparisons.
+
 
 \subsection{Multi-epoch observations}
 \label{sec:repeat-observations}
@@ -670,24 +720,19 @@ mean and unit variance.
 \stub{Are they? (Probably). How much should we inflate our formal errors, and should this be as a function of S/N? Note that in all Figures and tables,
 we show these inflated errors only, as we gauge them to be more representative.}
 
-\stub{Covariances between these parameters are accessible through the matrix of correlation coefficients in the associated results file.}
-
-
-\subsection{Quality control}
-\stub{What should we adopt as recommended QC? Show rogue gallery of a few "high s/n cases" where things went haywire?}
-
 
 \subsection{External validation}
 \label{sec:external-validation}
 
+\subsubsection{Comparison with \rave\ DR5}
+
 Here we cross-match our results against literature samples to verify that
-our labels are accurate.  Because this work is an independent analysis, our
-first point of reference is against the official \rave\ data releases.  These
-comparisons are shown in Figures \ref{fig:rave-dr4-comparison} and 
-\ref{fig:rave-dr5-comparison}, where we show our labels with respect to the
-results in the fourth and fifth \rave\ data releases, respectively.  In order
-to provide a fair comparison, we only show stars that meet a number of quality
-flags in both samples. 
+our results are accurate.  Because this work is an independent analysis, our
+first point of reference is against the official \rave\ data release.  This
+comparison is shown in Figure \ref{fig:rave-dr5-comparison}, 
+where we show our results with respect to the fifth \rave\ data release \citep{Kunder_2016}.  In order
+to provide a fair comparison, we only show the $XXX$ stars that meet a number of quality
+flags in both samples: 
 \stub{What selections qualify as a fair comparison in both samples?}
 There is very good agreement in $\teff$, with a bias
 and RMS of just XX~K and XXX~K, respectively.  We find our $\logg$ values are
@@ -705,12 +750,16 @@ effect on the detailed abundance or spectrophotometric distance determinations
 between these studies \citep{Binney_2014}.
 
 
+\subsubsection{Comparisons with Reddy, Bensby, and Valenti \& Fischer}
+
+\stub{Caution re MP dwarfs appear as sub-giants in our sample}
+
+\subsubsection{Comparison with the \ges\ survey}
 
 
 
 \stub{Discuss comparisons with: GES; calibration sources used in \citet{Kordopatis_2013}; and `gold-standard' studies: Reddy, Bensby, Valenti \& Fischer}
 
-\stub{Any differences in RAVE abundances? Corrections required due to having an unbalanced training set? Any caution required?}
 
 
 \subsection{Astrophysical validation}
@@ -718,19 +767,19 @@ between these studies \citep{Binney_2014}.
 
 
 After verifying that our stellar labels are comparable with other
-high-resolution studies, here we verify that the abundance labels we find
+high-resolution studies, here we verify that the abundances we find
 are consistent with expectations from astrophysics.  One example is stars in
 globular clusters, which show anti-correlations in light element abundances 
-\citep[e.g.,][and references therein]{Da_Costa,Carretta_2009}. In the \rave\
+\citep[e.g.,][and references therein]{Norris_Da_Costa_1995,Carretta_2009}.  In the \rave\
 survey, \cite{Anguiano_2015} found 70 stars with positions and radial velocities that are
-consistent with being members of globular clusters.  We have used that sample
-Specifically, this GC sample includes 49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde
+consistent with being members of globular clusters: 49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde
 globular cluster NGC~3201, and 10 members of NGC~362.  
 All of these systems are well-studied and exhibit abundance anti-correlations 
-in Na--O and Mg--Al \citep{people}.  Other correlations are also present 
+in Na--O and Mg--Al \citep{Marino_2011,Carretta_2009,Carretta_2013,Munoz_2013}.  Other correlations are also present 
 (e.g., C--N), but those relationships are less relevant for this work because 
 we do not measure C and N abundances here.  We note that \emph{none} of these 
-cluster stars are present in our training set.
+globular cluster stars are present in our training set.
+
 
 
 We show the detailed abundances for these globular cluster members in
@@ -807,13 +856,16 @@ tireless efforts of the entire \rave\ collaboration, past and present.
 
 
 \acknowledgements
-We thank Jonathan Bird (Vanderbilt), Sven Buder (MPIA), and Sergey Koposov (Cambridge).
-This research made use of: 
-  Astropy, a community-developed core Python package for Astronomy \citep{astropy};
-  NASA's Astrophysics Data System Bibliographic Services;
-% numpy, scipy, matplotlib.
+We thank 
+	Jonathan Bird (Vanderbilt),
+	Sven Buder (MPIA), 
 and 
-  \project{TOPCAT} \citep{Taylor_2005}.
+	Sergey Koposov (Cambridge).
+This research made use of: 
+  	NASA's Astrophysics Data System Bibliographic Services;
+  	Astropy, a community-developed core Python package for Astronomy \citep{astropy};
+and 
+  	\project{TOPCAT} \citep{Taylor_2005}.
 This work was partly supported by the European Union FP7 programme through ERC 
 grant number 320360. Funding for K.~H.~ has been provided through the Simons 
 Foundation Society of Fellows and the Marshall Scholarship.
@@ -846,6 +898,10 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Brown et al.(2011)]{Brown_2011} Brown, T.~M., Latham, D.~W., Everett, M.~E., \& Esquerdo, G.~A.\ 2011, \aj, 142, 112 
 
+\bibitem[Carretta et al.(2009)]{Carretta_2009} Carretta, E., Bragaglia, A., Gratton, R.~G., et al.\ 2009, \aap, 505, 117 
+
+\bibitem[Carretta et al.(2013)]{Carretta_2013} Carretta, E., Bragaglia, A., Gratton, R.~G., et al.\ 2013, \aap, 557, A138 
+
 \bibitem[Casey et al.(2012)]{Casey_2012} Casey, A.~R., Keller, S.~C., \& Da Costa, G.\ 2012, \aj, 143, 88 
 
 \bibitem[Casey et al.(2013)]{Casey_2013} Casey, A.~R., Da Costa, G., Keller, S.~C., \& Maunder, E.\ 2013, \apj, 764, 39 
@@ -865,6 +921,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[De Silva et al.(2015)]{DeSilva_2015} De Silva, G.~M., Freeman, K.~C., Bland-Hawthorn, J., et al.\ 2015, \mnras, 449, 2604 
 
 \bibitem[Deason et al.(2011)]{Deason_2011} Deason, A.~J., Belokurov, V., \& Evans, N.~W.\ 2011, \mnras, 416, 2903 
+
+\bibitem[Garc{\'{\i}}a P{\'e}rez et al.(2016)]{Garcia_Perez_2016} Garc{\'{\i}}a P{\'e}rez, A.~E., Allende Prieto, C., Holtzman, J.~A., et al.\ 2016, \aj, 151, 144 
 
 \bibitem[Gilmore et al.(2012)]{Gilmore_2012} Gilmore, G., Randich, S., Asplund, M., et al.\ 2012, The Messenger, 147, 25
 
@@ -892,9 +950,13 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[M{\"a}dler et al.(2016)]{Madler_2016} M{\"a}dler, T., Jofr{\'e}, P., Gilmore, G., et al.\ 2016, arXiv:1606.03015 
 
+\bibitem[Marino et al.(2011)]{Marino_2011} Marino, A.~F., Milone, A.~P., Piotto, G., et al.\ 2011, \apj, 731, 64 
+
 \bibitem[Michalik et al.(2015a)]{Michalik_2015a} Michalik, D., Lindegren, L., \& Hobbs, D.\ 2015, \aap, 574, A115 
 
 \bibitem[Michalik et al.(2015b)]{Michalik_2015b} Michalik, D., Lindegren, L., Hobbs, D., \& Butkevich, A.~G.\ 2015, \aap, 583, A68 
+
+\bibitem[Mu{\~n}oz et al.(2013)]{Munoz_2013} Mu{\~n}oz, C., Geisler, D., \& Villanova, S.\ 2013, \mnras, 433, 2006 
 
 \bibitem[Navin et al.(2016)]{Navin_2016} Navin, C.~A., Martell, S.~L., \& Zucker, D.~B.\ 2016, arXiv:1606.06430 
 
@@ -908,9 +970,15 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Ness et al.(2016)]{Ness_2016} Ness, M., Hogg, D.~W., Rix, H.-W., et al.\ 2016, \apj, 823, 114 
 
+\bibitem[Norris \& Da Costa(1995)]{Norris_Da_Costa_1995} Norris, J.~E., \& Da Costa, G.~S.\ 1995, \apj, 447, 680 
+
 \bibitem[Randich et al.(2013)]{Randich_2013} Randich, S., Gilmore, G., \& Gaia-ESO Consortium 2013, The Messenger, 154, 47 
 
 \bibitem[Recio-Blanco et al.(2016)]{Recio-Blanco_2016} Recio-Blanco, A., de Laverny, P., Allende Prieto, C., et al.\ 2016, \aap, 585, A93 
+
+\bibitem[Reddy et al.(2003)]{Reddy_2003} Reddy, B.~E., Tomkin, J., Lambert, D.~L., \& Allende Prieto, C.\ 2003, \mnras, 340, 304 
+
+\bibitem[Reddy et al.(2006)]{Reddy_2006} Reddy, B.~E., Lambert, D.~L., \& Allende Prieto, C.\ 2006, \mnras, 367, 1329 
 
 \bibitem[Robin et al.(2012)]{Robin_2012} Robin, A.~C., Luri, X., Reyl{\'e}, C., et al.\ 2012, \aap, 543, A100 
 
@@ -925,6 +993,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Steinmetz et al.(2006)]{Steinmetz_2006} Steinmetz, M., Zwitter, T., Siebert, A., et al.\ 2006, \aj, 132, 1645 
 
 \bibitem[Taylor(2005)]{Taylor_2005} Taylor, M.~B.\ 2005, Astronomical Data Analysis Software and Systems XIV, 347, 29 
+
+\bibitem[Valenti \& Fischer(2005)]{Valenti_Fischer_2005} Valenti, J.~A., \& Fischer, D.~A.\ 2005, \apjs, 159, 141 
 
 \bibitem[van Leeuwen(2007)]{van_Leeuwen_2007} van Leeuwen, F.\ 2007, \aap, 474, 653 
 
@@ -943,10 +1013,36 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \caption{A H-R diagram showing the training set labels.\label{fig:training-set-hrd}}
 \end{figure}
 
+
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/test-set-density.pdf}
+\caption{\label{fig:test-set-density}}
+\end{figure*}
+
+
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/set-giant-regularization.pdf}
 \caption{The fractional improvement in RMS deviation between inferred and training labels for the 9-label giant model at different regularization strengths.  The RMS values were calculated by leave-one-out cross-validation.  The points and solid line indicate the mean improvement across all labels. The filled area represents the minimum and maximum improvements across all labels.  The maximum improvement (decrease) in RMS label deviations occurs at $\Lambda \approx 0.3$, and this improvement persists until $\Lambda \approx 0.6$.\label{fig:set-hyperparameters}}
 \end{figure}
+
+
+
+\begin{figure}[p]
+\center
+\includegraphics[width=0.5\textwidth]{figures/joint-model-differences.pdf}
+\caption{The normalized differences in effective temperature $\teff$ and surface gravity $\logg$ between the main-sequence model and the joint model (top panel), and the giant model and the joint model (bottom panel).  The density scaling is logarithmic, and the differences in $\teff$ and $\logg$ are scaled to make them approximately isotropic (see text for details).  The peak at $(0, 0)$ represents good agreement between the joint model and comparison model, whereas the over-densities elsewhere are a consequence of testing the model on stars very different to the training set (e.g., dwarf stars tested on a model trained with only giant stars).\label{fig:joint-model-differences}}
+\end{figure}
+
+
+\begin{figure}[p]
+\center
+\includegraphics[width=0.5\textwidth]{figures/model-weights.pdf}
+\caption{The mean relative main-sequence model weight $w_{ms}/(w_{ms} + w_{giant})$ at each hexagonal bin of weighted effective temperature $\teff$ and surface gravity $\logg$.  The relative weighting illustrates how only results from the main-sequence model are adopted for unevolved stars, and there is a gradual transition to using results from the giant model, before only results from the giant model are used for evolved stars.\label{fig:model-weights}}
+\end{figure}
+
+
+
 
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-test-set.pdf}
