@@ -45,6 +45,7 @@
 \newcommand{\hipparcos}{\project{Hipparcos}}
 \newcommand{\epic}{\project{K2/EPIC}}
 \newcommand{\sdss}{\project{\acronym{SDSS}}}
+\newcommand{\tgas}{\project{\acronym{TGAS}}}
 
 \newcommand{\stub}[1]{{\color{blue} \textbf{#1}}}
 
@@ -54,6 +55,7 @@
 
 \newcommand{\Nspectra}{520,782}
 \newcommand{\Nstars}{457,589}
+\newcommand{\Nstarsqc}{434,470}
 
 
 \newcommand{\Dvector}[1]{\boldsymbol{#1}}
@@ -86,26 +88,26 @@
 \author{and the \rave\ collaboration}
 
 \begin{abstract}
-The Milky Way may be our greatest laboratory for understanding galaxy formation.
-This premise relies on the ability to precisely determine the astrometry and
-chemistry for many individual stars, and to use those data to make inferences
-about the Galaxy's formation and evolution. On 14 September 2016 the \gaia\ 
-mission will release precise astrometry for $\approx2\times10^6$ stars.  
-However, a comprehensive catalog of detailed chemical abundances to complement
-those data is currently lacking.  The RAdial Velocity Experiment (\rave) survey 
-has acquired spectra for 292,036 stars in common with the first \gaia\ data 
-release, constituting the largest overlap of any stellar spectroscopic sample.  
-We have performed an independent analysis of \rave\ spectra using \thecannon,
-and here we report effective temperature $\teff$, surface gravity $\logg$, 
-as well as chemical abundances of up to seven elements (O, Mg, Al, Si, Ca, Fe, 
-Ni) for \Nstars\ stars.  We validate our results internally from repeat visits, 
-and externally against existing high-resolution spectroscopic surveys.  The 
-typical precision is XXX~K in $\teff$, X.XX~dex in $\logg$, and X.XX~dex for
-detailed abundances.  We provide spectrophotometric distances based on our
-labels, improving upon the parallax-based distances available for distant 
-giants in the first \gaia\ data release.
-\stub{A one-line science result based on RAVE/Hipparcos overlap.}
-
+The Milky Way is a powerful laboratory for understanding galaxy formation,
+as it can provide orbits, ages, physical parameters, as well as chemical 
+abundances for vast sets of individual stars.  These inferences require 
+both astrometric and spectroscopic data.  Indeed, the Tycho-Gaia 
+Astrometric Solution (\tgas) sample in the first \gaia\ data release 
+requires a spectroscopic complement that includes radial velocities, 
+stellar parameters, and elemental abundances.  Among existing spectroscopic 
+samples, the RAdial Velocity Experiment (\rave) survey has the largest 
+overlap with \tgas: 292,036 stars.  Here we present a data-driven 
+re-analysis of \rave\ spectra, using an implementation of \thecannon, that
+yields more precise and accurate stellar parameters and abundances.  We 
+derive, and validate, improved effective temperature $\teff$, surface 
+gravity $\logg$, and chemical abundances of up to seven elements (O, Mg, 
+Al, Si, Ca, Fe, Ni) for \Nstarsqc\ stars.  The typical precision in chemical 
+abundances is X.XX~dex for stars on the giant branch.  We provide 
+spectrophotometric distances based on our stellar parameters, which should 
+be superior to the parallax-based distances for faint or distant objects in
+\tgas.  The unRAVE catalog presented here, in conjunction with \tgas, will 
+be the most powerful data set for chemo-orbital analysis at the dawn of 
+broadly available \gaia\ data.
 \end{abstract}
 
 \keywords{\vspace{5em}}
@@ -121,7 +123,8 @@ the astrometry and chemistry for (many) individual stars, and to use those data
 to infer the structure, kinematics, and chemical enrichment of the Galaxy 
 \citep[e.g.,][]{Schlaufman_2009,Deason_2011,Ness_2012,Ness_2013a,Ness_2013b,
 Casey_2012,Casey_2013,Casey_2014a,Casey_2014b,Kordopatis_2015,Bovy_2016}.  
-However, these quantities are not known for even 1\% of stars in the Milky Way.  Stellar distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,
+However, these quantities are not known for even 1\% of stars in the Milky Way.  
+Stellar distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,
 Jofre_2015,Madler_2016}, proper motions can be plagued by unquantified systematics 
 from the first epoch observations \citep[e.g.,][]{Casey_Schlaufman_2015}, and 
 stellar spectroscopists frequently report significantly different chemical 
@@ -294,11 +297,11 @@ have similar spectra.
 and we assume that the function is smooth enough within a sub-space of the labels
 (e.g., the giant branch or the main-sequence) that it can be reasonably approximated 
 with a low-order polynomial in label space.
-\item We have constructed a training set of stars with mean accurate labels.  Note
+\item The training set has mean accurate labels.  Note
 that we do not assume that \emph{every} label in the training is accurate -- we can
 afford to have a small fraction of inaccurate labels (e.g., a few obvious 
 misclassifications in the training set are affordable).
-\item We assume our training set is representative of the test set (the \rave\ survey).
+\item We assume the training set is representative of the test set (the \rave\ survey).
 \end{itemize}
 
 
@@ -329,15 +332,15 @@ $j$, $\vecv(\ell_n)$ is the vectorizing function that takes as input the $K$ lab
 $\ell_n$ for star $n$ and outputs functions of those labels as a vector of length
 $D>K$, $\vectheta_j$ is a vector of length $D$ of parameters influencing the model at
 wavelength pixel $j$, and $e_{jn}$ is the residual (noise).  Here we will only consider
-vectorizing functions with polynomial expansions (e.g., $\teff^2$, see Section 
-\ref{sec:a-simple-model}).  The noise values $e_{jn}$ can be considered to be drawn 
-from a Gaussian distribution with zero mean and variance $\sigma_{jn}^2 + s_j^2$, where
-$\sigma_{jn}^2$ is the variance in flux $y_{jn}$ and $s_j^2$ describes the excess 
-variance at the $j$-th wavelength pixel. 
+vectorizing functions with polynomial expansions (e.g., $\teff^2$, see Sections 
+\ref{sec:a-simple-model}-\ref{sec:evolved-star-model}).  The noise values $e_{jn}$ can 
+be considered to be drawn from a Gaussian distribution with zero mean and variance 
+$\sigma_{jn}^2 + s_j^2$, where $\sigma_{jn}^2$ is the variance in flux $y_{jn}$ and 
+$s_j^2$ describes the excess variance at the $j$-th wavelength pixel. 
 
 
-At the \emph{training} step we fix the $K$-lists of labels for all the training set stars $n$.
-At each wavelength pixel $j$, we then calculate the parameters $\vectheta_j$ and $s_j^2$
+At the \emph{training} step we fix the $K$-lists of labels for the $n$ training set.
+At each wavelength pixel $j$, we then find the parameters $\vectheta_j$ and $s_j^2$
 by optimizing the penalized likelihood function:
 \begin{eqnarray}\label{eq:train}
 \vectheta_j,s^2_j &\leftarrow& \argmin{\vectheta,s}\left[
@@ -348,15 +351,15 @@ by optimizing the penalized likelihood function:
 \end{eqnarray}
 
 \noindent{}where $\Lambda$ is a regularization parameter which we will heuristically set
-for each model in later sections, and $Q(\vectheta)$ is a regularizing function that 
-encourages $\vectheta$ values to take on zero values without breaking convexity:
+in later sections, and $Q(\vectheta)$ is a regularizing function that encourages 
+$\vectheta$ values to take on zero values without breaking convexity:
 \begin{eqnarray}\label{eq:regularization-function}
 	Q(\vectheta) = \sum_{d=1}^{D-1} |{\theta_d}| \quad .
 \end{eqnarray}
 
 Note that the $d$ subscript here is zero-indexed; the function $Q(\vectheta)$ does not act
-on the (first) $\theta_0$ coefficient, as this is a `pivot point' or offset that we do not
-expect to diminish with increasing regularization (e.g., see equation 
+on the (first) $\theta_0$ coefficient, as this is a `pivot point' (mean flux value) that 
+we do not expect to diminish with increasing regularization (e.g., see equation 
 \ref{eq:vectorizer-three-label}).  In practice equation \ref{eq:train} is 
 optimized by fixing $s_j^2 = 0$ to make equation~\ref{eq:train} a convex optimization 
 problem, then we optimize for $\vectheta_j$, before solving for $s_j^2$.  
@@ -372,10 +375,10 @@ the objective function is:
   \quad .
 \end{eqnarray}
 
-At the test step optimization we store the covariance matrix $\bm{\Sigma}$ for the labels
-$\ell$, which provides us with the formal errors on $\ell$.  The formal errors are expected
-to be underestimated, and in Section \ref{sec:validation} we judge the veracity of these 
-errors through validation experiments.
+After optimizing equation \ref{eq:test} for the $m$-th star we store the covariance matrix 
+$\bm{\Sigma}_m$ for the labels $\ell_m$, which provides us with the formal errors on $\ell_m$. 
+The formal errors are expected to be underestimated, and in Section~\ref{sec:validation} 
+we judge the veracity of these errors through validation experiments.
 
 
 
@@ -390,8 +393,8 @@ of O, Mg, Si, Ca, Al, Fe, and Ni.  This proved to be difficult because the magni
 range of \rave\ does not overlap substantially with high-resolution spectroscopic
 surveys.  The fourth internal data release of the \ges\ survey includes 
 giant and main-sequence stars, but only 142 overlap with \rave, which is too small to
-be a useful training set for our purposes.  The thirteenth data release from the Sloan
-Digital Sky Survey \citep{sloan_dr13} includes labels for \apogee\ stars on the
+be a useful training set for our purposes.  The thirteenth data release from the 
+\project{Sloan Digital Sky Survey} \citep{sloan_dr13} includes labels for \apogee\ stars on the
 giant branch and (uncalibrated values for) the main-sequence, but our tests indicated
 that the \apogee\ main-sequence labels suffered from significant systematic effects.  
 A flat, then `up-turning' main-sequence is present, and the metallicity gradient trends in 
@@ -413,8 +416,8 @@ successes in transferring high S/N ratio labels from \apogee\ \citep{Ness_2015,
 Ness_2016,Ho_2016,Casey_2016b}, we chose to use the 1,355 stars in the \apogee---\rave\ 
 overlap sample for giant star labels in the training set.  Of these, about 900 are 
 giants according to \apogee.  From this sample we selected stars to have: metallicity
-determinations ([Fe/H] $> -5$); S/N ratios of $>20)$ in \apogee\ $>25$ in \rave; and 
-we further required that the \aspcap\ pipeline did not report any peculiar flags 
+determinations ([Fe/H] $> -5$); S/N ratios of $>$200 in \apogee\ and $>$25 in \rave; and 
+we further required that \aspcap\ did not report any peculiar flags 
 (\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 357 stars along the giant 
 branch, with metallicities ranging from $[{\rm Fe/H}] = -1.62$ to 0.32.  Intermediate 
 tests with globular cluster members showed that the metallicity range of the training 
@@ -424,10 +427,10 @@ supplemented this sample with giant stars from the \epic\ catalog \citep{Huber_2
 
 
 Assembling a suitable training set for the main-sequence and sub-giant branch was less
-trivial.  There are no spectroscopic studies that have a large enough sample size that
-overlap with \rave\ and expand our required range in stellar parameters (e.g., FGKM-type 
-stars).  Moreover, most of the spectroscopic studies we considered also showed a flat 
-lower main-sequence, a systematic consequence of the analysis method adopted 
+trivial.  There are no spectroscopic studies that both extend the range of stellar types
+we are interested in (e.g., FGKM-type stars), and have a large enough sample size that
+overlaps with \rave.  Moreover, most of the spectroscopic studies we considered also 
+showed a flat lower main-sequence, a systematic consequence of the analysis method adopted 
 \citep[e.g., see][for a discussion]{Bensby_2014}.  For these reasons we chose to make 
 use of the \epic\ catalog \citep{Huber_2016} for the training set labels on the 
 main-sequence and sub-giant branch.  The \epic\ catalog follows from the successful
@@ -456,10 +459,11 @@ usually of high fidelity, and any spurious misclassifications could be identifie
 if spectra were available.
 
 
+
 We sought to have a small overlap between our giant and main-sequence star training
 sets.  Most of our giant training set is encapsulated within $0 < \logg < 3.5$, 
-however there is a sparse sampling of stars reaching to $\logg \approx 4$.  For
-the \epic\ main-sequence/sub-giant star training set we required $\logg > 3.5$,
+however there is a sparse sampling of stars reaching to $\logg \approx 4$.  We
+required $\logg > 3.5$ for the \epic\ main-sequence/sub-giant star training set,
 allowing for $\approx0.5$~dex of overlap between the two training sets.  We further
 employed the following quality constraints: the upper and lower confidence intervals 
 in $\teff$ must be below 150~K; the upper and lower confidence intervals in $\logg$ 
@@ -631,6 +635,21 @@ Artefacts due to dwarf stars in the test set are also present.
 
 
 % The single model.
+
+test
+
+
+\begin{figure*}[t!]
+\includegraphics[width=\textwidth]{figures/test-set-density.pdf}
+\caption{\label{fig:test-set-density}}
+\end{figure*}
+
+
+\begin{figure}[h!]
+\includegraphics[width=0.5\textwidth]{figures/joint-model-differences.pdf}
+\caption{\label{fig:joint-model-differences}}
+\end{figure}
+
 
 
 \section{Validation experiments}
@@ -805,11 +824,15 @@ tireless efforts of the entire \rave\ collaboration, past and present.
 
 \acknowledgements
 We thank Jonathan Bird (Vanderbilt), Sven Buder (MPIA), and Sergey Koposov (Cambridge).
-This research made use of: Astropy, a community-developed core Python package for
-Astronomy \citep{astropy}, NASA's Astrophysics Data System Bibliographic Services;
-and \project{TOPCAT} \citep{Taylor_2005}.
+This research made use of: 
+  Astropy, a community-developed core Python package for Astronomy \citep{astropy};
+  NASA's Astrophysics Data System Bibliographic Services;
+% numpy, scipy, matplotlib.
+and 
+  \project{TOPCAT} \citep{Taylor_2005}.
 This work was partly supported by the European Union FP7 programme through ERC 
-grant number 320360. Funding for KH has been provided through the Simons Foundation Society of Fellows and the Marshall Scholarship.
+grant number 320360. Funding for K.~H.~ has been provided through the Simons 
+Foundation Society of Fellows and the Marshall Scholarship.
 Funding for RAVE has been provided by: the Australian Astronomical Observatory; 
 the Leibniz-Institut fuer Astrophysik Potsdam (AIP); the Australian National 
 University; the Australian Research Council; the French National Research Agency;
