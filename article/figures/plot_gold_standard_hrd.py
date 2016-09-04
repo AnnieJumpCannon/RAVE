@@ -10,7 +10,7 @@ from matplotlib.ticker import MaxNLocator
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 try:
-    bensby_2014, reddy_2003, reddy_2006, valenti_2005
+    bensby_2014, reddy_2003, reddy_2006, valenti_2005, rave_cannon_dr1
 
 except NameError: # Do you know who I am? That's Jeff Vader!
 
@@ -40,8 +40,8 @@ except NameError: # Do you know who I am? That's Jeff Vader!
     OK = (rave_cannon_dr1["SNRK"] > 10) * (rave_cannon_dr1["R"] > 25) * (rave_cannon_dr1["R_CHI_SQ"] < 3)
     rave_cannon_dr1 = rave_cannon_dr1[OK].filled()
     """
-
-    ok = (rave_cannon_dr1["snr"] > 50) * (rave_cannon_dr1["r_chi_sq"] < 3)
+    
+    ok = (rave_cannon_dr1["snr"] > 10) * (rave_cannon_dr1["r_chi_sq"] < 3)
     rave_cannon_dr1 = rave_cannon_dr1[ok].filled()
 
     bensby_2014 = join(rave_cannon_dr1, get_literature_bensby(), keys=("Name", ))
@@ -79,7 +79,7 @@ def reddy_2003_data(cannon_label):
     label_name = {
         "TEFF": "Teff",
         "LOGG": "logg",
-        "FE_H": "__Fe_H__2"
+        "FE_H": "__Fe_H_"
     }.get(cannon_label, cannon_label)
 
     return get_data(reddy_2003, cannon_label, label_name)
@@ -90,7 +90,7 @@ def reddy_2006_data(cannon_label):
     label_name = {
         "TEFF": "Teff",
         "LOGG": "logg",
-        "FE_H": "__Fe_H__2"
+        "FE_H": "__Fe_H_"
     }.get(cannon_label, cannon_label)
 
     return get_data(reddy_2006, cannon_label, label_name)
@@ -101,7 +101,7 @@ def valenti_2005_data(cannon_label):
     label_name = {
         "TEFF": "Teff",
         "LOGG": "log_g_",
-        "FE_H": "__Fe_H__2"
+        "FE_H": "__Fe_H_"
     }.get(cannon_label, cannon_label)
 
     return get_data(valenti_2005, cannon_label, label_name)
@@ -153,7 +153,7 @@ comparison_labels = (
     r"${\rm Bensby}$ ${\rm et}$ ${\rm al.}$ $(2014)$",
     r"${\rm Reddy}$ ${\rm et}$ ${\rm al.}$ $(2003,2006)$", 
     r"${\rm Valenti}$ ${\rm \&}$ ${\rm Fischer}$ $(2005)$",
-#    r"${\rm Kordopatis}$ ${\rm et}$ ${\rm al.}$ $(2013{\rm ;}$ ${\rm RAVE}$ ${\rm DR4})$",
+    #r"${\rm Kordopatis}$ ${\rm et}$ ${\rm al.}$ $(2013{\rm ;}$ ${\rm RAVE}$ ${\rm DR4})$",
     r"${\rm unRAVE}$"
     )
 M = len(comparison_labels)
@@ -236,6 +236,7 @@ for comp in (bensby_2014_data, reddy_2003_data, reddy_2006_data, valenti_2005_da
     axes[3].scatter(x, y, c=c, **kwds)
 """
 
+
 for comp in (bensby_2014_data, reddy_2003_data, reddy_2006_data, valenti_2005_data):
 
     _, x = comp("TEFF")
@@ -252,7 +253,7 @@ for ax, label in zip(axes, comparison_labels):
     #ax.set_ylim(ylim.max(), ylim.min())
     
     ax.set_xlim(7000, 4250)
-    ax.set_ylim(5, 2.5)
+    ax.set_ylim(5, 3)
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))
 

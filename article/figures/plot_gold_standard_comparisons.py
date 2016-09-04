@@ -79,7 +79,7 @@ def reddy_2003_data(cannon_label):
     label_name = {
         "TEFF": "Teff",
         "LOGG": "logg",
-        "FE_H": "__Fe_H__2"
+        "FE_H": "__Fe_H_"
     }.get(cannon_label, cannon_label)
 
     return get_data(reddy_2003, cannon_label, label_name)
@@ -90,7 +90,7 @@ def reddy_2006_data(cannon_label):
     label_name = {
         "TEFF": "Teff",
         "LOGG": "logg",
-        "FE_H": "__Fe_H__2"
+        "FE_H": "__Fe_H_"
     }.get(cannon_label, cannon_label)
 
     return get_data(reddy_2006, cannon_label, label_name)
@@ -101,7 +101,7 @@ def valenti_2005_data(cannon_label):
     label_name = {
         "TEFF": "Teff",
         "LOGG": "log_g_",
-        "FE_H": "__Fe_H__2"
+        "FE_H": "__Fe_H_"
     }.get(cannon_label, cannon_label)
 
     return get_data(valenti_2005, cannon_label, label_name)
@@ -177,11 +177,11 @@ for ax, label_name in zip(axes, list(label_names) + list(label_names)):
             diffs.extend(y-x)
 
             if ax == axes[0]:
-                handles.append(ax.scatter([-10000], [-10000], facecolor="k", **kwds))
+                handles.append(ax.scatter([-10000], [-10000], facecolor="#cccccc", **kwds))
 
         else:
             scat = ax.scatter(x, y, c=c0, cmap="plasma", **kwds)
-    print(label_name, np.nanmedian(diffs), np.nanstd(diffs))
+    print(label_name, np.nanmedian(diffs), np.nanstd(diffs), np.isfinite(diffs).sum())
 
     if ax.is_first_row():
         ax.set_xticklabels([])
@@ -232,7 +232,7 @@ for ax, label_name in zip(axes, list(label_names) + list(label_names)):
 
 
 fig.legend(handles, comparison_labels, loc="upper center", 
-    frameon=False, ncol=len(comparison_labels), numpoints=1)
+    frameon=False, ncol=len(comparison_labels), numpoints=1, scatterpoints=1)
 
 #divider = make_axes_locatable(axes[-1])
 #cax = divider.append_axes("right", size="5%", pad=0.05)

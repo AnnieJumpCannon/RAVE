@@ -105,7 +105,7 @@ fig.tight_layout()
 
 cbar = plt.colorbar(_, 
     cax=fig.add_axes([0.93, fig.subplotpars.bottom, 0.02, fig.subplotpars.top - fig.subplotpars.bottom]))
-cbar.set_label(r"${\rm S/N}$ ${\rm unRAVE}$ $[{\rm pixel}^{-1}]$")
+cbar.set_label(r"${\rm S/N}$ ${\rm RAVE}$ $[{\rm pixel}^{-1}]$")
 
 
 fig.subplots_adjust(right=0.90)

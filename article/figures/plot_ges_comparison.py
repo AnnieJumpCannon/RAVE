@@ -108,8 +108,6 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     ax.set_ylabel(" ".join([latex_labels[label_name], r"$({\rm unRAVE})$"]))
     ax.set_xlabel(" ".join([latex_labels[label_name], r"$({\rm GES})$"]))
 
-    [_.set_rotation(30) for _ in ax.get_xticklabels()]
-    [_.set_rotation(30) for _ in ax.get_yticklabels()]
 
     diff = y - x
     print(label_name, np.nanmean(diff), np.nanstd(diff))

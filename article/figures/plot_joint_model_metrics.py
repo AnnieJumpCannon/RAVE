@@ -9,14 +9,12 @@ from scipy.spatial import Delaunay
 
 import AnniesLasso as tc
 
-output_filename, overwrite = \
-    ("/data/gaia-eso/arc/rave-data-files/unrave-v0.8-36-37-39.fits.gz", True)
 
 RESULTS_PATH = "/data/gaia-eso/arc/rave/results/"
-RESULTS_PATH = ""
+RESULTS_PATH = "../../"
 
 ms_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v37.fits.gz"))
-giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v36.fits.gz"))
+giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v42.fits.gz"))
 joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v41.fits.gz"))
 
 for t in (ms_results, giant_results, joint_results):
@@ -28,10 +26,10 @@ for t in (ms_results, giant_results, joint_results):
 assert np.all(ms_results["Name"] == joint_results["Name"])
 assert np.all(giant_results["Name"] == joint_results["Name"])
 
-ms_model = tc.load_model("rave-tgas-v37.model")
+ms_model = tc.load_model(os.path.join(RESULTS_PATH, "rave-tgas-v37.model"))
 
 # HACK MAGIC BEGINS #
-ms_model._labelled_set = Table.read("rave-tgas-v16b-labelled-set-cut.fits")
+ms_model._labelled_set = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v16b-labelled-set-cut.fits"))
 ms_model._labelled_set["TEFF"] = ms_model._labelled_set["EPIC_TEFF"]
 ms_model._labelled_set["LOGG"] = ms_model._labelled_set["EPIC_LOGG"]
 ms_model._labelled_set["FE_H"] = ms_model._labelled_set["EPIC_FEH"]
@@ -66,15 +64,15 @@ fig.subplots_adjust(
 extent = (3000, 8000, 0.5, 5.5)
 
 titles = (
+    r"${\rm Joint}$ ${\rm model}$",
     r"${\rm Main-sequence}$ ${\rm model}$", 
     r"${\rm Giant}$ ${\rm branch}$ ${\rm model}$",
-    r"${\rm Joint}$ ${\rm model}$"
 )
-all_results = (ms_results, giant_results, joint_results)
+all_results = (joint_results, ms_results, giant_results)
 for i, (ax, results, title) in enumerate(zip(axes, all_results, titles)):
 
     ax.hexbin(results["TEFF"], results["LOGG"], extent=extent,
-        norm=LogNorm(), cmap="Blues", gridsize=75, linewidths=0.1,
+        norm=LogNorm(), cmap="Blues", gridsize=35, linewidths=0.1,
         rasterized=True, edgecolor="#ffffff")
 
     ax.set_xlim(extent[:2][::-1])
@@ -96,7 +94,7 @@ for i, (ax, results, title) in enumerate(zip(axes, all_results, titles)):
 fig.tight_layout()
 
 fig.savefig("test-set-density.pdf", dpi=300)
-fig.savefig("test-set-density.png", dpi=300)
+fig.savefig("test-set-density.png")
 
 
 
@@ -134,7 +132,7 @@ y = ((ms_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
 ticks = (-10, -5, 0, 5, 10)
 
 kwds = dict(extent=(-10, 10, -10, 10), gridsize=25, linewidths=0.1, 
-    vmin=1, vmax=10**4, edgecolor="#000000", cmap="plasma", norm=PowerNorm(0.25))
+    edgecolor="#000000", cmap="plasma", norm=LogNorm())
 
 axes[0].hexbin(x, y, **kwds)
 #axes[0].axhline(0, c="#FFFFFF", linewidth=0.5, linestyle="-")
@@ -143,8 +141,8 @@ axes[0].hexbin(x, y, **kwds)
 axes[0].set_xticks(ticks)
 axes[0].set_yticks(ticks)
 
-axes[0].set_xlabel(r"$(T_{{\rm eff},ms} - T_{{\rm eff},joint})/\sigma_{T_{{\rm eff},ms}}$")
-axes[0].set_ylabel(r"$(\log{g}_{ms} - \log{g}_{joint})/\sigma_{\log{g},ms}$")
+axes[0].set_xlabel(r"$(T_{{\rm eff},ms} - T_{{\rm eff},joint})/\delta_{T_{{\rm eff},ms}}$")
+axes[0].set_ylabel(r"$(\log{g}_{ms} - \log{g}_{joint})/\delta_{\log{g},ms}$")
 
 
 x_mu, y_mu = (0, 0)
@@ -159,8 +157,8 @@ hexbin = axes[1].hexbin(x2, y2, **kwds)
 axes[1].set_xticks(ticks)
 axes[1].set_yticks(ticks)
 
-axes[1].set_xlabel(r"$(T_{{\rm eff},giant} - T_{{\rm eff},joint})/\sigma_{T_{{\rm eff},giant}}$")
-axes[1].set_ylabel(r"$(\log{g}_{giant} - \log{g}_{joint})/\sigma_{\log{g},giant}$")
+axes[1].set_xlabel(r"$(T_{{\rm eff},giant} - T_{{\rm eff},joint})/\delta_{T_{{\rm eff},giant}}$")
+axes[1].set_ylabel(r"$(\log{g}_{giant} - \log{g}_{joint})/\delta_{\log{g},giant}$")
 
 fig.tight_layout()
 

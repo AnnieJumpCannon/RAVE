@@ -49,7 +49,7 @@ for i, snr in enumerate(snrs):
     # On top figure show density.
     # On bottom axes show metallicity.
     
-    ok = (t["SNRK"] > snr) * (t["R_CHI_SQ"] < 3) * (t["VSINI"] < 1)
+    ok = (t["snr"] > snr) * (t["r_chi_sq"] < 3) #* (t["VSINI"] < 1)
     
     ax = axes[0, i]
 

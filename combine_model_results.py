@@ -14,13 +14,13 @@ from scipy.spatial import Delaunay
 import AnniesLasso as tc
 
 output_filename, overwrite = \
-    ("/data/gaia-eso/arc/rave-data-files/unrave-v0.8-36-37-39.fits.gz", True)
+    ("/data/gaia-eso/arc/rave-data-files/unrave-v0.9-36-42-41.fits.gz", True)
 
 RESULTS_PATH = "/data/gaia-eso/arc/rave/results/"
 RESULTS_PATH = ""
 
 ms_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v37.fits.gz"))
-giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v36.fits.gz"))
+giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v42.fits.gz"))
 joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v41.fits.gz"))
 
 for t in (ms_results, giant_results, joint_results):
@@ -234,8 +234,7 @@ ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], gridsize=N,
     cmap="Blues", norm=LogNorm(), edgecolor="#ffffff", linewidths=0.0)
 
 
-
-
+"""
 # Plot log(density) of the three models.
 K = 1
 factor = 3.5
@@ -273,6 +272,7 @@ fig.tight_layout()
 fig.savefig("article/figures/model-weights.pdf", dpi=300)
 fig.savefig("article/figures/model-weights.png", dpi=300)
 
+"""
 
 raise a
 

@@ -5,7 +5,7 @@ from astropy.table import Table
 from scipy.io import readsav
 
 DATA_PATH = "/data/gaia-eso/arc/rave-data-files/"
-
+DATA_PATH = ""
 
 def get_rave_kordopatis_dr4():
     return Table.read(os.path.join(DATA_PATH, "RAVE-DR4.fits"))
@@ -32,7 +32,8 @@ def get_cannon_dr1(filename=None):
     #filename = "rave-tgas-v31.fits.gz"
     #filename = "rave-tgas-v29.fits.gz"
     #filename = "rave-tgas-v37.fits.gz"
-    filename = filename or "unrave-v0.7-37_36.fits.gz"
+    #filename = filename or "unrave-v0.7-37_36.fits.gz"
+    filename = filename or "unrave-v0.9.fits.gz"
 
     rave_cannon_dr1 = Table.read(os.path.join(DATA_PATH, filename))
 
