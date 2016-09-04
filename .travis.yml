@@ -25,6 +25,10 @@ addons:
             - texlive-fonts-extra
             - dvipng
 
+branches:
+    except: # branches that have been force-pushed by travis
+        - /.+-pdf$/
+
 install:
     - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
     - bash miniconda.sh -b -p $HOME/miniconda
@@ -56,3 +60,8 @@ after_success: |
         git -c user.name='travis' -c user.email='travis' commit -m init
         git push -q -f https://andycasey:$GITHUB_API_KEY@github.com/AnnieJumpCannon/RAVE $TRAVIS_BRANCH-pdf
     fi
+
+notifications:
+    email:
+       on_success: change
+       on_failure: always
