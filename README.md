@@ -3,7 +3,8 @@ The *unRAVE* catalog
 
 [![Build Status](https://travis-ci.org/AnnieJumpCannon/RAVE.svg?branch=master)](https://travis-ci.org/AnnieJumpCannon/RAVE)
 
-An independent data-driven analysis of *RAVE* spectra in anticipation of the *Gaia/TGAS* data release. You can access the **[most recent version of the PDF here](https://github.com/AnnieJumpCannon/RAVE/raw/master-pdf/article/unrave.pdf)**.
+An independent data-driven analysis of *RAVE* spectra in anticipation of the *Gaia/TGAS* data release. 
+**[You can access the most recent version of the PDF here](https://github.com/AnnieJumpCannon/RAVE/raw/master-pdf/article/unrave.pdf)**.
 
 
 Instructions for making changes directly to the LaTeX
