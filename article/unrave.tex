@@ -206,7 +206,7 @@ spectra had been collected of \Nstars\ unique objects.
 
 
 The target selection for \rave\ is based on the $I$-band apparent magnitude,
-$9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge \citep{Wonjo_2016}.  
+$9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge \citep{Wojno_2016}.  
 The $I$ band was used for the target selection because it has a good overlap with the
 wavelength range that \rave\ operates in:  8410--8795~\AA.  This spectral region 
 is very well-studied.  It is one of the key setups used for the ground-based 
@@ -794,7 +794,7 @@ illustrated in Figure~\ref{fig:gold-standard-hrd}, where we show a
 Hertzsprung-Russell diagram for all stars in common between this work and that
 of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  While the
 overall shape of the turn-off in our work is consistent with the literature
-studies, the linked data points show that metal-poor stars in the literature
+studies (right panel), the linked data points in the first three panels show that metal-poor stars in the literature
 appear as more evolved stars in our combined results.  Instead, if we only
 take the results from our main-sequence model --- ignoring the influence of the
 giant model --- and compare those values to these literature studies, no such 
@@ -809,6 +809,18 @@ on main-sequence dwarf stars.  The results from both the main-sequence star mode
 and the giant star model, are available at \stub{should we put them online somewhere
 for open-science, or just make them available upon request so that we don't
 muddy the waters and confuse people as to which catalog to use?}
+
+
+We note that this issue does not appear to affect our derived metallicities for these
+stars.  For this reason, if stars affected by this issue can be confirmed to be
+dwarfs by external information --- rather than being sub-giants as our analysis
+suggests for some --- then the metallicity we report can still be considered
+useful.  For the more metal-rich dwarf stars, the sample we present here
+will undoubtedly be informative for upcoming studies based on exoplanet host
+star properties.  At present, however, there are just $\approx$30 stars in 
+\rave\ that overlap with the compilations of exoplanet host star properties 
+listed at \texttt{exoplanets.org} and \texttt{exoplanets.eu}.
+
 
 
 \subsubsection{Comparison with the \ges\ survey}
@@ -875,12 +887,21 @@ even for stars with low S/N ratios.
 \section{Discussion}
 \label{sec:discussion}
 
+% What information have we extracted: almost maximal use of giant branch,
+% lesss so for dwarfs.
 
-\stub{Chemistry + Kinematics = Stockholm}
+% Caveats in the results: metal-poor dwarfs/sub-giants
+% HETEROGENEOUS TRAINING SET
+% UNSURE IF TWO ABUNDANCE SCALES ARE ON THE SAME SCALE --!
+% METAL POOR ABUNDANCES
+% recommended SNR and chi-sq etc
+% weird projections in space. --> use morphological classifications to guide
 
-\stub{What do the two provide us with?}
+% despite these limitations, this catalog is the largest??? of abundances.
 
-\stub{What is one interesting science result should we show based on these abundances and Hipparcos results, which was not known previously?}
+% in the future we will do spectrophotometric distances to improve on this
+
+
 
 
 \section{Conclusion}
@@ -891,6 +912,7 @@ We report effective temperature $\teff$, surface gravity $\logg$, and metallicit
 for X stars on the main-sequence and sub-giant branch.  For another X stars on the red
 giant branch, we deliver $\teff$, $\logg$, and a total of X.XX~million elemental abundances:
 O, Mg, Al, Ca, Si, Fe, and Ni for X stars.  
+
 
 \stub{Typical precision}
 
@@ -1063,7 +1085,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[van Leeuwen(2007)]{van_Leeuwen_2007} van Leeuwen, F.\ 2007, \aap, 474, 653 
 
-\bibitem[Wonjo et al.(2016)]{Wonjo_2016} Wonjo, J., et al.\ 2016, submitted
+\bibitem[Wojno et al.(2016)]{Wojno_2016} Wojno, J., et al.\ 2016, submitted
 
 \bibitem[Zasowski et al.(2013)]{Zasowski_2013} Zasowski, G., Johnson, J.~A., Frinchaboy, P.~M., et al.\ 2013, \aj, 146, 81 
 
