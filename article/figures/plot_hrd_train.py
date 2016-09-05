@@ -1,6 +1,7 @@
 
 
 import numpy as np
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 from matplotlib.ticker import MaxNLocator
@@ -19,9 +20,9 @@ else:
 
 """
 names = (
-    r"${\rm Joint}$ ${\rm star}$ ${\rm model}$",
-    r"${\rm Main{-}sequence}$ ${\rm star}$ ${\rm model}$", 
-    r"${\rm Giant}$ ${\rm star}$ ${\rm model}$", 
+    r"${\rm Joint}$ ${\rm model}$",
+    r"${\rm Main{-}sequence}$ ${\rm model}$", 
+    r"${\rm Giant}$ ${\rm model}$", 
 )
 
 import AnniesLasso as tc
@@ -97,7 +98,6 @@ for ax in axes:
     ax.set_ylim(ylim)
 
 
-import matplotlib
 cax, kw = mpl.colorbar.make_axes(list(axes), fraction=0.075, pad=0.025, aspect=10)
 cbar = plt.colorbar(scat, cax=cax, ticks=[-3, -2, -1, 0])
 

@@ -65,7 +65,7 @@ extent = (3000, 8000, 0.5, 5.5)
 
 titles = (
     r"${\rm Joint}$ ${\rm model}$",
-    r"${\rm Main-sequence}$ ${\rm model}$", 
+    r"${\rm Main{-}sequence}$ ${\rm model}$", 
     r"${\rm Giant}$ ${\rm branch}$ ${\rm model}$",
 )
 all_results = (joint_results, ms_results, giant_results)
