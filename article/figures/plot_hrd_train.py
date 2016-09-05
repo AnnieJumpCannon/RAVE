@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import LogNorm
 from matplotlib.ticker import MaxNLocator
 
-
+"""
 try:
     ms_training_set, giant_training_set, joint_training_set
 
@@ -17,14 +17,23 @@ except NameError:
 else:
     print("Using pre-loaded data")
 
-
+"""
 names = (
-    r"${\rm Main-sequence}$ ${\rm star}$ ${\rm model}$", 
+    r"${\rm Joint}$ ${\rm star}$ ${\rm model}$",
+    r"${\rm Main{-}sequence}$ ${\rm star}$ ${\rm model}$", 
     r"${\rm Giant}$ ${\rm star}$ ${\rm model}$", 
-    r"${\rm Joint}$ ${\rm star}$ ${\rm model}$"
 )
 
-labelled_sets = (ms_training_set, giant_training_set, joint_training_set)
+import AnniesLasso as tc
+labelled_sets = (
+    tc.load_model("rave-tgas-v41.model").labelled_set, # joint
+    tc.load_model("rave-tgas-v16b.model").labelled_set, # ms result
+    tc.load_model("rave-tgas-v42.model").labelled_set, # giant result
+)
+labelled_sets[1]["TEFF"] = labelled_sets[1]["EPIC_TEFF"]
+labelled_sets[1]["LOGG"] = labelled_sets[1]["EPIC_LOGG"]
+labelled_sets[1]["FE_H"] = labelled_sets[1]["EPIC_FEH"]
+
 M = len(labelled_sets)
 
 factor = 3.5
@@ -43,7 +52,7 @@ fig.subplots_adjust(
     top=(yspace + lbdim)/ydim, wspace=whspace, hspace=whspace)
 
 
-xlim = (7000, 3500)
+xlim = (7500, 3500)
 ylim = (5.5, 0)
 
 vmin, vmax = (-3, 0.5)
@@ -53,9 +62,9 @@ vmin, vmax = (-3, 0.5)
 
 for ax, labelled_set, name in zip(axes, labelled_sets, names):
     
-    scat = ax.scatter(labelled_set["TEFF"], labelled_set["LOGG"],
-        c=labelled_set["FE_H"], cmap="magma",
-        vmin=vmin, vmax=vmax, alpha=0.75, s=50)
+    ax.scatter(labelled_set["TEFF"], labelled_set["LOGG"],
+        c=labelled_set["FE_H"], cmap="plasma",
+        vmin=vmin, vmax=vmax, s=50, edgecolor="k", linewidth=0.1, alpha=0.7)
 
     ax.text(0.05, 0.9, name,
         horizontalalignment="left", verticalalignment="bottom",
@@ -70,7 +79,7 @@ for ax, labelled_set, name in zip(axes, labelled_sets, names):
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))
 
-    ax.set_xlabel(r"$T_{\rm eff}$ $({\rm K})$")
+    ax.set_xlabel(r"$T_{\rm eff}$ $[{\rm K}]$")
 
     if ax.is_first_col():
         ax.set_ylabel(r"$\log{g}$")
@@ -78,6 +87,12 @@ for ax, labelled_set, name in zip(axes, labelled_sets, names):
     else:
         ax.set_yticklabels([])
 
+
+scat = axes[0].scatter([0], [0], c=[0], cmap="plasma",
+    vmin=vmin, vmax=vmax, alpha=1, s=50, edgecolor="none")
+
+for ax in axes:
+    ax.set_xticks([7000, 6000, 5000, 4000])
     ax.set_xlim(xlim)
     ax.set_ylim(ylim)
 
