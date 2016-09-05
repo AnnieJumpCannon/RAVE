@@ -16,15 +16,17 @@ import os
 rave_cannon_dr1 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/unrave-v0.9.fits')
 
 #----if GC  ----
-#RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_GC.fits')
+#RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_GC_v2.fits')
+#vmax = -0.2 ; vmin=-2.5
 
 #---if OC -----
 RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_OC.fits')
+vmax = 0.5 ; vmin=-1.0
 
 data_table = join(rave_cannon_dr1, RAVEDR4_GC, keys=("Name",))
 RAVEDR4 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVE-DR4.fits')
 DR4_cannon = join(rave_cannon_dr1, RAVEDR4, keys=("Name",))
-vmax = 0.5 ; vmin=-1.0
+
 
 try:
     data_table
@@ -52,7 +54,7 @@ DR4_cannon = data_table
 clusters = np.unique(data_table['Cluster'])
 
 #-------Generate HRD for each cluster----
-limits = [[3400,7000], [0.0,4.99]]
+limits = [[3400,6950], [-0.01,4.99]]
 cmap= "plasma"
 K = len(clusters) 
 if K == 0:
@@ -66,10 +68,10 @@ xspace = factor * K + factor * (K - 1) * whspace + lbdim * (K - 1)
 xdim = lbdim + xspace + trdim
 ydim = lbdim + yspace + trdim
 
-fig, axes = plt.subplots(2,K, figsize=(xdim, ydim), sharex=True,sharey=True)
-fig.subplots_adjust(left=lbdim/xdim, bottom=lbdim/ydim, 
-  right=(xspace + lbdim)/xdim, top=(yspace + lbdim)/ydim, 
-  wspace=whspace, hspace=whspace)
+fig, axes = plt.subplots(2, K, figsize=(xdim, ydim),sharex=True,sharey=True)
+fig.subplots_adjust(
+    left=lbdim/xdim, bottom=lbdim/ydim, right=(xspace + lbdim)/xdim,
+    top=(yspace + lbdim)/ydim, wspace=whspace, hspace=whspace)
 
 
 for i in np.arange(K):
@@ -93,12 +95,12 @@ for i in np.arange(K):
   ax.yaxis.set_major_locator(MaxNLocator(4))
   #ax.set_axis_bgcolor("#CCCCCC")
   ax.invert_xaxis();ax.invert_yaxis()
-  ax.text(6800,1.0,'%s'%clusters[i])
+  ax.text(6500,1.0,'%s'%clusters[i])
   #ax.set_ylabel(r"$\log{g}$",)
 
   if i==0:
     ax.set_ylabel(r"$\log{g}$",)
-  #	ax.set_title('The Cannon')
+  ax.set_title('unRAVE')
   #if i == K-1: 
   #  ax.set_xlabel(r"$T_{\rm eff}$")
 
@@ -123,17 +125,15 @@ for i in np.arange(K):
   ax.invert_xaxis();ax.invert_yaxis()
   ax.set_xlabel(r"$T_{\rm eff}$")
   #if i==0:
-  #	ax.set_title('RAVE DR4')
-  if i == K-1: 
-    #ax.set_xlabel(r"$T_{\rm eff}$") 
-    ax.get_yaxis().set_visible(False)
+  ax.set_title('RAVE DR4')
+
   if i==0:
     ax.set_ylabel(r"$\log{g}$",)
 
 fig.tight_layout()
-cbar = plt.colorbar(sc, cax=fig.add_axes([0.9,fig.subplotpars.bottom,0.02,0.9 - fig.subplotpars.bottom]))
+cbar = plt.colorbar(sc, cax=fig.add_axes([0.88,fig.subplotpars.bottom,0.02,0.9 - fig.subplotpars.bottom]))
 cbar.set_label(r"[Fe/H]")
-fig.subplots_adjust(top=0.90, right=0.88)
+fig.subplots_adjust(top=0.90, right=0.86)
 
 
 
