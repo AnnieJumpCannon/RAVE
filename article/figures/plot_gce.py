@@ -19,21 +19,22 @@ except NameError: # Do you know who I am? That's Jeff Vader!
 
     from rave_io import get_cannon_dr1, get_rave_kordopatis_dr4
 
-    rave_cannon_dr1 = get_cannon_dr1("rave-tgas-v36.fits.gz")
-    rave_cannon_dr1["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-")[0] for each in rave_cannon_dr1["FILENAME"]]
+    rave_cannon_dr1 = get_cannon_dr1()
 
-    from astropy.table import join
-    rave_cannon_dr1 = join(rave_cannon_dr1, get_rave_kordopatis_dr4(), keys=("Name", ))
+    #from astropy.table import join
+    #rave_cannon_dr1 = join(rave_cannon_dr1, get_rave_kordopatis_dr4(), keys=("Name", ))
 
 
 
 x = rave_cannon_dr1["FE_H"] 
 
 
-ok  = (rave_cannon_dr1["snr"] > 10) * (rave_cannon_dr1["r_chi_sq"] < 3) \
-    * (rave_cannon_dr1["R"] > 10) * (rave_cannon_dr1["loggK"] < 3)
+#ok  = (rave_cannon_dr1["snr"] > 10) * (rave_cannon_dr1["r_chi_sq"] < 3) \
+#    * (rave_cannon_dr1["R"] > 10) * (rave_cannon_dr1["loggK"] < 3)
 
-default_kwds = dict(gridsize=50,  cmap="viridis", norm=LogNorm())
+ok = (rave_cannon_dr1["snr"] > 10)
+
+default_kwds = dict(gridsize=50,  cmap="plasma", norm=LogNorm())
 elements_and_kwds = OrderedDict([
     ("O", dict(extent=(-1.5, 0.5, -0.05, 0.4))),
     ("AL", dict(extent=(-1.5, 0.5, -0.3, 0.5))),
@@ -63,12 +64,13 @@ for i, (element, updated_kwds) in enumerate(elements_and_kwds.items()):
     #    np.linspace(extent[2], extent[3], 13)
     #    ],
     #    **kwds)
-    cmap = plt.cm.viridis
+    cmap = plt.cm.Blues
     extent = kwds.pop("extent")
     xbins = np.linspace(extent[0], extent[1], 50)#np.ptp(extent[:2])/0.04)
     ybins = np.linspace(extent[2], extent[3], 20)#np.ptp(extent[2:])/0.04)
 
-    ax.hist2d(x[ok], y[ok], bins=(xbins, ybins), norm=LogNorm(), cmap=cmap)
+    show = np.isfinite(x * y)
+    ax.hist2d(x[ok * show], y[ok * show], bins=(xbins, ybins), norm=LogNorm(), cmap=cmap)
     #ax.hexbin(x[ok], y[ok], **kwds)
     ax.axhline(0, c="#FFFFFF", linewidth=0.5, linestyle="--")
     ax.axvline(0, c="#FFFFFF", linewidth=0.5, linestyle="--")

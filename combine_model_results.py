@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 from astropy.table import Table, vstack
 from matplotlib.colors import LogNorm
 from scipy.spatial import Delaunay
-
+from collections import OrderedDict
 
 import AnniesLasso as tc
 
@@ -161,7 +161,7 @@ axes[0].hexbin(x, y, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), line
 
 
 # TODO WITHOUT THIS PENALISATION TERM THE GOLD STANDARD COMPARISON IS BAD.
-x_mu, y_mu = (0, 1.0)
+x_mu, y_mu = (0, 0)
 x_sigma, y_sigma = (50, 0.15)
 
 x2 = ((giant_results["TEFF"] - joint_results["TEFF"]) - x_mu)/x_sigma
@@ -177,11 +177,22 @@ giant_distance = np.sqrt(x2**2 + y2**2)
 
 
 # Weight by relative distance, or just take the closest of the two?
-combined_data = {
-    "Name": giant_results["Name"],
-    "snr": joint_results["snr"],
-    "r_chi_sq": joint_results["r_chi_sq"]
-}
+combined_data = OrderedDict([
+    ("Name", giant_results["Name"]),
+    ("TEFF", None),
+    ("LOGG", None),
+    ("FE_H", None),
+    ("O_H",  None),
+    ("MG_H", None),
+    ("AL_H", None),
+    ("SI_H", None),
+    ("CA_H", None),
+    ("NI_H", None),
+    #("COV", None),
+    ("snr", joint_results["snr"]),
+    ("r_chi_sq", joint_results["r_chi_sq"])
+])
+    
 
 #w1 = np.exp(-0.5 * ms_distance**2)
 #w2 = np.exp(-0.5 * (giant_distance**2))
@@ -216,6 +227,17 @@ for label_name in label_names:
     weights2[~np.isfinite(foo)] = 0
 
     combined_data[label_name] = np.nansum(foo, axis=0)/np.sum(weights2, axis=0)
+
+
+
+
+
+# Need abundances for things that are *probably* giants.
+is_giant = (weights2[1] > 0.5)
+
+for label_name in ("MG_H", "AL_H", "O_H", "NI_H", "SI_H", "CA_H"):
+    combined_data[label_name] = np.nan * np.ones(len(joint_results))
+    combined_data[label_name][is_giant] = giant_results[label_name][is_giant]
 
 
 
@@ -274,61 +296,13 @@ fig.savefig("article/figures/model-weights.png", dpi=300)
 
 """
 
-raise a
 
-is_giant = giant_distance < ms_distance
-giant_subset = giant_results[is_giant]
-ms_subset = ms_results[~is_giant]
-del ms_subset["COV"]
-del giant_subset["COV"]
 
-combined_table = vstack([giant_subset, ms_subset])
+
 
 raise a
 
 
-
-
-
-
-# In the main-sequence model, then anything with LOGG < 4 and teff < 5000 *must*
-# be within the convex hull of the training set.
-
-subg = ms_model.labelled_set["LOGG"] < 4
-
-# Exclude out a few bad eggs from the convex hull
-bad1 = subg * (ms_model.labelled_set["TEFF"] < 4870)
-bad2 = subg * ((ms_model.labelled_set["TEFF"] < 4965) * (ms_model.labelled_set["LOGG"] > 3.66))
-keep = ~bad1 * ~bad2
-
-ms_subg_convex_hull = Delaunay(ms_model.labels_array[:, :2][subg * keep])
-in_ms_subg_hull = ms_subg_convex_hull.find_simplex(
-    np.array([ms_results["TEFF"], ms_results["LOGG"]]).T) >= 0
-
-bad = (ms_results["LOGG"] < 4) * (ms_results["TEFF"] < 5000) * ~in_ms_subg_hull
-for label in ("TEFF", "LOGG", "FE_H"):
-    ms_results[label][bad] = np.nan
-
-
-# Sort all in the same way.
-for table in (ms_results, giant_results, joint_results):
-    if "Name" not in table.dtype.names:
-        table["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-")[0] for each in table["FILENAME"]]
-
-ms_results.sort("Name")
-giant_results.sort("Name")
-joint_results.sort("Name")
-
-assert np.all(joint_results["Name"] == ms_results["Name"])
-assert np.all(joint_results["Name"] == giant_results["Name"])
-
-# Identify stars in the joint model that are giants by the Huber definition
-is_giant = (joint_results["LOGG"] < 3.8) \
-    + ((joint_results["TEFF"] > 5000) \
-        * (joint_results["LOGG"] < (13.363 - 0.00191*joint_results["TEFF"])))
-
-ms_subset = ms_results[~is_giant * np.isfinite(ms_results["TEFF"])]
-giant_subset = giant_results[is_giant * np.isfinite(giant_results["TEFF"])]
 
 # Fix columns and covariance matrices.
 ms_subset["E_VSINI"] = ms_subset["COV"][:, -1, -1]**0.5

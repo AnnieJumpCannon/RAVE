@@ -19,8 +19,9 @@ except NameError: # Do you know who I am? That's Jeff Vader!
 
     from rave_io import get_cannon_dr1, get_ges_idr4, get_rave_kordopatis_dr4
 
-    rave_cannon_dr1 = get_cannon_dr1("rave-tgas-v36.fits.gz")
-    rave_cannon_dr1["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-")[0] for each in rave_cannon_dr1["FILENAME"]]
+    rave_cannon_dr1 = get_cannon_dr1()
+    assert "Name" in rave_cannon_dr1.dtype.names
+    #rave_cannon_dr1["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-")[0] for each in rave_cannon_dr1["FILENAME"]]
 
     from astropy.table import join
     rave_cannon_dr1 = join(rave_cannon_dr1, get_rave_kordopatis_dr4(), keys=("Name", ))
@@ -28,8 +29,10 @@ except NameError: # Do you know who I am? That's Jeff Vader!
 
 
 # Produce error columns from COV matrix.
-for i, label_name in enumerate(rave_cannon_dr1.dtype.names[1:10]):
-    rave_cannon_dr1["E_{}".format(label_name)] = rave_cannon_dr1["COV"][:, i, i]**0.5
+if "COV" in rave_cannon_dr1.dtype.names:
+
+    for i, label_name in enumerate(rave_cannon_dr1.dtype.names[1:10]):
+        rave_cannon_dr1["E_{}".format(label_name)] = rave_cannon_dr1["COV"][:, i, i]**0.5
 
 
 asplund_2009_solar_abundances = {
@@ -44,9 +47,7 @@ asplund_2009_solar_abundances = {
 
 ges_species = ("O_1", "AL_1", "MG_1", "CA_1", "SI_1", "NI_1")
 
-ok  = (rave_cannon_dr1["snr"] > 0) * (rave_cannon_dr1["r_chi_sq"] < 3) \
-    * (rave_cannon_dr1["R"] > 10) * (rave_cannon_dr1["LOGG_2"] < 3.9)
-
+ok  = (rave_cannon_dr1["snr"] > 10)
 
 N, M = (3, 2)
 assert N * M == len(ges_species)
@@ -77,9 +78,9 @@ for i, (ax, species) in enumerate(zip(axes.flatten(), ges_species)):
     y = rave_cannon_dr1["{}_H".format(element)]
 
     xerr = rave_cannon_dr1["E_{}".format(species.replace("_", ""))]
-    yerr = rave_cannon_dr1["E_{}_H".format(element)]
-    ax.errorbar(x[ok], y[ok], xerr[ok], yerr[ok], 
-        fmt=None, ecolor="#666666", zorder=-1)
+    #yerr = rave_cannon_dr1["E_{}_H".format(element)]
+    #ax.errorbar(x[ok], y[ok], xerr[ok], yerr[ok], 
+    #    fmt=None, ecolor="#666666", zorder=-1)
     scat = ax.scatter(x[ok], y[ok], c=rave_cannon_dr1["snr"][ok], s=50,
         vmin=np.nanmin(rave_cannon_dr1["snr"]),
         vmax=np.nanmax(rave_cannon_dr1["snr"]),
