@@ -1026,12 +1026,35 @@ spectra varies from $6{,}500 < \mathcal{R} < 8{,}500$, and that the
 effective resolution is a function of time and position on the CCD (e.g., fibre number).  For this reason we ought to expect our derived stellar
 parameters or abundances to be correlated with the fibre number, or over
 time.  If significant, the trend could produce systematically offset
-stellar abundances solely due to the fibre number.  We have not seen
-evidence of these correlations in our results, however, we have only
+stellar abundances solely due to the fibre number.  \citet{Kordopatis_2013}
+conclude that resolution-based effects on the \rave\ stellar parameters
+should be a second-order effect. We have not seen evidence of these 
+resolution-based correlations in our results, however, we have only
 performed cursory (non-exhaustive) experiments to investigate this issue.
 
 
 \stub{assumptions that are probably wrong: fringing in high S/N spectra produces issues with the normalization and thus the spectrum. KCF to comment more on this}
+
+
+The fibre fringing is another example of how test spectra that are
+unusual from the training set can be projected as peculiar artefacts in the
+label space.  In other words, unusual spectra can appear as `clumps' in
+regions of parameter space that we could consider as being normal 
+(e.g., Solar-type stars).  We addressed this issue for the main-sequence
+and giant models by using a joint model to calculate relative weights.
+However, spectra that are unusual from the joint model training set can
+still project as systematic artefacts.  An interrogation of our results
+has identified one such group of metal-poor ($[{\rm Fe/H}] \approx -0.4$)
+stars near $\teff \approx 3250$~K, which peculiarly sit above the isochrone. 
+The \rave\ morphological classifications \citep{Matijevic_2012} indicate 
+these stars have chromospheric emission, a feature not present in our 
+training set.  Based on this (and other previously discussed) examples,
+we recommend either a thorough investigation of unexpected structure
+\footnote{Before submitting to \emph{Nature}} 
+using all the available 
+information from \rave, or judicious quality controls (e.g., requiring the 
+morphological classification to be `normal') to remove these spurious measurements.
+
 
 \stub{weird projections in the data space --> use morphological classifications to guide}
 
@@ -1159,6 +1182,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Kuzma et al.(2016)]{Kuzma_2016} Kuzma, P.~B., Da Costa, G.~S., Mackey, A.~D., \& Roderick, T.~A.\ 2016, \mnras, 461, 3639 
 
 \bibitem[M{\"a}dler et al.(2016)]{Madler_2016} M{\"a}dler, T., Jofr{\'e}, P., Gilmore, G., et al.\ 2016, arXiv:1606.03015 
+
+\bibitem[Matijevi{\v c} et al.(2012)]{Matijevic_2012} Matijevi{\v c}, G., Zwitter, T., Bienaym{\'e}, O., et al.\ 2012, \apjs, 200, 14 
 
 \bibitem[Marino et al.(2011)]{Marino_2011} Marino, A.~F., Milone, A.~P., Piotto, G., et al.\ 2011, \apj, 731, 64 
 
