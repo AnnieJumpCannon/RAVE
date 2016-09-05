@@ -948,13 +948,15 @@ even for stars with low S/N ratios.
 \label{sec:discussion}
 
 We have presented an independent re-analysis of \rave\ spectra that makes near-maximal
-use of the information content for red giant branch star, and provides significant a
-improvement in stellar parameter ($\teff$, $\logg$, [Fe/H]) precision over previous
-\rave\ data releases.  When combined with \gaia/\tgas, these results provide a powerful
-compendium for chemo-dynamic studies of the Milky Way.  However, our results have caveats.
+use of the information content for red giant branch stars, and provides a significant
+improvement in stellar parameters ($\teff$, $\logg$, [Fe/H]) over previous \rave\ data
+releases.  When combined with the \tgas\ sample, these results may amount to a powerful
+compendium for chemo-dynamic studies of the Milky Way.  However, our analysis has caveats.
 Any inferences based upon these results should be made with the recognition of those caveats,
-and acknowledge that they are subject to our explicit assumptions.
+and acknowledge that they are subject to our explicit assumptions, some of which are 
+provably incorrect.
 
+\stub{assumptions that are provably wrong: accurate labels in the training set. lol}
 
 For practical purposes we adopted separate models: one for the giant branch and one
 for the main-sequence.  A third model was used to derive relative weights for which
@@ -972,7 +974,8 @@ but have reasonable labels (by any available statistic) as dwarfs in the main-se
 model.  Clearly, the relative distance from the joint model to the giant model is 
 slightly favoured (over the main-sequence model) for metal-poor dwarf stars. In this
 sense, our approach towards combining labels from multiple models is sub-optimal.
- 
+
+
 
 If we only consider the results from individual models, there are a number of cautionary
 remarks that stem from the construction of the training set.  The labels for red giant 
@@ -988,43 +991,55 @@ guarantee that the stellar parameters \emph{or} abundances are on the same scale
 \apogee\ \citep[and good reasons to believe they will not be; see][]{Smiljanic_2014}.
 
 
+\stub{Metallicities on the main-sequence and giant branch -- we cannot be sure if they
+are correct. Are there any indications that we can get which suggest whether they are
+good or bad?}
 
-% Caveats in the results:
-% MULTIPLE MODELS
-% HETEROGENEOUS TRAINING SET
-% METAL POOR ABUNDANCES
-
-% UNSURE IF TWO ABUNDANCE SCALES ARE ON THE SAME SCALE --!
-% even if they are on the same scale...
-% metal-poor dwarfs/sub-giants
-
-% quality constraints recmomended
-% recommended SNR and chi-sq etc
-% weird projections in space. --> use morphological classifications to guide
-
-% despite these limitations, this catalog is the largest??? of abundances.
-% in the future we will do spectrophotometric distances to improve on this
+For some of the most metal-poor giant stars in \rave\, we \emph{know} the abundances 
+are not on the same scale as \apogee, because we were forced to adopt abundances for 
+specific elements when they were unavailable.  Although we sought to adopt the mean
+level of Galactic chemical enrichment at the overall metallicity, this is not a
+representative abundance. Even if that is the \emph{mean} enrichment at that Galactic
+metallicity, there is no requirement for zero abundance spread.
+More fundamentally, we are incorrectly assuming that the element \emph{must} be 
+detectable in the photosphere of the star.  There may be no transition that is 
+detectable in that star, even with zero noise, because it is too weak to have any 
+effect on the spectrum.  In the most optimistic case, this can be considered to be
+forcing the model to make use of correlated information between abundances.  In a
+more representative (pessimistic) case, we are simply invoking what all abundances
+should be at low metallicity.
 
 
-\section{Conclusion}
-\label{sec:conclusion}
+This choice is reflected in the abundances of the test set.  While we do recover
+trustworthy metallicities for ultra metal-poor ($[{\rm Fe/H}] \lesssim -4$) stars like 
+CD-38~245, the individual abundances for all extremely metal-poor stars aggregate
+(in [X/Fe] space; Figure~\ref{fig:gce}) at the assumed abundances for the metal-poor
+stars in our sample.  Thus, while the overall metallicities appear reliable, the 
+individual abundances for extremely metal-poor stars in the test set cannot be
+considered trustworthy in any sense.  For this reason we have updated the electronic
+catalog to discard these results, and included a quality control flag to indicate
+the result was discarded (see catalog \texttt{README} file for specifics related to
+the data structure and content).
 
-We performed an independent analysis of \rave\ spectra using a data-driven approach.
-We report effective temperature $\teff$, surface gravity $\logg$, and metallicity [Fe/H]
-for X stars on the main-sequence and sub-giant branch.  For another X stars on the red
-giant branch, we deliver $\teff$, $\logg$, and a total of X.XX~million elemental abundances:
-O, Mg, Al, Ca, Si, Fe, and Ni for X stars.  
 
-% Cross-validation, and
-% Validate through literature comparisons
+\stub{assumptions that are provably wrong: RAVE spectral resolution}
 
-\stub{Typical precision}
-\stub{Something about exoplanet host stars, TESS, etc}
+\stub{assumptions that are provably wrong: correlated noise in the RAVE spectra -- this is minor and unlikely to cause a real issue}
+
+\stub{assumptions that are probably wrong: fringing in high S/N spectra produces issues with the normalization and thus the spectrum. KCF to comment more on this}
+
+\stub{weird projections in the data space --> use morphological classifications to guide}
+
+\stub{quality constraints, etc}
+
+\stub{despite limitations, this catalog may be useful for science. N of abundances}
+
+\stub{in the future we will do spectrophotometric distances to improve on this}
 
 This catalog constitutes the largest collection of stellar abundances for stars in the
 first \gaia\ data release.  When combined with positions and 3D velocities from \gaia,
-we hope the \project{unRAVE} catalog will help advance understanding of the Milky Way's
-formation and evolution.
+we are optimistic that the \project{unRAVE} catalog will help advance understanding 
+of the Milky Way's formation and evolution.
 
 
 \subsection*{Access the results electronically}
@@ -1039,8 +1054,6 @@ of using these results that the fifth \rave\ data release by \citet{Kunder_2016}
 also be cited, as the work presented here would not have been possible without the 
 tireless efforts of the entire \rave\ collaboration, past and present.
 %}}
-
-
 
 
 \acknowledgements
