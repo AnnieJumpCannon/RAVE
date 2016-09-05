@@ -304,7 +304,9 @@ with a low-order polynomial in label space.
 Note that we do not assume that \emph{every} label in the training is accurate -- we
 can afford to have a small fraction of inaccurate labels (e.g., a few obvious 
 misclassifications in the training set are affordable).
-\item We assume the training set is representative of the test set (the \rave\ survey).
+\item We assume that the training data are similar (in spectra) to the test data 
+where they overlap in label space, and we assume that the training data spans enough
+of the label space to capture the variation in the test-set spectra.
 \end{itemize}
 
 
