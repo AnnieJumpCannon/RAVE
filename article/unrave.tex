@@ -830,13 +830,60 @@ There are 142 stars that overlap between \rave\ and the fourth internal
 data release of the \ges\ survey. These are a mix of main-sequence, 
 sub-giant and red giant branch stars.  Despite most of these stars having
 relatively low S/N ratios in \rave\ ($\approx 25$), there is good 
-agreement in stellar parameters (Figure~\ref{fig:ges-comparison}.  
+agreement in stellar parameters (Figure~\ref{fig:ges-stellar-parameters}.  
 The RMS in effective temperature, surface gravity and metallicity is
-236~K, 0.39~dex, and 0.18~dex, respectively. 
-% TODO: Check if those numbers above are still valid when final catalog is used.
+233~K, 0.37~dex, and 0.17~dex, respectively.  
 
-\stub{A paragraph about the abundance agreement.}
 
+Based on this comparison, we find no evidence for a systematic offset 
+between stars on the main-sequence and those on the giant branch. Specifically,
+we do not find any dwarf stars that are misclassified as sub-giants, as we
+found for some metal-poor stars in Section~\ref{sec:validation-gold-standards}.
+In addition we find no evidence for a systematic offset in metallicity (or
+individual abundances) between giant stars and main-sequence stars.  This is
+a crucial inference, as the metallicities for stars in our main-sequence
+training set have a principally different source to those on the giant branch.
+We cannot make these same inferences based on other surveys, like \apogee,
+because (1) \apogee\ stars formed part of the training set, and (2) they do
+not include main-sequence stars.  Even if we found good agreement between
+\epic\ and \apogee\ metallicities, this would not be informative, because
+\apogee\ is the source of metallicity for many stars on the giant branch in
+the \epic\ sample. Therefore, although this is a qualitative comparison only,
+it is reassuring that there is no obvious systematic difference between the
+metallicities of main-sequence and giant branch stars.
+
+
+The metallicity agreement between this work and \ges\ extends down to low
+metallicity, near $[{\rm Fe/H}] \approx -1.5$.  The scatter increases for
+the four stars in the overlap sample with [Fe/H] $< -1$, however these
+spectra have low S/N ratios, which is reflected in the larger uncertainties
+reported for these metallicities.
+% TODO: Check if that is still the case after we examine errors from repeat
+% 		obs.
+
+
+The fourth internal data release of the \ges\ includes detailed chemical
+abundances of up to 45~species ($\approx32$ elements at different ionization
+stages).  This provides us with an independent validation for our detailed
+abundances on the giant branch.  These comparisons are shown for six elemental
+abundances in Figure~\ref{fig:ges-abundances}, where markers are colored by the
+S/N of the \rave\ spectrum.  The number of stars available in each abundance
+comparison varies due to what is available in the \ges\ data release, which
+is itself a function of the instrument used, the spectral type, and other
+factors.  The absolute bias for individual elements varies from as low as
+0.01~dex ([Al/H]) to as high as 0.22~dex ([Si/H]), where we over-estimate 
+[Si/H] abundances relative to the \ges\ survey. The RMS deviation in each
+label is small for stars with [X/H] $\sim -0.5$, before increasing at lower
+metallicities.  If we consider all stars, the smallest abundance RMS we see
+with respect to \ges\ is 0.18~dex for [Ca/H].  The increasing RMS at low 
+metallicity is likely a consequence of multiple factors, namely: inaccurate
+abundance labels for metal-poor stars (Section~\ref{sec:the-training-set});
+only weak, blended lines being available in \rave, which cease to be visible
+in hot and/or metal-poor stars; and to a lesser extent, low S/N ratios for 
+those particular stars being compared.  Unfortunately not all of these
+factors are represented by the quoted errors in each label.  For these reasons, 
+although it affects only a small number of stars, we recommend caution when 
+using individual abundances for very metal-poor giant stars in our sample.
 
 
 \subsection{Astrophysical validation}
@@ -946,8 +993,9 @@ tireless efforts of the entire \rave\ collaboration, past and present.
 We thank 
 	Jonathan Bird (Vanderbilt),
 	Sven Buder (MPIA), 
+	Sergey Koposov (Cambridge),
 and 
-	Sergey Koposov (Cambridge).
+	Sofia Randich (INAF).
 This research made use of: 
   	NASA's Astrophysics Data System Bibliographic Services;
   	Astropy, a community-developed core Python package for Astronomy \citep{astropy};
