@@ -335,7 +335,7 @@ by optimizing the penalized likelihood function
 \begin{eqnarray}\label{eq:train}
 \vectheta_j,s^2_j &\leftarrow& \argmin{\vectheta,s}\left[
     \sum_{n=0}^{N-1} \frac{[y_{jn}-\vecv(\ell_n)\cdot\vectheta]^2}{\sigma^2_{jn}+s^2}
-    + \sum_{n=0}^{N-1} \ln(\sigma^2_{jn}+s^2) + \Lambda{}Q(\vectheta)
+    + \sum_{n=0}^{N-1} \ln(\sigma^2_{jn}+s^2) + \Lambda{}\,Q(\vectheta)
     \right]
   \quad ,
 \end{eqnarray}
@@ -485,7 +485,7 @@ a simple model for \emph{all} stars that only makes use of three labels ($\teff$
 for this model will be quadratic ($\teff^2$ is the highest term), where the vectorizer 
 $\vecv(\ell_n)$ expands as,
 \begin{eqnarray}\label{eq:vectorizer-three-label}
-\vecv(\ell_n) \rightarrow \left[1, T_{{\rm eff},n}, \logg_n, [{\rm Fe/H}]_n, T_{{\rm eff},n}^2, \logg_n\cdot{}T_{{\rm eff},n}, \feh_n\cdot{}T_{{\rm eff},n}, \logg_n^2, \feh_n\cdot\logg_n, \feh_n^2\right]
+\vecv(\ell_n) \rightarrow \left[1, T_{{\rm eff},n}, \logg_n, [{\rm Fe/H}]_n, T_{{\rm eff},n}^2, \logg_n\,T_{{\rm eff},n}, \feh_n\,T_{{\rm eff},n}, \logg_n^2, \feh_n\,\logg_n, \feh_n^2\right]
 \end{eqnarray}
 
 \noindent{}such that $\vecv(\ell)$ produces the design matrix:
@@ -658,7 +658,7 @@ adopt the scaled distance in labels $\teff$ and $\logg$ from the joint model,
 
 \noindent{}and produce the weighted labels $\hat\ell$:
 \begin{eqnarray}
-	\hat\ell = \frac{w_{ms}\ell_{ms} + w_{giant}\ell_{giant}}{w_{ms} + w_{giant}} \quad .
+	\hat\ell = \frac{w_{ms}\,\ell_{ms} + w_{giant}\,\ell_{giant}}{w_{ms} + w_{giant}} \quad .
 \end{eqnarray}
 
 We calculate weighted errors of $\hat\ell$ and correlation coefficients in 
