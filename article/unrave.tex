@@ -896,13 +896,14 @@ are consistent with expectations from astrophysics.  One example is stars in
 globular clusters, which show anti-correlations in light element abundances 
 \citep[e.g.,][and references therein]{Norris_Da_Costa_1995,Carretta_2009}.  In the \rave\
 survey, \cite{Anguiano_2015} found 70 stars with positions and radial velocities that are
-consistent with being members of globular clusters: 49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde
-globular cluster NGC~3201, and 10 members of NGC~362.  
-All of these systems are well-studied and exhibit abundance anti-correlations 
+consistent with being members of globular clusters: 49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde globular cluster NGC~3201, and 10 members of NGC~362. In addition to these systems, NGC~6752 and 47~Tuc were observed \citep{Kunder_2016}. In the top panel of Figure~\ref{fig:globular-cluster-HRD} we plot the spectroscopic H-R diagram for the members of these globular clusters. For comparison, in the bottom panel of Figure~\ref{fig:globular-cluster-HRD} we show the same as the top panel but for the RAVE DR4. For a detailed description of the cluster membership for NGC~5139, NGC~3201, and NGC~362 we refer the reader to \cite{Anguiano_2015}. The membership selection of the remaining clusters can be found in \cite{Kunder_2016}. \stub{check if this is the case in Kunder et al 2016.} 
+
+All of these systems (\stub{check if this is the case for the remaining two new GCs added.}) in \cite{Anguiano_2015} are well-studied and exhibit abundance anti-correlations 
 in Na--O and Mg--Al \citep{Marino_2011,Carretta_2009,Carretta_2013,Munoz_2013}.  Other correlations are also present 
 (e.g., C--N), but those relationships are less relevant for this work because 
 we do not measure C and N abundances here.  We note that \emph{none} of these 
 globular cluster stars were present in our training set.
+
 
 
 
@@ -917,6 +918,7 @@ globular cluster members that are now tidally disrupted \citep{Anguiano_2016,Kuz
 even for stars with low S/N ratios.
 
 % Some literature notes:
+%check if NGC 6571 has anticorrelations present
 % See http://iopscience.iop.org/article/10.1088/0004-637X/731/1/64/pdf
 % NGC 3201 has Na-O anti-correlation: Carretta et al. (2009)
 % NGC 362 has "two discrete groups along the Na-O anti-correlation": https://arxiv.org/abs/1307.4085
@@ -928,7 +930,9 @@ even for stars with low S/N ratios.
 
 \subsubsection{Open clusters}
 \label{sec:open-cluster-validation}
+The RAVE survey has observed several open clusters which can serve as a qualitative sanity check that the stellar parameters match our expectations. These include .... \stub{add more here about each open cluster plus its members}. The membership selection of the remaining clusters can be found in \cite{Kunder_2016}. \stub{check if this is the case in Kunder et al 2016.} 
 
+ In Figure~\ref{fig:globular-cluster-HRD}, we plot the cannon-derived H-R diagram (top panel) and compare it to the RAVE DR4 H-R diagram (bottom panel) for the stars which are probably members of the open clusters. 
 
 \subsubsection{Diffuse interstellar bands}
 \label{sec:dibs-validation}
@@ -1324,6 +1328,16 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \caption{Detailed chemical abundances in the fourth internal data release from the \ges\ survey compared to this work.  The number of stars shown in each panel is indicated, and the bias and RMS deviations are shown. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.\label{fig:ges-abundances}}
 \end{figure*}
 
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/HRD_GCs.pdf}
+\caption{Top Panel: Cannon-derived $\logg$ as a function of $\teff$ for globular cluster members. The cluster name is indicated in the top left corner. The points are color-coded by the metallicity of the member star. Bottom Panel: RAVE DR4 $\logg$ as a function of $\teff$ for the same clusters in the top panel. The points are color-coded by the metallicity of the member star. In both panels, the black line represent the theoretical expectation of a single stellar population from the Padova isochrone set. \label{fig:globular-cluster-HRD}}
+\end{figure*}
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/HRD_OCs.pdf}
+\caption{Same as Figure~\ref{fig:globular-cluster-HRD} for the open cluster members in the RAVE dataset.  \label{fig:open-cluster-HRD}}
+\end{figure*}
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/gold-standard-comparison.pdf}
