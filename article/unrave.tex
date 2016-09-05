@@ -277,11 +277,11 @@ for this analysis.  Specifically, we will use an implementation of \thecannon\
 of our model (e.g., see Section \ref{sec:the-training-set}), a data-driven approach 
 makes use of all available information in the spectrum and lowers the S/N ratio 
 at which systematic effects begin to dominate.  In other words, in the low S/N
-regime, a well-constructed data-driven model will yield more precise labels 
+regime, a well-constructed data-driven model will yield more precise \emph{labels}
 (e.g., stellar parameters and chemical abundances) than most physics-driven 
 models\footnote{However, see \citet{Casey_2016a}}.  This is particularly relevant 
 for the low-resolution \rave\ data analysed here, because about half of the 
-spectra have S/N $\lesssim 50$.
+spectra have S/N $\lesssim 50$~pixel$^{-1}$.
 
 
 There are two main analysis steps when using \thecannon: the \emph{training} 
@@ -297,7 +297,10 @@ resolution in the \rave\ spectra are negligible.
 pixels, and normally distributed.
 \item We assume that the normalization procedure employed by the \rave\ pipeline
 is invariant with respect to the labels we seek to measure (e.g., $\teff$, $\logg$,
-or [Fe/H]), and invariant with respect to the S/N ratio.
+or [Fe/H]), and invariant with respect to the S/N ratio.  In other words, we assume
+that the normalization procedure does not produce different results for high S/N
+spectra compared to low S/N spectra, nor does the normalization procedure vary 
+non-linearly with respect to stellar parameters (e.g., [Fe/H]).
 \item We assume that stars with similar labels ($\teff$, $\logg$, and abundances)
 have similar spectra.
 \item A stellar spectrum is a smooth function of the label values for that star,
@@ -326,14 +329,14 @@ $j$, $\vecv(\ell_n)$ is the vectorizing function that takes as input the $K$ lab
 $\ell_n$ for star $n$ and outputs functions of those labels as a vector of length
 $D>K$, $\vectheta_j$ is a vector of length $D$ of parameters influencing the model at
 wavelength pixel $j$, and $e_{jn}$ is the residual (noise).  Here we will only consider
-vectorizing functions with polynomial expansions (e.g., $\teff^2$, see Sections 
+vectorizing functions with second-order polynomial expansions (e.g., $\teff^2$, see Sections 
 \ref{sec:a-simple-model}-\ref{sec:evolved-star-model}).  The noise values $e_{jn}$ can 
 be considered to be drawn from a Gaussian distribution with zero mean and variance 
 $\sigma_{jn}^2 + s_j^2$, where $\sigma_{jn}^2$ is the variance in flux $y_{jn}$ and 
 $s_j^2$ describes the excess variance at the $j$-th wavelength pixel. 
 
 
-At the \emph{training} step we fix the $K$-lists of labels for the $n$ training set.
+At the \emph{training} step we fix the $K$-lists of labels for the $n$ training set stars.
 At each wavelength pixel $j$, we then find the parameters $\vectheta_j$ and $s_j^2$
 by optimizing the penalized likelihood function
 \begin{eqnarray}\label{eq:train}
@@ -345,7 +348,7 @@ by optimizing the penalized likelihood function
 \end{eqnarray}
 
 \noindent{}where $\Lambda$ is a regularization parameter which we will heuristically set
-in later sections, and $Q(\vectheta)$ is a regularizing function that encourages 
+in later sections, and $Q(\vectheta)$ is a L1 regularizing function that encourages 
 $\vectheta$ values to take on zero values without breaking convexity:
 \begin{eqnarray}\label{eq:regularization-function}
 	Q(\vectheta) = \sum_{d=1}^{D-1} |{\theta_d}| \quad .
@@ -360,7 +363,7 @@ solving for $s_j^2$.
 
 
 The \emph{test step} is where we fix the parameters $\vectheta_j,s_j^2$ at all wavelength
-pixels $j$, and optimize the $K$-list of labels $\ell_m$ for each test set star $m$.  Here
+pixels $j$, and optimize the $K$-list of labels $\ell_m$ for the $m$-th test set star.  Here
 the objective function is:
 \begin{eqnarray}\label{eq:test}
   \ell_m &\leftarrow& \argmin{\ell}\left[
@@ -381,7 +384,7 @@ we judge the veracity of these errors through validation experiments.
 
 
 We sought to construct a training set of stars across the main-sequence, the
-sub-giant branch, and the red giant branch.  We demanded stars with precisely measured
+sub-giant branch, and the red giant branch.  We required stars with precisely measured
 effective temperature $\teff$, surface gravity $\logg$, and elemental abundances
 of O, Mg, Si, Ca, Al, Fe, and Ni.  This proved to be difficult because the magnitude
 range of \rave\ does not overlap substantially with high-resolution spectroscopic
@@ -409,8 +412,8 @@ These constraints forced us to construct a heterogeneous training set.  Given pr
 successes in transferring high S/N ratio labels from \apogee\ \citep{Ness_2015,
 Ness_2016,Ho_2016,Casey_2016b}, we chose to use the 1,355 stars in the \apogee---\rave\ 
 overlap sample for giant star labels in the training set.  Of these, about 900 are 
-giants according to \apogee.  From this sample we selected stars to have: metallicity
-determinations ([Fe/H] $> -5$); S/N ratios of $>$200 in \apogee\ and $>$25 in \rave; and 
+giants according to \apogee.  From this sample we selected stars to have: 
+determinations in all abundances of interest ([X/H] $> -5$ for O, Mg, Al, Si, Ca, Fe, and Ni); S/N ratios of $>$200 in \apogee\ and $>$25 in \rave; and 
 we further required that \aspcap\ did not report any peculiar flags 
 (\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 536 stars along the giant 
 branch, with metallicities ranging from $[{\rm Fe/H}] = -1.79$ to 0.26.  Intermediate 
@@ -422,8 +425,8 @@ practically useful.  \stub{Supplemented this sample with known metal-poor stars 
 
 Assembling a suitable training set for the main-sequence and sub-giant branch was less
 trivial.  There are no spectroscopic studies that extend the range of stellar types we 
-are interested in (e.g., FGKM-type stars), and also have a large enough sample size that
-overlaps with \rave.  Moreover, most of the spectroscopic studies we considered also 
+are interested in (e.g., FGKM-type stars), and which have a large enough sample size 
+overlapping with \rave.  Moreover, most of the spectroscopic studies we considered also 
 showed a flat lower main-sequence, a systematic consequence of the analysis method adopted 
 \citep[see][for discussion on this issue]{Bensby_2014}.  For these reasons we chose to make 
 use of the \epic\ catalog \citep{Huber_2016} for the training set labels on the 
@@ -443,7 +446,7 @@ due to limited information available, it is possible that a star has been
 misclassified.  This is most prevalent for sub-giants, where \citet{Huber_2016} 
 note that $\approx55-70$\% of sub-giants are misclassified as dwarfs.  The 
 probability of misclassification is usually quantified in the uncertainties given
-for each star; most dwarfs that have a higher likelihood of being sub-giants have
+for each star; most dwarfs that have a higher possibility of being sub-giants have
 large confidence intervals.  Therefore, requiring low uncertainties will decrease 
 the total sample size, but in practice it removes most misclassifications.  The 
 situation is far more favourable for dwarfs and giants.  Only $1-4$\% of giant 
@@ -471,7 +474,8 @@ we could identify misclassifications by leave-one-out cross-validation.  However
 chose not to do this because the number of likely misclassifications in the training
 set was negligible ($\approx1$\%), and the improvement in main-sequence test set labels
 was minimal.  The distilled sample of the \rave--\epic\ overlap catalog contains 583 
-stars (of 4,611).
+stars (of 4,611).  The full training set for each model (see next sections) is shown
+in Figure~\ref{fig:training-set-hrd}.
 
 
 \subsection{A 3-label model ($\teff$, $\logg$, $\feh$) for all stars}
@@ -499,7 +503,7 @@ $\vecv(\ell_n)$ expands as,
 
 We used no regularization ($\Lambda = 0$) for this model.  After training the model we
 treated all \Nspectra\ spectra as test set objects.  In the right-hand panel of Figure 
-\ref{fig:tes-set-density} we show the effective temperature $\teff$ and surface gravity 
+\ref{fig:test-set-density} we show the effective temperature $\teff$ and surface gravity 
 $\logg$ for all spectra.  The main-sequence and red giant branch are clearly visible.  
 However, the details of stellar evolution are no longer present: the sub-giant branch is 
 not discernible, and there are a number of systematic artefacts (over-densities) present
@@ -554,12 +558,12 @@ for $\logg$, with $X.XX$~dex and $X.XX$~dex for [Fe/H].
 
 
 We inferred labels for all \rave\ spectra using this main-sequence/sub-giant star model.  
-The results for the survey sample are shown in the left panel of Figure \ref{fig:test-set-density}.  
+The results for the survey sample are shown in the centre panel of Figure \ref{fig:test-set-density}.  
 The increased density of Solar-type stars is consistent with \rave\
 observing stars in the local neighbourhood, and the high number of turn-off
 and main-sequence stars relative to the sub-giant branch is expected from 
 the relative lifetimes of these evolutionary phases.  An over-density
-of stars near the giant branch clump is also present.  This artefact is due 
+of stars near the base of the giant branch is also present.  This artefact is due 
 to having giant stars in the test set, but not in the training set, and the
 model is (poorly) extrapolating outside the convex hull of the training set.
 
@@ -586,8 +590,7 @@ in the same way described in Section \ref{sec:unevolved-star-model}, using the s
 The results are shown in Figure \ref{fig:set-hyperparameters}, where
 again the enveloped region represents the minimum and maximum change in RMS label
 deviation with respect to the unregularized case.  At the point of maximum improvement 
-near $\Lambda = X.XX$, the RMS in all nine labels has decreased by at least $X$\%, 
-and up to $X$\%.  Here the regularization strength also produces a sparser matrix
+near $\Lambda = X.XX$, the RMS in all nine labels has decreased by up to $X$\%.  Here the regularization strength also produces a sparser matrix
 of $\vectheta$, with $\approx20$\% more terms (mostly cross-terms) having zero-valued entries.
 Based on the increased model sparsity and decreasing RMS deviation in the labels, 
 we adopt $\Lambda = X.XX$ for the giant star model.
@@ -597,9 +600,9 @@ Results from cross-validation on our regularized model imply that the precision
 in labels is XXX~K in $\teff$, X.XX~dex in $\logg$, and between X.XX~dex (EL) and 
 X.XX~dex (EL) depending on the elemental abundance.  We inferred labels for all
 \Nspectra\ \rave\ spectra using this model, and these results are summarized in
-Figure \ref{fig:test-set-density} (middle panel).  The red clump is clearly visible
+the right panel of Figure \ref{fig:test-set-density}.  The red clump is clearly visible
 and in the expected location, without requiring any post-analysis calibration.
-Artefacts due to dwarf stars in the test set are also present.
+However, artefacts due to dwarf stars in the test set are also present.
 
 
 \subsection{Joining the models}
@@ -607,7 +610,7 @@ Artefacts due to dwarf stars in the test set are also present.
 
 We have derived labels for all \Nspectra\ \rave\ spectra using the three models
 described in previous sections.  The results from the joint model --- that includes 
-the main-sequence, sub-giant and red giant branch --- shows that a single quadratic
+the main-sequence, sub-giant and red giant branch --- shows that a single 3-label quadratic
 model is too simple for the \rave\ spectral range.  The other models have problems,
 too: unrealistic over-densities in label space show that the main-sequence model and
 the giant model make very poor extrapolations for stars outside their respective
@@ -645,7 +648,7 @@ be approximately isotropic by setting
 	$\delta_{\log{g}} = 0.15$~dex for both models.
 The stars within the peak at $(0, 0)$ represent objects where
 the joint model and the comparison model both report similar labels.  The artefacts 
-seen in the Hertszprung-Russell diagrams in Figure \ref{fig:test-set-density} are
+seen in the Hertzsprung-Russell diagrams in Figure \ref{fig:test-set-density} are
 also present in Figure \ref{fig:joint-model-differences} as over-densities far away
 from the central peak.  Therefore, we can 
 adopt the scaled distance in labels $\teff$ and $\logg$ from the joint model,
@@ -729,7 +732,7 @@ $\Delta\logg/\sqrt{\sigma_{\logg,stacked}^2 + \sigma_{\logg,visit}^2}$).
 If our measurements were unbiased by S/N and the formal errors were 
 representative, these values should be normally distributed with a zero 
 mean and unit variance.
-\stub{Are they? (Probably). How much should we inflate our formal errors, and should this be as a function of S/N? Note that in all Figures and tables,
+\stub{Are they? (Probably not!). How much should we inflate our formal errors, and should this be as a function of S/N? Note that in all Figures and tables,
 we show these inflated errors only, as we gauge them to be more representative.}
 
 
@@ -744,8 +747,8 @@ official fourth \rave\ data release (Figure \ref{fig:rave-dr4-comparison}).
 In order to provide a fair comparison, we only show stars that meet a number
 of quality flags in \emph{both} samples. Specifically we require that the 
 $S/N$ (as measured by our analysis) exceeds 10~pixel$^{-1}$, the reduced
-$\chi_r^2$ in our analysis $< 3$, and that the \texttt{QK} flag reported by
-\citet{Kordopatis_2013} is zero, indicating no problems with quality control.
+$\chi_r^2$ in our analysis $< 3$, and that the \texttt{QK} flag from
+\citet{Kordopatis_2013} is zero, indicating that no problems were reported by the pipeline.
 There is very good agreement in $\teff$, with a bias and RMS of just XX~K 
 and XXX~K, respectively.  The offset in $\logg$ on the giant branch between this study and 
 \citet{Kordopatis_2013} has been noted in other studies, and this has issue
@@ -776,11 +779,11 @@ to evaluate the accuracy of our results on the main-sequence and sub-giant branc
 
 We compare the stellar parameters ($\teff$, $\logg$, [Fe/H]) of stars that
 overlap these literature studies in Figure~\ref{fig:gold-standard-comparison}.
-We only include stars with $\chi_r^2 < 3$ and $S/N > 10$, although the latter
+We only include stars with $\chi_r^2 < 3$ and $S/N > 10$~pixel$^{-1}$, although the latter
 cut removed only few stars because the average S/N in the \rave\ spectra for
-these stars is relatively high ($\gtrsim{}50$). When considering the relative 
+these stars is relatively high ($\gtrsim{}50$~pixel$^{-1}$). When considering the relative 
 information content available in \rave\ (945~pixels in the near infrared with
-$\mathcal{R} ~ 7{,}500$) compared to these literature studies (\stub{what snr, resolution, wavelength range and hipparcos parallaxes}, we consider the
+$\mathcal{R} \approx 7{,}500$) compared to these literature studies (\stub{what snr, resolution, wavelength range and hipparcos parallaxes}, we consider the
  agreement to be satisfactory.
 
 
@@ -804,8 +807,8 @@ metallicities.  Our investigation indicates that this issue affects dwarf stars
 near the turn-off that have $[{\rm Fe/H}] \lesssim -1$.  While the agreement
 would improve if we adopted the main-sequence results for these specific stars,
 the underlying issue of metal-poor dwarf stars would still be present.  Thus,
-we use this example to illustrate caution for studies making inferences based
-on main-sequence dwarf stars.  The results from both the main-sequence star model, 
+we use this example to illustrate caution for studies making inferences from our
+work based on main-sequence dwarf stars.  The results from both the main-sequence star model, 
 and the giant star model, are available at \stub{should we put them online somewhere
 for open-science, or just make them available upon request so that we don't
 muddy the waters and confuse people as to which catalog to use?}
@@ -829,8 +832,8 @@ listed at \texttt{exoplanets.org} and \texttt{exoplanets.eu}.
 There are 142 stars that overlap between \rave\ and the fourth internal
 data release of the \ges\ survey. These are a mix of main-sequence, 
 sub-giant and red giant branch stars.  Despite most of these stars having
-relatively low S/N ratios in \rave\ ($\approx 25$), there is good 
-agreement in stellar parameters (Figure~\ref{fig:ges-stellar-parameters}.  
+relatively low S/N ratios in \rave\ ($\approx 25$~pixel$^{-1}$), there is good 
+agreement in stellar parameters (Figure~\ref{fig:ges-stellar-parameters}).  
 The RMS in effective temperature, surface gravity and metallicity is
 233~K, 0.37~dex, and 0.17~dex, respectively.  
 
@@ -841,7 +844,7 @@ we do not find any dwarf stars that are misclassified as sub-giants, as we
 found for some metal-poor stars in Section~\ref{sec:validation-gold-standards}.
 In addition we find no evidence for a systematic offset in metallicity (or
 individual abundances) between giant stars and main-sequence stars.  This is
-a crucial inference, as the metallicities for stars in our main-sequence
+a crucial observation, as the metallicities for stars in our main-sequence
 training set have a principally different source to those on the giant branch.
 We cannot make these same inferences based on other surveys, like \apogee,
 because (1) \apogee\ stars formed part of the training set, and (2) they do
@@ -944,21 +947,25 @@ even for stars with low S/N ratios.
 \section{Discussion}
 \label{sec:discussion}
 
-% What information have we extracted: almost maximal use of giant branch,
-% lesss so for dwarfs.
+% What we have presented, an independent analysis that makes maximal use of giant branch
+% less-so for dwarfs
+% the intent is for usefulness with chemo-dynamic studies.
 
-% Caveats in the results: metal-poor dwarfs/sub-giants
+% Caveats in the results:
+% MULTIPLE MODELS
 % HETEROGENEOUS TRAINING SET
-% UNSURE IF TWO ABUNDANCE SCALES ARE ON THE SAME SCALE --!
 % METAL POOR ABUNDANCES
+
+% UNSURE IF TWO ABUNDANCE SCALES ARE ON THE SAME SCALE --!
+% even if they are on the same scale...
+% metal-poor dwarfs/sub-giants
+
+% quality constraints recmomended
 % recommended SNR and chi-sq etc
 % weird projections in space. --> use morphological classifications to guide
 
 % despite these limitations, this catalog is the largest??? of abundances.
-
 % in the future we will do spectrophotometric distances to improve on this
-
-
 
 
 \section{Conclusion}
@@ -970,11 +977,10 @@ for X stars on the main-sequence and sub-giant branch.  For another X stars on t
 giant branch, we deliver $\teff$, $\logg$, and a total of X.XX~million elemental abundances:
 O, Mg, Al, Ca, Si, Fe, and Ni for X stars.  
 
+% Cross-validation, and
+% Validate through literature comparisons
 
 \stub{Typical precision}
-
-\stub{A key science result that we see already}
-
 \stub{Something about exoplanet host stars, TESS, etc}
 
 This catalog constitutes the largest collection of stellar abundances for stars in the
@@ -1012,7 +1018,8 @@ This research made use of:
 and 
   	\project{TOPCAT} \citep{Taylor_2005}.
 This work was partly supported by the European Union FP7 programme through ERC 
-grant number 320360. Funding for K.~H.~ has been provided through the Simons 
+grant number 320360. A.~R.~C. thanks King's College of the University of Cambridge
+for their support.  Funding for K.~H.~ has been provided through the Simons 
 Foundation Society of Fellows and the Marshall Scholarship.
 Funding for RAVE has been provided by: the Australian Astronomical Observatory; 
 the Leibniz-Institut fuer Astrophysik Potsdam (AIP); the Australian National 
@@ -1213,7 +1220,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/ges-comparison.pdf}
-\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth internal data release from the \ges\ survey, and this work. The number of stars in each panel are shown, as well as the bias and RMS deviation in each label. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  Most of the \ges-\rave\ overlap stars have relatively low S/N ratios in \rave, near $\approx 30$.\label{fig:ges-stellar-parameters}}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth internal data release from the \ges\ survey, and this work. The number of stars in each panel are shown, as well as the bias and RMS deviation in each label. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  Most of the \ges/\rave\ overlap stars have relatively low S/N ratios in \rave, near $\approx 30$~pixel$^{-1}$.\label{fig:ges-stellar-parameters}}
 \end{figure*}
 
 
