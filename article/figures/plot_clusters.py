@@ -13,14 +13,18 @@ from astropy.table import Table
 import os
 
 
-rave_cannon_dr1 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/unrave-v0.7-37_36.fits')
-RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_GC.fits')
-#RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_OC.fits')
+rave_cannon_dr1 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/unrave-v0.9.fits')
+
+#----if GC  ----
+#RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_GC.fits')
+
+#---if OC -----
+RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_OC.fits')
 
 data_table = join(rave_cannon_dr1, RAVEDR4_GC, keys=("Name",))
 RAVEDR4 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVE-DR4.fits')
 DR4_cannon = join(rave_cannon_dr1, RAVEDR4, keys=("Name",))
-vmax = -1.0 ; vmin=-3.0
+vmax = 0.5 ; vmin=-1.0
 
 try:
     data_table
@@ -49,6 +53,7 @@ clusters = np.unique(data_table['Cluster'])
 
 #-------Generate HRD for each cluster----
 limits = [[3400,7000], [0.0,4.99]]
+cmap= "plasma"
 K = len(clusters) 
 if K == 0:
   raise ValueError('WARNING: No clusters found in the UNRAVE-tgas catalouge')
@@ -68,22 +73,24 @@ fig.subplots_adjust(left=lbdim/xdim, bottom=lbdim/ydim,
 
 
 for i in np.arange(K):
-  cind = np.where(data_table['Cluster'] == clusters[i])[0] #find the cluster stars
+  cind = np.where((data_table['Cluster'] == clusters[i]) & (data_table['snr']>=10) & (data_table['r_chi_sq'] <= 3))[0] #find the cluster stars
   #plot the cannon
   ax = axes[0][i]
   s = ax.scatter(data_table['TEFF'][cind], data_table['LOGG'][cind], c=data_table['FE_H'][cind],vmax=vmax,vmin=vmin,s=60 )
+  print 'Mean metallicity of %s cluster = %.2f +/- %.2f'%(clusters[i],np.nanmean(data_table['FE_H'][cind]), np.nanstd(data_table['FE_H'][cind]))
   #plt.colorbar(s)
   #---- plotting isochrones if they exist----
   isopath = './' #defines the location of the isohrone data (Teff, logg info for the iso)
-  if os.path.isfile(isopath+'%s_y2_iso.dat'%clusters[i]):
-    T_iso, g_iso = np.loadtxt(isopath+'%s_y2_iso.dat'%clusters[i],unpack=True)
+  if os.path.isfile(isopath+'%s_padova_iso.dat'%clusters[i]):
+    a = np.loadtxt(isopath+'%s_padova_iso.dat'%clusters[i])
+    T_iso = 10**(a[:,5]) ; g_iso = a[:,6]
     ax.plot(T_iso,g_iso,'k-')
   #-----------------------------
 
   ax.set_xlim(limits[0])
   ax.set_ylim(limits[1])
-  ax.xaxis.set_major_locator(MaxNLocator(6))
-  ax.yaxis.set_major_locator(MaxNLocator(6))
+  ax.xaxis.set_major_locator(MaxNLocator(4))
+  ax.yaxis.set_major_locator(MaxNLocator(4))
   #ax.set_axis_bgcolor("#CCCCCC")
   ax.invert_xaxis();ax.invert_yaxis()
   ax.text(6800,1.0,'%s'%clusters[i])
@@ -95,20 +102,23 @@ for i in np.arange(K):
   #if i == K-1: 
   #  ax.set_xlabel(r"$T_{\rm eff}$")
 
+
+  #-----plot the RAVE DR4---------
+
   ax = axes[1][i]
-  #plot the RAVE DR4
-  sc = ax.scatter(data_table['TeffK_1'][cind], data_table['loggK_1'][cind], c=data_table['__M_H_K_1'][cind], vmax=vmax,vmin=vmin,s=60)
+  sc = ax.scatter(data_table['TeffK'][cind], data_table['loggK'][cind], c=data_table['__M_H_K'][cind], vmax=vmax,vmin=vmin,s=60,cmap=cmap)
   #---- plotting isochrones if they exist----
   isopath = './' #defines the location of the isohrone data (Teff, logg info for the iso)
-  if os.path.isfile(isopath+'%s_y2_iso.dat'%clusters[i]):
-    T_iso, g_iso = np.loadtxt(isopath+'%s_y2_iso.dat'%clusters[i],unpack=True)
+  if os.path.isfile(isopath+'%s_padova_iso.dat'%clusters[i]):
+    a = np.loadtxt(isopath+'%s_padova_iso.dat'%clusters[i])
+    T_iso = 10**(a[:,5]) ; g_iso = a[:,6]
     ax.plot(T_iso,g_iso,'k-')
   #-----------------------------
   #plt.colorbar(sc)
   ax.set_xlim(limits[0])
   ax.set_ylim(limits[1])
-  ax.xaxis.set_major_locator(MaxNLocator(6))
-  ax.yaxis.set_major_locator(MaxNLocator(6))
+  ax.xaxis.set_major_locator(MaxNLocator(4))
+  ax.yaxis.set_major_locator(MaxNLocator(4))
   #ax.set_axis_bgcolor("#CCCCCC")
   ax.invert_xaxis();ax.invert_yaxis()
   ax.set_xlabel(r"$T_{\rm eff}$")
@@ -120,7 +130,15 @@ for i in np.arange(K):
   if i==0:
     ax.set_ylabel(r"$\log{g}$",)
 
-plt.colorbar(sc)
+fig.tight_layout()
+cbar = plt.colorbar(sc, cax=fig.add_axes([0.9,fig.subplotpars.bottom,0.02,0.9 - fig.subplotpars.bottom]))
+cbar.set_label(r"[Fe/H]")
+fig.subplots_adjust(top=0.90, right=0.88)
+
+
+
+
+#plt.colorbar(sc)
 
 def generate_cluster_abundance_plot(cluster=clusters[0]):
   all_columns = [ 
@@ -157,7 +175,7 @@ def generate_cluster_abundance_plot(cluster=clusters[0]):
 def generate_cluster_memebership(cluster=clusters[0]):
   all_columns = [ 
   ("HRV_1", "FE_H"), 
-  ("HRV_1", "__M_H_K_1"),
+  ("HRV_1", "__M_H_K"),
   ]
   cind = np.where(data_table['Cluster'] == cluster)[0] #find the cluster stars
   RAlim=5
@@ -181,9 +199,9 @@ def generate_cluster_memebership(cluster=clusters[0]):
 
 
   ax2 = plt.subplot(1,2,2,sharex=ax1,sharey=ax1)
-  y = data_table['__M_H_K_1'][cind]
+  y = data_table['__M_H_K'][cind]
   xfield = DR4_cannon['HRV_1'][feild_ind]
-  yfield = DR4_cannon['__M_H_K_1'][feild_ind]
+  yfield = DR4_cannon['__M_H_K'][feild_ind]
   ax2.plot(xfield,yfield,'.',color='gray',label='Field',ms=2)
   ax2.plot(x,y,'bo',label='%s'%cluster,ms=7)
   ax2.set_title('RAVE DR4')
@@ -199,10 +217,6 @@ def generate_cluster_memebership(cluster=clusters[0]):
 for i in np.arange(len(clusters)):
   #generate_cluster_abundance_plot(cluster=clusters[i])
   generate_cluster_memebership(cluster=clusters[i])
-
-
-
-
 
 
 
