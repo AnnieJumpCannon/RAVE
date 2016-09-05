@@ -158,7 +158,7 @@ comparison_labels = (
     )
 M = len(comparison_labels)
 
-link = False
+link = True
 
 factor = 3.5
 lbdim = 0.2 * factor

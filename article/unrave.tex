@@ -668,8 +668,8 @@ the main-sequence model is zero, and vice-versa for main-sequence stars.
 The relative weights smoothly transition from 0 to 1 on the sub-giant branch
 near $\log{g} \approx 3.5$, in the training set overlap region of both models.
 For abundance labels in the giant model that are not in the main-sequence
-model (e.g., [O/H], [Mg/H]), we only report abundances if there was no contribution
-from the main-sequence model: $w_{ms} = 0$.
+model (e.g., [O/H], [Mg/H]), we only report abundances for objects if
+$w_{ms} < 0.05$.
 
 
 Our catalog now contains entries of $XXX$ stars with effective temperature $\teff$,
@@ -1028,21 +1028,21 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-train-set.pdf}
-\caption{A H-R diagram showing the training set labels.\label{fig:training-set-hrd}}
+\caption{Effective temperature $\teff$ and surface gravity $\logg$ for all stars in the training sets. Stars are colored by their metallicity [Fe/H], and the three panels show stars in the joint model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (middle panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}).\label{fig:training-set-hrd}}
 \end{figure}
 
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/test-set-density.pdf}
-\caption{\label{fig:test-set-density}}
+\caption{The logarithmic density of effective temperature $\teff$ and surface gravity $\logg$ for all \Nspectra\ \rave\ spectra, as derived using the joint model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (center panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}). These panels demonstrate how a single quadratic model is insufficient for all \rave\ stars (left panel), and illustrate some of the systematic artefacts that can result from testing on stars outside of the training set (center and right panel).  These panels do not represent our final results, which are shown in Figure~\ref{fig:test-set-hrd}.\label{fig:test-set-density}}
 \end{figure*}
 
 
 \begin{figure}[p]
 \center
 \includegraphics[width=0.45\textwidth]{figures/set-hyperparameters.pdf}
-\caption{The percentage change in RMS deviation between inferred and training labels at different regularization strengths.  The RMS values were calculated by leave-one-out cross-validation.  The points and solid line indicate the mean improvement across all labels. The filled area represents the minimum and maximum improvements across all labels.\label{fig:set-hyperparameters}}
+\caption{The percentage change in RMS deviation between inferred and training labels at different regularization strengths.  The RMS values were calculated by leave-one-out cross-validation, and are shown with respect to an unregularized model ($\Lambda = 0$).  The points and solid line indicate the mean improvement across all labels. The filled area represents the minimum and maximum improvements over all labels. With increasing regularization strength, there is a minimum in the RMS deviation over all labels, which is where we set $\Lambda$ for each model (see text for details).\label{fig:set-hyperparameters}}
 \end{figure}
 
 
@@ -1065,7 +1065,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-test-set.pdf}
-\caption{The effective temperature $\teff$ and surface gravity $\logg$ for \rave\ stars after combining labels from the main-sequence and giant star models.  Only stars with $v\sin{i} < 1$~km~s$^{-1}$ and $\chi_{red} < 3$ are shown.  The top three panels show logarithmic density, and bins in the lower three panels are colored by the median metallicity in each bin.\label{fig:test-set-hrd}}
+\caption{The effective temperature $\teff$ and surface gravity $\logg$ for \rave\ stars after combining labels from the main-sequence and giant star models.  Only results with $\chi_{r}^2 < 3$ and S/N ratios greater than the quoted limit in each panel are shown.  The top three panels show logarithmic density, and bins in the bottom three panels are colored by the median metallicity in each bin.\label{fig:test-set-hrd}}
 \end{figure}
 
 
@@ -1079,42 +1079,45 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/dr4-comparison.pdf}
-\caption{Stellar label comparison between the \project{UNRAVE} catalog and the \project{RAVE} fourth data release \citep{Kordopatis_2013}.\label{fig:rave-dr4-comparison}}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth \rave\ data release \citep{Kordopatis_2013} and this work. Only stars meeting all the following quality criteria are shown: $\chi_{r}^2 < 3$ (\project{unRAVE} constraint); S/N $> 10$ (\project{unRAVE} constraint); and \texttt{QK = 0} (\rave\ DR4 constraint). \label{fig:rave-dr4-comparison}}
 \end{figure*}
 
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/ges-comparison.pdf}
-\caption{Stellar label comparison between the \project{unRAVE} catalog and the \ges\ fourth internal data release.\label{fig:ges-stellar-parameters}}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth internal data release from the \ges\ survey, and this work. The number of stars in each panel are shown, as well as the bias and RMS deviation in each label. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  Most of the \ges-\rave\ overlap stars have relatively low S/N ratios in \rave, near $\approx 30$.\label{fig:ges-stellar-parameters}}
 \end{figure*}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/ges-abundances.pdf}
-\caption{Individual chemical abundances in \project{unRAVE} compared to \ges.\label{fig:ges-abundances}}
+\caption{Detailed chemical abundances in the fourth internal data release from the \ges\ survey compared to this work.  The number of stars shown in each panel is indicated, and the bias and RMS deviations are shown. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.\label{fig:ges-abundances}}
 \end{figure*}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/gold-standard-comparison.pdf}
-\caption{Stellar parameter comparisons for stars in common between this work and studies using high-resolution, high S/N spectra and \hipparcos\ parallaxes.\label{fig:gold-standard-comparison}}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparisons for stars in common between this work and `gold standard' studies that use high-resolution, high S/N spectra and \hipparcos\ parallaxes where available: \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  \label{fig:gold-standard-comparison}}
 \end{figure*}
+
+
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/gold-standard-hrd.pdf}
-\caption{HRD of gold standard comparisons.\label{fig:gold-standard-hrd}}
+\caption{Hertsprung-Russell diagrams of stars in common between this work and that of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  Stars are colored by the metallicity of each study. Circles indicate literature markers in the first three panels, and the linked triangles indicate \project{unRAVE} parameters for the same object. This figure illustrates the good overall agreement in the shape of the turnoff and sub-giant branch, yet also demonstrates how some literature metal-poor ($[{\rm Fe/H}] \lesssim -1$) dwarfs near the turn-off appear as metal-poor sub-giants in \project{unRAVE}.\label{fig:gold-standard-hrd}}
 \end{figure*}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/kordopatis-calibration.pdf}
-\caption{Comparison with the calibration (literature) samples used by \citet{Kordopatis_2013} and \citet{Kunder_2016}.\label{fig:kordopatis-calibration}}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison with the literature calibration sources used by \citet{Kordopatis_2013} and \citet{Kunder_2016}. Stars are colored by the S/N of the \rave\ spectra. Note that this comparison is for illustrative purposes only: it is not an indication of independent agreement with the literature because some metal-poor stars in this literature sample were used in the construction of our training set (see text for details).\label{fig:kordopatis-calibration}}
 \end{figure*}
 
 \begin{figure}[p]
-\includegraphics[width=0.5\textwidth]{figures/gce.pdf}
-\caption{Giant star abundances ([X/Fe]) with respect to [Fe/H], showing the Galactic chemical evolution trend for individual elements.\label{fig:gce}}
+\center
+\includegraphics[width=0.65\textwidth]{figures/gce.pdf}
+\caption{Detailed chemical abundances ([X/Fe]) for giant stars in \unrave\ with respect to [Fe/H], showing the Galactic chemical evolution derived for each element. Note that the y-axes limits vary for each panel, however for clarity we show the scaled-Solar position by dashed lines, and have common tick mark spacing on the y-axis for all panels. Only stars with S/N $> 10$ and $\chi_r^2 < 3$ are shown.\label{fig:gce}}
 \end{figure}
 
 
