@@ -92,24 +92,29 @@
 The Milky Way is a powerful laboratory for understanding galaxy formation,
 as it can provide orbits, ages, physical parameters, as well as chemical 
 abundances for vast sets of individual stars.  These inferences require 
-both astrometric and spectroscopic data.  Indeed, the Tycho-Gaia 
-Astrometric Solution (\tgas) sample in the first \gaia\ data release 
-requires a spectroscopic complement that includes radial velocities, 
-stellar parameters, and elemental abundances.  Among existing spectroscopic 
-samples, the RAdial Velocity Experiment (\rave) survey has the largest 
-overlap with \tgas: 292,036 stars.  Here we present a data-driven 
-re-analysis of \rave\ spectra, using an implementation of \thecannon, that
-yields more precise and accurate stellar parameters and abundances.  We 
-derive, and validate, improved effective temperature $\teff$, surface 
-gravity $\logg$, and chemical abundances of up to seven elements (O, Mg, 
-Al, Si, Ca, Fe, Ni) for \Nstarsqc\ stars.  The typical precision in chemical 
-abundances is X.XX~dex for stars on the giant branch.  We provide 
-spectrophotometric distances based on our stellar parameters, which should 
-be superior to the parallax-based distances for faint or distant objects in
-\tgas.  The \unrave\ catalog presented here, in conjunction with \tgas, will 
+both astrometric and spectroscopic data.  Indeed, in order to be maximally
+useful for chemo-dynamic studies, the Tycho-Gaia Astrometric Solution 
+(\tgas) sample in the first \gaia\ data release requires a spectroscopic 
+complement that includes radial velocities, stellar parameters, and 
+elemental abundances.  Among existing spectroscopic samples, the RAdial 
+Velocity Experiment (\rave) survey has the largest overlap with \tgas: 
+292,036 stars.  Here we present a data-driven re-analysis of \rave\ 
+spectra, using an implementation of \thecannon, that yields more precise 
+and accurate stellar parameters and abundances.  We derive, and validate,
+improved effective temperature $\teff$, surface gravity $\logg$, and 
+chemical abundances of up to seven elements (O, Mg, Al, Si, Ca, Fe, Ni) 
+for \Nstarsqc\ stars.  The typical precision in chemical abundances is 
+X.XX~dex for stars on the giant branch.  
+The \unrave\ catalog presented here, in conjunction with \tgas, will 
 be the most powerful data set for chemo-orbital analysis at the dawn of 
 broadly available \gaia\ data.
 \end{abstract}
+
+%We *will* provide 
+%spectrophotometric distances based on our stellar parameters, which should 
+%be superior to the parallax-based distances for faint or distant objects in
+%\tgas.
+
 
 \keywords{\vspace{5em}}
 
@@ -731,38 +736,80 @@ we show these inflated errors only, as we gauge them to be more representative.}
 \subsection{External validation}
 \label{sec:external-validation}
 
-\subsubsection{Comparison with \rave\ DR5}
-
-Here we cross-match our results against literature samples to verify that
-our results are accurate.  Because this work is an independent analysis, our
-first point of reference is against the official \rave\ data release.  This
-comparison is shown in Figure \ref{fig:rave-dr5-comparison}, 
-where we show our results with respect to the fifth \rave\ data release \citep{Kunder_2016}.  In order
-to provide a fair comparison, we only show the $XXX$ stars that meet a number of quality
-flags in both samples: 
-\stub{What selections qualify as a fair comparison in both samples?}
-There is very good agreement in $\teff$, with a bias
-and RMS of just XX~K and XXX~K, respectively.  We find our $\logg$ values are
-closest to the `calibrated' \rave\ surface gravities, which make use of 
-asteroseismic information to correct (increase) the $\logg$ values along the
-giant branch.  The calibrated \rave\ surface gravities also correct the 
-location of the red clump (by $\sim0.5$~dex) to be in the same position in our
-results.  However, while our $\logg$ values generally agree with the calibrated
-\rave\ values along the giant branch, our $\logg$ values do differ slightly 
-along the main-sequence.  This is principally because the main-sequence in 
-this work tends to taper down towards higher $\logg$ values at cooler 
-temperatures, whereas the comparison sample tend to have a slightly flatter
-main-sequence.  This difference is not likely to have a very significant 
-effect on the detailed abundance or spectrophotometric distance determinations
-between these studies \citep{Binney_2014}.
-
-\subsubsection{Comparison with the \citet{Kordopatis_2013} calibration sample}
+\subsubsection{Comparison with \rave\ DR4}
 \label{sec:validation-kordopatis}
+
+As an initial point of comparison, we cross-matched our results against the 
+official fourth \rave\ data release (Figure \ref{fig:rave-dr4-comparison}).
+In order to provide a fair comparison, we only show stars that meet a number
+of quality flags in \emph{both} samples. Specifically we require that the 
+$S/N$ (as measured by our analysis) exceeds 10~pixel$^{-1}$, the reduced
+$\chi_r^2$ in our analysis $< 3$, and that the \texttt{QK} flag reported by
+\citet{Kordopatis_2013} is zero, indicating no problems with quality control.
+There is very good agreement in $\teff$, with a bias and RMS of just XX~K 
+and XXX~K, respectively.  The offset in $\logg$ on the giant branch between this study and 
+\citet{Kordopatis_2013} has been noted in other studies, and this has issue
+has been resolved in the fifth \rave\ data release by correcting $\logg$
+values with a small sample of asteroseismic targets.  There is also a
+slight discrepancy in the $\log$ values along the main-sequence, where our
+work tends to taper down towards higher $\logg$ values at cooler temperatures,
+and the \rave\ DR4 sample tends to have a slightly flatter lower main-sequence.
+This difference is not likely to have a very significant effect on the detailed
+abundance or spectrophotometric distance determinations between these studies 
+\citep{Binney_2014}.
+
 
 \subsubsection{Comparisons with Reddy, Bensby, and Valenti \& Fischer}
 \label{sec:validation-gold-standards}
 
-\stub{Caution re MP dwarfs appear as sub-giants in our sample}
+We searched the literature for studies that overlap with \rave, and which base
+their analysis on high-resolution, high S/N spectra.  We found four notable
+studies with a sufficient level of overlap: the disk studies \citet{Reddy_2003}
+and \citet{Reddy_2006}, the \citet{Valenti_Fischer_2005} work on exoplanet
+host star candidates, and the work of \citet{Bensby_2014}.  These studies 
+perform a careful (manual; expert) analysis using extremely high-resolution
+\stub{how high?}, high S/N spectra, and make use of \project{Hipparcos}
+parallaxes where possible.  Most of the stars in these samples are main-sequence
+or sub-giant stars.  Therefore, these works constitute an excellent comparison
+to evaluate the accuracy of our results on the main-sequence and sub-giant branch.
+
+
+We compare the stellar parameters ($\teff$, $\logg$, [Fe/H]) of stars that
+overlap these literature studies in Figure~\ref{fig:gold-standard-comparison}.
+We only include stars with $\chi_r^2 < 3$ and $S/N > 10$, although the latter
+cut removed only few stars because the average S/N in the \rave\ spectra for
+these stars is relatively high ($\gtrsim{}50$). When considering the relative 
+information content available in \rave\ (945~pixels in the near infrared with
+$\mathcal{R} ~ 7{,}500$) compared to these literature studies (\stub{what snr, resolution, wavelength range and hipparcos parallaxes}, we consider the
+ agreement to be satisfactory.
+
+
+There are some discrepancies between our results and these literature studies,
+and these differences arise from the manner in which we join results from the
+main-sequence and giant model.  Specifically, for metal-poor stars near
+the turn-off in these literature comparisons, in our weighted results we find 
+these stars to have similar metallicities, but to be slightly more evolved: 
+on the sub-giant branch or the base of the giant branch.  This effect is best
+illustrated in Figure~\ref{fig:gold-standard-hrd}, where we show a 
+Hertzsprung-Russell diagram for all stars in common between this work and that
+of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  While the
+overall shape of the turn-off in our work is consistent with the literature
+studies, the linked data points show that metal-poor stars in the literature
+appear as more evolved stars in our combined results.  Instead, if we only
+take the results from our main-sequence model --- ignoring the influence of the
+giant model --- and compare those values to these literature studies, no such 
+systematic discrepancies are present in the Hertzsprung-Russell diagram: we 
+find those metal-poor turn-off stars to also be turn-off stars, with comparable
+metallicities.  Our investigation indicates that this issue affects dwarf stars
+near the turn-off that have $[{\rm Fe/H}] \lesssim -1$.  While the agreement
+would improve if we adopted the main-sequence results for these specific stars,
+the underlying issue of metal-poor dwarf stars would still be present.  Thus,
+we use this example to illustrate caution for studies making inferences based
+on main-sequence dwarf stars.  The results from both the main-sequence star model, 
+and the giant star model, are available at \stub{should we put them online somewhere
+for open-science, or just make them available upon request so that we don't
+muddy the waters and confuse people as to which catalog to use?}
+
 
 \subsubsection{Comparison with the \ges\ survey}
 \label{sec:validation-ges}
