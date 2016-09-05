@@ -13,6 +13,7 @@ Lambdas = [0, 0.001, 0.01, 0.1, 1.0, 10.0, 25.0, 50.0, 100.0]
 labels = ("TEFF", "LOGG", "FE_H", "MG_H", "AL_H", "O_H", "NI_H", "SI_H", "CA_H")
 
 
+import AnniesLasso as tc
 
 # y axis should be some metric(s)
 # x axis should be Lambda
@@ -20,27 +21,131 @@ labels = ("TEFF", "LOGG", "FE_H", "MG_H", "AL_H", "O_H", "NI_H", "SI_H", "CA_H")
 
 
 
-#labelled_set = Table.read("{}-labelled-set.fits".format(model_name))
-labelled_set = Table.read("/data/gaia-eso/arc/rave/preprocessing/giant_trainingsets_APOGEERAVE_V2.fits")
-
-ok = np.ones(len(labelled_set), dtype=bool)
-for label_name in labels:
-    ok *= np.isfinite(labelled_set[label_name])
-    ok *= (labelled_set[label_name] > -5)
-
-labelled_set = labelled_set[ok]
-labelled_set = np.array([labelled_set[label_name] for label_name in labels]).T
 
 
+#def metric(labelled_set, test_set):
+#    return np.nanstd(labelled_set - test_set, axis=0)
 
-def metric(labelled_set, test_set):
-    return np.nanstd(labelled_set - test_set, axis=0)
+
+comparisons = [
+    (
+        tc.load_model("rave-tgas-v34.model"), 
+        glob("rave-tgas-v34-test-labelled-set-?.????????e*-1.00.pkl"),
+        "rave-tgas-v34-test-labelled-set-0.00000000e+00-1.00.pkl",
+        "#3498DB",
+        r"${\rm Main{-}sequence}$ ${\rm model}$"
+    ),
+    (
+        tc.load_model("rave-tgas-v16b.model"),
+        glob("rave-tgas-v16b-test-labelled-set-*+vsini.pkl"),
+        'rave-tgas-v16b-test-labelled-set-1.00000000e-03+vsini.pkl',
+        "r",
+        r"${\rm Giant}$ ${\rm model}$"
+    )
+]
 
 
-color_choices = ["r", "b", "g", "m", "y"]
-color_choices = ["#3498DB"]
 
-files = glob("/data/gaia-eso/arc/rave/rave-tgas-v34-test-labelled-set-?.????????e*-1.00.pkl")
+# Plot log(density) of the three models.
+K = 1
+factor = 3.5
+lbdim = 0.2 * factor
+trdim = 0.1 * factor
+whspace = 0.05
+yspace = factor
+xspace = factor * K + factor * (K - 1) * whspace + lbdim * (K - 1)
+xdim = lbdim + xspace + trdim
+ydim = lbdim + yspace + trdim
+
+fig, ax = plt.subplots(1, K, figsize=(xdim, ydim))
+fig.subplots_adjust(
+    left=lbdim/xdim, bottom=lbdim/ydim, right=(xspace + lbdim)/xdim,
+    top=(yspace + lbdim)/ydim, wspace=whspace, hspace=whspace)
+
+
+offset = 0
+for i, (model, filenames, base_filename, color, title) in enumerate(comparisons):
+
+
+    x = []
+    y = []
+
+    for filename in filenames:
+
+        with open(filename, "rb") as fp:
+            test_set = pickle.load(fp)
+
+        basename = os.path.basename(filename)
+        
+        _ = basename.split("-test-labelled-set-")[1]
+        Lambda = float(_[:_.index("e") + 4])
+
+
+        
+        x.append(Lambda)
+        y.append(np.nanstd(model.labels_array - test_set, axis=0))
+
+
+    x = np.array(x)
+    y = np.array(y)
+
+    with open(base_filename, "rb") as fp:
+        base_test_set = pickle.load(fp)
+
+    y_comparison = np.nanstd(model.labels_array - base_test_set, axis=0)
+
+    y = 100 * (y - y_comparison)/y_comparison
+
+    indices = np.argsort(x)
+    x = x[indices]
+    y = y[indices]
+
+    
+
+    """
+    for index in range(9):
+
+        ax.scatter(x_, y_[:, index], facecolor=marker_colors[color])
+        ax.plot(x_, y_[:, index], c=marker_colors[color], label=color)
+    """ 
+    ax.scatter(x, np.mean(y, axis=1), facecolor=color, s=50, zorder=100 - i)
+    ax.plot(x, np.mean(y, axis=1), c=color, linewidth=2, zorder=-i*50,
+        label=title)
+    ax.fill_between(x, 
+        np.min(y, axis=1), #np.mean(y_, axis=1) - np.std(y_, axis=1), #np.min(y_, axis=1),
+        np.max(y, axis=1), #np.mean(y_, axis=1) + np.std(y_, axis=1), #np.max(y_, axis=1),
+        facecolor=color, edgecolor=color,
+        alpha=0.5, linewidth=2, zorder=-i*10)
+
+
+    ax.semilogx()
+    ax.axhline(0, c="k", linestyle=":", zorder=-100)
+
+
+    ax.set_xlim(0, 1001)
+    ax.set_ylim(-50, 50)
+
+    #ax.text(0.05, 0.92, title, fontsize=14, transform=ax.transAxes)
+
+    ax.yaxis.set_major_locator(MaxNLocator(6))
+
+    if ax.is_first_col():
+        ax.set_ylabel(r"${\rm Change}$ ${\rm in}$ ${\rm label}$ ${\rm RMS}$ ${\rm w.r.t.}$ $\Lambda = 0{\rm ,}$ $\Delta\sigma$ $[{\rm \%}]$")
+    
+    else:
+        ax.set_yticklabels([])
+
+    ax.set_xlabel(r"${\rm Regularization}$ ${\rm hyperparameter,}$ $\Lambda$")
+    
+
+plt.legend(loc="lower right", frameon=False)
+
+fig.tight_layout()
+
+fig.savefig("set-hyperparameters.pdf", dpi=300)
+fig.savefig("set-hyperparameters.png", dpi=300)
+
+raise a
 
 metric_index = 0
 
@@ -48,6 +153,7 @@ offset = 5
 x = []
 colors = []
 y = []
+
 
 for filename in files:
 
@@ -59,46 +165,16 @@ for filename in files:
     scale_factor = basename[42 + offset:46 + offset]
 
     x.append(float(Lambda))
-    colors.append(float(scale_factor))
-
     y.append(metric(labelled_set, test_set))
+
 
 x = np.array(x)
 y = np.array(y)
 colors = np.array(colors)
 
-fig, ax = plt.subplots()
 N_metrics = len(y[0])
 
-marker_colors = dict(zip(set(colors), color_choices))
 
-for color in set(colors):
-
-    base_match = (colors == color) * (x == 0)
-
-    match = colors == color
-    x_ = x[match]
-    y_ = 100 * (y[match] - y[base_match])/(y[base_match])
-
-    indices = np.argsort(x_)
-    x_ = x_[indices]
-    y_ = y_[indices]
-
-    
-
-    """
-    for index in range(9):
-
-        ax.scatter(x_, y_[:, index], facecolor=marker_colors[color])
-        ax.plot(x_, y_[:, index], c=marker_colors[color], label=color)
-    """ 
-    ax.scatter(x_, np.mean(y_, axis=1), facecolor=marker_colors[color], s=50, zorder=100)
-    ax.plot(x_, np.mean(y_, axis=1), c=marker_colors[color], label=color, linewidth=2, zorder=50)
-    ax.fill_between(x_, 
-        np.min(y_, axis=1), #np.mean(y_, axis=1) - np.std(y_, axis=1), #np.min(y_, axis=1),
-        np.max(y_, axis=1), #np.mean(y_, axis=1) + np.std(y_, axis=1), #np.max(y_, axis=1),
-        facecolor=marker_colors[color], edgecolor=marker_colors[color],
-        alpha=0.5, linewidth=2, zorder=10)
 
 
 
