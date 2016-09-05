@@ -947,9 +947,47 @@ even for stars with low S/N ratios.
 \section{Discussion}
 \label{sec:discussion}
 
-% What we have presented, an independent analysis that makes maximal use of giant branch
-% less-so for dwarfs
-% the intent is for usefulness with chemo-dynamic studies.
+We have presented an independent re-analysis of \rave\ spectra that makes near-maximal
+use of the information content for red giant branch star, and provides significant a
+improvement in stellar parameter ($\teff$, $\logg$, [Fe/H]) precision over previous
+\rave\ data releases.  When combined with \gaia/\tgas, these results provide a powerful
+compendium for chemo-dynamic studies of the Milky Way.  However, our results have caveats.
+Any inferences based upon these results should be made with the recognition of those caveats,
+and acknowledge that they are subject to our explicit assumptions.
+
+
+For practical purposes we adopted separate models: one for the giant branch and one
+for the main-sequence.  A third model was used to derive relative weights for which
+results to use.  The relative weighting we have used does not have any formal
+interpretation as a likelihood or belief (in any sense): it was introduced for
+practical reasons to identify systematic errors and combine results for multiple
+models.  Because the relative weights have no formal interpretation, it is reasonable
+to consider this method is as \emph{ad hoc} as any other approach.  Therefore, the
+relative weighting has no warranty to be (formally) correct, and may introduce 
+inconsistencies or systematic errors rather than
+minimizing them.  Evidence of this is already present in our comparisons to
+`gold standard' works \citep{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005},
+where metal-poor dwarf stars appear as metal-poor sub-giants in our combined results,
+but have reasonable labels (by any available statistic) as dwarfs in the main-sequence
+model.  Clearly, the relative distance from the joint model to the giant model is 
+slightly favoured (over the main-sequence model) for metal-poor dwarf stars. In this
+sense, our approach towards combining labels from multiple models is sub-optimal.
+ 
+
+If we only consider the results from individual models, there are a number of cautionary
+remarks that stem from the construction of the training set.  The labels for red giant 
+branch stars primarily come from \apogee, where previous successes with \thecannon\
+have demonstrated that \apogee\ labels based on high S/N data can be of high fidelity.
+However, the lack of metal-poor stars in the \apogee/\rave\ overlap sample produced
+a tapering-off in the test set, where \emph{no} stars had reliably reported metallicities
+below that of the training set, which forced us to construct a heterogeneous training
+set.  The metal-poor stars included in this sample are from high-resolution studies
+\citep{Fulbright,Ruchti,elsewhere}, but it is unknown if the stellar parameters are
+of high fidelity (e.g., we have limited quality metrics available), and there is no
+guarantee that the stellar parameters \emph{or} abundances are on the same scale as
+\apogee\ \citep[and good reasons to believe they will not be; see][]{Smiljanic_2014}.
+
+
 
 % Caveats in the results:
 % MULTIPLE MODELS
