@@ -109,12 +109,6 @@ The \unrave\ catalog presented here, in conjunction with \tgas, represents the m
 broadly available \gaia\ data.
 \end{abstract}
 
-%We *will* provide 
-%spectrophotometric distances based on our stellar parameters, which should 
-%be superior to the parallax-based distances for faint or distant objects in
-%\tgas.
-
-
 \keywords{\vspace{5em}}
 
 
@@ -688,13 +682,6 @@ S/N constraints are shown in Figure \ref{fig:test-set-hrd}, both in logarithmic 
 and mean metallicity.  The artefacts from individual models are no longer 
 apparent, and the rich structure of the Hertzsprung-Russell is visible.
 
-\subsection{Spectrophotometric distances}
-\label{sec:distances}
-
-\stub{These will be derived by Jason Sanders when he returns from his honeymoon.
-The timing means that the distances will not be available when we submit the first
-version to arXiv. So we may need to remove this section and the reference to it
-from the abstract.}
 
 \section{Validation experiments}
 \label{sec:validation}
@@ -942,20 +929,19 @@ even for stars with low S/N ratios.
 \stub{Look at residuals between model and data as a function of galactic position. This might be out of scope unless someone volunteers to do it}
 
 
-
 \section{Discussion}
 \label{sec:discussion}
+
 
 We have presented an independent re-analysis of \rave\ spectra that makes near-maximal
 use of the information content for red giant branch stars, and provides a significant
 improvement in stellar parameters ($\teff$, $\logg$, [Fe/H]) over previous \rave\ data
 releases.  When combined with the \tgas\ sample, these results may amount to a powerful
 compendium for chemo-dynamic studies of the Milky Way.  However, our analysis has caveats.
-Any inferences based upon these results should be made with the recognition of those caveats,
-and acknowledge that they are subject to our explicit assumptions, some of which are 
-provably incorrect.
+Inferences based on these results should recognize those caveats, and acknowledge that 
+these results are subject to our explicit assumptions, some of which are provably
+incorrect.
 
-\stub{assumptions that are provably wrong: accurate labels in the training set. lol}
 
 For practical purposes we adopted separate models: one for the giant branch and one
 for the main-sequence.  A third model was used to derive relative weights for which
@@ -975,28 +961,40 @@ slightly favoured (over the main-sequence model) for metal-poor dwarf stars. In 
 sense, our approach towards combining labels from multiple models is sub-optimal.
 
 
-
 If we only consider the results from individual models, there are a number of cautionary
 remarks that stem from the construction of the training set.  The labels for red giant 
 branch stars primarily come from \apogee, where previous successes with \thecannon\
-have demonstrated that \apogee\ labels based on high S/N data can be of high fidelity.
+have demonstrated that \apogee\ labels based on high S/N data can be of high fidelity
+\citep{Ness_2015,Ness_2016,Ho_2016,Casey_2016}.
 However, the lack of metal-poor stars in the \apogee/\rave\ overlap sample produced
-a tapering-off in the test set, where \emph{no} stars had reliably reported metallicities
-below that of the training set, which forced us to construct a heterogeneous training
+a tapering-off in the test set --- where \emph{no} stars had reliably reported metallicities
+below that of the training set --- which forced us to construct a heterogeneous training
 set.  The metal-poor stars included in this sample are from high-resolution studies
-\citep{Fulbright,Ruchti,elsewhere}, but it is unknown if the stellar parameters are
+\citep{Fulbright_2010,Ruchti_2011}, but it is unknown if the stellar parameters are
 of high fidelity (e.g., we have limited quality metrics available), and there is no
 guarantee that the stellar parameters \emph{or} abundances are on the same scale as
 \apogee\ \citep[and good reasons to believe they will not be; see][]{Smiljanic_2014}.
 
 
-\stub{Metallicities on the main-sequence and giant branch -- we cannot be sure if they
-are correct. Are there any indications that we can get which suggest whether they are
-good or bad?}
+If the metallicities of metal-poor giant stars are on the same scale as the \apogee\
+abundances, there is a larger issue in verifying that the main-sequence metallicities
+and giant branch metallicities are on the same scale.  The training set for the
+main-sequence stars includes metallicities from a variety of sources --- including
+\lamost, and the fourth \rave\ data release.  Even on expectation value, there is 
+no straightforward manner to ensure that these two models produce metallicities on
+the same scale.  We see no systematic offset in metallicities of dwarf and giant
+stars that overlap between \rave\ and the \ges\ survey, and our examination of
+globular and open clusters suggests that \stub{if there is a systematic offset, it must
+be small.} Nevertheless, these are only verification checks based on $<1$\% of the
+data, and there is currently insufficient data for us to prove both models are on
+the same abundance scale.
+
 
 For some of the most metal-poor giant stars in \rave\, we \emph{know} the abundances 
 are not on the same scale as \apogee, because we were forced to adopt abundances for 
-specific elements when they were unavailable.  Although we sought to adopt the mean
+specific elements when they were unavailable.  In that sense, our assumption that the
+training set contains accurate labels is clearly untrue (for \emph{at least} some stars).
+Although we sought to adopt the mean
 level of Galactic chemical enrichment at the overall metallicity, this is not a
 representative abundance. Even if that is the \emph{mean} enrichment at that Galactic
 metallicity, there is no requirement for zero abundance spread.
@@ -1021,9 +1019,17 @@ the result was discarded (see catalog \texttt{README} file for specifics related
 the data structure and content).
 
 
-\stub{assumptions that are provably wrong: RAVE spectral resolution}
+In Section~\ref{sec:method} we assumed that any fibre- or time-dependent variations
+in the \rave\ spectra are negligible.  This is provably incorrect. Indeed,
+\citet{Kordopatis_2013} note that the effective resolution of \rave\
+spectra varies from $6{,}500 < \mathcal{R} < 8{,}500$, and that the 
+effective resolution is a function of time and position on the CCD (e.g., fibre number).  For this reason we ought to expect our derived stellar
+parameters or abundances to be correlated with the fibre number, or over
+time.  If significant, the trend could produce systematically offset
+stellar abundances solely due to the fibre number.  We have not seen
+evidence of these correlations in our results, however, we have only
+performed cursory (non-exhaustive) experiments to investigate this issue.
 
-\stub{assumptions that are provably wrong: correlated noise in the RAVE spectra -- this is minor and unlikely to cause a real issue}
 
 \stub{assumptions that are probably wrong: fringing in high S/N spectra produces issues with the normalization and thus the spectrum. KCF to comment more on this}
 
@@ -1124,6 +1130,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Deason et al.(2011)]{Deason_2011} Deason, A.~J., Belokurov, V., \& Evans, N.~W.\ 2011, \mnras, 416, 2903 
 
+\bibitem[Fulbright et al.(2010)]{Fulbright_2010} Fulbright, J.~P., Wyse, R.~F.~G., Ruchti, G.~R., et al.\ 2010, \apjl, 724, L104 
+
 \bibitem[Garc{\'{\i}}a P{\'e}rez et al.(2016)]{Garcia_Perez_2016} Garc{\'{\i}}a P{\'e}rez, A.~E., Allende Prieto, C., Holtzman, J.~A., et al.\ 2016, \aj, 151, 144 
 
 \bibitem[Gilmore et al.(2012)]{Gilmore_2012} Gilmore, G., Randich, S., Asplund, M., et al.\ 2012, The Messenger, 147, 25
@@ -1183,6 +1191,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Reddy et al.(2006)]{Reddy_2006} Reddy, B.~E., Lambert, D.~L., \& Allende Prieto, C.\ 2006, \mnras, 367, 1329 
 
 \bibitem[Robin et al.(2012)]{Robin_2012} Robin, A.~C., Luri, X., Reyl{\'e}, C., et al.\ 2012, \aap, 543, A100 
+
+\bibitem[Ruchti et al.(2011)]{Ruchti_2011} Ruchti, G.~R., Fulbright, J.~P., Wyse, R.~F.~G., et al.\ 2011, \apj, 743, 107 
 
 \bibitem[Schlaufman et al.(2009)]{Schlaufman_2009} Schlaufman, K.~C., Rockosi, C.~M., Allende Prieto, C., et al.\ 2009, \apj, 703, 2177 
 
