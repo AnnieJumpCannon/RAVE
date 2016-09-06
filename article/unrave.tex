@@ -87,9 +87,10 @@
 \author{Luca Casagrande, Cristina Chiappini, Andrea Kunder, Paul McMillan, Alessandro Siviero, Marica Valentini, Jennifer Wojno, Toma{\^z} Zwitter}
 
 % RAVE builders
-\author{Brad K. Gibson, Joss Bland-Hawthorn}
+\author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert}
+%Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia.
 % E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom.
-
+%1Observatoire Astronomique, Universite de Strasbourg, CNRS, 11 rue de l?universit ? e, 67000 Strasbourg, France
 \author{and the \rave\ collaboration}
 
 \begin{abstract}
@@ -144,7 +145,7 @@ astrophysics, including the properties of exoplanet host stars, the formation
 Galactic disk, to name a few.
 
 
-The \gaia\ mission was borne out of the rich scientific potential of the stars of the Milky Way. 
+The \gaia\ mission represents a critical step forward in understanding the Galaxy.
 \gaia\ is primarily an astrometric mission, and will provide precise positions,
 parallaxes and proper motions for more than $10^9$ stars in its final data
 release, in 2022.  While this is a sample size about four orders of magnitude 
@@ -352,7 +353,7 @@ by optimizing the penalized likelihood function
 
 \noindent{}where $\Lambda$ is a regularization parameter which we will heuristically set
 in later sections, and $Q(\vectheta)$ is a L1 regularizing function that encourages 
-$\vectheta$ values to take on zero values without breaking convexity:
+$\vectheta$ values to take on zero values without breaking convexity \citep{Casey_2016b}:
 \begin{eqnarray}\label{eq:regularization-function}
 	Q(\vectheta) = \sum_{d=1}^{D-1} |{\theta_d}| \quad .
 \end{eqnarray}
