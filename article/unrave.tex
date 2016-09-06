@@ -898,16 +898,17 @@ high-resolution studies, here we verify that the abundances we find
 are consistent with expectations from astrophysics.  One example is stars in
 globular clusters, which show anti-correlations in light element abundances 
 \citep[e.g.,][and references therein]{Norris_Da_Costa_1995,Carretta_2009}.  In the \rave\
-survey, \cite{Anguiano_2015} found 70 stars with positions and radial velocities that are
-consistent with being members of globular clusters: 49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde globular cluster NGC~3201, and 10 members of NGC~362. In addition to these systems, NGC~6752 and 47~Tuc were observed \citep{Kunder_2016}. In the top panel of Figure~\ref{fig:globular-cluster-HRD} we plot the spectroscopic H-R diagram for the members of these globular clusters. For comparison, in the bottom panel of Figure~\ref{fig:globular-cluster-HRD} we show the same as the top panel but for the RAVE DR4. For a detailed description of the cluster membership for NGC~5139, NGC~3201, and NGC~362 we refer the reader to \cite{Anguiano_2015}. The membership selection of the remaining clusters can be found in \cite{Kunder_2016}. \stub{check if this is the case in Kunder et al 2016.} 
+survey, \cite{Anguiano_2015} found 80 stars with positions and radial velocities that are
+consistent with being members of globular clusters: 49 stars belonging to NGC~5139 ($\omega$~Centauri), 11 members of the retrograde globular cluster NGC~3201, and 10 members of NGC~362. In addition to these systems, NGC~6752 and \stub{47~Tuc} were observed \citep{Kunder_2016}. For a detailed description of the cluster membership for NGC~5139, NGC~3201, and NGC~362 we refer the reader to \cite{Anguiano_2015}. The membership selection of the remaining clusters can be found in \cite{Kunder_2016}. \stub{check if this is the case in Kunder et al 2016.} We note here that we have not re-evaluated cluster membership as that is beyond the scope of the paper, however with the results presented here it is possible to study these systems in further detail. 
+
+In the top panel of Figure~\ref{fig:globular-cluster-HRD} we plot the spectroscopic H-R diagram for the members of these globular clusters. For comparison, in the bottom panel of Figure~\ref{fig:globular-cluster-HRD} we show the same as the top panel but for the RAVE DR4. In both panels isochrones, we have also plotted the PARSEC isochrones \citep{	
+Bressan_2012} for comparison. The basic properties of the globular cluster used to generate the isochrones were sourced from Table 2 of \cite{Kunder_2016} and from the 2010 version of the Harris Globular Cluster Catalogue \citep{Harris_1996}.This figure indicates that for some stars in specific clusters clusters, namely NGC3201 and NGC362, are slightly offset from the isochrones most likely because the star's metallicity is significantly higher than the mean cluster metallicity. This could be a result of a combination of the inclusion of stars that are not cluster members but appeared to be consistent with the RAVE DR4 stellar parameters. In the remaining globular clusters the stars are consistent with the isochrones. In the case of NGC5139 ($\omega$ cen), it may be possible to pick out two of the several components that exist within that cluster.
 
 All of these systems (\stub{check if this is the case for the remaining two new GCs added.}) in \cite{Anguiano_2015} are well-studied and exhibit abundance anti-correlations 
 in Na--O and Mg--Al \citep{Marino_2011,Carretta_2009,Carretta_2013,Munoz_2013}.  Other correlations are also present 
 (e.g., C--N), but those relationships are less relevant for this work because 
 we do not measure C and N abundances here.  We note that \emph{none} of these 
 globular cluster stars were present in our training set.
-
-
 
 
 We show the detailed abundances for these globular cluster members in
@@ -929,13 +930,29 @@ even for stars with low S/N ratios.
 % NGC 362 has a large metallicity spread in RAVE (Anguiano_2015) but not the case in high-res studies (e.g. https://arxiv.org/abs/1307.4085 has a metallicity spread of 0.05/0.08 dex) may indicate better cluster selection needed and can be done with cannon results.
 % NGC 3201 has Mg-Al relationship (http://arxiv.org/pdf/1305.3645.pdf and references therein)
 
+%Mean metallicity of NGC3201 cluster = -0.75 +/- 0.20
+%Mean metallicity of NGC362 cluster = -0.92 +/- 0.48
+%Mean metallicity of NGC5139 cluster = -0.85 +/- 0.55
+%Mean metallicity of NGC6752 cluster = -1.17 +/- 0.30
+
+
 
 
 \subsubsection{Open clusters}
 \label{sec:open-cluster-validation}
-The RAVE survey has observed several open clusters which can serve as a qualitative sanity check that the stellar parameters match our expectations. These include .... \stub{add more here about each open cluster plus its members}. The membership selection of the remaining clusters can be found in \cite{Kunder_2016}. \stub{check if this is the case in Kunder et al 2016.} 
+The RAVE survey has observed several open clusters which can serve as a qualitative sanity check that the stellar parameters match our expectations. These include $\sim$160 stars within the Pleiades (78 stars), the Hyades (26 stars), M67 (30 stars) and IC4651 (13 stars) open clusters. Details on the open cluster membership and selection can be found in \cite{Kunder_2016}. The basic properties of the open cluster were sourced from Table 2 of \cite{Kunder_2016} and from \cite{Kharchenko_2013}. 
 
- In Figure~\ref{fig:globular-cluster-HRD}, we plot the cannon-derived H-R diagram (top panel) and compare it to the RAVE DR4 H-R diagram (bottom panel) for the stars which are probably members of the open clusters. 
+In Figure~\ref{fig:open-cluster-HRD}, we plot the cannon-derived H-R diagram (top panel) and compare it to the RAVE DR4 H-R diagram (bottom panel) for the stars which are likely members of the open clusters. In all cases, except the Pleiades, the stellar parameters derived from the Cannon are consistent with the expectations from the isochrones. We note that theoretical isochrones struggle to match the observed color-magnitude diagrams of young cluster, such as the Pleiades, and thus there has been an effort to use empirical isochrones for such systems \citep[e.g.][]{Bouy_2015}. Additionally, the improvement in the precision of the stellar parameters in the study compared to RAVE DR4 is illustrated in the top and bottom panels of Figure~\ref{fig:open-cluster-HRD} by comparing the tightness of the main-sequence in and sub-giant branch in these open cluster.
+
+We illustrate the precision in the chemical abundance by quantifying the star-to-star dispersion of  the detailed abundances for these open cluster members in
+Figure \ref{fig:open-cluster-abundances}.  The internal cluster abundance dispersion can be used as a gauge of precision because open clusters are thought to be chemically homogenous \citep[e.g.][]{Bovy_2016}. 
+\stub{What do we find?}
+
+ 
+%Mean metallicity of Hyades cluster = 0.07 +/- 0.09 (26 stars)
+%Mean metallicity of IC4651 cluster = 0.15 +/- 0.12 (13 stars)
+%Mean metallicity of M67 cluster = -0.02 +/- 0.17 (30 stars)
+%Mean metallicity of Pleiades cluster = -0.02 +/- 0.12 (78 stars)
 
 \subsubsection{Diffuse interstellar bands}
 \label{sec:dibs-validation}
@@ -1140,11 +1157,16 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Binney et al.(2014)]{Binney_2014} Binney, J., Burnett, B., Kordopatis, G., et al.\ 2014, \mnras, 437, 351 
 
-\bibitem[Bensby et al.(2014)]{Bensby_2014} Bensby, T., Feltzing, S., \& Oey, M.~S.\ 2014, \aap, 562, A71 
+\bibitem[Bensby et al.(2014)]{Bensby_2014} Bensby, T., Feltzing, S., \& Oey, M.~S.\ 2014, \aap, 562, A71
+
+\bibitem[Bressan et al.(2012)]{Bressan_2012} Bressan, A., Marigo, P., Girardi, L., et al.\ 2012, \mnras, 427, 127 
+ 
 
 \bibitem[Bovy et al.(2016)]{Bovy_2016} Bovy, J., Rix, H.-W., Schlafly, E.~F., et al.\ 2016, \apj, 823, 30 
 
 \bibitem[Brown et al.(2011)]{Brown_2011} Brown, T.~M., Latham, D.~W., Everett, M.~E., \& Esquerdo, G.~A.\ 2011, \aj, 142, 112 
+
+\bibitem[Bouy et al.(2015)]{Bouy_2015} Bouy, H., Bertin, E., Sarro, L.~M., et al.\ 2015, \aap, 577, A148 
 
 \bibitem[Carretta et al.(2009)]{Carretta_2009} Carretta, E., Bragaglia, A., Gratton, R.~G., et al.\ 2009, \aap, 505, 117 
 
@@ -1175,6 +1197,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Garc{\'{\i}}a P{\'e}rez et al.(2016)]{Garcia_Perez_2016} Garc{\'{\i}}a P{\'e}rez, A.~E., Allende Prieto, C., Holtzman, J.~A., et al.\ 2016, \aj, 151, 144 
 
 \bibitem[Gilmore et al.(2012)]{Gilmore_2012} Gilmore, G., Randich, S., Asplund, M., et al.\ 2012, The Messenger, 147, 25
+
+\bibitem[Harris(1996)]{Harris_1996} Harris, W.~E.\ 1996, \aj, 112, 1487 
 
 \bibitem[Hawkins et al.(2016)]{Hawkins_2016} Hawkins, K., Masseron, T., Jofre, P., et al.\ 2016, arXiv:1604.08800 
 
