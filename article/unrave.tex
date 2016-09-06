@@ -105,7 +105,7 @@ useful for chemo-dynamic studies, the Tycho-Gaia Astrometric Solution
 complement that includes radial velocities, stellar parameters, and 
 elemental abundances.  Among existing spectroscopic samples, the RAdial 
 Velocity Experiment (\rave) survey has the largest overlap with \tgas: 
-292,036 stars.  Here we present a data-driven re-analysis of \rave\ 
+up to 292,036 stars.  Here we present a data-driven re-analysis of \rave\ 
 spectra, using an implementation of \thecannon, that yields more precise 
 and accurate stellar parameters and abundances than previous \rave\
 data releases.  We constructed our model using high-fidelity \apogee\ 
@@ -115,13 +115,14 @@ Pole Input Catalog} for main-sequence and sub-giant branch stars.
 We derive, and validate, improved effective temperature $\teff$, surface 
 gravity $\logg$, and chemical abundances of up to seven elements (O, Mg, 
 Al, Si, Ca, Fe, Ni) for \Nstarsqc\ stars.  The typical precision in 
+% TODO
 chemical abundances is X.XX~dex for red giant branch stars.  The \unrave\ 
 catalog presented here, in conjunction with \tgas, represents the 
 most powerful data set for chemo-orbital analysis at the dawn of broadly 
 available \gaia\ data.
 \end{abstract}
 
-\keywords{\vspace{5em}}
+\keywords{}
 
 
 
@@ -150,7 +151,7 @@ Galactic disk, to name a few.
 The \gaia\ mission represents a critical step forward in understanding the Galaxy.
 \gaia\ is primarily an astrometric mission, and will provide precise positions,
 parallaxes and proper motions for more than $10^9$ stars in its final data
-release, in 2022.  While this is a sample size about four orders of magnitude 
+release in 2022.  While this is a sample size about four orders of magnitude 
 larger than its predecessor \hipparcos, both astrometry and chemistry are 
 required to fully characterize the formation and evolution of our Galaxy. 
 \gaia\ will also provide radial velocities, stellar parameters and chemical 
@@ -168,9 +169,9 @@ motions, and parallaxes for approximately two million stars in the Tycho-2
 surveys\footnote{Specifically we cross-matched the Tycho-2 catalog against the 
 \apogee\ \citep{Zasowski_2013}, \ges\ \citep{Gilmore_2012,Randich_2013}, 
 \galah\ \citep{DeSilva_2015}, \lamost\ \citep{Cui_2012}, and \rave\ 
-\citep{Steinmetz_2006} surveys}, we found the RAdial Velocity Experiment 
+\citep{Steinmetz_2006} surveys}, we found that the RAdial Velocity Experiment 
 (\rave) survey is expected to have the largest overlap with the first \gaia\ 
-data release: $\approx$292,036 stars.  We used the \gaia\ universe model snapshot 
+data release: up to 292,036 stars.  We used the \gaia\ universe model snapshot 
 \citep{Robin_2012} to estimate the precision in parallax and proper motions that
 could be available in the first \gaia\ data release (DR1) for stars in those 
 overlap samples.  Comparing the expected precision to what is currently available, 
@@ -275,8 +276,8 @@ $8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.  This corresponds to abou
 
 
 We chose to adopt a data-driven model for this analysis, rather than the
-physics-based models used in \rave\ data releases 2--5.
- Specifically, we will use an implementation of \thecannon\
+physics-based models used in the \rave\ data releases.  Specifically, we will
+use an implementation of \thecannon\
 \citep{Ness_2015,Ness_2016}.  Although this choice complicated the construction 
 of our model (e.g., see Section \ref{sec:the-training-set}), a data-driven approach 
 makes use of all available information in the spectrum and lowers the S/N ratio 
@@ -506,7 +507,7 @@ $\vecv(\ell_n)$ expands as,
 
 
 We used no regularization ($\Lambda = 0$) for this model.  After training the model we
-treated all \Nspectra\ spectra as test set objects.  In the right-hand panel of Figure 
+treated all \Nspectra\ spectra as test set objects.  In the left-hand panel of Figure 
 \ref{fig:test-set-density} we show the effective temperature $\teff$ and surface gravity 
 $\logg$ for all spectra.  The main-sequence and red giant branch are clearly visible.  
 However, the details of stellar evolution are no longer present: the sub-giant branch is 
@@ -655,7 +656,9 @@ be approximately isotropic by setting
 	$\delta_{T_{\rm eff}} = 50$~K for the giant model, and 
 	$\delta_{\log{g}} = 0.15$~dex for both models.
 The stars within the peak at $(0, 0)$ represent objects where
-the joint model and the comparison model both report similar labels.  The artefacts 
+the joint model and the comparison model both report similar labels.  
+\stub{State these are empirically chosen normalization factors, and how}
+The artefacts 
 seen in the Hertzsprung-Russell diagrams in Figure \ref{fig:test-set-density} are
 also present in Figure \ref{fig:joint-model-differences} as over-densities far away
 from the central peak.  Therefore, we can 
@@ -1074,6 +1077,8 @@ should be a second-order effect. We have not seen evidence of these
 resolution-based correlations in our results, however, we have only
 performed cursory (non-exhaustive) experiments to investigate this issue.
 
+\stub{Include text about fast rotators; blue stragglers}
+
 
 \stub{assumptions that are probably wrong: fringing in high S/N spectra produces issues with the normalization and thus the spectrum. KCF to comment more on this}
 
@@ -1096,6 +1101,8 @@ Before submitting to \emph{Nature}}
 using all the available 
 information from \rave, or judicious quality controls (e.g., requiring the 
 morphological classification to be `normal') to remove these spurious projections.
+
+\stub{Sub-giant artefact; comment as projection}
 
 
 \stub{based on our interrogation of the data, we supply a 'QC' column that uses very strict requirements to eliminate weird things: morphological classifications, SNR, R (pipeline), $\chi_r^2$, etc....}
@@ -1310,7 +1317,6 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure}
 
 
-
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/test-set-density.pdf}
 \caption{The logarithmic density of effective temperature $\teff$ and surface gravity $\logg$ for all \Nspectra\ \rave\ spectra, as derived using the joint model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (center panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}). These panels demonstrate how a single quadratic model is insufficient for all \rave\ stars (left panel), and illustrate some of the systematic artefacts that can result from testing on stars outside of the training set (center and right panel).  These panels do not represent our final results, which are shown in Figure~\ref{fig:test-set-hrd}.\label{fig:test-set-density}}
@@ -1322,7 +1328,6 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \includegraphics[width=0.45\textwidth]{figures/set-hyperparameters.pdf}
 \caption{The percentage change in RMS deviation between inferred and training labels at different regularization strengths.  The RMS values were calculated by leave-one-out cross-validation, and are shown with respect to an unregularized model ($\Lambda = 0$).  The points and solid line indicate the mean improvement across all labels. The filled area represents the minimum and maximum improvements over all labels. With increasing regularization strength, there is a minimum in the RMS deviation over all labels, which is where we set $\Lambda$ for each model (see text for details).\label{fig:set-hyperparameters}}
 \end{figure}
-
 
 
 \begin{figure}[p]
@@ -1339,27 +1344,33 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure}
 
 
-
-
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-test-set.pdf}
 \caption{The effective temperature $\teff$ and surface gravity $\logg$ for \rave\ stars after combining labels from the main-sequence and giant star models.  Only results with $\chi_{r}^2 < 3$ and S/N ratios greater than the quoted limit in each panel are shown.  The top three panels show logarithmic density, and bins in the bottom three panels are colored by the median metallicity in each bin.\label{fig:test-set-hrd}}
 \end{figure}
 
 
-
-
-
-
 \begin{figure*}[p]
 \caption{The RMS of the test set labels as a function of S/N ratio for repeated stars in the test set.\label{fig:test-set-repeats}}
 \end{figure*}
+
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/dr4-comparison.pdf}
 \caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth \rave\ data release \citep{Kordopatis_2013} and this work. Here we show the `calibrated' metallicity (column \texttt{c\_M\_H\_K}) from the \rave\ survey. Only stars meeting all the following quality criteria are shown: $\chi_{r}^2 < 3$ (\project{unRAVE} constraint); S/N $> 10$ (\project{unRAVE} constraint); and \texttt{QK = 0} (\rave\ DR4 constraint). \label{fig:rave-dr4-comparison}}
 \end{figure*}
 
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/gold-standard-comparison.pdf}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparisons for stars in common between this work and `gold standard' studies that use high-resolution, high S/N spectra and \hipparcos\ parallaxes where available: \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  \label{fig:gold-standard-comparison}}
+\end{figure*}
+
+
+\begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/gold-standard-hrd.pdf}
+\caption{Hertsprung-Russell diagrams of stars in common between this work and that of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  Stars are colored by the metallicity of each study. Circles indicate literature markers in the first three panels, and the linked triangles indicate \project{unRAVE} parameters for the same object. This figure illustrates the good overall agreement in the shape of the turnoff and sub-giant branch, yet also demonstrates how some literature metal-poor ($[{\rm Fe/H}] \lesssim -1$) dwarfs near the turn-off appear as metal-poor sub-giants in \project{unRAVE}.\label{fig:gold-standard-hrd}}
+\end{figure*}
 
 
 \begin{figure*}[p]
@@ -1384,31 +1395,18 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \caption{Same as Figure~\ref{fig:globular-cluster-HRD} for the open cluster members in the RAVE dataset.  \label{fig:open-cluster-HRD}}
 \end{figure*}
 
-\begin{figure*}[p]
-\includegraphics[width=\textwidth]{figures/gold-standard-comparison.pdf}
-\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparisons for stars in common between this work and `gold standard' studies that use high-resolution, high S/N spectra and \hipparcos\ parallaxes where available: \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  \label{fig:gold-standard-comparison}}
-\end{figure*}
-
-
-
-\begin{figure*}[p]
-\includegraphics[width=\textwidth]{figures/gold-standard-hrd.pdf}
-\caption{Hertsprung-Russell diagrams of stars in common between this work and that of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  Stars are colored by the metallicity of each study. Circles indicate literature markers in the first three panels, and the linked triangles indicate \project{unRAVE} parameters for the same object. This figure illustrates the good overall agreement in the shape of the turnoff and sub-giant branch, yet also demonstrates how some literature metal-poor ($[{\rm Fe/H}] \lesssim -1$) dwarfs near the turn-off appear as metal-poor sub-giants in \project{unRAVE}.\label{fig:gold-standard-hrd}}
-\end{figure*}
-
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/kordopatis-calibration.pdf}
 \caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison with the literature calibration sources used by \citet{Kordopatis_2013} and \citet{Kunder_2016}. Stars are colored by the S/N of the \rave\ spectra. Note that this comparison is for illustrative purposes only: it is not an indication of independent agreement with the literature because some metal-poor stars in this literature sample were used in the construction of our training set (see text for details).\label{fig:kordopatis-calibration}}
 \end{figure*}
 
+
 \begin{figure}[p]
 \center
 \includegraphics[width=0.65\textwidth]{figures/gce.pdf}
 \caption{Detailed chemical abundances ([X/Fe]) for giant stars in \unrave\ with respect to [Fe/H], showing the Galactic chemical evolution derived for each element. Note that the y-axes limits vary for each panel, however for clarity we show the scaled-Solar position by dashed lines, and have common tick mark spacing on the y-axis for all panels. Only stars with S/N $> 10$ and $\chi_r^2 < 3$ are shown.\label{fig:gce}}
 \end{figure}
-
-
 
 
 \end{document}
