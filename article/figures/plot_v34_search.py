@@ -33,14 +33,15 @@ comparisons = [
         glob("rave-tgas-v34-test-labelled-set-?.????????e*-1.00.pkl"),
         "rave-tgas-v34-test-labelled-set-0.00000000e+00-1.00.pkl",
         "#3498DB",
-        r"${\rm Main{-}sequence}$ ${\rm model}$"
+        r"${\rm Giant}$ ${\rm branch}$ ${\rm model}$"
+
     ),
     (
         tc.load_model("rave-tgas-v16b.model"),
         glob("rave-tgas-v16b-test-labelled-set-*+vsini.pkl"),
         'rave-tgas-v16b-test-labelled-set-1.00000000e-03+vsini.pkl',
         "r",
-        r"${\rm Giant}$ ${\rm model}$"
+        r"${\rm Main{-}sequence}$ ${\rm model}$"
     )
 ]
 
