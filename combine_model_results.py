@@ -19,7 +19,7 @@ output_filename, overwrite = \
 RESULTS_PATH = "/data/gaia-eso/arc/rave/results/"
 RESULTS_PATH = ""
 
-ms_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v37.fits.gz"))
+ms_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v43.fits.gz"))
 giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v42.fits.gz"))
 joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v41.fits.gz"))
 
@@ -155,7 +155,7 @@ x_mu, y_mu = (0, 0)
 x_sigma, y_sigma = (90, 0.15)
 x = ((ms_results["TEFF"] - joint_results["TEFF"]) - x_mu)/x_sigma
 y = ((ms_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
-
+z = ((ms_results["FE_H"] - joint_results["FE_H"]) - 0)/0.15
 
 axes[0].hexbin(x, y, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), linewidths=0.1)
 
@@ -166,19 +166,20 @@ x_sigma, y_sigma = (50, 0.15)
 
 x2 = ((giant_results["TEFF"] - joint_results["TEFF"]) - x_mu)/x_sigma
 y2 = ((giant_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
-
+z2 = ((giant_results["FE_H"] - joint_results["FE_H"]) - 0)/0.15
 
 axes[1].hexbin(x2, y2, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), linewidths=0.1)
 
 
 
-ms_distance = np.sqrt(x**2 + y**2)
-giant_distance = np.sqrt(x2**2 + y2**2)
+ms_distance = np.sqrt(x**2 + y**2 + z**2)
+giant_distance = np.sqrt(x2**2 + y2**2 + z2**2)
 
 
 # Weight by relative distance, or just take the closest of the two?
 combined_data = OrderedDict([
-    ("Name", giant_results["Name"]),
+    #("Name", giant_results["Name"]),
+    ("RAVE_OBS_ID", giant_results["Name"]),
     ("TEFF", None),
     ("LOGG", None),
     ("FE_H", None),
@@ -188,9 +189,21 @@ combined_data = OrderedDict([
     ("SI_H", None),
     ("CA_H", None),
     ("NI_H", None),
+    ("E_TEFF", None),
+    ("E_LOGG", None),
+    ("E_FE_H", None),
+    ("E_O_H",  None),
+    ("E_MG_H", None),
+    ("E_AL_H", None),
+    ("E_SI_H", None),
+    ("E_CA_H", None),
+    ("E_NI_H", None),
     #("COV", None),
-    ("snr", joint_results["snr"]),
-    ("r_chi_sq", joint_results["r_chi_sq"])
+    #("snr", joint_results["snr"]),
+    #("r_chi_sq", joint_results["r_chi_sq"]),
+    ("SNR", joint_results["snr"]),
+    ("R_CHI_SQ", joint_results["r_chi_sq"]),
+    ("QC", np.ones(len(joint_results), dtype=bool))
 ])
     
 
@@ -213,7 +226,7 @@ ms_bad = ms_distance > 10
 giant_bad = giant_distance > 10
 
 
-for label_name in label_names:
+for i, label_name in enumerate(label_names):
 
     values = np.array([ms_results[label_name], giant_results[label_name]])
 
@@ -228,29 +241,110 @@ for label_name in label_names:
 
     combined_data[label_name] = np.nansum(foo, axis=0)/np.sum(weights2, axis=0)
 
+    """
+    # And the errors.
+    errors = np.array([ms_results["COV"][:, i, i]**0.5, giant_results["COV"][:, i, i]**0.5])
+    errors[0, ms_bad] = np.nan
+    errors[1, giant_bad] = np.nan
 
+    bar = values * weights
 
+    combined_data["E_{}".format(label_name)] = np.nansum(bar, axis=0)/np.sum(weights2, axis=0)
+    """
 
 
 # Need abundances for things that are *probably* giants.
-is_giant = (weights2[1] > 0.5)
+is_giant = (weights2[1] > 0.95)
 
-for label_name in ("MG_H", "AL_H", "O_H", "NI_H", "SI_H", "CA_H"):
+abundance_label_names = ["MG_H", "AL_H", "O_H", "NI_H", "SI_H", "CA_H"]
+for i, label_name in enumerate(abundance_label_names):
     combined_data[label_name] = np.nan * np.ones(len(joint_results))
     combined_data[label_name][is_giant] = giant_results[label_name][is_giant]
 
+    """
+    # And the errors.
+    combined_data["E_{}".format(label_name)] = np.nan * np.ones(len(joint_results))
+    combined_data["E_{}".format(label_name)][is_giant] = giant_results["COV"][:, i+3, i+3][is_giant]**0.5
+    """
+
+
+"""
+# Construct a common-shape covariance matrix for each table.
+K, L = (giant_results["COV"].shape[-1], 3)
+new_cov = np.nan * np.ones((len(ms_results), K, K))
+new_cov[:, :L, :L] = ms_results["COV"][:, :L, :L]
+ms_results["COV"] = new_cov
+
+# Produce a weighted covariance matrix.
+giant_weights = weights2[1]
+for label_name in ["TEFF", "LOGG", "FE_H"] + abundance_label_names:
+
+"""
 
 
 combined_table = Table(data=combined_data)
 
 
+dr5_catalog_with_correct_raveids = Table.read("../rave/RAVEDR5_PublicCut_20160905.csv.gz", format="csv")
+keep_columns = (
+    # Positional information
+    "RAVE_OBS_ID", "RAdeg", "DEdeg",
+
+    # Velocity information.
+    "HRV", "eHRV", "StdDev_HRV", "MAD_HRV", "CorrelationCoeff", "PeakHeight",
+    "PeakWidth", "CorrectionRV",
+
+    # Skyline information.
+    "SkyRV",
+    "eSkyRV",
+    "SkyCorrelationCoeff",
+
+    # Some flags from SPARV. Others removed if 
+    "Vrot_SPARV",
+    "ZeroPointFLAG",
+
+    # Morphological information.
+    "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", 
+    "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20")
+
+for column in dr5_catalog_with_correct_raveids.dtype.names:
+    if column not in keep_columns:
+        del dr5_catalog_with_correct_raveids[column]
+
+
+# Fix string columns.
+from astropy.table import Column
+for column in ("StdDev_HRV", "MAD_HRV", "Vrot_SPARV"):
+    data = np.array([[e, np.nan][e == "NULL"] for e in dr5_catalog_with_correct_raveids[column].copy()], dtype=float)
+
+    index = list(dr5_catalog_with_correct_raveids.dtype.names).index(column)
+    del dr5_catalog_with_correct_raveids[column]
+
+
+    dr5_catalog_with_correct_raveids.add_column(
+        Column(data, name=column),
+        index=index)
+
+
+# Rename columns, since units will go into the metadata of the FITS table.
+rename_columns = [
+    ("RAdeg", "RA"),
+    ("DEdeg", "DEC"),
+]
+for before, after in rename_columns:
+    dr5_catalog_with_correct_raveids.rename_column(before, after)
+
+
+from astropy.table import join
+combined_table = join(dr5_catalog_with_correct_raveids, combined_table, keys=("RAVE_OBS_ID", ))
+
 
 
 
 N = 70
-fig, ax = plt.subplots()
+fig,  plt.subplots()
 
-ok = combined_table["snr"] > 10
+ok = combined_table["SNR"] > 10
 ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], gridsize=N,
     extent=(3000, 7500, 0, 5.5),
     cmap="Blues", norm=LogNorm(), edgecolor="#ffffff", linewidths=0.0)
