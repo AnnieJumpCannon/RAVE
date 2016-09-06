@@ -618,7 +618,11 @@ model is too simple for the \rave\ spectral range.  The other models have proble
 too: unrealistic over-densities in label space show that the main-sequence model and
 the giant model make very poor extrapolations for stars outside their respective
 training sets.  For these reasons we were forced to exclude or severely penalize 
-incorrect results from both models.
+incorrect results from both models.  We emphasize that the choices here are entirely
+heuristic, and depart from interpreting \thaecannon\ output labels as the maxima
+of individual likelihood functions.  Each model produces estimates of the labels
+for a given star, and we use those estimates to produce a unified estimate, but 
+this is done by disregarding any probabilistic justification.
 
 
 Before attempting to join the results from different models, we excluded results
@@ -690,7 +694,10 @@ In total, this leads to a catalog of X.XX million stellar abundances.
 The weighted $\teff$ and $\logg$ values for stars meeting different
 S/N constraints are shown in Figure \ref{fig:test-set-hrd}, both in logarithmic density
 and mean metallicity.  The artefacts from individual models are no longer 
-apparent, and the rich structure of the Hertzsprung-Russell is visible.
+apparent, and the rich structure of the Hertzsprung-Russell is visible.  Despite
+this, there are a number of caveats introduced by the choices we have made to
+combine estimates from multiple models. We discuss these issues in detail in
+Section \ref{sec:discussion}.
 
 
 \section{Validation experiments}
