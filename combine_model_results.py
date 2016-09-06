@@ -21,13 +21,17 @@ RESULTS_PATH = ""
 
 ms_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v43.fits.gz"))
 giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v42.fits.gz"))
-joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v41.fits.gz"))
+joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v44.fits.gz"))
+
+print("CULLING RESULTS")
+joint_results = joint_results[:len(ms_results)]
 
 for t in (ms_results, giant_results, joint_results):
     if "Name" not in t.dtype.names:
         t["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-result")[0].replace("_result.pkl", "") for each in t["FILENAME"]]
 
     t.sort("Name")
+
 
 assert np.all(ms_results["Name"] == joint_results["Name"])
 assert np.all(giant_results["Name"] == joint_results["Name"])
@@ -77,6 +81,20 @@ in_ms_subg_hull = ms_subg_convex_hull.find_simplex(
 bad = (ms_results["LOGG"] < 4) * (ms_results["TEFF"] < 5000) * ~in_ms_subg_hull
 for label in ("TEFF", "LOGG", "FE_H"):
     ms_results[label][bad] = np.nan
+
+# Remove stars outside the convex hull of the lower main-sequence, since they are
+# actually giants 
+
+"""
+ms_lower_ms_convex_hull = Delaunay(ms_model.labels_array[:, :2][ms_model.labelled_set["TEFF"] < 4000])
+in_lower_ms_convex_hull = ms_lower_ms_convex_hull.find_simplex(
+    np.array([ms_results["TEFF"], ms_results["LOGG"]]).T) >= 0
+
+bad = (ms_results["TEFF"] < 4000) * ~in_lower_ms_convex_hull
+for label in ("TEFF", "LOGG", "FE_H"):
+    ms_results[label][bad] = np.nan
+"""
+
 
 
 """
@@ -155,7 +173,7 @@ x_mu, y_mu = (0, 0)
 x_sigma, y_sigma = (90, 0.15)
 x = ((ms_results["TEFF"] - joint_results["TEFF"]) - x_mu)/x_sigma
 y = ((ms_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
-z = ((ms_results["FE_H"] - joint_results["FE_H"]) - 0)/0.15
+#z = joint_results["FE_H"]**2
 
 axes[0].hexbin(x, y, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), linewidths=0.1)
 
@@ -166,13 +184,14 @@ x_sigma, y_sigma = (50, 0.15)
 
 x2 = ((giant_results["TEFF"] - joint_results["TEFF"]) - x_mu)/x_sigma
 y2 = ((giant_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
-z2 = ((giant_results["FE_H"] - joint_results["FE_H"]) - 0)/0.15
+#z2 = ((giant_results["FE_H"] - joint_results["FE_H"]) - 0)/0.15
+z2 = np.abs(joint_results["FE_H"])
 
 axes[1].hexbin(x2, y2, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), linewidths=0.1)
 
 
 
-ms_distance = np.sqrt(x**2 + y**2 + z**2)
+ms_distance = np.sqrt(x**2 + y**2)
 giant_distance = np.sqrt(x2**2 + y2**2 + z2**2)
 
 
@@ -189,6 +208,12 @@ combined_data = OrderedDict([
     ("SI_H", None),
     ("CA_H", None),
     ("NI_H", None),
+    ("SNR", joint_results["snr"]),
+    ("R_CHI_SQ", joint_results["r_chi_sq"]),
+    ("QC", np.ones(len(joint_results), dtype=bool))
+])
+
+"""
     ("E_TEFF", None),
     ("E_LOGG", None),
     ("E_FE_H", None),
@@ -198,13 +223,10 @@ combined_data = OrderedDict([
     ("E_SI_H", None),
     ("E_CA_H", None),
     ("E_NI_H", None),
+"""
     #("COV", None),
     #("snr", joint_results["snr"]),
     #("r_chi_sq", joint_results["r_chi_sq"]),
-    ("SNR", joint_results["snr"]),
-    ("R_CHI_SQ", joint_results["r_chi_sq"]),
-    ("QC", np.ones(len(joint_results), dtype=bool))
-])
     
 
 #w1 = np.exp(-0.5 * ms_distance**2)
@@ -299,7 +321,7 @@ keep_columns = (
     "eSkyRV",
     "SkyCorrelationCoeff",
 
-    # Some flags from SPARV. Others removed if 
+    # Some flags from SPARV. Others removed if we already provide them (e.g SNR)
     "Vrot_SPARV",
     "ZeroPointFLAG",
 
@@ -339,6 +361,12 @@ from astropy.table import join
 combined_table = join(dr5_catalog_with_correct_raveids, combined_table, keys=("RAVE_OBS_ID", ))
 
 
+combined_table["QC"] = (combined_table["SNR"] > 10) * (combined_table["R_CHI_SQ"] < 3)
+combined_table["QC_ABUNDANCE"] = combined_table["QC"] * (combined_table["FE_H"] >= -1.5)
+combined_table.write("unrave-v0.94.fits.gz", overwrite=True)
+combined_table.write("unrave-v0.94.csv.gz")
+
+raise a
 
 
 N = 70
