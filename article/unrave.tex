@@ -205,22 +205,21 @@ Observations were conducted on the 1.2~m UK Schmidt telescope at the Australian
 Astronomical Observatory\footnote{Formerly the Anglo-Australian Observatory} from 
 2003--2013.  A large 5.7~degree field-of-view and robotic fibre positioner made for 
 very efficient observing:  spectra for up to 150 targets could be simultaneously
-acquired.  When observations concluded in April 2013, a total of \Nspectra\ useful 
-spectra had been collected of \Nstars\ unique objects. 
+acquired.  When observations concluded in April 2013, at least \Nspectra\ useful 
+spectra had been collected of more than \Nstars\ unique objects. 
 
 
 The target selection for \rave\ is based on the $I$-band apparent magnitude,
 $9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge \citep{Wojno_2016}.  
 The $I$ band was used for the target selection because it has a good overlap with the
-wavelength range that \rave\ operates in:  8410--8795~\AA.  This spectral region 
-is very well-studied.  It is one of the key setups used for the ground-based 
-high-resolution \ges\ survey \citep{Gilmore_2012,Randich_2013}, and the 
-\rave\ resolution and wavelength coverage is comparable to the Radial Velocity 
-Spectrometer on board the \gaia\ space telescope \citep{Kordopatis_2011,Recio-Blanco_2016}.  
-The region includes the \ion{Ca}{2} near infrared triplet lines --- strong 
-transitions that are dominated by pressure broadening --- which are visible even 
-in metal-poor stars or spectra with very low signal-to-noise (S/N) ratios.
-Atomic transitions of 
+wavelength range that \rave\ operates in:  8410--8795~\AA.  The resolution and 
+wavelength coverage is comparable to the Radial Velocity Spectrometer on board 
+the \gaia\ space telescope \citep{Munari_2005,Kordopatis_2011,Recio-Blanco_2016}, 
+and the wavelength range overlaps with one of the key setups used for the ground-based 
+high-resolution \ges\ survey \citep{Gilmore_2012,Randich_2013}.  The region 
+includes the \ion{Ca}{2} near infrared triplet lines --- strong transitions that 
+are dominated by pressure broadening --- which are visible even in metal-poor stars
+or spectra with very low signal-to-noise (S/N) ratios.  Atomic transitions of 
 light-, $\alpha$-, and Fe-peak elements are also present, allowing for detailed 
 chemical abundance studies.
 
@@ -240,10 +239,10 @@ targets for S/N $\gtrsim100$.
 
 
 Despite the relatively low resolution and S/N of the spectra compared to other
-surveys, the \rave\ data releases have demonstrated the team's enormous success 
-in deriving radial velocities, stellar astrophysical parameters ($\teff$, $\logg$),
-as well as individual chemical abundances \citep{Steinmetz_2006,Zwitter_2008,
-Siebert_2011,Kordopatis_2013,Kunder_2016}.  In this work we make use of spectra
+surveys, the \rave\ data releases have provided excellent radial velocities, 
+stellar astrophysical parameters ($\teff$, $\logg$), as well as individual 
+chemical abundances \citep{Steinmetz_2006,Zwitter_2008,Siebert_2011,Boeche_2011,
+Kordopatis_2013,Kunder_2016}.  In this work we make use of spectra
 that has been reprocessed for the fifth \rave\ data release.  These re-processing
 steps include: a detailed re-reduction of all the original data frames, with flux
 variances propagated at every step; an updated continuum-normalization procedure;
@@ -275,8 +274,9 @@ $8423.2\,{\rm \AA} \le \lambda \le 8777.6\,{\rm \AA}$.  This corresponds to abou
 \label{sec:method}
 
 
-We chose to adopt a data-driven model --- rather than a physics-based model ---
-for this analysis.  Specifically, we will use an implementation of \thecannon\
+We chose to adopt a data-driven model for this analysis, rather than the
+physics-based models used in \rave\ data releases 2--5.
+ Specifically, we will use an implementation of \thecannon\
 \citep{Ness_2015,Ness_2016}.  Although this choice complicated the construction 
 of our model (e.g., see Section \ref{sec:the-training-set}), a data-driven approach 
 makes use of all available information in the spectrum and lowers the S/N ratio 
@@ -409,9 +409,7 @@ $g$-band (\texttt{snrg}).  However, the labels are expectedly less precise given
 lower resolution, there are no elemental abundances available for the main-sequence 
 stars\footnote{Abundance information is available for \lamost\ stars from \citet{Ho_2016},
 but that sample contains only giant stars}, and the \lamost\ lower main-sequence suffers
-from the same systematic effects seen in \apogee\ data.  The \galah\ survey has a good 
-overlap with \rave, but results from that sample are not yet precise enough for our 
-purposes.
+from the same systematic effects seen in \apogee\ data. 
 
 
 These constraints forced us to construct a heterogeneous training set.  Given previous
@@ -757,9 +755,10 @@ $\chi_r^2$ in our analysis $< 3$, and that the \texttt{QK} flag from
 \citet{Kordopatis_2013} is zero, indicating that no problems were reported by the pipeline.
 There is very good agreement in $\teff$, with a bias and RMS of just XX~K 
 and XXX~K, respectively.  The offset in $\logg$ on the giant branch between this study and 
-\citet{Kordopatis_2013} has been noted in other studies, and this has issue
+\citet{Kordopatis_2013} has been noted in other studies (e.g., \apogee), and this has issue
 has been resolved in the fifth \rave\ data release by correcting $\logg$
-values with a small sample of asteroseismic targets.  There is also a
+values with a calibration sample consisting of asteroseismic targets and the
+\gaia\ benchmark stars.  There is also a
 slight discrepancy in the $\log$ values along the main-sequence, where our
 work tends to taper down towards higher $\logg$ values at cooler temperatures,
 and the \rave\ DR4 sample tends to have a slightly flatter lower main-sequence.
@@ -815,7 +814,7 @@ would improve if we adopted the main-sequence results for these specific stars,
 the underlying issue of metal-poor dwarf stars would still be present.  Thus,
 we use this example to illustrate caution for studies making inferences from our
 work based on main-sequence dwarf stars.  The results from both the main-sequence star model, 
-and the giant star model, are available at \stub{should we put them online somewhere
+and the giant star model, are available on request. \stub{should we put them online somewhere
 for open-science, or just make them available upon request so that we don't
 muddy the waters and confuse people as to which catalog to use?}
 
@@ -839,7 +838,7 @@ There are 142 stars that overlap between \rave\ and the fourth internal
 data release of the \ges\ survey. These are a mix of main-sequence, 
 sub-giant and red giant branch stars.  Despite most of these stars having
 relatively low S/N ratios in \rave\ ($\approx 25$~pixel$^{-1}$), there is good 
-agreement in stellar parameters (Figure~\ref{fig:ges-stellar-parameters}).  
+agreement in with \ges\ and the \unrave\ stellar parameters (Figure~\ref{fig:ges-stellar-parameters}).  
 The RMS in effective temperature, surface gravity and metallicity is
 233~K, 0.37~dex, and 0.17~dex, respectively.  
 
@@ -1064,7 +1063,9 @@ In Section~\ref{sec:method} we assumed that any fibre- or time-dependent variati
 in the \rave\ spectra are negligible.  This is provably incorrect. Indeed,
 \citet{Kordopatis_2013} note that the effective resolution of \rave\
 spectra varies from $6{,}500 < \mathcal{R} < 8{,}500$, and that the 
-effective resolution is a function of time and position on the CCD (e.g., fibre number).  For this reason we ought to expect our derived stellar
+effective resolution is a function of temperature variations, fibre-to-fibre
+variations, and thus position on the CCD \citep{Steinmetz_2006}.
+ For this reason we ought to expect our derived stellar
 parameters or abundances to be correlated with the fibre number, or over
 time.  If significant, the trend could produce systematically offset
 stellar abundances solely due to the fibre number.  \citet{Kordopatis_2013}
@@ -1120,8 +1121,9 @@ of the Milky Way's formation and evolution.
 %\noindent\colorbox{unoffensive-warning}{\parbox{\dimexpr\linewidth-2\fboxsep}{
 \noindent{}Source code for this project is available at \texttt{\giturl}\hspace{-0.5em},
 and this document was compiled from revision hash \texttt{\githash} in that repository.
-Inferred labels, covariance matrices, and relevant metadata are available electronically
-at \texttt{\url{ZENODO-URL}} \citep{DATA_REPOSITORY}.  Please note that it is a condition
+Inferred labels, associated errors, and relevant metadata are available electronically
+at \texttt{\url{ZENODO-URL}} \citep{DATA_REPOSITORY}.  These results are also available
+through the \rave\ DR5 database \citep{Kunder_2016}. Please note that it is a condition
 of using these results that the fifth \rave\ data release by \citet{Kunder_2016} must 
 also be cited, as the work presented here would not have been possible without the 
 tireless efforts of the entire \rave\ collaboration, past and present.
@@ -1168,6 +1170,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Bensby et al.(2014)]{Bensby_2014} Bensby, T., Feltzing, S., \& Oey, M.~S.\ 2014, \aap, 562, A71
 
 \bibitem[Binney et al.(2014)]{Binney_2014} Binney, J., Burnett, B., Kordopatis, G., et al.\ 2014, \mnras, 437, 351 
+
+\bibitem[Boeche et al.(2011)]{Boeche_2011} Boeche, C., Siebert, A., Williams, M., et al.\ 2011, \aj, 142, 193 
 
 \bibitem[Boeche et al.(2013)]{Boeche_2013} Boeche, C., Chiappini, C., Minchev, I., et al.\ 2013, \aap, 553, A19 
 
@@ -1243,6 +1247,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Michalik et al.(2015a)]{Michalik_2015a} Michalik, D., Lindegren, L., \& Hobbs, D.\ 2015, \aap, 574, A115 
 
 \bibitem[Michalik et al.(2015b)]{Michalik_2015b} Michalik, D., Lindegren, L., Hobbs, D., \& Butkevich, A.~G.\ 2015, \aap, 583, A68 
+
+\bibitem[Munari et al.(2005)]{Munari_2005} Munari, U., Sordo, R., Castelli, F., \& Zwitter, T.\ 2005, \aap, 442, 1127 
 
 \bibitem[Mu{\~n}oz et al.(2013)]{Munoz_2013} Mu{\~n}oz, C., Geisler, D., \& Villanova, S.\ 2013, \mnras, 433, 2006 
 
