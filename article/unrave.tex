@@ -84,15 +84,17 @@
 \author{Some combination of: Harry Enke, Kenneth C. Freeman, Gerry Gilmore, Keith Hawkins, David W. Hogg, Georges Kordopatis, Gal Matijevic, Melissa Ness, Jason Sanders, Matthias Steinmetz, Hans Walter-Rix}
 
 % RAVE DR5 core team:
-\author{Luca Casagrande, Cristina Chiappini, Andrea Kunder, Paul McMillan, Alessandro Siviero, Marica Valentini, Jennifer Wojno, Toma{\^z} Zwitter}
+\author{Luca Casagrande, Andrea Kunder, Paul McMillan, Alessandro Siviero, Marica Valentini, Jennifer Wojno, Toma{\^z} Zwitter}
 
 % RAVE builders
-\author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert, Olivier Bienayme, Julio F. Navarro}
-%Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia.
-%E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom.
-%Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
-%Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
-%Senior CIfAR Fellow; Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2
+\author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert, Olivier Bienayme, Julio F. Navarro, Ulisse Munari}
+% Bland-Hawthorn: Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia.
+% Gibson: E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom.
+% Siebert: Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
+% Bienayme: Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
+% Navarro: Senior CIfAR Fellow; Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2
+% Munari: INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy
+
 \author{and the \rave\ collaboration}
 
 \begin{abstract}
@@ -641,7 +643,8 @@ incorrect results from both models.  We emphasize that the choices here are enti
 heuristic, and depart from interpreting \thecannon\ output labels as the maxima
 of individual likelihood functions.  Each model produces estimates of the labels
 for a given star, and we use those estimates to produce a unified estimate, but 
-this is done by disregarding any probabilistic justification.
+this joint estimate is calculated by disregarding the probabilistic attributes
+of individual estimates.
 
 
 Before attempting to join the results from different models, we excluded results
@@ -665,28 +668,50 @@ main-sequence/sub-giant model; or a linear combination of the two.
 
 In Figure \ref{fig:joint-model-differences} we show the differences in effective temperature
 $\teff$ and surface gravity $\logg$ between: the main-sequence model and the joint
-model; and the differences between the red giant branch model and the joint model. We have scaled
-the differences in $\teff$ and $\logg$ to make the central peak near $(0, 0)$ to 
-% ARC to HOGG: This is a total hack. Should we fit for these and \rho_{\teff,\logg} or are you content with the hack?
-be approximately isotropic by setting
+model; and the differences between the red giant branch model and the joint model. 
+We have scaled the differences in $\teff$ and $\logg$ to make the central peak 
+near $(0, 0)$ to be approximately isotropic by setting
 	$\delta_{T_{\rm eff}} = 90$~K for the main-sequence model, 
 	$\delta_{T_{\rm eff}} = 50$~K for the giant model, and 
 	$\delta_{\log{g}} = 0.15$~dex for both models.
-The stars within the peak at $(0, 0)$ represent objects where
+It is important to note that these $\delta$ values do not represent any kind of intrinsic
+uncertainty or precision: they are merely normalization factors.  Adopting
+substantially different scaling factors would produce in clear inconsistencies in our
+results (e.g., sub-giants being misclassified as giants).  Therefore we chose these 
+factors empirically to make the distributions in Figure \ref{fig:joint-model-differences}
+approximately isotropic, and to some extent, comparable.  In Figure 
+\ref{fig:joint-model-differences} the stars within the peak at $(0, 0)$ represent objects where
 the joint model and the comparison model both report similar labels.  
-\stub{State these are empirically chosen normalization factors, and how}
 The artefacts 
 seen in the Hertzsprung-Russell diagrams in Figure \ref{fig:test-set-density} are
 also present in Figure \ref{fig:joint-model-differences} as over-densities far away
 from the central peak.  Therefore, we can 
-adopt the scaled distance in labels $\teff$ and $\logg$ from the joint model,
-% ARC to HOGG: Please suggest any nomenclature or definition changes as you see fit!
+adopt the scaled distance in labels $\teff$ and $\logg$ from the joint model to the 
+main-sequence model $d_{ms}$,
 \begin{eqnarray}
-	d_{ms} & = & \left(\frac{T_{{\rm eff},ms} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},ms}}}\right)^2 + \left(\frac{\log{g}_{ms} - \log{g}_{joint}}{\delta_{\log{g},ms}}\right)^2   \nonumber \\
-	d_{giant} & = & \left(\frac{T_{{\rm eff},giant} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},giant}}}\right)^2 + \left(\frac{\log{g}_{giant} - \log{g}_{joint}}{\delta_{\log{g},giant}}\right)^2   \quad ,
+	d_{ms} & = & \left(\frac{T_{{\rm eff},ms} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},ms}}}\right)^2 + \left(\frac{\log{g}_{ms} - \log{g}_{joint}}{\delta_{\log{g},ms}}\right)^2 \quad .
 \end{eqnarray}
 
-\noindent{}as a metric to derive the weights,
+However when adopting a similar distance metric for the giant model, we found that the
+giant model and the joint model produced similar label estimates (with low $\chi_r^2$
+values) for metal-poor ($[{\rm Fe/H]} < -1$) dwarf stars near the turn-off.  The similarity
+in estimated labels occurred in $\teff$, $\logg$, \emph{and} [Fe/H], implying that we
+could not use the difference between $[{\rm Fe/H}]_{giant} - [{\rm Fe/H]}]_{joint}$
+as a term that would benefit the main-sequence model.  As a result, our joint estimate 
+for metal-poor dwarf stars that overlap with high-resolution studies
+\citep{Reddy_2003,Reddy_2006,Bensby_2014,Valenti_Fischer_2005},
+would appear as metal-poor giant stars, because the giant star model would have a much
+smaller distance metric than the main-sequence model.  It is reasonable to assert that
+this issue may be complicated by the increased complexity, or flexibility, of the giant
+star model relative to the main-sequence model.  In any case, we found that by empirically
+penalizing the giant model distance metric by absolute metallicity,
+\begin{eqnarray}
+	d_{giant} & = & \left(\frac{T_{{\rm eff},giant} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},giant}}}\right)^2 + \left(\frac{\log{g}_{giant} - \log{g}_{joint}}{\delta_{\log{g},giant}}\right)^2  + \lvert[{\rm Fe/H}]_{joint}\rvert  \quad ,
+\end{eqnarray}
+
+\noindent{}the weighting of dwarfs was no longer a function of joint metallicity, and this
+issue was resolved without introducing new artefacts. Using these distance metrics we 
+then derived the weights,
 \begin{eqnarray}
 	w_{ms} = \frac{1}{{d_{ms}}^2} & \text{and} & w_{giant} = \frac{1}{{d_{giant}}^2} \quad ,
 \end{eqnarray}
@@ -696,8 +721,8 @@ adopt the scaled distance in labels $\teff$ and $\logg$ from the joint model,
 	\hat\ell = \frac{w_{ms}\,\ell_{ms} + w_{giant}\,\ell_{giant}}{w_{ms} + w_{giant}} \quad .
 \end{eqnarray}
 
-We calculate weighted errors of $\hat\ell$ and correlation coefficients in 
-the same manner.  In Figure \ref{fig:model-weights} we show the mean relative
+We calculate weighted errors of $\hat\ell$ in the same manner.  
+In Figure \ref{fig:model-weights} we show the mean relative
 weight $w_{ms}/(w_{ms} + w_{giant})$ within each two-dimensional bin of 
 $\hat\teff$ and $\hat\logg$.  For giant stars the relative weight of 
 the main-sequence model is zero, and vice-versa for main-sequence stars.
@@ -708,10 +733,6 @@ model (e.g., [O/H], [Mg/H]), we only report abundances for objects if
 $w_{ms} < 0.05$.
 
 
-Our catalog now contains entries of $XXX$ stars with effective temperature $\teff$,
-surface gravity $\logg$, iron abundance [Fe/H], and $XXX$ of those stars are giants
-with elemental abundances of [O/H], [Al/H], [Mg/H], [Ca/H], [Si/H], and [Ni/H].
-In total, this leads to a catalog of X.XX million stellar abundances. 
 The weighted $\teff$ and $\logg$ values for stars meeting different
 S/N constraints are shown in Figure \ref{fig:test-set-hrd}, both in logarithmic density
 and mean metallicity.  The artefacts from individual models are no longer 
@@ -759,6 +780,8 @@ mean and unit variance.
 \stub{Are they? (Probably not!). How much should we inflate our formal errors, and should this be as a function of S/N? Note that in all Figures and tables,
 we show these inflated errors only, as we gauge them to be more representative.}
 
+\stub{In Figure \ref{fig:test-set-repeats} we look at the difference as a function of SNR}
+
 
 \subsection{External validation}
 \label{sec:external-validation}
@@ -769,12 +792,16 @@ we show these inflated errors only, as we gauge them to be more representative.}
 As an initial point of comparison, we cross-matched our results against the 
 official fourth \rave\ data release (Figure \ref{fig:rave-dr4-comparison}).
 In order to provide a fair comparison, we only show stars that meet a number
-of quality flags in \emph{both} samples. Specifically we require that the 
-$S/N$ (as measured by our analysis) exceeds 10~pixel$^{-1}$, the reduced
-$\chi_r^2$ in our analysis $< 3$, and that the \texttt{QK} flag from
-\citet{Kordopatis_2013} is zero, indicating that no problems were reported by the pipeline.
-There is very good agreement in $\teff$, with a bias and RMS of just XX~K 
-and XXX~K, respectively.  The offset in $\logg$ on the giant branch between this study and 
+of quality flags in \emph{both} samples.  Our constraints require that the
+S/N ratio exceeds 10~pixel$^{-1}$, and $\chi_r^2 < 3$.  For this comparison
+we further required that:
+the \texttt{QK} flag from \citet{Kordopatis_2013} is zero, indicating no
+problems were reported by the pipeline; $T_{{\rm eff},DR4} > 4000$~K;
+the error in radial velocity \texttt{e\_HRV} is $<$8~km~s$^{-1}$; and the three
+principal morphological flags \texttt{c1}, \texttt{c2}, \texttt{c3}, from 
+\citet{Matijevic_2012} all indicate `n' for a normal FGK-type star.
+There is good agreement in $\teff$, with a bias and RMS of just 4~K and 240~K,
+respectively. The offset in $\logg$ on the giant branch between this study and 
 \citet{Kordopatis_2013} has been noted in other studies (e.g., \apogee), and this has issue
 has been resolved in the fifth \rave\ data release by correcting $\logg$
 values with a calibration sample consisting of asteroseismic targets and the
@@ -792,11 +819,13 @@ abundance or spectrophotometric distance determinations between these studies
 
 We searched the literature for studies that overlap with \rave, and which base
 their analysis on high-resolution, high S/N spectra.  We found four notable
-studies with a sufficient level of overlap: the disk studies \citet{Reddy_2003}
-and \citet{Reddy_2006}, the \citet{Valenti_Fischer_2005} work on exoplanet
-host star candidates, and the work of \citet{Bensby_2014}.  These studies 
+studies with a sufficient level of overlap: the disk studies by \citet{Reddy_2003,Reddy_2006}
+and \citet{Bensby_2014}, as well as the \citet{Valenti_Fischer_2005} work on exoplanet
+host star candidates.  These studies 
 perform a careful (manual; expert) analysis using extremely high-resolution
-\stub{how high?}, high S/N spectra, and make use of \project{Hipparcos}
+
+
+, high S/N spectra, and make use of \project{Hipparcos}
 parallaxes where possible.  Most of the stars in these samples are main-sequence
 or sub-giant stars.  Therefore, these works constitute an excellent comparison
 to evaluate the accuracy of our results on the main-sequence and sub-giant branch.
@@ -1373,13 +1402,18 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 
 \begin{figure*}[p]
+\caption{Distribution of differences in label estimates from multiple visits, divided by their formal errors summed in quadrature.  If our measurements were unbiased and the formal errors were representative, these distribution should be normally distributed with zero mean and unit variance.\label{fig:formal-errors-comparison}}
+\end{figure*}
+
+
+\begin{figure*}[p]
 \caption{The RMS of the test set labels as a function of S/N ratio for repeated stars in the test set.\label{fig:test-set-repeats}}
 \end{figure*}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/dr4-comparison.pdf}
-\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth \rave\ data release \citep{Kordopatis_2013} and this work. Here we show the `calibrated' metallicity (column \texttt{c\_M\_H\_K}) from the \rave\ survey. Only stars meeting all the following quality criteria are shown: $\chi_{r}^2 < 3$ (\project{unRAVE} constraint); S/N $> 10$ (\project{unRAVE} constraint); and \texttt{QK = 0} (\rave\ DR4 constraint). \label{fig:rave-dr4-comparison}}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth \rave\ data release \citep{Kordopatis_2013} and this work. Here we show the `calibrated' metallicity (column \texttt{c\_M\_H\_K}) from the \rave\ survey. Only stars meeting quality constraints in \emph{both} studies are shown (see text for details).\label{fig:rave-dr4-comparison}}
 \end{figure*}
 
 
