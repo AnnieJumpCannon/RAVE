@@ -13,8 +13,6 @@ from collections import OrderedDict
 
 import AnniesLasso as tc
 
-output_filename, overwrite = \
-    ("/data/gaia-eso/arc/rave-data-files/unrave-v0.9-36-42-41.fits.gz", True)
 
 RESULTS_PATH = "/data/gaia-eso/arc/rave/results/"
 RESULTS_PATH = ""
@@ -23,18 +21,16 @@ ms_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v43.fits.gz"))
 giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v42.fits.gz"))
 joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v44.fits.gz"))
 
-print("CULLING RESULTS")
-joint_results = joint_results[:len(ms_results)]
 
 for t in (ms_results, giant_results, joint_results):
-    if "Name" not in t.dtype.names:
-        t["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-result")[0].replace("_result.pkl", "") for each in t["FILENAME"]]
+    if "RAVE_OBS_ID" not in t.dtype.names:
+        t["RAVE_OBS_ID"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-result")[0].replace("_result.pkl", "") for each in t["FILENAME"]]
 
-    t.sort("Name")
+    t.sort("RAVE_OBS_ID")
 
 
-assert np.all(ms_results["Name"] == joint_results["Name"])
-assert np.all(giant_results["Name"] == joint_results["Name"])
+assert np.all(ms_results["RAVE_OBS_ID"] == joint_results["RAVE_OBS_ID"])
+assert np.all(giant_results["RAVE_OBS_ID"] == joint_results["RAVE_OBS_ID"])
 
 ms_model = tc.load_model("rave-tgas-v37.model")
 
@@ -50,6 +46,9 @@ ms_model._labelled_set["FE_H"] = ms_model._labelled_set["EPIC_FEH"]
 ms_results["TEFF"] = ms_results["EPIC_TEFF"]
 ms_results["LOGG"] = ms_results["EPIC_LOGG"]
 ms_results["FE_H"] = ms_results["EPIC_FEH"]
+ms_results["E_TEFF"] = ms_results["E_EPIC_TEFF"]
+ms_results["E_LOGG"] = ms_results["E_EPIC_LOGG"]
+ms_results["E_FE_H"] = ms_results["E_EPIC_FEH"]
 
 
 # In the giant and main-sequence results, ignore anything with \chi_{red} > 3
@@ -57,12 +56,13 @@ for table in (ms_results, giant_results):
     bad = table["r_chi_sq"] > 3
     for label in ("TEFF", "LOGG", "FE_H"):
         table[label][bad] = np.nan
-
+        table["E_{}".format(label)][bad] = np.nan
 
 
 bad = joint_results["LOGG"] > 3.5
 for label in ("TEFF", "LOGG", "FE_H"):
     giant_results[label][bad] = np.nan
+    giant_results["E_{}".format(label)][bad] = np.nan
 
 label_names = ("TEFF", "LOGG", "FE_H")
 
@@ -81,6 +81,20 @@ in_ms_subg_hull = ms_subg_convex_hull.find_simplex(
 bad = (ms_results["LOGG"] < 4) * (ms_results["TEFF"] < 5000) * ~in_ms_subg_hull
 for label in ("TEFF", "LOGG", "FE_H"):
     ms_results[label][bad] = np.nan
+    ms_results["E_{}".format(label)][bad] = np.nan
+
+
+misclassified = Table.read("dr5-misclassified.fits")
+indices = []
+for rave_obs_id in misclassified["RAVE_OBS_ID"]:
+    match = ms_results["RAVE_OBS_ID"] == rave_obs_id.strip()
+    indices.append(np.where(match)[0][0])
+
+indices = np.array(indices)
+for label in ("TEFF", "LOGG", "FE_H"):
+    ms_results[label][indices] = np.nan
+    ms_results["E_{}".format(label)][indices] = np.nan
+
 
 # Remove stars outside the convex hull of the lower main-sequence, since they are
 # actually giants 
@@ -185,7 +199,7 @@ x_sigma, y_sigma = (50, 0.15)
 x2 = ((giant_results["TEFF"] - joint_results["TEFF"]) - x_mu)/x_sigma
 y2 = ((giant_results["LOGG"] - joint_results["LOGG"]) - y_mu)/y_sigma
 #z2 = ((giant_results["FE_H"] - joint_results["FE_H"]) - 0)/0.15
-z2 = np.abs(joint_results["FE_H"])
+z2 = np.abs(joint_results["FE_H"])**2
 
 axes[1].hexbin(x2, y2, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), linewidths=0.1)
 
@@ -197,8 +211,8 @@ giant_distance = np.sqrt(x2**2 + y2**2 + z2**2)
 
 # Weight by relative distance, or just take the closest of the two?
 combined_data = OrderedDict([
-    #("Name", giant_results["Name"]),
-    ("RAVE_OBS_ID", giant_results["Name"]),
+    #("RAVE_OBS_ID", giant_results["RAVE_OBS_ID"]),
+    ("RAVE_OBS_ID", giant_results["RAVE_OBS_ID"]),
     ("TEFF", None),
     ("LOGG", None),
     ("FE_H", None),
@@ -208,12 +222,6 @@ combined_data = OrderedDict([
     ("SI_H", None),
     ("CA_H", None),
     ("NI_H", None),
-    ("SNR", joint_results["snr"]),
-    ("R_CHI_SQ", joint_results["r_chi_sq"]),
-    ("QC", np.ones(len(joint_results), dtype=bool))
-])
-
-"""
     ("E_TEFF", None),
     ("E_LOGG", None),
     ("E_FE_H", None),
@@ -223,7 +231,11 @@ combined_data = OrderedDict([
     ("E_SI_H", None),
     ("E_CA_H", None),
     ("E_NI_H", None),
-"""
+    ("SNR", joint_results["snr"]),
+    ("R_CHI_SQ", joint_results["r_chi_sq"]),
+    ("QC", np.ones(len(joint_results), dtype=bool))
+])
+
     #("COV", None),
     #("snr", joint_results["snr"]),
     #("r_chi_sq", joint_results["r_chi_sq"]),
@@ -263,16 +275,15 @@ for i, label_name in enumerate(label_names):
 
     combined_data[label_name] = np.nansum(foo, axis=0)/np.sum(weights2, axis=0)
 
-    """
     # And the errors.
-    errors = np.array([ms_results["COV"][:, i, i]**0.5, giant_results["COV"][:, i, i]**0.5])
+    #errors = np.array([ms_results["COV"][:, i, i]**0.5, giant_results["COV"][:, i, i]**0.5])
+    errors = np.array([ms_results["E_{}".format(label_name)], giant_results["E_{}".format(label_name)]])
     errors[0, ms_bad] = np.nan
     errors[1, giant_bad] = np.nan
 
-    bar = values * weights
+    bar = errors * weights
 
     combined_data["E_{}".format(label_name)] = np.nansum(bar, axis=0)/np.sum(weights2, axis=0)
-    """
 
 
 # Need abundances for things that are *probably* giants.
@@ -283,11 +294,10 @@ for i, label_name in enumerate(abundance_label_names):
     combined_data[label_name] = np.nan * np.ones(len(joint_results))
     combined_data[label_name][is_giant] = giant_results[label_name][is_giant]
 
-    """
     # And the errors.
     combined_data["E_{}".format(label_name)] = np.nan * np.ones(len(joint_results))
-    combined_data["E_{}".format(label_name)][is_giant] = giant_results["COV"][:, i+3, i+3][is_giant]**0.5
-    """
+    #combined_data["E_{}".format(label_name)][is_giant] = giant_results["COV"][:, i+3, i+3][is_giant]**0.5
+    combined_data["E_{}".format(label_name)][is_giant] = giant_results["E_{}".format(label_name)][is_giant]
 
 
 """
@@ -322,21 +332,21 @@ keep_columns = (
     "SkyCorrelationCoeff",
 
     # Some flags from SPARV. Others removed if we already provide them (e.g SNR)
+    "Teff_SPARV",
     "Vrot_SPARV",
     "ZeroPointFLAG",
+
+    "logg_k",
 
     # Morphological information.
     "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", 
     "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20")
 
-for column in dr5_catalog_with_correct_raveids.dtype.names:
-    if column not in keep_columns:
-        del dr5_catalog_with_correct_raveids[column]
 
 
 # Fix string columns.
 from astropy.table import Column
-for column in ("StdDev_HRV", "MAD_HRV", "Vrot_SPARV"):
+for column in ("StdDev_HRV", "MAD_HRV", "Vrot_SPARV", "Teff_SPARV", "logg_k"):
     data = np.array([[e, np.nan][e == "NULL"] for e in dr5_catalog_with_correct_raveids[column].copy()], dtype=float)
 
     index = list(dr5_catalog_with_correct_raveids.dtype.names).index(column)
@@ -346,6 +356,12 @@ for column in ("StdDev_HRV", "MAD_HRV", "Vrot_SPARV"):
     dr5_catalog_with_correct_raveids.add_column(
         Column(data, name=column),
         index=index)
+
+
+for column in dr5_catalog_with_correct_raveids.dtype.names:
+    if column not in keep_columns:
+        del dr5_catalog_with_correct_raveids[column]
+
 
 
 # Rename columns, since units will go into the metadata of the FITS table.
@@ -360,19 +376,42 @@ for before, after in rename_columns:
 from astropy.table import join
 combined_table = join(dr5_catalog_with_correct_raveids, combined_table, keys=("RAVE_OBS_ID", ))
 
+# QC_FLAG
+# 0 = No problems
+# 1 = Don't trust the stellar parameters.
+# 2 = Don't trust the stellar parameters or the abundances.
+# It's a bitmask flag
+# Remove hot stars based on SPARV Teff values
 
-combined_table["QC"] = (combined_table["SNR"] > 10) * (combined_table["R_CHI_SQ"] < 3)
-combined_table["QC_ABUNDANCE"] = combined_table["QC"] * (combined_table["FE_H"] >= -1.5)
-combined_table.write("unrave-v0.94.fits.gz", overwrite=True)
-combined_table.write("unrave-v0.94.csv.gz")
 
-raise a
+combined_table["QC"] = \
+      (combined_table["SNR"] >= 10) \
+    * (combined_table["R_CHI_SQ"] < 3) \
+    * (combined_table["Teff_SPARV"] <= 7000)
+
+metal_poor = combined_table["FE_H"] < -1.5
+for label_name in abundance_label_names:
+    combined_table[label_name][metal_poor] = np.nan
+    combined_table["E_{}".format(label_name)][metal_poor] = np.nan
+    
+
+# Remove the SPARV temperature.
+del combined_table["Teff_SPARV"]
+
+
+
+#for column in ("TEFF", "LOGG", "FE_H", "O_H", "MG_H", "AL_H", "SI_H", "CA_H", "NI_H"):
+#    combined_table[column][hot] = np.nan
+#    combined_table["E_{}".format(column)] = np.nan
+
+combined_table.write("unrave-v0.95.fits.gz", overwrite=True)
+
 
 
 N = 70
-fig,  plt.subplots()
+fig, ax = plt.subplots()
 
-ok = combined_table["SNR"] > 10
+ok = combined_table["QC"]
 ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], gridsize=N,
     extent=(3000, 7500, 0, 5.5),
     cmap="Blues", norm=LogNorm(), edgecolor="#ffffff", linewidths=0.0)
