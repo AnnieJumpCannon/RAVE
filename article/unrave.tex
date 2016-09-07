@@ -423,9 +423,22 @@ we further required that \aspcap\ did not report any peculiar flags
 (\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 536 stars along the giant 
 branch, with metallicities ranging from $[{\rm Fe/H}] = -1.79$ to 0.26.  Intermediate 
 tests with globular cluster members showed that the metallicity range of the training 
-set needed to extend below $[{\rm Fe/H}] \lesssim -2$ in order for our catalog to be 
-practically useful.  \stub{Supplemented this sample with known metal-poor stars in \rave}.
-
+set needed to extend at least below $[{\rm Fe/H}] \lesssim -2$ in order for our catalog 
+to be practically useful.  Without additional metal-poor stars, the lowest metallicity
+labels reported by our model would be around $[{\rm Fe/H}] \approx -2$, even for well
+studied stars with $[{\rm Fe/H}] \sim -4$ (e.g., CD~38-245).  For this reason we
+supplemented our sample of \apogee\ giant stars with 176 known metal-poor giant stars 
+observed by \rave.  The effective temperature $\teff$, surface gravity $\logg$ and
+iron abundance [Fe/H] labels were adopted from \citet{Fulbright_2010, Ruchti_2011}.
+The elemental abundances for O, Mg, Al, Si, Ca, and Ni were assumed to follow typical
+trends of Galactic chemical evolution, such that we assumed $[{\rm Mg/Fe}] = +0.4$,
+$[{\rm O/Fe}] = +0.4$, $[{\rm Al/Fe}] = -0.5$, $[{\rm Ca/Fe}] = +0.4$, 
+$[{\rm Si/Fe}] = +0.4$, and $[{\rm Ni/Fe}] = -0.25$.  This decision is made solely 
+to ensure that our overall metallicity scale extends that of the \rave\ survey, down 
+to $[{\rm Fe/H}] \sim -4$.  In other words, we do not recommend the use of individual 
+abundance labels at $[{\rm Fe/H}] \sim -4$; in practice the abundances of most of these
+elements are largely unrecoverable in the \rave\ wavelength region at $[{\rm Fe/H}] \sim -4$.
+We discuss this issue in more detail in Section~\ref{sec:discussion}.
 
 
 Assembling a suitable training set for the main-sequence and sub-giant branch was less
@@ -472,14 +485,15 @@ must be less than 0.15~dex; the $S/N$ of the \rave\ spectra must exceed
 30~pixel$^{-1}$; and $\teff \leqslant 6750$~K.  Unfortunately these strict constraints
 removed most metal-poor stars, which we later found to cause the test labels to have
 under-predicted abundances for dwarfs of low metallicity.  For this reason we relaxed
-(ignored) those quality constraints for stars with $[{\rm Fe/H}] < -1$.  
-\stub{Include known metal-poor stars in \rave?}. After training
+(ignored) those quality constraints for stars with $[{\rm Fe/H}] < -1$, and included
+an additional 12 turn-off stars with $-1.6 \gtrsim [{\rm Fe/H}] \gtrsim -2.1$ from 
+\citet{Ruchti_2011}.  After training
 a model based on main-sequence and giant stars (Section \ref{sec:the-model}), we found 
 we could identify misclassifications by leave-one-out cross-validation.  However, we 
 chose not to do this because the number of likely misclassifications in the training
 set was negligible ($\approx1$\%), and the improvement in main-sequence test set labels
-was minimal.  The distilled sample of the \rave--\epic\ overlap catalog contains 583 
-stars (of 4,611).  The full training set for each model (see next sections) is shown
+was minimal.  The distilled sample of the \rave--\epic\ overlap catalog contains 595 
+stars (583 of 4,611 from \epic).  The full training set for each model (see next sections) is shown
 in Figure~\ref{fig:training-set-hrd}.
 
 
