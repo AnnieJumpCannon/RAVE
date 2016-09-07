@@ -86,13 +86,15 @@
 \author{Luca Casagrande, Andrea Kunder, Paul McMillan, Alessandro Siviero, Jennifer Wojno, Toma{\^z} Zwitter}
 
 % RAVE builders
-\author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert, Olivier Bienayme, Julio F. Navarro, Ulisse Munari}
+\author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert, Olivier Bienayme, Julio F. Navarro, Ulisse Munari, Warren Reid}
 % Bland-Hawthorn: Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia.
 % Gibson: E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom.
 % Siebert: Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
 % Bienayme: Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
 % Navarro: Senior CIfAR Fellow; Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2
 % Munari: INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy
+% Reid (1/2): Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia
+% Reid (1/2): Western Sydney University, Penrith South DC, NSW 1797
 
 \author{and the \rave\ collaboration}
 
@@ -984,28 +986,21 @@ with the $[{\rm Fe/H}] = -0.034 \pm 0.024$~dex measurement reported by
 
 The most pronounced discrepancy is seen in the main-sequence of the Pleiades.
 Like \citet{Kordopatis_2013}, we find lower $\logg$ values than what the isochrone
-shown predicts.  There are two potential reasons for this discrepancy.  Firstly,
-we note that theoretical isochrones often struggle to match the observed
-color-magnitude diagrams for some young clusters \citep[e.g., the Pleiades, see][]{Bouy_2015}.
-Secondly, the lower $\logg$ values we find near the turn-off for the Pleiades could
-be explained if those stars are fast rotators. As seen in Figure \ref{fig:test-set-hrd},
-for stars with S/N ratios $>10$~pixel$^{-1}$ or $>25$~pixel$^{-1}$, we find many
-stars to sit slightly above the turn-off point.  The \rave\ pipeline identifies
-these stars to be fast rotators, consistent with the idea that they are blue
-stragglers.  Nevertheless, they are slightly higher from the turnoff point, which
-may indicate a tendency for fast-rotating turn-off stars to have systematically
-lower $\logg$ values, by $\approx$0.2~dex.  
-
+shown predicts.  \stub{Hawkins: use correct isochrone from Bouy to see if this issue is resolved.}
+%  Firstly,
+%we note that theoretical isochrones often struggle to match the observed
+%color-magnitude diagrams for some young clusters \citep[e.g., the Pleiades, see][]{Bouy_2015}.
 
 
 \section{Discussion}
 \label{sec:discussion}
 
 
-We have presented an independent re-analysis of \rave\ spectra that makes near-maximal
-use of the information content for red giant branch stars, and provides a significant
-improvement in stellar parameters ($\teff$, $\logg$, [Fe/H]) over previous \rave\ data
-releases.  When combined with the \tgas\ sample, these results may amount to a powerful
+We have derived atmospheric parameters ($\teff$, $\logg$, [Fe/H]) for all \rave\ 
+spectra, as well as detailed abundances for red giant branch stars, based on an
+independent re-analysis of \rave\ spectra.  Our catalog provides an excellent
+complement to the current \rave\ data release \citep{Kunder_2016}.  
+When combined with the \tgas\ sample, these results may amount to a powerful
 compendium for chemo-dynamic studies of the Milky Way.  However, our analysis has caveats.
 Inferences based on these results should recognize those caveats, and acknowledge that 
 these results are subject to our explicit assumptions, some of which are provably
@@ -1034,7 +1029,7 @@ If we only consider the results from individual models, there are a number of ca
 remarks that stem from the construction of the training set.  The labels for red giant 
 branch stars primarily come from \apogee, where previous successes with \thecannon\
 have demonstrated that \apogee\ labels based on high S/N data can be of high fidelity
-\citep{Ness_2015,Ness_2016,Ho_2016,Casey_2016}.
+\citep{Ness_2015,Ness_2016,Ho_2016,Casey_2016b}.
 However, the lack of metal-poor stars in the \apogee/\rave\ overlap sample produced
 a tapering-off in the test set --- where \emph{no} stars had reliably reported metallicities
 below that of the training set --- which forced us to construct a heterogeneous training
@@ -1126,6 +1121,8 @@ information from \rave, or judicious quality controls (e.g., requiring the
 morphological classification to be `normal') to remove these spurious projections.
 
 \stub{Sub-giant artefact; comment as projection}
+
+\stub{Hot stars!}
 
 
 \stub{based on our interrogation of the data, we supply a 'QC' column that uses very strict requirements to eliminate weird things: morphological classifications, SNR, R (pipeline), $\chi_r^2$, etc....}
