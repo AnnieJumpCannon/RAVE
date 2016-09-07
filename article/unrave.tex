@@ -84,7 +84,7 @@
 \author{Some combination of: Harry Enke, Kenneth C. Freeman, Gerry Gilmore, Keith Hawkins, David W. Hogg, Georges Kordopatis, Gal Matijevic, Melissa Ness, Jason Sanders, Matthias Steinmetz, Hans Walter-Rix}
 
 % RAVE DR5 core team:
-\author{Luca Casagrande, Andrea Kunder, Paul McMillan, Alessandro Siviero, Marica Valentini, Jennifer Wojno, Toma{\^z} Zwitter}
+\author{Luca Casagrande, Andrea Kunder, Paul McMillan, Alessandro Siviero, Jennifer Wojno, Toma{\^z} Zwitter}
 
 % RAVE builders
 \author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert, Olivier Bienayme, Julio F. Navarro, Ulisse Munari}
@@ -135,7 +135,7 @@ The Milky Way is considered to be our best laboratory for understanding galaxy
 formation and evolution.  This premise hinges on the ability to precisely measure 
 the astrometry and chemistry for (many) individual stars, and to use those data 
 to infer the structure, kinematics, and chemical enrichment of the Galaxy 
-\citep[e.g.,][]{Schlaufman_2009,Deason_2011,Ness_2012,Ness_2013a,Ness_2013b,
+\citep[e.g.,][]{Nordstrom_2004,Schlaufman_2009,Deason_2011,Casagrande_2011,Ness_2012,Ness_2013a,Ness_2013b,
 Casey_2012,Casey_2013,Casey_2014a,Casey_2014b,Boeche_2013,Kordopatis_2015,Bovy_2016}.  
 However, these quantities are not known for even 1\% of stars in the Milky Way.  
 Stellar distances are famously imprecise \citep[e.g.,][]{van_Leeuwen_2007,
@@ -146,8 +146,8 @@ abundance patterns from the same spectrum \citep{Smiljanic_2014}.  The impact
 these issues have on scientific inferences cannot be understated.  Imperfect 
 astrometry or chemistry limits understanding in a number of sub-fields in
 astrophysics, including the properties of exoplanet host stars, the formation 
-(and destruction) of stars and clusters, as well as the structure of the 
-Galactic disk, to name a few.
+(and destruction) of stars and clusters, as well as the study of stellar
+populations and Galactic structure, to name a few.
 
 
 The \gaia\ mission represents a critical step forward in understanding the Galaxy.
@@ -958,10 +958,24 @@ M67 and 13 stars in IC4651. Details on the open cluster membership and selection
 be found in \cite{Kunder_2016}.  We show the effective temperature $\teff$ and surface
 gravity $\logg$ for these stars in Figure \ref{fig:open-cluster-HRD}.  The isochrones
 are sourced from \citet{Bressan_2012}, with cluster properties adopted from 
-\cite{Kunder_2016} and from \cite{Kharchenko_2013}.  We find good agreement between
-our atmospheric parameters (top panels) and the isochrones shown.  The position
-of the red clump in IC4651 and M67 are perfectly matched to the isochrone, and the
-Hyades main-sequence is in good agreement down to $T_{\rm eff} \approx 4000$~K.
+\cite{Kunder_2016} and \cite{Kharchenko_2013}.  
+
+
+We find good agreement between our atmospheric parameters (top panels) and the 
+isochrones shown.  The position of the red clump in IC4651 and M67 are perfectly matched
+to the isochrone, and the Hyades main-sequence is in good agreement down to 
+$T_{\rm eff} \approx 4000$~K.  Similarly, we find consistency with the literature and
+our metallicity scale.  We find the mean metallicity of M67 stars to be 
+$[{\rm Fe/H}] = -0.02 \pm 0.17$~dex (30 stars), in excellent agreement with the
+expected $[{\rm Fe/H}] = 0.00$ value (not accounting for atomic diffusion).
+We further find the Hyades mean metallicity to be $[{\rm Fe/H}] = 0.07 \pm 0.09$~dex,
+consistent with \citet{Paulson_2003}: $[{\rm Fe/H}] \approx 0.13$.
+For IC4651 from 13 stars we find a mean $[{\rm Fe/H}] = 0.15 \pm 0.12$~dex, matching the
+high-resolution, high S/N study of \citet{Pasquini_2004}, where they find 
+$[{\rm Fe/H}] = 0.10 \pm 0.03$~dex. Finally, from 78 stars we find the mean
+metallicity of the Pleiades to be $[{\rm Fe/H}] = -0.02 \pm 0.12$~dex, in agreement
+with the $[{\rm Fe/H}] = -0.034 \pm 0.024$~dex measurement reported by 
+\citet{Friel_Boesgaard_1990}.
 
 
 The most pronounced discrepancy is seen in the main-sequence of the Pleiades.
@@ -977,6 +991,8 @@ these stars to be fast rotators, consistent with the idea that they are blue
 stragglers.  Nevertheless, they are slightly higher from the turnoff point, which
 may indicate a tendency for fast-rotating turn-off stars to have systematically
 lower $\logg$ values, by $\approx$0.2~dex.  
+
+
 
 \section{Discussion}
 \label{sec:discussion}
@@ -1082,8 +1098,6 @@ conclude that resolution-based effects on the \rave\ stellar parameters
 should be a second-order effect. We have not seen evidence of these 
 resolution-based correlations in our results, however, we have only
 performed cursory (non-exhaustive) experiments to investigate this issue.
-
-\stub{Include text about fast rotators; blue stragglers}
 
 
 \stub{assumptions that are probably wrong: fringing in high S/N spectra produces issues with the normalization and thus the spectrum. KCF to comment more on this}
@@ -1200,6 +1214,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Carretta et al.(2013)]{Carretta_2013} Carretta, E., Bragaglia, A., Gratton, R.~G., et al.\ 2013, \aap, 557, A138 
 
+\bibitem[Casagrande et al.(2011)]{Casagrande_2011} Casagrande, L., Sch{\"o}nrich, R., Asplund, M., et al.\ 2011, \aap, 530, A138 
+
 \bibitem[Casey et al.(2012)]{Casey_2012} Casey, A.~R., Keller, S.~C., \& Da Costa, G.\ 2012, \aj, 143, 88 
 
 \bibitem[Casey et al.(2013)]{Casey_2013} Casey, A.~R., Da Costa, G., Keller, S.~C., \& Maunder, E.\ 2013, \apj, 764, 39 
@@ -1219,6 +1235,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[De Silva et al.(2015)]{DeSilva_2015} De Silva, G.~M., Freeman, K.~C., Bland-Hawthorn, J., et al.\ 2015, \mnras, 449, 2604 
 
 \bibitem[Deason et al.(2011)]{Deason_2011} Deason, A.~J., Belokurov, V., \& Evans, N.~W.\ 2011, \mnras, 416, 2903 
+
+\bibitem[Friel \& Boesgaard(1990)]{Friel_Boesgaard_1990} Friel, E.~D., \& Boesgaard, A.~M.\ 1990, \apj, 351, 480 
 
 \bibitem[Fulbright et al.(2010)]{Fulbright_2010} Fulbright, J.~P., Wyse, R.~F.~G., Ruchti, G.~R., et al.\ 2010, \apjl, 724, L104 
 
@@ -1240,6 +1258,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Jofr{\'e} et al.(2015)]{Jofre_2015} Jofr{\'e}, P., M{\"a}dler, T., Gilmore, G., et al.\ 2015, \mnras, 453, 1428 
 
+\bibitem[Kharchenko et al.(2013)]{Kharchenko_2013} Kharchenko, N.~V., Piskunov, A.~E., Schilbach, E., R{\"o}ser, S., \& Scholz, R.-D.\ 2013, \aap, 558, A53 
+
 \bibitem[Kordopatis et al.(2011)]{Kordopatis_2011} Kordopatis, G., Recio-Blanco, A., de Laverny, P., et al.\ 2011, \aap, 535, A106 
 
 \bibitem[Kordopatis et al.(2013)]{Kordopatis_2013} Kordopatis, G., Gilmore, G., Steinmetz, M., et al.\ 2013, \aj, 146, 134 
@@ -1260,7 +1280,6 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Mar{\'{\i}}n-Franch et al.(2009)]{Marin-Franch_2009} Mar{\'{\i}}n-Franch, A., Aparicio, A., Piotto, G., et al.\ 2009, \apj, 694, 1498 
 
-
 \bibitem[Michalik et al.(2015a)]{Michalik_2015a} Michalik, D., Lindegren, L., \& Hobbs, D.\ 2015, \aap, 574, A115 
 
 \bibitem[Michalik et al.(2015b)]{Michalik_2015b} Michalik, D., Lindegren, L., Hobbs, D., \& Butkevich, A.~G.\ 2015, \aap, 583, A68 
@@ -1279,7 +1298,13 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Ness et al.(2016)]{Ness_2016} Ness, M., Hogg, D.~W., Rix, H.-W., et al.\ 2016, \apj, 823, 114 
 
+\bibitem[Nordstr{\"o}m et al.(2004)]{Nordstrom_2004} Nordstr{\"o}m, B., Mayor, M., Andersen, J., et al.\ 2004, \aap, 418, 989 
+
 \bibitem[Norris \& Da Costa(1995)]{Norris_Da_Costa_1995} Norris, J.~E., \& Da Costa, G.~S.\ 1995, \apj, 447, 680 
+
+\bibitem[Pasquini et al.(2004)]{Pasquini_2004} Pasquini, L., Randich, S., Zoccali, M., et al.\ 2004, \aap, 424, 951 
+
+\bibitem[Paulson et al.(2003)]{Paulson_2003} Paulson, D.~B., Sneden, C., \& Cochran, W.~D.\ 2003, \aj, 125, 3185 
 
 \bibitem[Randich et al.(2013)]{Randich_2013} Randich, S., Gilmore, G., \& Gaia-ESO Consortium 2013, The Messenger, 154, 47 
 
