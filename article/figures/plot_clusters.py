@@ -16,12 +16,12 @@ import os
 rave_cannon_dr1 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/unrave-v0.9.fits')
 
 #----if GC  ----
-#RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_GC_v2.fits')
-#vmax = -0.2 ; vmin=-2.5
+RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_GC_v3.fits')
+vmax = -0.2 ; vmin=-2.5
 
 #---if OC -----
-RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_OC.fits')
-vmax = 0.5 ; vmin=-1.0
+#RAVEDR4_GC = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVEDR4_OC.fits')
+#vmax = 0.5 ; vmin=-1.0
 
 data_table = join(rave_cannon_dr1, RAVEDR4_GC, keys=("Name",))
 RAVEDR4 = Table.read('/Users/khawkins/Desktop/RAVE_cannon/RAVE-DR4.fits')
@@ -68,7 +68,7 @@ xspace = factor * K + factor * (K - 1) * whspace + lbdim * (K - 1)
 xdim = lbdim + xspace + trdim
 ydim = lbdim + yspace + trdim
 
-fig, axes = plt.subplots(2, K, figsize=(xdim, ydim),sharex=True,sharey=True)
+fig, axes = plt.subplots(2, K, figsize=(xdim, ydim*2),sharex=True,sharey=True)
 fig.subplots_adjust(
     left=lbdim/xdim, bottom=lbdim/ydim, right=(xspace + lbdim)/xdim,
     top=(yspace + lbdim)/ydim, wspace=whspace, hspace=whspace)
@@ -79,7 +79,7 @@ for i in np.arange(K):
   #plot the cannon
   ax = axes[0][i]
   s = ax.scatter(data_table['TEFF'][cind], data_table['LOGG'][cind], c=data_table['FE_H'][cind],vmax=vmax,vmin=vmin,s=60 )
-  print 'Mean metallicity of %s cluster = %.2f +/- %.2f'%(clusters[i],np.nanmean(data_table['FE_H'][cind]), np.nanstd(data_table['FE_H'][cind]))
+  print 'Mean metallicity of %s cluster = %.2f +/- %.2f (%i stars)'%(clusters[i],np.nanmean(data_table['FE_H'][cind]), np.nanstd(data_table['FE_H'][cind]),len(cind))
   #plt.colorbar(s)
   #---- plotting isochrones if they exist----
   isopath = './' #defines the location of the isohrone data (Teff, logg info for the iso)
