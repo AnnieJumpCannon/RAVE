@@ -884,7 +884,7 @@ The metallicity agreement between this work and \ges\ extends down to low
 metallicity, near $[{\rm Fe/H}] \approx -1.5$.  The scatter increases for
 the four stars in the overlap sample with [Fe/H] $< -1$, however these
 spectra have low S/N ratios, which is reflected in the larger uncertainties
-reported for these metallicities.
+reported for these metallicities. 
 % TODO: Check if that is still the case after we examine errors from repeat
 % 		obs.
 
@@ -899,7 +899,10 @@ comparison varies due to what is available in the \ges\ data release, which
 is itself a function of the instrument used, the spectral type, and other
 factors.  The absolute bias for individual elements varies from as low as
 0.01~dex ([Al/H]) to as high as 0.22~dex ([Si/H]), where we over-estimate 
-[Si/H] abundances relative to the \ges\ survey. The RMS deviation in each
+[Si/H] abundances relative to the \ges\ survey.  The large bias in [Si/H]
+is likely a consequence of an offset between [Si/H] abundances in \ges\ and
+\apogee, the source of our training set for giant star abundances.  
+The RMS deviation in each
 label is small for stars with [X/H] $\sim -0.5$, before increasing at lower
 metallicities.  If we consider all stars, the smallest abundance RMS we see
 with respect to \ges\ is 0.18~dex for [Ca/H].  The increasing RMS at low 
@@ -911,9 +914,7 @@ those particular stars being compared.  Unfortunately not all of these
 factors are represented by the quoted errors in each label.  For these reasons, 
 although it affects only a small number of stars, we recommend caution when 
 using individual abundances for very metal-poor giant stars in our sample.
-% TODO: Revise this last sentence after we see the globular cluster comparisons,
-%		because we are saying 'hey be careful' then perhaps saying 'look how good
-%		those same abundances are in GCs`
+
 
 \subsection{Astrophysical validation}
 \label{sec:astrophysical-validation}
