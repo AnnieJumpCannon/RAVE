@@ -534,7 +534,7 @@ labels are too imprecise.
 
 
 We chose to adopt separate models for the main-sequence and the red giant branch rather
-than switch to a single model with more complexity.  This choice allowed us to derive
+than switch to a single model with higher complexity.  This choice allowed us to derive
 stellar parameters for stars on the main-sequence and sub-giant branch, as well as 
 detailed elemental abundances for red giant branch stars.  However, adopting two separate
 models introduces the challenge of how to combine the results from two models, or how to
@@ -550,16 +550,18 @@ star model in Section \ref{sec:evolved-star-model}.
 
 
 We constructed a three-label quadratic model using only main-sequence and sub-giant
-stars in the \epic\ training set.  In order to set the regularization hyperparameter
+stars. In order to set the regularization hyperparameter
 $\Lambda$ for this model, we trained 30 models with different regularization strengths,
 spaced evenly in logarithmic steps between $\Lambda = 10^{-3}$ to $\Lambda = 10^{3}$.
 We then performed leave-one-out cross-validation for each model.  Specifically, for 
 each star in the training set: we removed the star; trained the model; and then 
 inferred labels from the removed star as if it was a test object. We also performed 
 leave-one-out cross-validation on an unregularized ($\Lambda = 0$) model, which we 
-will use as the basis for comparison.  For every model we calculated the bias and
-root-mean-square (RMS) deviation between the training set labels and those inferred
-through cross-validation. 
+will use as the basis for comparison.  For the unregularized case, we calculated the 
+bias and root-mean-square (RMS) deviation between: the training set labels, and the 
+labels we derive by cross-validation, where one star is removed at a time and the
+model is re-trained.  We repeated this calculation of bias and RMS deviation for all
+30 models with different regularization strengths $\Lambda$. 
 
 
 We show the \emph{percentage difference} in the RMS deviation of the labels with respect
@@ -567,13 +569,13 @@ to the unregularized model in Figure \ref{fig:set-hyperparameters}.  The upper
 and lower envelope represent the boundaries across all labels, showing that with increasing
 regularization, the RMS decreased in \emph{all} labels.  We found similar
 improvements in the biases, however these were already minimal in the unregularized
-case.  The improvement in RMS reaches a minimum value near $\Lambda = X.XX$, where
-%3.56224789e+01
-we achieve RMS deviations that are about 30\% better than the unregularized case.
-Based on this improvement we set $\Lambda = X.XX$ for this model.  At this regularization 
+case.  The improvement in RMS reaches a minimum value near 
+$\Lambda = 35.6$ ($\approx10^{1.5}$), where
+we achieve RMS deviations that are about 10\% better than the unregularized case.
+Based on this improvement we set $\Lambda = 35.6$ for this model.  At this regularization 
 strength, the bias and RMS values found by leave-one-out
-cross validation are, respectively: $X$~K and $XX$~K for $\teff$, $X.XX$~dex and $X.XX$~dex
-for $\logg$, with $X.XX$~dex and $X.XX$~dex for [Fe/H].
+cross validation are, respectively: $38$~K and $256$~K for $\teff$, $0.05$~dex and 
+$0.29$~dex for $\logg$, with $0.03$~dex and $0.17$~dex for [Fe/H].
 
 
 We inferred labels for all \rave\ spectra using this main-sequence/sub-giant star model.  
@@ -609,16 +611,17 @@ in the same way described in Section \ref{sec:unevolved-star-model}, using the s
 The results are shown in Figure \ref{fig:set-hyperparameters}, where
 again the enveloped region represents the minimum and maximum change in RMS label
 deviation with respect to the unregularized case.  At the point of maximum improvement 
-near $\Lambda = X.XX$, the RMS in all nine labels has decreased by up to $X$\%.  Here the regularization strength also produces a sparser matrix
+near $\Lambda = 0.13$ $(\approx10^{-0.9})$, the RMS in all nine labels has decreased by up to $30$\%,
+with all labels showing an improvement $>5$\%, and the mean improvement over all labels is about 10\%.
+Near $\Lambda \approx 10^{-0.9}$ to $10^{-0.3}$, the regularization also produces a sparser matrix
 of $\vectheta$, with $\approx20$\% more terms (mostly cross-terms) having zero-valued entries.
 Based on the increased model sparsity and decreasing RMS deviation in the labels, 
-we adopt $\Lambda = X.XX$ for the giant star model.
-
-
-Results from cross-validation on our regularized model imply that the precision
-in labels is XXX~K in $\teff$, X.XX~dex in $\logg$, and between X.XX~dex (EL) and 
-X.XX~dex (EL) depending on the elemental abundance.  We inferred labels for all
-\Nspectra\ \rave\ spectra using this model, and these results are summarized in
+we adopt $\Lambda = 0.57$ ($10^{-0.25}$) for the giant star model.  The bias in 
+labels from a regularized model with $\Lambda = 0.57$ is negligible: $-0.3$~K in 
+$\teff$, and $<$0.007~dex in magnitude for $\logg$ and all seven elements.  The RMS
+at this regularization strength is 69~K in $\teff$, 0.18~dex in $\logg$, and varies
+between $0.07-0.09$~dex depending on the elemental abundance.  We inferred labels 
+for all \Nspectra\ \rave\ spectra using this model, and these results are summarized in
 the right panel of Figure \ref{fig:test-set-density}.  The red clump is clearly visible
 and in the expected location, without requiring any post-analysis calibration.
 However, artefacts due to dwarf stars in the test set are also present.
