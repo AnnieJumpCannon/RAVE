@@ -1108,24 +1108,38 @@ regions of parameter space that we could consider as being normal
 (e.g., Solar-type stars).  We addressed this issue for the main-sequence
 and giant models by using a joint model to calculate relative weights.
 However, spectra that are unusual from the joint model training set can
-still project as systematic artefacts.  An interrogation of our results
-has identified one such group of metal-poor ($[{\rm Fe/H}] \approx -0.4$)
-stars near $\teff \approx 3250$~K, which peculiarly sit above the isochrone. 
-The \rave\ morphological classifications \citep{Matijevic_2012} indicate 
-these stars have chromospheric emission, a feature not present in our 
-training set.  Based on this (and other previously discussed) examples,
-we recommend either a thorough investigation of unexpected structure\footnote{
-Before submitting to \emph{Nature}} 
-using all the available 
-information from \rave, or judicious quality controls (e.g., requiring the 
-morphological classification to be `normal') to remove these spurious projections.
-
-\stub{Sub-giant artefact; comment as projection}
-
-\stub{Hot stars!}
+still project as systematic artefacts.  
 
 
-\stub{based on our interrogation of the data, we supply a 'QC' column that uses very strict requirements to eliminate weird things: morphological classifications, SNR, R (pipeline), $\chi_r^2$, etc....}
+Indeed, there are two known artefacts in our data that are relevant to this discusssion. The
+first is a small over-density at the base of the giant branch, which is
+likely a consequence of joining the 9-label and 3-label models.  The
+second has an astrophysical origin: there are no hot stars ($\teff > 8000$~K)
+present in our training set, yet there are many in the \rave\ survey.
+However, the \rave\ pre-processing pipeline (\texttt{SPARV}) performs
+template matching against grids of cool \emph{and} hot stars, and therefore
+we can use those results to identify hot stars. In Figure \ref{fig:hot-stars} 
+we show our derived effective temperatures $\teff$ and surface gravities $\logg$,
+where each hexagonal bin is colored by the \emph{maximum} temperature
+reported by \texttt{SPARV} for any star in that bin.  Hot stars dominate
+at just above the turn-off point in our results. 
+
+
+\stub{this following paragraph needs rewording}
+Based on a thorough interrogation of our results, we have adopted two boolean
+columns to signify whether our labels meet specific quality constraints:
+one marked \texttt{QC} to indicate reliable stellar parameters ($\teff$, $\logg$, [Fe/H]), and \texttt{QC\_ABUNDANCE} to indicate reliable chemical abundances.
+For stellar atmospheric parameters to meet our quality constraints, we
+require: $\chi_r^2 < 3$; $S/N >10$~pixel$^{-1}$; and \texttt{TeffS} $< 8000$~K
+in order to remove hot stars that are outside the training set.  We
+specified the quality constraint in chemical abundances to further
+require that the iron abundance $[{\rm Fe/H}] > -1.5$, since this approximately
+corresponds to the point where individual abundances will become undetectable
+in \rave\ spectra, and the individual abundance labels will be driven by our
+constraint to place them on the mean galactic chemical evolution trend.
+These quality constraints should not be taken verbatim: judicious use of
+the morphological classifications \citep{Matijevic_2012} or metadata from
+the pre-processing pipelines is encouraged.
 
 
 We have presented the largest collection of stellar abundances for stars in the 
