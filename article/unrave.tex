@@ -25,8 +25,7 @@
   \setmydatenumber{dateone}{\the\year}{\the\month}{\the\day}%
   \setmydatenumber{datetwo}{#1}{#2}{#3}%
   \addtocounter{datetwo}{-\thedateone}%
-  \the\numexpr(\thedatetwo)\relax\space days
-}
+  \the\numexpr(\thedatetwo)\relax\space days}
 % ------------------------------------------
 
 \IfFileExists{vc.tex}{\input{vc.tex}}{\newcommand{\githash}{UNKNOWN}\newcommand{\giturl}{UNKNOWN}}
@@ -71,7 +70,7 @@
 
 \begin{document}
 % Remove at submission:
-\slugcomment{{\color{red} \textbf{To appear on arXiv on 13 September 2016 (\difftoday{2016}{9}{9}away)}}}
+\slugcomment{{\color{red} \textbf{To appear on arXiv on 13 Sep 2016 (submission in \difftoday{2016}{9}{9})}}}
 
 
 \title{The \project{unRAVE} catalog}
@@ -857,6 +856,7 @@ relatively low S/N ratios in \rave\ ($\approx 25$~pixel$^{-1}$), there is good
 agreement in with \ges\ and the \unrave\ stellar parameters (Figure~\ref{fig:ges-stellar-parameters}).  
 The RMS in effective temperature, surface gravity and metallicity is
 233~K, 0.37~dex, and 0.17~dex, respectively.  
+
 
 
 Based on this comparison, we find no evidence for a systematic offset 
