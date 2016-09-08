@@ -317,7 +317,7 @@ for label_name in ["TEFF", "LOGG", "FE_H"] + abundance_label_names:
 combined_table = Table(data=combined_data)
 
 
-dr5_catalog_with_correct_raveids = Table.read("../rave/RAVEDR5_PublicCut_20160905.csv.gz", format="csv")
+dr5_catalog_with_correct_raveids = Table.read("RAVEDR5_PublicCut_20160905.csv.gz", format="csv")
 keep_columns = (
     # Positional information
     "RAVE_OBS_ID", "RAdeg", "DEdeg",
@@ -336,8 +336,6 @@ keep_columns = (
     "Vrot_SPARV",
     "ZeroPointFLAG",
 
-    "logg_k",
-
     # Morphological information.
     "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", 
     "c13", "c14", "c15", "c16", "c17", "c18", "c19", "c20")
@@ -346,7 +344,7 @@ keep_columns = (
 
 # Fix string columns.
 from astropy.table import Column
-for column in ("StdDev_HRV", "MAD_HRV", "Vrot_SPARV", "Teff_SPARV", "logg_k"):
+for column in ("StdDev_HRV", "MAD_HRV", "Vrot_SPARV", "Teff_SPARV"):
     data = np.array([[e, np.nan][e == "NULL"] for e in dr5_catalog_with_correct_raveids[column].copy()], dtype=float)
 
     index = list(dr5_catalog_with_correct_raveids.dtype.names).index(column)
@@ -395,6 +393,28 @@ for label_name in abundance_label_names:
     combined_table["E_{}".format(label_name)][metal_poor] = np.nan
     
 
+# Make a figure
+ok = (combined_table["SNR"] >= 10) * (combined_table["R_CHI_SQ"] < 3)
+fig, ax = plt.subplots()
+hexbin = ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], 
+    C=combined_table["Teff_SPARV"][ok], reduce_C_function=np.nanmax,
+    gridsize=50, vmin=4000, vmax=10000, extent=(3500, 7500, 0, 5.5),
+    cmap="plasma",)
+
+ax.set_xlim(ax.get_xlim()[::-1])
+ax.set_ylim(ax.get_ylim()[::-1])
+
+ax.set_xlabel(r"$T_{\rm eff}$ $[{\rm K}]$")
+ax.set_ylabel(r"$\log{g}$")
+
+cbar = plt.colorbar(hexbin, ticks=[4000, 5000, 6000, 7000, 8000, 9000, 10000])
+cbar.set_label(r"$T_{{\rm eff},SPARV}$ $[{\rm K}]$")
+
+fig.tight_layout()
+fig.savefig("article/figures/hot-stars.pdf", dpi=300)
+fig.savefig("article/figures/hot-stars.png")
+
+
 # Remove the SPARV temperature.
 del combined_table["Teff_SPARV"]
 
@@ -404,7 +424,7 @@ del combined_table["Teff_SPARV"]
 #    combined_table[column][hot] = np.nan
 #    combined_table["E_{}".format(column)] = np.nan
 
-combined_table.write("unrave-v0.95.fits.gz", overwrite=True)
+combined_table.write("stacked-spectra-v0.95.fits.gz", overwrite=True)
 
 
 
