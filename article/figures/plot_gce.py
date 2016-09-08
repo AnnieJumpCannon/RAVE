@@ -32,16 +32,17 @@ x = rave_cannon_dr1["FE_H"]
 #ok  = (rave_cannon_dr1["snr"] > 10) * (rave_cannon_dr1["r_chi_sq"] < 3) \
 #    * (rave_cannon_dr1["R"] > 10) * (rave_cannon_dr1["loggK"] < 3)
 
-ok = (rave_cannon_dr1["snr"] > 10)
+ok = rave_cannon_dr1["QC"]
 
-default_kwds = dict(gridsize=50,  cmap="plasma", norm=LogNorm())
+default_kwds = dict(gridsize=(31, 9), cmap="Blues", norm=LogNorm(),
+    linewidths=0.1, edgecolor="#ffffff", rasterized=True)
 elements_and_kwds = OrderedDict([
-    ("O", dict(extent=(-1.5, 0.5, -0.05, 0.4))),
-    ("AL", dict(extent=(-1.5, 0.5, -0.3, 0.5))),
-    ("MG", dict(extent=(-1.5, 0.5, -0.3, 0.4))),
-    ("CA", dict(extent=(-1.5, 0.5, -0.3, 0.4))),
-    ("SI", dict(extent=(-1.5, 0.5, -0.1, 0.6))),
-    ("NI", dict(extent=(-1.5, 0.5, -0.3, 0.2)))
+    ("O", dict(extent=(-1.2, 0.5, -0.05, 0.4))),
+    ("AL", dict(extent=(-1.2, 0.5, -0.3, 0.5))),
+    ("MG", dict(extent=(-1.2, 0.5, -0.1, 0.4))),
+    ("CA", dict(extent=(-1.2, 0.5, -0.3, 0.4))),
+    ("SI", dict(extent=(-1.2, 0.5, -0.1, 0.6))),
+    ("NI", dict(extent=(-1.2, 0.5, -0.3, 0.2)))
 ])
 
 
@@ -65,15 +66,15 @@ for i, (element, updated_kwds) in enumerate(elements_and_kwds.items()):
     #    ],
     #    **kwds)
     cmap = plt.cm.Blues
-    extent = kwds.pop("extent")
+    extent = kwds.get("extent")
     xbins = np.linspace(extent[0], extent[1], 50)#np.ptp(extent[:2])/0.04)
     ybins = np.linspace(extent[2], extent[3], 20)#np.ptp(extent[2:])/0.04)
 
     show = np.isfinite(x * y)
-    ax.hist2d(x[ok * show], y[ok * show], bins=(xbins, ybins), norm=LogNorm(), cmap=cmap)
-    #ax.hexbin(x[ok], y[ok], **kwds)
-    ax.axhline(0, c="#FFFFFF", linewidth=0.5, linestyle="--")
-    ax.axvline(0, c="#FFFFFF", linewidth=0.5, linestyle="--")
+    #ax.hist2d(x[ok * show], y[ok * show], bins=(xbins, ybins), norm=LogNorm(), cmap=cmap)
+    ax.hexbin(x[ok], y[ok], **kwds)
+    ax.axhline(0, c="k", linewidth=2, linestyle="--")
+    ax.axvline(0, c="k", linewidth=2, linestyle="--")
 
     ax.xaxis.set_major_locator(MaxNLocator(6))
     if ax.is_last_row():
