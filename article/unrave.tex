@@ -590,19 +590,21 @@ cross validation are, respectively: $38$~K and $256$~K for $\teff$, $0.05$~dex a
 $0.29$~dex for $\logg$, with $0.03$~dex and $0.17$~dex for [Fe/H].
 
 
-We inferred labels for all \rave\ spectra using this main-sequence/sub-giant star model.  \stub{from Zwitter: ensure it is clear that we say we are running this model on all spectra}
-The results for the survey sample are shown in the centre panel of Figure \ref{fig:test-set-density}.  
-The increased density of solar-type stars is consistent with \rave\
-observing stars in the local neighbourhood, and the high number of turn-off
-and main-sequence stars relative to the sub-giant branch is expected from 
-the relative lifetimes of these evolutionary phases.  An over-density
+We inferred labels for all \Nspectra\ \rave\ spectra using this main-sequence/sub-giant
+star model; we made no \emph{a priori} decisions as to whether a star was likely a
+main-sequence/sub-giant star or not.  The results for the entire survey sample are shown
+in the centre panel of Figure \ref{fig:test-set-density}.  The increased density of 
+solar-type stars is consistent with \rave\ observing stars in the local neighbourhood, 
+and the high number of turn-off and main-sequence stars relative to the sub-giant branch 
+is expected from the relative lifetimes of these evolutionary phases.  An over-density
 of stars near the base of the giant branch is also present.  This artefact is due 
-to having giant stars in the test set, but not in the training set, and the
-model is (poorly) extrapolating outside the convex hull of the training set.
+to having giant stars in the test set, but not in the training set, and the model is 
+(poorly) extrapolating outside the convex hull of the training set.
 
 
 \subsection{A 9-label model for detailed abundances of giant stars}
 \label{sec:evolved-star-model}
+
 
 The red giant branch stars in our training set have stellar parameters 
 ($\teff$, $\logg$) and up to 15 elemental abundances from the \aspcap\ 
@@ -632,11 +634,15 @@ we adopt $\Lambda = 0.57$ ($10^{-0.25}$) for the giant star model.  The bias in
 labels from a regularized model with $\Lambda = 0.57$ is negligible: $-0.3$~K in 
 $\teff$, and $<$0.007~dex in magnitude for $\logg$ and all seven elements.  The RMS
 at this regularization strength is 69~K in $\teff$, 0.18~dex in $\logg$, and varies
-between $0.07-0.09$~dex depending on the elemental abundance.  We inferred labels 
-for all \Nspectra\ \rave\ spectra using this model, and these results are summarized in
-the right panel of Figure \ref{fig:test-set-density}.  The red clump is clearly visible
-and in the expected location, without requiring any post-analysis calibration.
-However, artefacts due to dwarf stars in the test set are also present.
+between $0.07-0.09$~dex depending on the elemental abundance.  
+
+
+We inferred labels for all \Nspectra\ \rave\ spectra using this model, again without
+regard for whether a star was likely a giant or not.  The results for all survey stars
+are summarized in the right panel of Figure \ref{fig:test-set-density}.  The red clump
+is clearly visible and in the expected location, without requiring any post-analysis 
+calibration.  However, artefacts due to dwarf stars being present in the test set,
+and not in the training set, are also present.
 
 
 \subsection{Joining the models}
