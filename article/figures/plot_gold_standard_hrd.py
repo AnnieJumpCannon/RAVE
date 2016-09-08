@@ -244,6 +244,10 @@ for comp in (bensby_2014_data, reddy_2003_data, reddy_2006_data, valenti_2005_da
     _, y = comp("LOGG")
     _, c = comp("FE_H")
 
+    _, xerr = comp("E_TEFF")
+    _, yerr = comp("E_LOGG")
+    print(comp, np.nanmax(yerr))
+    axes[-1].errorbar(x, y, xerr=xerr, yerr=yerr, fmt=None, ecolor="#666666", zorder=-1)
     axes[-1].scatter(x, y, c=c, **kwds)
 
 

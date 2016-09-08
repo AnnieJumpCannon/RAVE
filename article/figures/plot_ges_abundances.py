@@ -28,12 +28,6 @@ except NameError: # Do you know who I am? That's Jeff Vader!
     rave_cannon_dr1 = join(rave_cannon_dr1, get_ges_idr4(), keys=("Name", ))
 
 
-# Produce error columns from COV matrix.
-if "COV" in rave_cannon_dr1.dtype.names:
-
-    for i, label_name in enumerate(rave_cannon_dr1.dtype.names[1:10]):
-        rave_cannon_dr1["E_{}".format(label_name)] = rave_cannon_dr1["COV"][:, i, i]**0.5
-
 
 asplund_2009_solar_abundances = {
     "O": 8.69, 
@@ -47,7 +41,8 @@ asplund_2009_solar_abundances = {
 
 ges_species = ("O_1", "AL_1", "MG_1", "CA_1", "SI_1", "NI_1")
 
-ok  = (rave_cannon_dr1["snr"] > 10)
+ok  = rave_cannon_dr1["QC"]
+
 
 N, M = (3, 2)
 assert N * M == len(ges_species)
@@ -78,9 +73,9 @@ for i, (ax, species) in enumerate(zip(axes.flatten(), ges_species)):
     y = rave_cannon_dr1["{}_H".format(element)]
 
     xerr = rave_cannon_dr1["E_{}".format(species.replace("_", ""))]
-    #yerr = rave_cannon_dr1["E_{}_H".format(element)]
-    #ax.errorbar(x[ok], y[ok], xerr[ok], yerr[ok], 
-    #    fmt=None, ecolor="#666666", zorder=-1)
+    yerr = rave_cannon_dr1["E_{}_H".format(element)]
+    ax.errorbar(x[ok], y[ok], xerr[ok], yerr[ok], 
+        fmt=None, ecolor="#666666", zorder=-1)
     scat = ax.scatter(x[ok], y[ok], c=rave_cannon_dr1["snr"][ok], s=50,
         vmin=np.nanmin(rave_cannon_dr1["snr"]),
         vmax=np.nanmax(rave_cannon_dr1["snr"]),

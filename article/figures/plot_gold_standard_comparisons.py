@@ -68,7 +68,10 @@ def bensby_2014_data(cannon_label):
     label_name = {
         "TEFF": "TeffH",
         "LOGG": "loggH",
-        "FE_H": "Fe_H"
+        "FE_H": "Fe_H",
+        "E_TEFF": "e_Teff",
+        "E_LOGG": "e_logg",
+        "E_FE_H": "e_Fe_H"
     }.get(cannon_label, cannon_label)
 
     return get_data(bensby_2014, cannon_label, label_name)
@@ -79,10 +82,14 @@ def reddy_2003_data(cannon_label):
     label_name = {
         "TEFF": "Teff",
         "LOGG": "logg",
-        "FE_H": "__Fe_H_"
+        "FE_H": "__Fe_H_",
     }.get(cannon_label, cannon_label)
+    # No errors
+    a, b =  get_data(reddy_2003, cannon_label, label_name)
 
-    return get_data(reddy_2003, cannon_label, label_name)
+    if cannon_label.startswith("E_"):
+        a = np.nan * np.ones(len(a))
+    return (a, b)
 
 
 def reddy_2006_data(cannon_label):
@@ -93,7 +100,11 @@ def reddy_2006_data(cannon_label):
         "FE_H": "__Fe_H_"
     }.get(cannon_label, cannon_label)
 
-    return get_data(reddy_2006, cannon_label, label_name)
+    # No errors..
+    a, b = get_data(reddy_2006, cannon_label, label_name)
+    if cannon_label.startswith("E_"):
+        a = np.nan * np.ones(len(a))
+    return a, b
 
 
 def valenti_2005_data(cannon_label):
@@ -103,8 +114,12 @@ def valenti_2005_data(cannon_label):
         "LOGG": "log_g_",
         "FE_H": "__Fe_H_"
     }.get(cannon_label, cannon_label)
+    # No errors...
 
-    return get_data(valenti_2005, cannon_label, label_name)
+    a, b =  get_data(valenti_2005, cannon_label, label_name)
+    if cannon_label.startswith("E_"):
+        a = np.nan * np.ones(len(a))
+    return a, b
 
 
 
@@ -169,10 +184,12 @@ for ax, label_name in zip(axes, list(label_names) + list(label_names)):
     diffs = []
     for comparison, kwds in comparisons.items():
         x, y = comparison(label_name) 
+        xerr, yerr = comparison("E_{}".format(label_name))
         c0, c1 = comparison("snr")
         allx.extend(x)
         ally.extend(y)
         if ax.is_first_row():
+            #ax.errorbar(x, y - y, yerr=yerr, fmt=None, ecolor="#666666", zorder=-1)
             _ = ax.scatter(x, y - x, c=c0, cmap="plasma", **kwds)
             diffs.extend(y-x)
 
@@ -180,6 +197,7 @@ for ax, label_name in zip(axes, list(label_names) + list(label_names)):
                 handles.append(ax.scatter([-10000], [-10000], facecolor="#cccccc", **kwds))
 
         else:
+            #ax.errorbar(x, y, yerr=yerr, fmt=None, ecolor="#666666", zorder=-1)
             scat = ax.scatter(x, y, c=c0, cmap="plasma", **kwds)
     print(label_name, np.nanmedian(diffs), np.nanstd(diffs), np.isfinite(diffs).sum())
 

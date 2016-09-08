@@ -49,8 +49,8 @@ for i, snr in enumerate(snrs):
     # On top figure show density.
     # On bottom axes show metallicity.
     
-    ok = (t["snr"] > snr) * (t["r_chi_sq"] < 3) #* (t["VSINI"] < 1)
-    
+    ok = cannon_dr1["QC"]
+
     ax = axes[0, i]
 
     top_hexbin = ax.hexbin(t["TEFF"][ok], t["LOGG"][ok], 
