@@ -1120,7 +1120,7 @@ first is a small over-density at the base of the giant branch, which is
 likely a consequence of joining the 9-label and 3-label models.  The
 second has an astrophysical origin: there are no hot stars ($\teff > 8000$~K)
 present in our training set, yet there are many in the \rave\ survey.
-However, the \rave\ pre-processing pipeline (\texttt{SPARV}) performs
+However, the \rave\ pre-processing pipeline \citep[\texttt{SPARV};][]{Steinmetz_2006,Zwitter_2008} performs
 template matching against grids of cool \emph{and} hot stars, and therefore
 we can use those results to identify hot stars. In Figure \ref{fig:hot-stars} 
 we show our derived effective temperatures $\teff$ and surface gravities $\logg$,
@@ -1472,7 +1472,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \begin{figure}[p]
 \center
 \includegraphics[width=0.65\textwidth]{figures/hot-stars.pdf}
-\caption{Effective temperatures $\teff$ and surface gravities $\logg$ from this work, where each hexagonal bin is colored by the \emph{maximum} temperature for any star in that bin, as reported by the \rave\ pre-processing pipeline \texttt{SPARV}.  Hot stars are not included in our training set, and appear above the turnoff in our labels.  For this reason, we supply a boolean quality control flag \texttt{QC} that flags stars with $\teff > 8000$~K (as reported by \texttt{SPARV}), and other results that are known to be erroneous.\label{fig:hot-stars}}
+\caption{Effective temperatures $\teff$ and surface gravities $\logg$ from this work, where each hexagonal bin is colored by the \emph{maximum} temperature for any star in that bin, as reported by the \rave\ pre-processing pipeline \texttt{SPARV} \citep{Steinmetz_2006,Zwitter_2008}.  Hot stars are not included in our training set, and appear above the turnoff in our labels.  For this reason, we supply a boolean quality control flag \texttt{QC} that flags stars with $\teff > 8000$~K (as reported by \texttt{SPARV}), and other results that are known to be erroneous.\label{fig:hot-stars}}
 \end{figure}
 
 \end{document}

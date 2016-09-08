@@ -34,8 +34,7 @@ x = rave_cannon_dr1["FE_H"]
 
 ok = rave_cannon_dr1["QC"]
 
-default_kwds = dict(gridsize=(31, 9), cmap="Blues", norm=LogNorm(),
-    linewidths=0.1, edgecolor="#ffffff", rasterized=True)
+default_kwds = dict(gridsize=(31, 9), cmap="Blues", norm=LogNorm())
 elements_and_kwds = OrderedDict([
     ("O", dict(extent=(-1.2, 0.5, -0.05, 0.4))),
     ("AL", dict(extent=(-1.2, 0.5, -0.3, 0.5))),
@@ -71,8 +70,8 @@ for i, (element, updated_kwds) in enumerate(elements_and_kwds.items()):
     ybins = np.linspace(extent[2], extent[3], 20)#np.ptp(extent[2:])/0.04)
 
     show = np.isfinite(x * y)
-    #ax.hist2d(x[ok * show], y[ok * show], bins=(xbins, ybins), norm=LogNorm(), cmap=cmap)
-    ax.hexbin(x[ok], y[ok], **kwds)
+    ax.hist2d(x[ok * show], y[ok * show], bins=(xbins, ybins), norm=LogNorm(), cmap=cmap)
+    #ax.hexbin(x[ok], y[ok], **kwds)
     ax.axhline(0, c="k", linewidth=2, linestyle="--")
     ax.axvline(0, c="k", linewidth=2, linestyle="--")
 
