@@ -30,7 +30,7 @@ else:
     print("Warning: Using pre-loaded data.")
 
 
-ok = (data_table["r_chi_sq"] < 3)# * (data_table["R"] > 10)
+ok = data_table["QC"]# * (data_table["R"] > 10)
 
 latex_labels = {
     "TEFF_2": r"$T_{\rm eff}$ $[{\rm K}]$ $({\rm Literature})$",
@@ -46,9 +46,9 @@ cannon_labels = ("TEFF_1", "LOGG_1", "FE_H")
 literature_labels = ("TEFF_2", "LOGG_2", "FEH")
 
 limits = {
-    "TEFF_1": [3500, 7000],
-    "LOGG_1": [0, 5],
-    "FE_H": [-4.5, 0.75]
+    "TEFF_1": [3500, 7500],
+    "LOGG_1": [0, 5.5],
+    "FE_H": [-3.5, 0.75]
 }
 
 kwds = dict(cmap="plasma", vmin=np.nanmin(data_table["snr"]), vmax=np.nanmax(data_table["snr"]))
@@ -78,7 +78,12 @@ in enumerate(zip(axes, cannon_labels, literature_labels)):
     y = data_table[cannon_label]
     c = data_table["snr"]
 
-    scat = ax.scatter(x[ok], y[ok], c=c[ok], s=50, alpha=0.5, **kwds)
+    #xerr = data_table["e_{}".format(literature_label)]
+    yerr = data_table["E_{}".format(cannon_label).strip("_1")]
+
+    ax.errorbar(x[ok], y[ok], yerr=yerr[ok], fmt=None, ecolor="#666666",
+        zorder=-1)
+    scat = ax.scatter(x[ok], y[ok], c=c[ok], s=50, **kwds)
 
 
 _ = ax.scatter([-999], [-9999], c=[0], **kwds)
@@ -99,6 +104,12 @@ for ax, cannon_label, literature_label in zip(axes, cannon_labels, literature_la
     ax.set_xlabel(latex_labels[literature_label])
     ax.set_ylabel(latex_labels[cannon_label])
 
+
+axes[0].set_xticks([4000, 5000, 6000, 7000])
+axes[0].set_yticks([4000, 5000, 6000, 7000])
+
+axes[-1].set_xticks([-3.5, -2.5, -1.5, -0.5, 0.5])
+axes[-1].set_yticks([-3.5, -2.5, -1.5, -0.5, 0.5])
 
 fig.tight_layout()
 
