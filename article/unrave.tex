@@ -645,69 +645,74 @@ calibration.  However, artefacts due to dwarf stars being present in the test se
 and not in the training set, are also present.
 
 
-\subsection{Joining the models}
+\subsection{Deriving joint estimates from all models}
 \label{sec:joining-the-models}
 
+
 We have derived labels for all \Nspectra\ \rave\ spectra using the three models
-described in previous sections.  The results from the joint model --- that includes 
-the main-sequence, sub-giant and red giant branch --- shows that a single 3-label quadratic
-model is too simple for the \rave\ spectral range.  The other models have problems,
-too: unrealistic over-densities in label space show that the main-sequence model and
-the giant model make very poor extrapolations for stars outside their respective
-training sets.  For these reasons we were forced to exclude or severely penalize 
-incorrect results from both models.  We emphasize that the choices here are entirely
-heuristic, and depart from interpreting \thecannon\ output labels as the maxima
-of individual likelihood functions.  Each model produces estimates of the labels
-for a given star, and we use those estimates to produce a unified estimate, but 
-this joint estimate is calculated by disregarding the probabilistic attributes
-of individual estimates.
+described in previous sections.  The results from our first model 
+(Section~\ref{sec:a-simple-model}) --- which includes the main-sequence, sub-giant 
+and red giant branch --- shows that a single 3-label quadratic model is too simple 
+for the \rave\ spectral range.   The other models have problems, too: unrealistic 
+over-densities in label space show that the main-sequence model and the giant model
+make very poor extrapolations for stars outside their respective training sets.  
+For these reasons we were forced to exclude or severely penalize incorrect results
+from both models.  We emphasize that the choices here are entirely heuristic, 
+and depart from interpreting \thecannon\ output labels as the maxima of individual 
+likelihood functions.  Each model produces estimates of the labels for a given star, 
+and we use those estimates to produce a unified estimate, but this joint estimate 
+is calculated by disregarding the probabilistic attributes of individual estimates.
 
 
-Before attempting to join the results from different models, we excluded results
+Before attempting to join the results from the models in Sections 
+\ref{sec:unevolved-star-model} and \ref{sec:evolved-star-model}, we excluded results
 in either model that had a reduced $\chi_{r}^2 > 3$.  We further discarded stars with
 labels that are outside the extent of the training set.  Specifically for the
 results from the giant model we (conservatively) excluded stars with derived 
 $\logg > 3.5$, and for the results from the main-sequence model we excluded 
-sub-giant stars ($\logg < 4$ and $\teff < 5000$~K) that were outside the 
-two-dimensional ($\teff$, $\logg$) convex hull of the training set used for the main-sequence model.  Unfortunately these restrictions did not remove all spurious
-results.  The reason for this can be explained with an example:  consider that our 
-giant star model was trained with only giant stars but tested with both giant 
-stars and dwarf stars.  Some classes of stars (e.g., metal-poor dwarfs) can 
-project into a region of label space that would suggest it is a giant 
-(e.g., a clump star).  These objects could have relatively low $\chi_{r}^2$ values
-(e.g., $\chi_{r}^2 < 3$) and in this example, they would appear as bonafide red clump 
-stars.  These incorrect projections are extrapolation errors in high dimensions that
-project to `normal' parts of the label space in two dimensions.  For these reasons 
-we also made use of the joint model in Section~\ref{sec:a-simple-model}
-to inform whether we should adopt results from: the red giant branch model; the
-main-sequence/sub-giant model; or a linear combination of the two. 
+sub-giant stars ($\logg < 4$ and $\teff < 5000$~K) that were outside the two-dimensional 
+($\teff$, $\logg$) convex hull of the training set used for the main-sequence model.  
+Unfortunately these restrictions did not remove all spurious results.  The reason 
+for this can be explained with an example:  consider that our giant star model was 
+trained with only giant stars but tested with both giant stars and dwarf stars.  
+Some classes of stars (e.g., metal-poor dwarfs) can project into a region of label 
+space that would suggest it is a giant (e.g., a clump star).  These objects could 
+have relatively low $\chi_{r}^2$ values (e.g., $\chi_{r}^2 < 3$) and in this example,
+they would appear as bonafide red clump stars.  These incorrect projections are 
+extrapolation errors in high dimensions that project to `normal' parts of the label 
+space in two dimensions.  For these reasons we also made use of the simple model in 
+Section~\ref{sec:a-simple-model} to inform whether we should adopt results from: 
+the red giant branch model; the main-sequence/sub-giant model; or a linear combination 
+of the two. 
 
-In Figure \ref{fig:joint-model-differences} we show the differences in effective temperature
-$\teff$ and surface gravity $\logg$ between: the main-sequence model and the joint
-model; and the differences between the red giant branch model and the joint model. 
-We have scaled the differences in $\teff$ and $\logg$ to make the central peak 
-near $(0, 0)$ to be approximately isotropic by setting
+
+In Figure \ref{fig:joint-model-differences} we show the differences in effective 
+temperature $\teff$ and surface gravity $\logg$ between: the main-sequence model 
+(Section~\ref{sec:unevolved-star-model}) and the simplest model (Section~
+\ref{sec:a-simple-model}); and the differences between the red giant branch model 
+(Section~\ref{sec:evolved-star-model}) and the simplest model (Section 
+\ref{sec:a-simple-model}).  We have scaled the differences in $\teff$ and $\logg$ 
+to make the central peak near $(0, 0)$ to be approximately isotropic by setting
 	$\delta_{T_{\rm eff}} = 90$~K for the main-sequence model, 
 	$\delta_{T_{\rm eff}} = 50$~K for the giant model, and 
 	$\delta_{\log{g}} = 0.15$~dex for both models.
-It is important to note that these $\delta$ values do not represent any kind of intrinsic
-uncertainty or precision: they are merely normalization factors.  Adopting
+It is important to note that these $\delta$ values do not represent any kind of 
+intrinsic uncertainty or precision: they are merely normalization factors.  Adopting
 substantially different scaling factors would produce in clear inconsistencies in our
 results (e.g., sub-giants being misclassified as giants).  Therefore we chose these 
 factors empirically to make the distributions in Figure \ref{fig:joint-model-differences}
 approximately isotropic, and to some extent, comparable.  In Figure 
-\ref{fig:joint-model-differences} the stars within the peak at $(0, 0)$ represent objects where
-the joint model and the comparison model both report similar labels.  
-The artefacts 
-seen in the Hertzsprung-Russell diagrams in Figure \ref{fig:test-set-density} are
-also present in Figure \ref{fig:joint-model-differences} as over-densities far away
-from the central peak.  Therefore, we can 
-adopt the scaled distance in labels $\teff$ and $\logg$ from the joint model to the 
-main-sequence model $d_{ms}$,
+\ref{fig:joint-model-differences} the stars within the peak at $(0, 0)$ represent 
+objects where the simple model and the comparison model both report similar labels.  
+The artefacts seen in the Hertzsprung-Russell diagrams in Figure \ref{fig:test-set-density} 
+are also present in Figure \ref{fig:joint-model-differences} as over-densities far away
+from the central peak.  Therefore, we can adopt the scaled distance in labels 
+$\teff$ and $\logg$ from the joint model to the main-sequence model $d_{ms}$,
 \begin{eqnarray}
 	d_{ms} & = & \left(\frac{T_{{\rm eff},ms} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},ms}}}\right)^2 + \left(\frac{\log{g}_{ms} - \log{g}_{joint}}{\delta_{\log{g},ms}}\right)^2 \quad .
 \end{eqnarray}
 
+\stub{Warning: The metallicity correction may disappear -- I am trying to fix that}
 However when adopting a similar distance metric for the giant model, we found that the
 giant model and the joint model produced similar label estimates (with low $\chi_r^2$
 values) for metal-poor ($[{\rm Fe/H]} < -1$) dwarf stars near the turn-off.  The similarity
