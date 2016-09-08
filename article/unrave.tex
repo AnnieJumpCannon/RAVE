@@ -777,8 +777,8 @@ We calculated all possible pair-wise differences between the labels we
 derived from multiple visits.  If \rave\ observed a star $H$ times, there 
 are $H!/2(H-2)!$ possible $a$-to-$b$ pair-wise combinations where we can calculate 
 the difference between the derived label (for example, $\logg$) over the
-quadrature sum of their formal uncertainties $(\logg_a - \logg_b)/\sqrt{{\sigma_{\logg,a}}^2 + {\sigma_{\logg,b}}^2}$.  If our derived labels and formal errors were 
-correct, the distribution of these pair-wise comparisons would be
+quadrature sum of their formal uncertainties $(\logg_a - \logg_b)/\sqrt{{\sigma_{\logg,a}}^2 + {\sigma_{\logg,b}}^2}$.  If our derived labels were unbiased and our formal
+errors were correct, the distribution of these pair-wise comparisons would be
 well-represented by a Gaussian distribution with zero mean and variance
 of unity.  However, our formal errors are likely to be under-estimated,
 and therefore we introduce a systematic error floor for each label, which
@@ -809,16 +809,16 @@ We further used the repeat observations in \rave\ to build intuition for
 the label precision that was achievable as a function of S/N ratio.  
 Specifically we stacked all spectra for a given star by summing the 
 fluxes weighted by the inverse variances, then treated the stacked spectra
-as a normal survey star.  We inferred labels for the stacked spectra 
+as normal survey stars.  We inferred labels for the stacked spectra 
 using all three models, and derived a joint estimate as per Section 
-\ref{sec:joining-the-models}.  The labels we inferred from the stacked 
+\ref{sec:joining-the-models}.  The labels we inferred from each stacked 
 spectrum then served as a basis of comparison for the labels we derived 
 from the individual visit spectra of the same star, which are of lower 
 S/N ratios.
 
 
 In Figure \ref{fig:repeat-visits} we show the RMS difference
-in labels between the stacked spectrum and a single visit, binned by the
+in labels between the stacked spectra and single visit, binned by the
 S/N ratio of the individual visit spectrum.  Here we only show stars
 where the \emph{stacked} spectrum had S/N $>100$~pixel$^{-1}$ to ensure
 that our baseline comparisons were in a region where we are dominated
@@ -864,70 +864,73 @@ abundance or spectrophotometric distance determinations between these studies
 \subsubsection{Comparisons with Reddy, Bensby, and Valenti \& Fischer}
 \label{sec:validation-gold-standards}
 
+
 We searched the literature for studies that overlap with \rave, and which base
 their analysis on high-resolution, high S/N spectra.  We found four notable
-studies with a sufficient level of overlap: the disk studies by \citet{Reddy_2003,Reddy_2006}
-and \citet{Bensby_2014}, as well as the \citet{Valenti_Fischer_2005} work on exoplanet
-host star candidates.  These studies 
-perform a careful (manual; expert) analysis using extremely high-resolution, high S/N spectra, and make use of \project{Hipparcos}
-parallaxes where possible.  Most of the stars in these samples are main-sequence
-or sub-giant stars.  Therefore, these works constitute an excellent comparison
-to evaluate the accuracy of our results on the main-sequence and sub-giant branch.
+studies with a sufficient level of overlap: the disk studies by \citet{Reddy_2003,
+Reddy_2006} and \citet{Bensby_2014}, as well as the \citet{Valenti_Fischer_2005} 
+work on exoplanet host star candidates.  These studies perform a careful (manual;
+expert) analysis using extremely high-resolution, high S/N spectra, and make use 
+of \project{Hipparcos} parallaxes where possible.  Most of the stars in these 
+samples are main-sequence or sub-giant stars.  Therefore, these works constitute 
+an excellent comparison to evaluate the accuracy of our results on the 
+main-sequence and sub-giant branch.
 
 
-We compare the stellar parameters ($\teff$, $\logg$, [Fe/H]) of stars that
-overlap these literature studies in Figure~\ref{fig:gold-standard-comparison}.
-We only include stars with $\chi_r^2 < 3$ and $S/N > 10$~pixel$^{-1}$, although the latter
-cut removed only a few stars because the average S/N in the \rave\ spectra for
-these stars is relatively high ($\gtrsim{}50$~pixel$^{-1}$). When considering the relative 
-information content available in \rave\ (945~pixels in the near infrared with
-$\mathcal{R} \approx 7{,}500$) compared to these literature studies that use
-\project{Hipparcos} parallaxes where possible, and base their inferences on
-spectra with resolving power $\mathcal{R}$ between 40,000 to 110,000, and
-S/N ratios exceeding 150, we consider the agreement to be very satisfactory.
-Indeed, given the metallicity precision available in the \unrave\ catalog, 
-these results will likely be useful for future studies based on exoplanet
-host star properties (e.g., \project{TESS}). At present, however, there are 
-just $\approx$30 stars in \rave\ that overlap with the compilations of 
-exoplanet host star properties listed at \texttt{exoplanets.org} and 
-\texttt{exoplanets.eu}.
-
-
-\stub{Reference Figure \ref{fig:gold-standard-hrd}}
+In Figure \ref{fig:gold-standard-hrd} we show Hertzsprung-Russell diagrams 
+for the \rave\ stars that overlap with these studies.  We only include stars 
+with $\chi_r^2 < 3$ and $S/N > 10$~pixel$^{-1}$, although the latter cut 
+removed only a few stars because the average S/N in the \rave\ spectra for
+these stars is relatively high ($\gtrsim{}50$~pixel$^{-1}$).  The literature 
+data points in Figure \ref{fig:gold-standard-hrd} are linked to our derived
+labels for the same stars, illustrating good qualitative agreement across 
+the turn-off and sub-giant branch in all studies.  If we treat all three 
+studies as a single point of comparison, the bias between our work and these 
+studies is $-89$~K in $\teff$, just $-0.06$~dex in $\logg$, and $-0.03$~dex 
+in [Fe/H] (see Figure~\ref{fig:gold-standard-comparison}).  The RMS deviation
+in labels is 237~K, 0.30~dex, and 0.15~dex, respectively.  When considering 
+the relative information content available in \rave\ (945~pixels in the near 
+infrared with $\mathcal{R} \approx 7{,}500$) compared to these literature 
+studies that use \project{Hipparcos} parallaxes where possible, and base 
+their inferences on spectra with resolving power $\mathcal{R}$ between 
+40,000 to 110,000, and S/N ratios exceeding 150, we consider the agreement 
+to be very satisfactory.  Indeed, given the metallicity precision available
+in the \unrave\ catalog, these results will likely be useful for future 
+studies based on exoplanet host star properties (e.g., 
+\project{TESS}\footnote{At present, however, there are just $\approx$30 
+stars in \rave\ that overlap with the compilations of exoplanet host star 
+properties listed at \texttt{exoplanets.org} and \texttt{exoplanets.eu}.}).
 
 
 \subsubsection{Comparison with the \ges\ survey}
 \label{sec:validation-ges}
 
+
 There are 142 stars that overlap between \rave\ and the fourth internal
 data release of the \ges\ survey. These are a mix of main-sequence, 
 sub-giant and red giant branch stars.  About half (67) of the sample 
-were acquired with the \acronym{UVES} instrument, the other with the \acronym{GIRAFFE} spectrograph, and
-the S/N of the \ges\ spectra peaks at $\approx140$~pixel$^{-1}$.  Despite 
-most of these stars having
-relatively low S/N ratios in \rave\ ($\approx 25$~pixel$^{-1}$), there is good 
-agreement in with \ges\ and the \unrave\ stellar parameters (Figure~\ref{fig:ges-stellar-parameters}).  
-The RMS in effective temperature, surface gravity and metallicity is
-233~K, 0.37~dex, and 0.17~dex, respectively.  
+were acquired with the \acronym{UVES} instrument --- the other with the 
+\acronym{GIRAFFE} spectrograph --- and the S/N of the \ges\ spectra peaks 
+at $\approx140$~pixel$^{-1}$.  Despite most of these stars having relatively 
+low S/N ratios in \rave\ ($\approx 25$~pixel$^{-1}$), there is good agreement
+in with \ges\ and the \unrave\ stellar parameters (Figure~\ref{fig:ges-stellar-parameters}).  
+The RMS in effective temperature, surface gravity and metallicity is 233~K, 
+0.37~dex, and 0.17~dex, respectively.  
 
 
-
-Based on this comparison, we find no evidence for a systematic offset 
-between stars on the main-sequence and those on the giant branch. Specifically,
-we do not find any dwarf stars that are misclassified as sub-giants, as we
-found for some metal-poor stars in Section~\ref{sec:validation-gold-standards}.
-In addition we find no evidence for a systematic offset in metallicity (or
-individual abundances) between giant stars and main-sequence stars.  This is
-a crucial observation, as the metallicities for stars in our main-sequence
-training set have a principally different source to those on the giant branch.
-We cannot make these same inferences based on other surveys, like \apogee,
-because (1) \apogee\ stars formed part of the training set, and (2) they do
-not include main-sequence stars.  Even if we found good agreement between
-\epic\ and \apogee\ metallicities, this would not be informative, because
-\apogee\ is the source of metallicity for many stars on the giant branch in
-the \epic\ sample. Therefore, although this is a qualitative comparison only,
-it is reassuring that there is no obvious systematic difference between the
-metallicities of main-sequence and giant branch stars.
+Based on this comparison, we find no evidence for a systematic offset in
+metallicities between stars on the main-sequence and those on the giant branch. 
+This is a crucial observation, as the metallicities for stars in our 
+main-sequence training set have a principally different source to those on 
+the giant branch.  We cannot make these same inferences based on other 
+surveys, like \apogee, because (1) \apogee\ stars formed part of the 
+training set, and (2) they do not include main-sequence stars.  Even if we 
+found good agreement between \epic\ and \apogee\ metallicities, this would 
+not be informative, because \apogee\ is the source of metallicity for many 
+stars on the giant branch in the \epic\ sample. Therefore, although this is
+a qualitative comparison only, it is reassuring that there is no obvious 
+systematic difference between the metallicities of main-sequence and giant
+branch stars.
 
 
 The metallicity agreement between this work and \ges\ extends down to low
@@ -935,15 +938,13 @@ metallicity, near $[{\rm Fe/H}] \approx -1.5$.  The scatter increases for
 the four stars in the overlap sample with [Fe/H] $< -1$, however these
 spectra have low S/N ratios, which is reflected in the larger uncertainties
 reported for these metallicities. 
-% TODO: Check if that is still the case after we examine errors from repeat
-% 		obs.
 
 
 The fourth internal data release of the \ges\ includes detailed chemical
 abundances of up to 45~species ($\approx32$ elements at different ionization
 stages).  This provides us with an independent validation for our detailed
-abundances on the giant branch.  These comparisons are shown for six elemental
-abundances in Figure~\ref{fig:ges-abundances}, where markers are colored by the
+abundances on the giant branch.  These comparisons are shown in 
+Figure~\ref{fig:ges-abundances}, where markers are colored by the
 S/N of the \rave\ spectrum.  The number of stars available in each abundance
 comparison varies due to what is available in the \ges\ data release, which
 is itself a function of the instrument used, the spectral type, and other
@@ -967,10 +968,20 @@ using individual abundances for very metal-poor giant stars in our sample.
 
 
 \subsubsection{Comparison with the \rave\ DR4 calibration sample}
+\label{sec:dr4-calibration-sample}
 
 
-\stub{Reference Figure\ref{fig:kordopatis-calibration}}
-
+The fourth \rave\ data release made use of a number of high-resolution studies
+to verify the accuracy of the reported stellar atmospheric parameters.  These
+samples include main-sequence stars, giant stars, with a particular focus to
+include metal-poor stars to identify (and correct) any deviations at low
+and high metallicities.  We refer the reader to \citet{Kordopatis_2013} for
+the full compilation of literature sources.  Although the stellar atmospheric 
+parameters in this compilation come from multiple (heterogeneous) sources, we 
+find generally good agreement with these works (Figure 
+\ref{fig:kordopatis-calibration}).  However, some reservation is warranted 
+when evaluating this comparison, as some of the metal-poor stars in this 
+calibration sample formed part of our training set.  
 
 
 \subsection{Astrophysical validation}
@@ -1475,14 +1486,14 @@ precision flattens out at S/N $\gtrsim 40$~pixel$^{-1}$, where our results becom
 
 
 \begin{figure*}[p]
-\includegraphics[width=\textwidth]{figures/gold-standard-comparison.pdf}
-\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparisons for stars in common between this work and `gold standard' studies that use high-resolution, high S/N spectra and \hipparcos\ parallaxes where available: \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  \label{fig:gold-standard-comparison}}
+\includegraphics[width=\textwidth]{figures/gold-standard-hrd.pdf}
+\caption{Hertsprung-Russell diagrams of stars in common between this work and that of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  Stars are colored by the metallicity of each study. Circles indicate literature markers in the first three panels, and the linked triangles indicate \project{unRAVE} parameters for the same object. This figure illustrates the good overall agreement in the shape of the turnoff and sub-giant branch, yet also demonstrates how some literature metal-poor ($[{\rm Fe/H}] \lesssim -1$) dwarfs near the turn-off appear as metal-poor sub-giants in \project{unRAVE}.\label{fig:gold-standard-hrd}}
 \end{figure*}
 
 
 \begin{figure*}[p]
-\includegraphics[width=\textwidth]{figures/gold-standard-hrd.pdf}
-\caption{Hertsprung-Russell diagrams of stars in common between this work and that of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  Stars are colored by the metallicity of each study. Circles indicate literature markers in the first three panels, and the linked triangles indicate \project{unRAVE} parameters for the same object. This figure illustrates the good overall agreement in the shape of the turnoff and sub-giant branch, yet also demonstrates how some literature metal-poor ($[{\rm Fe/H}] \lesssim -1$) dwarfs near the turn-off appear as metal-poor sub-giants in \project{unRAVE}.\label{fig:gold-standard-hrd}}
+\includegraphics[width=\textwidth]{figures/gold-standard-comparison.pdf}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparisons for stars in common between this work and `gold standard' studies that use high-resolution, high S/N spectra and \hipparcos\ parallaxes where available: \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  \label{fig:gold-standard-comparison}}
 \end{figure*}
 
 
