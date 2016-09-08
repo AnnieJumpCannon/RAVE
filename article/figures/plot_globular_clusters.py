@@ -75,11 +75,11 @@ for i, (row, cluster_name) in enumerate(zip(axes, cluster_names)):
 
     # Show LHS RAVE DR4
     ax = row[0]
-    ax.text(0.05, 0.92, r"${{\rm {0}}}$".format(cluster_name.strip().replace("NGC", "NGC\,")),
-        horizontalalignment="left", transform=ax.transAxes)
+    ax.text(0.15, 0.82, r"${{\rm {0}}}$".format(cluster_name.strip().replace("NGC", "NGC\,")),
+        horizontalalignment="left", transform=ax.transAxes, fontsize=16)
     Nstars = np.isfinite(dr4[dr4_teff][match] * dr4[dr4_logg][match]).sum()
-    ax.text(0.05, 0.84, r"${0}$ ${{\rm stars}}$".format(Nstars),
-        horizontalalignment="left", transform=ax.transAxes)
+    ax.text(0.15, 0.74, r"${0}$ ${{\rm stars}}$".format(Nstars),
+        horizontalalignment="left", transform=ax.transAxes, fontsize=16)
     
     ax.errorbar(dr4[dr4_teff][match], dr4[dr4_logg][match],
         xerr=dr4[dr4_e_teff][match], yerr=dr4[dr4_e_logg][match], 
@@ -96,11 +96,11 @@ for i, (row, cluster_name) in enumerate(zip(axes, cluster_names)):
 
     # Show RHS unRAVE
     ax = row[1]
-    ax.text(0.05, 0.92, r"${{\rm {0}}}$".format(cluster_name.strip().replace("NGC", "NGC\,")),
-        horizontalalignment="left", transform=ax.transAxes)
+    ax.text(0.15, 0.82, r"${{\rm {0}}}$".format(cluster_name.strip().replace("NGC", "NGC\,")),
+        horizontalalignment="left", transform=ax.transAxes, fontsize=16)
     Nstars = np.isfinite(unrave[unrave_teff][match] * unrave[unrave_logg][match]).sum()
-    ax.text(0.05, 0.84, r"${0}$ ${{\rm stars}}$".format(Nstars),
-        horizontalalignment="left", transform=ax.transAxes)
+    ax.text(0.15, 0.74, r"${0}$ ${{\rm stars}}$".format(Nstars),
+        horizontalalignment="left", transform=ax.transAxes, fontsize=16)
 
     ax.errorbar(unrave[unrave_teff][match], unrave[unrave_logg][match],
         xerr=unrave[unrave_e_teff][match], yerr=unrave[unrave_e_logg][match], 
