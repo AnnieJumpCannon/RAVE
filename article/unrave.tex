@@ -90,7 +90,7 @@
 % Zwitter:  University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia
 
 % RAVE builders
-\author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert, Olivier Bienayme, Julio F. Navarro, Ulisse Munari, Warren Reid, Rosemary Wyse, Amina Helmi}
+\author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert, Olivier Bienayme, Julio F. Navarro, Ulisse Munari, Warren Reid, Rosemary Wyse, Amina Helmi, George Seabroke}
 % Bland-Hawthorn: Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia.
 % Gibson: E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom.
 % Siebert: Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
@@ -101,6 +101,7 @@
 % Reid (1/2): Western Sydney University, Penrith South DC, NSW 1797
 % Wyse: Johns Hopkins University, Baltimore, MD, USA
 % Helmi: Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands
+% Seabroke: Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK
 \author{and the \rave\ collaboration}
 
 \begin{abstract}
@@ -183,7 +184,8 @@ data release: up to 292,036 stars.  We used the \gaia\ universe model snapshot
 \citep{Robin_2012} to estimate the precision in parallax and proper motions that
 could be available in the first \gaia\ data release (DR1) for stars in those 
 overlap samples.  Comparing the expected precision to what is currently available, 
-we further found that the \rave\ survey will benefit most from \gaia\ DR1: 63\%
+we further found that the \rave\ survey will benefit most from \gaia\ DR1: the
+parallaxes of 63\%
 of stars in the \rave--\gaia\ DR1 overlap sample ($\approx$182,862 stars) are 
 expected to improve with the first \gaia\ data release, and 47\% of stars ($\approx$137,211 stars) are 
 likely to have better proper motions.  Although the \gaia\ universe
@@ -853,6 +855,8 @@ exoplanet host star properties listed at \texttt{exoplanets.org} and
 \texttt{exoplanets.eu}.
 
 
+\stub{Reference Figure \ref{fig:gold-standard-hrd}}
+
 
 \subsubsection{Comparison with the \ges\ survey}
 \label{sec:validation-ges}
@@ -922,6 +926,13 @@ those particular stars being compared.  Unfortunately not all of these
 factors are represented by the quoted errors in each label.  For these reasons, 
 although it affects only a small number of stars, we recommend caution when 
 using individual abundances for very metal-poor giant stars in our sample.
+
+
+\subsubsection{Comparison with the \rave\ DR4 calibration sample}
+
+
+\stub{Reference Figure\ref{fig:kordopatis-calibration}}
+
 
 
 \subsection{Astrophysical validation}
@@ -1446,6 +1457,12 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 
 \begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/kordopatis-calibration.pdf}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison with the literature calibration sources used by \citet{Kordopatis_2013} and \citet{Kunder_2016}. Stars are colored by the S/N of the \rave\ spectra. Note that this comparison is for illustrative purposes only: it is not an indication of independent agreement with the literature because some metal-poor stars in this literature sample were used in the construction of our training set (see text for details).\label{fig:kordopatis-calibration}}
+\end{figure*}
+
+
+\begin{figure*}[p]
 \center
 \includegraphics[height=\textheight]{figures/globular-clusters.pdf}
 \caption{Effective temperature $\teff$ and surface gravity $\logg$ for globular cluster members identified by \citet{Kunder_2014,Anguiano_2015}.  Left-hand panels indicate results from the fourth \rave\ data release \citep{Kordopatis_2013}, and the right-hand panels show results from this work. A representative isochrone is shown for each cluster \citep{Bressan_2012}.\label{fig:globular-cluster-HRD}}
@@ -1459,10 +1476,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \end{figure*}
 
 
-\begin{figure*}[p]
-\includegraphics[width=\textwidth]{figures/kordopatis-calibration.pdf}
-\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison with the literature calibration sources used by \citet{Kordopatis_2013} and \citet{Kunder_2016}. Stars are colored by the S/N of the \rave\ spectra. Note that this comparison is for illustrative purposes only: it is not an indication of independent agreement with the literature because some metal-poor stars in this literature sample were used in the construction of our training set (see text for details).\label{fig:kordopatis-calibration}}
-\end{figure*}
+
 
 
 \begin{figure}[p]
