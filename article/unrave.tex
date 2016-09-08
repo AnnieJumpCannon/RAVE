@@ -740,13 +740,13 @@ model (e.g., [O/H], [Mg/H]), we only report abundances for objects if
 $w_{ms} < 0.05$.
 
 
-The weighted $\teff$ and $\logg$ values for stars meeting different
-S/N constraints are shown in Figure \ref{fig:test-set-hrd}, both in logarithmic density
-and mean metallicity.  The artefacts from individual models are no longer 
-apparent, and stars across the full Hertzsprung-Russell diagram are visible.
-However, there are a number of caveats introduced by the choices we have made to
-combine estimates from multiple models.  We discuss these issues in detail in
-Section \ref{sec:discussion}.
+The weighted $\teff$ and $\logg$ values for stars meeting different S/N 
+constraints are shown in Figure \ref{fig:test-set-hrd}, both in logarithmic 
+density and mean metallicity.  The artefacts from individual models are no 
+longer apparent, and the complete structure of the Hertzsprung-Russell diagram
+is visible.  However, there are a number of caveats introduced by the choices 
+we have made to combine estimates from multiple models.  We discuss these 
+issues in detail in Section \ref{sec:discussion}.
 
 
 \section{Validation experiments}
@@ -760,7 +760,8 @@ tests based on repeat observations, before evaluating our accuracy based on
 high-resolution literature comparisons.
 
 
-\subsection{Multi-epoch observations}
+\subsection{Internal validation}
+\subsubsection{Repeat observations}
 \label{sec:repeat-observations}
 
 The \rave\ survey performed repeat observations for 43,918 stars with time 
@@ -772,26 +773,57 @@ of observations for any target.  These repeat observations allow us to
 quantify the level of (in)correctness in our formal errors.  
 
 
+We calculated all possible pair-wise differences between the labels we
+derived from multiple visits.  If \rave\ observed a star $H$ times, there 
+are $H!/2(H-2)!$ possible $a$-$b$ pair-wise combinations where we can calculate 
+the difference between the derived label (for example, $\logg$) over the
+quadrature sum of their formal uncertainties,
+\begin{eqnarray}
+\eta_{\logg} & = & \frac{\logg_a - \logg_b}{\sqrt{\sigma_{\logg,a}^2 + \sigma_{\logg,b}^2}} \quad .
+\end{eqnarray}
 
-For every star
-with multiple visits we constructed a high S/N stacked spectrum for that
-star, weighted by the inverse variances in the individual visit spectra.
+If our derived labels and formal errors were correct, the distribution of
+$\eta$ values would represent a normal distribution with zero mean and
+unity variance.  However, our formal errors are likely to be under-estimated,
+and therefore we introduce a systematic error floor for each label, which
+is added in quadrature to every observation such that for $\logg$,
+\begin{eqnarray}
+	\eta_{\logg} & = & \frac{\logg_a - \logg_b}{\sqrt{(\sigma_{\logg,a} + \sigma_{\logg,floor})^2 + (\sigma_{\logg,b} + \sigma_{\logg,floor})^2}} \quad .
+\end{eqnarray}
+
+We increased the minimum label error until the distribution of $\eta$ 
+values for a given label approximately reached unity.  The minimum error
+values for each label are shown with the distribution of (new) $\eta$
+values in Figure \ref{fig:pairwise-metrics}.  These minimum values form
+part of our error model, and \emph{have} been added in quadrature with 
+the formal errors; the quoted errors in our labels already incorporate
+these minimum errors.
 
 
-We treated the stacked spectra as normal survey stars.  We inferred labels
-using all models and joined the results as per Section \ref{sec:joining-the-models}.  The labels inferred from the stacked spectra served as the basis
-of comparison for all individual visits to that object.  Figure 
-\ref{fig:formal-errors-comparison} shows the difference in labels 
-between the comparison spectrum and a repeat visit, normalized by their 
-formal errors summed in quadrature (e.g., 
-$\Delta\logg/\sqrt{\sigma_{\logg,stacked}^2 + \sigma_{\logg,visit}^2}$).
-If our measurements were unbiased by S/N and the formal errors were 
-representative, these values should be normally distributed with a zero 
-mean and unit variance.
-\stub{Are they? (Probably not!). How much should we inflate our formal errors, and should this be as a function of S/N? Note that in all Figures and tables,
-we show these inflated errors only, as we gauge them to be more representative.}
+\subsubsection{Precision as a function of S/N ratio}
+\label{sec:precision-wrt-snr}
 
-\stub{In Figure \ref{fig:repeat-visits} we look at the difference as a function of SNR}
+
+We also used the repeat observations to build intuition for the label
+precision that was achievable as a function of S/N ratio.  Specifically
+we stacked all spectra for a given star by summing the fluxes weighted
+by the inverse variances, then treated the stacked spectra as a normal
+survey star.  We inferred labels for the stacked spectra using all models,
+and derived a joint estimate as per Section~\ref{sec:joining-the-models}.
+The labels we inferred from the stacked spectrum serve as a basis of
+comparison for the labels we derived from the individual visit spectra,
+which are of lower S/N ratios.
+
+
+In Figure \ref{fig:formal-errors-comparison} we show the RMS difference
+in labels between the stacked spectrum and a single visit, binned by the
+S/N ratio of the individual visit spectrum.  Here we only show stars
+where the \emph{stacked} spectrum had S/N $>100$~pixel$^{-1}$ to ensure
+that our baseline comparisons were in a region where we are dominated
+by systematic uncertainties.  The precision in all labels tends to
+flatten out past S/N $> 40$~pixel$^{-1}$, and the precision at high S/N
+ratios is comparable to the minimum error floors we adopted in Section
+\ref{fig:repeat-observations}.
 
 
 \subsection{External validation}
