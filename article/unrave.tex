@@ -1409,13 +1409,13 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-train-set.pdf}
-\caption{Effective temperature $\teff$ and surface gravity $\logg$ for all stars in the training sets. Stars are colored by their metallicity [Fe/H], and the three panels show stars in the joint model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (middle panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}).\label{fig:training-set-hrd}}
+\caption{Effective temperature $\teff$ and surface gravity $\logg$ for all stars in the training sets. Stars are colored by their metallicity [Fe/H], and the three panels show stars in the simplest model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (middle panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}).\label{fig:training-set-hrd}}
 \end{figure}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/test-set-density.pdf}
-\caption{The logarithmic density of effective temperature $\teff$ and surface gravity $\logg$ for all \Nspectra\ \rave\ spectra, as derived using the joint model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (center panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}). These panels demonstrate how a single quadratic model is insufficient for all \rave\ stars (left panel), and illustrate some of the systematic artefacts that can result from testing on stars outside of the training set (center and right panel).  These panels do not represent our final results, which are shown in Figure~\ref{fig:test-set-hrd}.\label{fig:test-set-density}}
+\caption{The logarithmic density of effective temperature $\teff$ and surface gravity $\logg$ for all \Nspectra\ \rave\ spectra, as derived using the simplest model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (center panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}). These panels demonstrate how a single quadratic model is insufficient for all \rave\ stars (left panel), and illustrate some of the systematic artefacts that can result from testing on stars outside of the training set (center and right panel).  These panels do not represent our final results, which are shown in Figure~\ref{fig:test-set-hrd}.\label{fig:test-set-density}}
 \end{figure*}
 
 
@@ -1429,7 +1429,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \begin{figure}[p]
 \center
 \includegraphics[width=0.5\textwidth]{figures/joint-model-differences.pdf}
-\caption{The normalized differences in effective temperature $\teff$ and surface gravity $\logg$ between the main-sequence model and the joint model (top panel), and the giant model and the joint model (bottom panel).  The density scaling is logarithmic, and the differences in $\teff$ and $\logg$ are scaled to make them approximately isotropic (see text for details).  The peak at $(0, 0)$ represents good agreement between the joint model and comparison model, whereas the over-densities elsewhere are a consequence of testing the model on stars very different to the training set (e.g., dwarf stars tested on a model trained with only giant stars).\label{fig:joint-model-differences}}
+\caption{The normalized differences in effective temperature $\teff$ and surface gravity $\logg$ between the main-sequence model and the simplest model (top panel), and the giant model and the simplest model (bottom panel).  The density scaling is logarithmic, and the differences in $\teff$ and $\logg$ are scaled to make them approximately isotropic (see text for details).  The peak at $(0, 0)$ represents good agreement between the simplest model and comparison model, whereas the over-densities elsewhere are a consequence of testing the model on stars very different to the training set (e.g., dwarf stars tested on a model trained with only giant stars).\label{fig:joint-model-differences}}
 \end{figure}
 
 
@@ -1442,7 +1442,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-test-set.pdf}
-\caption{The effective temperature $\teff$ and surface gravity $\logg$ for \rave\ stars after combining labels from the main-sequence and giant star models.  Only results with $\chi_{r}^2 < 3$ and S/N ratios greater than the quoted limit in each panel are shown.  The top three panels show logarithmic density, and bins in the bottom three panels are colored by the median metallicity in each bin.\label{fig:test-set-hrd}}
+\caption{The effective temperature $\teff$ and surface gravity $\logg$ for \rave\ stars after combining labels from the main-sequence and giant star models.  Only results meeting our quality constraints are shown (see Section~\ref{sec:discussion}). The top three panels show logarithmic density, and bins in the bottom three panels are colored by the median metallicity in each bin.\label{fig:test-set-hrd}}
 \end{figure}
 
 
@@ -1469,25 +1469,25 @@ precision flattens out at S/N $\gtrsim 40$~pixel$^{-1}$, where our results becom
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/gold-standard-hrd.pdf}
-\caption{Hertsprung-Russell diagrams of stars in common between this work and that of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  Stars are colored by the metallicity of each study. Circles indicate literature markers in the first three panels, and the linked triangles indicate \project{unRAVE} parameters for the same object. This figure illustrates the good overall agreement in the shape of the turnoff and sub-giant branch, yet also demonstrates how some literature metal-poor ($[{\rm Fe/H}] \lesssim -1$) dwarfs near the turn-off appear as metal-poor sub-giants in \project{unRAVE}.\label{fig:gold-standard-hrd}}
+\caption{Hertsprung-Russell diagrams of stars in common between this work and that of \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}.  Stars are colored by the metallicity of each study. Circles indicate literature markers in the first three panels, and the linked triangles indicate \project{unRAVE} parameters for the same object. This figure illustrates the good qualitative agreement in the shape of the turnoff and sub-giant branch.\label{fig:gold-standard-hrd}}
 \end{figure*}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/gold-standard-comparison.pdf}
-\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparisons for stars in common between this work and `gold standard' studies that use high-resolution, high S/N spectra and \hipparcos\ parallaxes where available: \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  \label{fig:gold-standard-comparison}}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparisons for stars in common between this work and `gold standard' studies that use high-resolution, high S/N spectra and \hipparcos\ parallaxes where available: \citet{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005}. Stars are colored by the S/N of the \rave\ spectra. \label{fig:gold-standard-comparison}}
 \end{figure*}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/ges-comparison.pdf}
-\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth internal data release from the \ges\ survey, and this work. The number of stars in each panel are shown, as well as the bias and RMS deviation in each label. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.  Most of the \ges/\rave\ overlap stars have relatively low S/N ratios in \rave, near $\approx 30$~pixel$^{-1}$.\label{fig:ges-stellar-parameters}}
+\caption{Stellar parameter ($\teff$, $\logg$, [Fe/H]) comparison between the fourth internal data release from the \ges\ survey, and this work. The number of stars in each panel are shown, as well as the bias and RMS deviation in each label. Stars are colored by the S/N of the \rave\ spectra.  Most of the \ges/\rave\ overlap stars have relatively low S/N ratios in \rave, near $\approx 30$~pixel$^{-1}$.\label{fig:ges-stellar-parameters}}
 \end{figure*}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/ges-abundances.pdf}
-\caption{Detailed chemical abundances in the fourth internal data release from the \ges\ survey compared to this work.  The number of stars shown in each panel is indicated, and the bias and RMS deviations are shown. Stars are colored by the S/N of the \rave\ spectra, and only stars with $\chi_r^2 < 3$ and S/N $> 10$ are shown.\label{fig:ges-abundances}}
+\caption{Detailed chemical abundances in the fourth internal data release from the \ges\ survey compared to this work.  The number of stars shown in each panel is indicated, and the bias and RMS deviations are shown. Stars are colored by the S/N of the \rave\ spectra.\label{fig:ges-abundances}}
 \end{figure*}
 
 
@@ -1500,7 +1500,7 @@ precision flattens out at S/N $\gtrsim 40$~pixel$^{-1}$, where our results becom
 \begin{figure*}[p]
 \center
 \includegraphics[height=\textheight]{figures/globular-clusters.pdf}
-\caption{Effective temperature $\teff$ and surface gravity $\logg$ for globular cluster members identified by \citet{Kunder_2014,Anguiano_2015}.  Left-hand panels indicate results from the fourth \rave\ data release \citep{Kordopatis_2013}, and the right-hand panels show results from this work. A representative isochrone is shown for each cluster \citep{Bressan_2012}.\label{fig:globular-cluster-HRD}}
+\caption{Effective temperature $\teff$ and surface gravity $\logg$ for globular cluster members identified by \citet{Kunder_2014,Anguiano_2015}.  Left-hand panels indicate results from the fourth \rave\ data release \citep{Kordopatis_2013}, and the right-hand panels show results from this work.  A representative isochrone is shown for each cluster \citep{Bressan_2012}.\label{fig:globular-cluster-HRD}}
 \end{figure*}
 
 
@@ -1511,13 +1511,10 @@ precision flattens out at S/N $\gtrsim 40$~pixel$^{-1}$, where our results becom
 \end{figure*}
 
 
-
-
-
 \begin{figure}[p]
 \center
 \includegraphics[width=0.65\textwidth]{figures/gce.pdf}
-\caption{Detailed chemical abundances ([X/Fe]) for giant stars in \unrave\ with respect to [Fe/H], showing the Galactic chemical evolution derived for each element. Note that the y-axis limits vary for each panel, however for clarity we show the scaled-solar position by dashed lines, and have common tick mark spacing on the y-axis for all panels. Only stars with S/N $> 10$ and $\chi_r^2 < 3$ are shown.\label{fig:gce}}
+\caption{Detailed chemical abundances ([X/Fe]) for giant stars in \unrave\ with respect to [Fe/H], showing the Galactic chemical evolution derived for each element. Note that the y-axis limits vary for each panel, however for clarity we show the scaled-solar position by dashed lines, and have common tick mark spacing on the y-axis for all panels. Only stars meeting our quality constraints are shown (see Section \ref{sec:discussion}).\label{fig:gce}}
 \end{figure}
 
 
