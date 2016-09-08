@@ -794,7 +794,7 @@ is added in quadrature to every observation such that for $\logg$,
 We increased the minimum label error until the distribution of $\eta$ 
 values for a given label approximately reached unity.  The minimum error
 values for each label are shown with the distribution of (new) $\eta$
-values in Figure \ref{fig:pairwise-metrics}.  These minimum values form
+values in Figure \ref{fig:pairwise-comparison}.  These minimum values form
 part of our error model, and \emph{have} been added in quadrature with 
 the formal errors; the quoted errors in our labels already incorporate
 these minimum errors.
@@ -815,7 +815,7 @@ comparison for the labels we derived from the individual visit spectra,
 which are of lower S/N ratios.
 
 
-In Figure \ref{fig:formal-errors-comparison} we show the RMS difference
+In Figure \ref{fig:repeat-visits} we show the RMS difference
 in labels between the stacked spectrum and a single visit, binned by the
 S/N ratio of the individual visit spectrum.  Here we only show stars
 where the \emph{stacked} spectrum had S/N $>100$~pixel$^{-1}$ to ensure
@@ -823,7 +823,9 @@ that our baseline comparisons were in a region where we are dominated
 by systematic uncertainties.  The precision in all labels tends to
 flatten out past S/N $> 40$~pixel$^{-1}$, and the precision at high S/N
 ratios is comparable to the minimum error floors we adopted in Section
-\ref{fig:repeat-observations}.
+\ref{sec:repeat-observations}.  The median S/N of \rave\ spectra is
+50~pixel$^{-1}$, at which point our abundance precision is $\approx0.1$~dex,
+varying a few tenths of a dex between elements.
 
 
 \subsection{External validation}
@@ -1450,7 +1452,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 
 \begin{figure*}[p]
-\caption{Distribution of differences in label estimates from multiple visits, divided by their formal errors summed in quadrature.  If our measurements were unbiased and the formal errors were representative, these distribution should be normally distributed with zero mean and unit variance.\label{fig:formal-errors-comparison}}
+\caption{Distribution of differences in label estimates from multiple visits, divided by the quadrature sum of their formal errors, and a minimum error value for each observation.  If our measurements were unbiased and our errors were representative, no minimum error floor would be required and this distribution would by normally-distributed with zero mean and unity variance. 
+We increased the error floor for a given label until the distribution variance approximately reached unity. The error floors are given for each label.\label{fig:pairwise-comparison}}
 \end{figure*}
 
 
