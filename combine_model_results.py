@@ -19,7 +19,7 @@ RESULTS_PATH = ""
 
 ms_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v43.fits.gz"))
 giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v42.fits.gz"))
-joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v44.fits.gz"))
+joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v45.fits.gz"))
 
 
 for t in (ms_results, giant_results, joint_results):
@@ -206,7 +206,7 @@ axes[1].hexbin(x2, y2, gridsize=100, extent=(-3, +3, -3, +3), norm=LogNorm(), li
 
 
 ms_distance = np.sqrt(x**2 + y**2)
-giant_distance = np.sqrt(x2**2 + y2**2 + z2**2)
+giant_distance = np.sqrt(x2**2 + y2**2)
 
 
 # Weight by relative distance, or just take the closest of the two?
@@ -393,11 +393,13 @@ for label_name in abundance_label_names:
     combined_table["E_{}".format(label_name)][metal_poor] = np.nan
     
 
+
+"""
 # Make a figure
 ok = (combined_table["SNR"] >= 10) * (combined_table["R_CHI_SQ"] < 3)
 fig, ax = plt.subplots()
 hexbin = ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], 
-    C=combined_table["Teff_SPARV"][ok], reduce_C_function=np.nanmax,
+    C=combined_tpwable["Teff_SPARV"][ok], reduce_C_function=np.nanmax,
     gridsize=50, vmin=4000, vmax=10000, extent=(3500, 7500, 0, 5.5),
     cmap="plasma",)
 
@@ -413,7 +415,7 @@ cbar.set_label(r"$T_{{\rm eff},SPARV}$ $[{\rm K}]$")
 fig.tight_layout()
 fig.savefig("article/figures/hot-stars.pdf", dpi=300)
 fig.savefig("article/figures/hot-stars.png")
-
+"""
 
 # Remove the SPARV temperature.
 del combined_table["Teff_SPARV"]
@@ -424,7 +426,7 @@ del combined_table["Teff_SPARV"]
 #    combined_table[column][hot] = np.nan
 #    combined_table["E_{}".format(column)] = np.nan
 
-combined_table.write("stacked-spectra-v0.95.fits.gz", overwrite=True)
+combined_table.write("unrave-v0.96.fits.gz", overwrite=True)
 
 
 
@@ -436,6 +438,7 @@ ax.hexbin(combined_table["TEFF"][ok], combined_table["LOGG"][ok], gridsize=N,
     extent=(3000, 7500, 0, 5.5),
     cmap="Blues", norm=LogNorm(), edgecolor="#ffffff", linewidths=0.0)
 
+raise a
 
 """
 # Plot log(density) of the three models.

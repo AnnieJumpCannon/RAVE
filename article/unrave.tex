@@ -707,32 +707,18 @@ objects where the simple model and the comparison model both report similar labe
 The artefacts seen in the Hertzsprung-Russell diagrams in Figure \ref{fig:test-set-density} 
 are also present in Figure \ref{fig:joint-model-differences} as over-densities far away
 from the central peak.  Therefore, we can adopt the scaled distance in labels 
-$\teff$ and $\logg$ from the joint model to the main-sequence model $d_{ms}$,
+$\teff$ and $\logg$ from the simplest model to the main-sequence model $d_{ms}$,
 \begin{eqnarray}
-	d_{ms} & = & \left(\frac{T_{{\rm eff},ms} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},ms}}}\right)^2 + \left(\frac{\log{g}_{ms} - \log{g}_{joint}}{\delta_{\log{g},ms}}\right)^2 \quad .
+	d_{ms} & = & \left(\frac{T_{{\rm eff},ms} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},ms}}}\right)^2 + \left(\frac{\log{g}_{ms} - \log{g}_{joint}}{\delta_{\log{g},ms}}\right)^2 \quad ,
 \end{eqnarray}
 
-\stub{Warning: The metallicity correction may disappear -- I am trying to fix that}
-However when adopting a similar distance metric for the giant model, we found that the
-giant model and the joint model produced similar label estimates (with low $\chi_r^2$
-values) for metal-poor ($[{\rm Fe/H]} < -1$) dwarf stars near the turn-off.  The similarity
-in estimated labels occurred in $\teff$, $\logg$, \emph{and} [Fe/H], implying that we
-could not use the difference between $[{\rm Fe/H}]_{giant} - [{\rm Fe/H]}]_{joint}$
-as a term that would benefit the main-sequence model.  As a result, our joint estimate 
-for metal-poor dwarf stars that overlap with high-resolution studies
-\citep{Reddy_2003,Reddy_2006,Bensby_2014,Valenti_Fischer_2005},
-would appear as metal-poor giant stars, because the giant star model would have a much
-smaller distance metric than the main-sequence model.  It is reasonable to assert that
-this issue may be complicated by the increased complexity, or flexibility, of the giant
-star model relative to the main-sequence model.  In any case, we found that by empirically
-penalizing the giant model distance metric by absolute metallicity,
+\noindent{}and the scaled distance from the simplest model to the giant model $d_{giant}$,
 \begin{eqnarray}
-	d_{giant} & = & \left(\frac{T_{{\rm eff},giant} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},giant}}}\right)^2 + \left(\frac{\log{g}_{giant} - \log{g}_{joint}}{\delta_{\log{g},giant}}\right)^2  + \lvert[{\rm Fe/H}]_{joint}\rvert  \quad ,
+	d_{giant} & = & \left(\frac{T_{{\rm eff},giant} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},giant}}}\right)^2 + \left(\frac{\log{g}_{giant} - \log{g}_{joint}}{\delta_{\log{g},giant}}\right)^2  \quad ,
+\label{eq:d_giant}
 \end{eqnarray}
 
-\noindent{}the weighting of dwarfs was no longer a function of joint metallicity, and this
-issue was resolved without introducing new artefacts. Using these distance metrics we 
-then derived the weights,
+\noindent{}to derive the weights,
 \begin{eqnarray}
 	w_{ms} = \frac{1}{{d_{ms}}^2} & \text{and} & w_{giant} = \frac{1}{{d_{giant}}^2} \quad ,
 \end{eqnarray}
@@ -757,9 +743,9 @@ $w_{ms} < 0.05$.
 The weighted $\teff$ and $\logg$ values for stars meeting different
 S/N constraints are shown in Figure \ref{fig:test-set-hrd}, both in logarithmic density
 and mean metallicity.  The artefacts from individual models are no longer 
-apparent, and the rich structure of the Hertzsprung-Russell is visible.  Despite
-this, there are a number of caveats introduced by the choices we have made to
-combine estimates from multiple models. We discuss these issues in detail in
+apparent, and stars across the full Hertzsprung-Russell diagram are visible.
+However, there are a number of caveats introduced by the choices we have made to
+combine estimates from multiple models.  We discuss these issues in detail in
 Section \ref{sec:discussion}.
 
 
@@ -783,7 +769,11 @@ constructed to be quasi-logarithmic such that spectroscopic binaries could
 be optimally identified. Most of the stars that were observed multiple times
 were only observed twice, with thirteen visits being the maximum number 
 of observations for any target.  These repeat observations allow us to 
-quantify the level of (in)correctness in our formal errors.  For every star
+quantify the level of (in)correctness in our formal errors.  
+
+
+
+For every star
 with multiple visits we constructed a high S/N stacked spectrum for that
 star, weighted by the inverse variances in the individual visit spectra.
 
