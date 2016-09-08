@@ -775,25 +775,26 @@ quantify the level of (in)correctness in our formal errors.
 
 We calculated all possible pair-wise differences between the labels we
 derived from multiple visits.  If \rave\ observed a star $H$ times, there 
-are $H!/2(H-2)!$ possible $a$-$b$ pair-wise combinations where we can calculate 
+are $H!/2(H-2)!$ possible $a$-to-$b$ pair-wise combinations where we can calculate 
 the difference between the derived label (for example, $\logg$) over the
-quadrature sum of their formal uncertainties,
-\begin{eqnarray}
-\eta_{\logg} & = & \frac{\logg_a - \logg_b}{\sqrt{\sigma_{\logg,a}^2 + \sigma_{\logg,b}^2}} \quad .
-\end{eqnarray}
-
-If our derived labels and formal errors were correct, the distribution of
-$\eta$ values would represent a normal distribution with zero mean and
-unity variance.  However, our formal errors are likely to be under-estimated,
+quadrature sum of their formal uncertainties $(\logg_a - \logg_b)/\sqrt{{\sigma_{\logg,a}}^2 + {\sigma_{\logg,b}}^2}$.  If our derived labels and formal errors were 
+correct, the distribution of these pair-wise comparisons would be
+well-represented by a Gaussian distribution with zero mean and variance
+of unity.  However, our formal errors are likely to be under-estimated,
 and therefore we introduce a systematic error floor for each label, which
-is added in quadrature to every observation such that for $\logg$,
+is added in quadrature to every observation such that (for example, $\logg$),
 \begin{eqnarray}
 	\eta_{\logg} & = & \frac{\logg_a - \logg_b}{\sqrt{(\sigma_{\logg,a} + \sigma_{\logg,floor})^2 + (\sigma_{\logg,b} + \sigma_{\logg,floor})^2}} \quad .
 \end{eqnarray}
 
+
+%\begin{eqnarray}
+%\eta_{\logg} & = & \frac{\logg_a - \logg_b}{\sqrt{{\sigma_{\logg,a}}^2 + {\sigma_{\logg,b}}^2}} \quad .
+%\end{eqnarray}
+
 We increased the minimum label error until the distribution of $\eta$ 
 values for a given label approximately reached unity.  The minimum error
-values for each label are shown with the distribution of (new) $\eta$
+values for each label are shown with the distribution of $\eta$
 values in Figure \ref{fig:pairwise-comparison}.  These minimum values form
 part of our error model, and \emph{have} been added in quadrature with 
 the formal errors; the quoted errors in our labels already incorporate
@@ -804,15 +805,16 @@ these minimum errors.
 \label{sec:precision-wrt-snr}
 
 
-We also used the repeat observations to build intuition for the label
-precision that was achievable as a function of S/N ratio.  Specifically
-we stacked all spectra for a given star by summing the fluxes weighted
-by the inverse variances, then treated the stacked spectra as a normal
-survey star.  We inferred labels for the stacked spectra using all models,
-and derived a joint estimate as per Section~\ref{sec:joining-the-models}.
-The labels we inferred from the stacked spectrum serve as a basis of
-comparison for the labels we derived from the individual visit spectra,
-which are of lower S/N ratios.
+We further used the repeat observations in \rave\ to build intuition for
+the label precision that was achievable as a function of S/N ratio.  
+Specifically we stacked all spectra for a given star by summing the 
+fluxes weighted by the inverse variances, then treated the stacked spectra
+as a normal survey star.  We inferred labels for the stacked spectra 
+using all three models, and derived a joint estimate as per Section 
+\ref{sec:joining-the-models}.  The labels we inferred from the stacked 
+spectrum then served as a basis of comparison for the labels we derived 
+from the individual visit spectra of the same star, which are of lower 
+S/N ratios.
 
 
 In Figure \ref{fig:repeat-visits} we show the RMS difference
@@ -1452,6 +1454,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 
 \begin{figure*}[p]
+\includegraphics[width=\textwidth]{figures/pairwise-metrics.pdf}
 \caption{Distribution of differences in label estimates from multiple visits, divided by the quadrature sum of their formal errors, and a minimum error value for each observation.  If our measurements were unbiased and our errors were representative, no minimum error floor would be required and this distribution would by normally-distributed with zero mean and unity variance. 
 We increased the error floor for a given label until the distribution variance approximately reached unity. The error floors are given for each label.\label{fig:pairwise-comparison}}
 \end{figure*}
