@@ -47,8 +47,7 @@ latex_labels = {
 
 # Exclude ones we think are bad.
 #ok = data_table["OK"] 
-ok = (data_table["r_chi_sq"] < 3) * (data_table["snr"] > 15)
-
+ok = data_table["QC"]
 #ok *= np.isfinite(data_table["TEFF_1"] * data_table["TEFF_2"] * data_table["LOGG_1"] * data_table["LOGG_2"] * data_table["FE_H"] * data_table["FEH"])
 
 data_table = data_table[ok]
@@ -72,8 +71,11 @@ fig.subplots_adjust(
 for i, (ax, label_name) in enumerate(zip(axes, label_names)):
 
     y = data_table[label_name]
-    #xerr
+    xerr = data_table["E_{}".format(label_name)]
+    xerr[xerr == 0] = np.nan
+
     x = data_table[ges_label_names[label_name]]
+    yerr = data_table["E_{}".format(ges_label_names[label_name])]
     # yerr
     c = data_table["snr"]
 
@@ -81,6 +83,7 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
 
     #scat = ax.scatter(x[uves], y[uves], c=data_table["snr"][uves], s=75, marker="s", vmin=np.nanmin(data_table["snr"]), vmax=np.nanmax(data_table["snr"]), cmap="plasma")
     #ax.scatter(x[~uves], y[~uves], c=data_table["snr"][~uves], s=75, marker="o", vmin=np.nanmin(data_table["snr"]), vmax=np.nanmax(data_table["snr"]), cmap="plasma") 
+    ax.errorbar(x, y, xerr=xerr, yerr=yerr, fmt=None, ecolor="#666666", zorder=-1)
     scat = ax.scatter(x, y, c=data_table["snr"], s=75, cmap="plasma")
 
     limits = label_limits[label_name]
