@@ -26,55 +26,14 @@ def get_kordopatis_comparisons():
 
 def get_cannon_dr1(filename=None):
 
-    #filename = "unrave-v0.2-16b_23giant.fits.gz"
-    #filename = "unrave-v0.3-27_23giant.fits.gz"
-    #filename = "unrave-v0.4-29_23giant.fits.gz"
-    #filename = "rave-tgas-v31.fits.gz"
-    #filename = "rave-tgas-v29.fits.gz"
-    #filename = "rave-tgas-v37.fits.gz"
-    #filename = filename or "unrave-v0.7-37_36.fits.gz"
-    filename = filename or "unrave-v0.9.fits.gz"
+    filename = filename or os.path.join(DATA_PATH, "unrave-v0.95.fits.gz")
 
     rave_cannon_dr1 = Table.read(os.path.join(DATA_PATH, filename))
 
-    if "Name" not in rave_cannon_dr1.dtype.names:
-        rave_cannon_dr1["Name"] = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-")[0] for each in rave_cannon_dr1["FILENAME"]]
-
-    
-    if filename in ("rave-tgas-v37.fits.gz", "rave-tgas-v31.fits.gz"):
-        rave_cannon_dr1["TEFF"] = rave_cannon_dr1["EPIC_TEFF"]
-        rave_cannon_dr1["LOGG"] = rave_cannon_dr1["EPIC_LOGG"]
-        rave_cannon_dr1["FE_H"] = rave_cannon_dr1["EPIC_FEH"]
-
-        from astropy.table import join
-        rave_cannon_dr1 = join(rave_cannon_dr1, get_rave_kordopatis_dr4(), keys=("Name", ))
-
-
-    if "snr" not in rave_cannon_dr1.dtype.names and "snr_ms" in rave_cannon_dr1.dtype.names:
-        rave_cannon_dr1["snr"] = rave_cannon_dr1["snr_ms"]
-
-    if "snr" not in rave_cannon_dr1.dtype.names and "SNRK" in rave_cannon_dr1.dtype.names:
-        rave_cannon_dr1["snr"] = rave_cannon_dr1["SNRK"]
-
-    if "r_chi_sq" not in rave_cannon_dr1.dtype.names and "R_CHI_SQ" in rave_cannon_dr1.dtype.names:
-        rave_cannon_dr1["r_chi_sq"] = rave_cannon_dr1["R_CHI_SQ"]
-
-    #rave_cannon_dr1["TEFF"] = rave_cannon_dr1["EPIC_TEFF"]
-    #rave_cannon_dr1["LOGG"] = rave_cannon_dr1["EPIC_LOGG"]
-    #rave_cannon_dr1["FE_H"] = rave_cannon_dr1["EPIC_FEH"]
-    
-    print("LOADED FROM FILENAME {}".format(filename))
-    if "OK" not in rave_cannon_dr1.dtype.names:
-        try:
-            rave_cannon_dr1["OK"] = (rave_cannon_dr1["SNRK"] > 10) * (rave_cannon_dr1["R_CHI_SQ"] < 3)
-        except KeyError:
-            print("No 'OK' subset")
-
-        else:
-            print("Setting OK as stars with S/N > 50 and R_CHI_SQ < 3")
-
-    else:
-        print("Using pre-defined subset of 'OK'")
+    # Just so I don't have to rewrite a bunch of code.
+    rave_cannon_dr1['Name'] = rave_cannon_dr1["RAVE_OBS_ID"]
+    rave_cannon_dr1['snr'] = rave_cannon_dr1["SNR"]
+    rave_cannon_dr1['r_chi_sq'] = rave_cannon_dr1["R_CHI_SQ"]
 
     return rave_cannon_dr1
 
