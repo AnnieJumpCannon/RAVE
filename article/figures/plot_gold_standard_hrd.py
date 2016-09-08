@@ -41,7 +41,8 @@ except NameError: # Do you know who I am? That's Jeff Vader!
     rave_cannon_dr1 = rave_cannon_dr1[OK].filled()
     """
     
-    ok = (rave_cannon_dr1["snr"] > 10) * (rave_cannon_dr1["r_chi_sq"] < 3)
+    #ok = (rave_cannon_dr1["snr"] > 10) * (rave_cannon_dr1["r_chi_sq"] < 3)
+    ok = rave_cannon_dr1["QC"]
     rave_cannon_dr1 = rave_cannon_dr1[ok].filled()
 
     bensby_2014 = join(rave_cannon_dr1, get_literature_bensby(), keys=("Name", ))
@@ -122,7 +123,7 @@ comparison_labels = (
     r"${\rm Bensby}$ ${\rm et}$ ${\rm al.}$ $(2014)$",
     r"${\rm Reddy}$ ${\rm et}$ ${\rm al.}$ $(2003)$", 
     r"${\rm Reddy}$ ${\rm et}$ ${\rm al.}$ $(2006)$", 
-    r"${\rm Valenti}$ ${\rm \&}$ ${\rm Fischer}$ $(2005)$") 
+    r"${\rm Valenti}$ ${\rm +}$ ${\rm Fischer}$ $(2005)$") 
 
 label_names = ("TEFF", "LOGG", "FE_H")
 N = len(label_names)
@@ -152,7 +153,7 @@ def latexify(label_name, axis):
 comparison_labels = (
     r"${\rm Bensby}$ ${\rm et}$ ${\rm al.}$ $(2014)$",
     r"${\rm Reddy}$ ${\rm et}$ ${\rm al.}$ $(2003,2006)$", 
-    r"${\rm Valenti}$ ${\rm \&}$ ${\rm Fischer}$ $(2005)$",
+    r"${\rm Valenti}$ ${\rm +}$ ${\rm Fischer}$ $(2005)$",
     #r"${\rm Kordopatis}$ ${\rm et}$ ${\rm al.}$ $(2013{\rm ;}$ ${\rm RAVE}$ ${\rm DR4})$",
     r"${\rm unRAVE}$"
     )
@@ -252,7 +253,7 @@ for ax, label in zip(axes, comparison_labels):
     #ax.set_xlim(xlim.max(), xlim.min())
     #ax.set_ylim(ylim.max(), ylim.min())
     
-    ax.set_xlim(7000, 4250)
+    ax.set_xlim(7250, 4250)
     ax.set_ylim(5, 3)
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))

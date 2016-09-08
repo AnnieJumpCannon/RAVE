@@ -41,7 +41,7 @@ except NameError: # Do you know who I am? That's Jeff Vader!
     rave_cannon_dr1 = rave_cannon_dr1[OK].filled()
     """
 
-    ok = (rave_cannon_dr1["snr"] > 10) * (rave_cannon_dr1["r_chi_sq"] < 3)
+    ok = rave_cannon_dr1["QC"]
     rave_cannon_dr1 = rave_cannon_dr1[ok].filled()
 
     bensby_2014 = join(rave_cannon_dr1, get_literature_bensby(), keys=("Name", ))
@@ -120,7 +120,7 @@ comparison_labels = (
     r"${\rm Bensby}$ ${\rm et}$ ${\rm al.}$ $(2014)$",
     r"${\rm Reddy}$ ${\rm et}$ ${\rm al.}$ $(2003)$", 
     r"${\rm Reddy}$ ${\rm et}$ ${\rm al.}$ $(2006)$", 
-    r"${\rm Valenti}$ ${\rm \&}$ ${\rm Fischer}$ $(2005)$") 
+    r"${\rm Valenti}$ ${\rm +}$ ${\rm Fischer}$ $(2005)$") 
 
 label_names = ("TEFF", "LOGG", "FE_H")
 N = len(label_names)
@@ -158,7 +158,7 @@ ylims = {
     "FE_H": 1
 }
 limits = {
-    "TEFF": (4000, 7000),
+    "TEFF": (3500, 7500),
     "LOGG": (2.5, 5.5),
     "FE_H": (-2.5, 0.5)
 }
@@ -227,8 +227,8 @@ for ax, label_name in zip(axes, list(label_names) + list(label_names)):
         ax.set_ylabel(latexify(label_name, "y"))
         
 
-        ax.xaxis.set_major_locator(MaxNLocator(5))
-        ax.yaxis.set_major_locator(MaxNLocator(5))
+        ax.xaxis.set_major_locator(MaxNLocator(6))
+        ax.yaxis.set_major_locator(MaxNLocator(6))
 
 
 fig.legend(handles, comparison_labels, loc="upper center", 

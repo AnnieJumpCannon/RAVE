@@ -22,7 +22,9 @@ except NameError:
 else:
     print("Warning: Using pre-loaded data!")
 
-QC = (combined_table["snr"] > 10) * (combined_table["r_chi_sq"] < 3) * (combined_table["QK"] == 0)
+QC =  (combined_table["QC"]) \
+    * (combined_table["TeffK"] > 4000) * (combined_table["c1_1"] == "n") * (combined_table["c2_1"] == "n") \
+    * (combined_table["c3_1"] == "n") * (combined_table["e_HRV"] < 8)
 
 N_bins = 50
 
@@ -33,8 +35,8 @@ all_columns = [
     ("FE_H", "c_M_H_K"),
 ]
 label_limits = {
-    "TEFF": (3000, 8000),
-    "LOGG": (0, 5),
+    "TEFF": (3500, 7500),
+    "LOGG": (0, 5.5),
     "FE_H": (-2.5, 0.5)
 }
 latex_labels = (r"$T_{\rm eff}$", r"$\log{g}$", r"$[{\rm Fe/H}]$")
@@ -69,6 +71,7 @@ for i, (ax, columns, latex_label) in enumerate(zip(axes, all_columns, latex_labe
     ax.hist2d(y[finite], x[finite], bins=(bins, bins), norm=LogNorm(),
         cmap=cmap)
 
+    ax.plot(limits, limits, c="#CCCCCC", linestyle=":")
     # Common limits, labels.
     ax.set_xlim(limits)
     ax.set_ylim(limits)
@@ -80,6 +83,9 @@ for i, (ax, columns, latex_label) in enumerate(zip(axes, all_columns, latex_labe
     diff = y - x
     print(latex_labels, np.nanmean(diff), np.nanstd(diff))
 
+axes[0].set_xticks([4000, 5000, 6000, 7000])
+axes[0].set_yticks([4000, 5000, 6000, 7000])
+axes[-1].set_xlabel(" ".join([r"$[{\rm M/H}]$", r"$({\rm RAVE}$ ${\rm DR4})$"]))
 fig.tight_layout()
 
 fig.savefig("dr4-comparison.pdf", dpi=300)
