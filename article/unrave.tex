@@ -1062,14 +1062,13 @@ with the isochrone appears present in the fourth \rave\ data release \citet{Kord
 \label{sec:discussion}
 
 
-We have derived atmospheric parameters ($\teff$, $\logg$, [Fe/H]) for all \rave\ 
-spectra, as well as detailed abundances for red giant branch stars, based on an
-independent re-analysis of \rave\ spectra.  Our catalog provides an excellent
-complement to the current \rave\ data release \citep{Kunder_2016}.  
-When combined with the \tgas\ sample, these results may amount to a powerful
-compendium for chemo-dynamic studies of the Milky Way.  However, our analysis has caveats.
-Inferences based on these results should recognize those caveats, and acknowledge that 
-these results are subject to our explicit assumptions, some of which are provably
+We have performed an independent re-analysis of \Nspectra\ \rave\ spectra,
+having derived atmospheric parameters ($\teff$, $\logg$, [Fe/H]) for all stars,
+as well as detailed chemical abundances for red giant branch stars.  When 
+combined with the \tgas\ sample, these results amount to a powerful compendium 
+for chemo-dynamic studies of the Milky Way.  However, our analysis has caveats.
+Inferences based on these results should recognize those caveats, and acknowledge 
+that these results are subject to our explicit assumptions, some of which are provably
 incorrect.
 
 
@@ -1079,16 +1078,9 @@ results to use.  The relative weighting we have used does not have any formal
 interpretation as a likelihood or belief (in any sense): it was introduced for
 practical reasons to identify systematic errors and combine results for multiple
 models.  Because the relative weights have no formal interpretation, it is reasonable
-to consider this method is as \emph{ad hoc} as any other approach.  Therefore, the
-relative weighting has no warranty to be (formally) correct, and may introduce 
-inconsistencies or systematic errors rather than
-minimizing them.  Evidence of this is already present in our comparisons to
-`gold standard' works \citep{Bensby_2014,Reddy_2003,Reddy_2006,Valenti_Fischer_2005},
-where metal-poor dwarf stars appear as metal-poor sub-giants in our combined results,
-but have reasonable labels (by any available statistic) as dwarfs in the main-sequence
-model.  Clearly, the relative distance from the joint model to the giant model is 
-slightly favoured (over the main-sequence model) for metal-poor dwarf stars. In this
-sense, our approach towards combining labels from multiple models is sub-optimal.
+to consider this method is as \emph{ad hoc} as any other approach.  The relative 
+weighting has no warranty to be (formally) correct, and may introduce inconsistencies
+or systematic errors rather than minimizing them.  
 
 
 If we only consider the results from individual models, there are a number of cautionary
@@ -1100,40 +1092,39 @@ However, the lack of metal-poor stars in the \apogee/\rave\ overlap sample produ
 a tapering-off in the test set --- where \emph{no} stars had reliably reported metallicities
 below that of the training set --- which forced us to construct a heterogeneous training
 set.  The metal-poor stars included in this sample are from high-resolution studies
-\citep{Fulbright_2010,Ruchti_2011}, but it is unknown if the stellar parameters are
-of high fidelity (e.g., we have limited quality metrics available), and there is no
-guarantee that the stellar parameters \emph{or} abundances are on the same scale as
-\apogee\ \citep[and good reasons to believe they will not be; see][]{Smiljanic_2014}.
+\citep{Fulbright_2010,Ruchti_2011}, but it is not known if the stellar parameters are
+of high fidelity because we have limited quality metrics available.  Moreover, there
+is no guarantee that the stellar parameters \emph{or} abundances are on the same scale
+as \apogee\ \citep[and good reasons to believe they will not be; see][]{Smiljanic_2014}.
 
 
-If the metallicities of metal-poor giant stars are on the same scale as the \apogee\
+If the metallicities of metal-poor giant stars were on the same scale as the \apogee\
 abundances, there is a larger issue in verifying that the main-sequence metallicities
 and giant branch metallicities are on the same scale.  The training set for the
-main-sequence stars includes metallicities from a variety of sources --- including
+main-sequence stars includes metallicities from a variety of sources, including
 \lamost, and the fourth \rave\ data release.  Even on expectation value, there is 
-no straightforward manner to ensure that these two models produce metallicities on
-the same scale.  We see no systematic offset in metallicities of dwarf and giant
-stars that overlap between \rave\ and the \ges\ survey, suggesting that if there is
-a systematic offset, it must be small. Nevertheless, these are only verification checks based on $<1$\% of the
-data, and there is currently insufficient data for us to prove both models are on
-the same abundance scale.
+no straightforward manner to ensure that the main-sequence model and the red giant
+branch model produce metallicities on the same scale.  We see no systematic offset
+in metallicities of dwarf and giant stars that overlap between \rave\ and the \ges\
+survey, suggesting that if there is a systematic offset, it must be small. 
+Nevertheless, these are only verification checks based on $<1$\% of the data, and 
+there is currently insufficient data for us to prove both models are on the same 
+abundance scale.
 
 
 For some of the most metal-poor giant stars in \rave\, we \emph{know} the abundances 
 are not on the same scale as \apogee, because we were forced to adopt abundances for 
-specific elements when they were unavailable.  In that sense, our assumption that the
-training set contains accurate labels is clearly untrue (for \emph{at least} some stars).
-Although we sought to adopt the mean
-level of Galactic chemical enrichment at the overall metallicity, this is not a
+specific elements when they were unavailable.  Although we sought to adopt mean
+level of Galactic chemical enrichment at a given overall metallicity, this is not a
 representative abundance. Even if that is the \emph{mean} enrichment at that Galactic
-metallicity, there is no requirement for zero abundance spread.
-More fundamentally, we are incorrectly assuming that the element \emph{must} be 
-detectable in the photosphere of the star.  There may be no transition that is 
-detectable in that star, even with zero noise, because it is too weak to have any 
-effect on the spectrum.  In the most optimistic case, this can be considered to be
-forcing the model to make use of correlated information between abundances.  In a
-more representative (pessimistic) case, we are simply invoking what all abundances
-should be at low metallicity.
+metallicity, there is no requirement for zero abundance spread.  More fundamentally, 
+we are incorrectly asserting that the element \emph{must} be detectable in the 
+photosphere of the star.  There may be no transition that is detectable in that 
+star, even with zero noise, because it is too weak to have any effect on the 
+spectrum.  In the most optimistic case, this could be considered to be forcing the
+model to make use of correlated information between abundances.  In a more 
+representative (pessimistic) case, we are simply invoking what all abundances should 
+be at low metallicity.
 
 
 This choice is reflected in the abundances of the test set.  While we do recover
@@ -1150,76 +1141,68 @@ the data structure and content).
 
 In Section~\ref{sec:method} we assumed that any fibre- or time-dependent variations
 in the \rave\ spectra are negligible.  This is provably incorrect. Indeed,
-\citet{Kordopatis_2013} note that the effective resolution of \rave\
-spectra varies from $6{,}500 < \mathcal{R} < 8{,}500$, and that the 
-effective resolution is a function of temperature variations, fibre-to-fibre
-variations, and thus position on the CCD \citep{Steinmetz_2006}.
- For this reason we ought to expect our derived stellar
-parameters or abundances to be correlated with the fibre number, or over
-time.  If significant, the trend could produce systematically offset
-stellar abundances solely due to the fibre number.  \citet{Kordopatis_2013}
-conclude that resolution-based effects on the \rave\ stellar parameters
-should be a second-order effect. We have not seen evidence of these 
-resolution-based correlations in our results, however, we have only
-performed cursory (non-exhaustive) experiments to investigate this issue.
+\citet{Kordopatis_2013} note that the effective resolution of \rave\ spectra
+varies from $6{,}500 < \mathcal{R} < 8{,}500$, and that the effective 
+resolution is a function of temperature variations, fibre-to-fibre variations,
+and thus position on the CCD \citep{Steinmetz_2006}. For this reason we ought
+to expect our derived stellar parameters or abundances to be correlated either
+with the fibre number, with the observation date, or both.  If significant, 
+the trend could produce systematically offset stellar abundances solely due to
+the fibre used.  \citet{Kordopatis_2013} conclude that resolution-based effects 
+on the \rave\ stellar parameters should be a second-order effect. We have not 
+seen evidence of these resolution-based correlations in our results, however, 
+we have only performed cursory (non-exhaustive) experiments to investigate 
+this issue.
 
 
-\stub{assumptions that are probably wrong: fringing in high S/N spectra produces issues with the normalization and thus the spectrum. KCF to comment more on this}
-
-
-The fibre fringing is another example of how test spectra that are
-unusual from the training set can be projected as peculiar artefacts in the
+We have shown some potential outcomes when the test set spectra differ 
+significantly from the spectra in the training set.  Test set spectra that is
+`unusual' from the training set can be projected as peculiar artefacts in 
 label space.  In other words, unusual spectra can appear as `clumps' in
-regions of parameter space that we could consider as being normal 
-(e.g., solar-type stars).  We addressed this issue for the main-sequence
-and giant models by using a joint model to calculate relative weights.
-However, spectra that are unusual from the joint model training set can
-still project as systematic artefacts.  
+regions of parameter space that we could consider as being normal (e.g.,
+an over-density of solar-type stars).  We addressed this issue for the main-sequence
+and giant models by using a third model (Section \ref{sec:a-simple-model}) to
+calculate relative weights.  However, spectra that are unusual from the 
+training set used in the simplest model still project as systematic artefacts.  
 
 
-Indeed, there are two known artefacts in our data that are relevant to this discusssion. The
-first is a small over-density at the base of the giant branch, which is
-likely a consequence of joining the 9-label and 3-label models.  The
+Indeed, there are two known artefacts in our data that are relevant to this 
+discussion. The first is a small over-density at the base of the giant branch, 
+which is likely a consequence of joining the 9-label and 3-label models.  The
 second has an astrophysical origin: there are no hot stars ($\teff > 8000$~K)
 present in our training set, yet there are many in the \rave\ survey.
-However, the \rave\ pre-processing pipeline \citep[\texttt{SPARV};][]{Steinmetz_2006,Zwitter_2008} performs
-template matching against grids of cool \emph{and} hot stars, and therefore
-we can use those results to identify hot stars. In Figure \ref{fig:hot-stars} 
+However, the \rave\ pre-processing pipeline 
+\citep[\texttt{SPARV};][]{Steinmetz_2006,Zwitter_2008} performs template 
+matching against grids of cool \emph{and} hot stars, and therefore we can use 
+that information to identify hot stars.  In Figure \ref{fig:hot-stars} 
 we show our derived effective temperatures $\teff$ and surface gravities $\logg$,
 where each hexagonal bin is colored by the \emph{maximum} temperature
-reported by \texttt{SPARV} for any star in that bin.  Hot stars dominate
-at just above the turn-off point in our results. 
+reported by \texttt{SPARV} for any star in that bin.  We show the maximum
+temperature reported by \texttt{SPARV} to demonstrate that hot stars project
+into a single clump in our label space --- near the turn-off --- in a region
+where we may otherwise be deceived into thinking the observed over-density
+is consistent with expectations from astrophysics. 
 
 
-\stub{this following paragraph needs rewording}
-Based on a thorough interrogation of our results, we have adopted two boolean
-columns to signify whether our labels meet specific quality constraints:
-one marked \texttt{QC} to indicate reliable stellar parameters ($\teff$, $\logg$, [Fe/H]), and \texttt{QC\_ABUNDANCE} to indicate reliable chemical abundances.
-For stellar atmospheric parameters to meet our quality constraints, we
-require: $\chi_r^2 < 3$; $S/N >10$~pixel$^{-1}$; and \texttt{TeffS} $< 8000$~K
-in order to remove hot stars that are outside the training set.  We
-specified the quality constraint in chemical abundances to further
-require that the iron abundance $[{\rm Fe/H}] > -1.5$, since this approximately
-corresponds to the point where individual abundances will become undetectable
-in \rave\ spectra, and the individual abundance labels will be driven by our
-constraint to place them on the mean galactic chemical evolution trend.
-These quality constraints should not be taken verbatim: judicious use of
-the morphological classifications \citep{Matijevic_2012} or metadata from
-the pre-processing pipelines is encouraged.
+We have included a boolean flag column in our catalog for quality control,
+to signify whether a result is thought to be reasonable.  Specifically, 
+stars where \texttt{SPARV} indicates a $\teff > 8000$~K do not meet our quality 
+control flag.  For all other stars, we further require $\chi_r^2 < 3$ and
+$S/N >10$~pixel$^{-1}$.  These quality constraints represent the minimum
+acceptable constraints and should not be taken verbatim: judicious use of
+the morphological classifications \citep{Matijevic_2012} or additional 
+metadata from the \rave\ pre-processing pipelines is strongly encouraged.
 
 
 We have presented the largest collection of stellar abundances for stars in the 
-first \gaia\ data release.  In total more than 1.69 million abundances are
-available, with effective temperature $\teff$, surface gravity $\logg$ and 
-metallicity available for \Nstarsqc\ stars.  Despite the caveats and limitations 
-discussed here, our validation experiments and comparisons with high-resolution
-spectroscopic studies suggests that our results have sufficient accuracy and
-precision to be useful for exoplanet host stars studies 
-\citep[c.f.,][]{Valenti_Fischer_2005}, investigations of the Milky Way disk 
-\citep[c.f.,][]{Reddy_2003,Reddy_2006,Bensby_2014}, and a multitude of 
-chemo-dynamic studies.  When combined with positions and 3D velocities from \gaia,
-we are optimistic that the \unrave\ catalog will help advance understanding 
-of the Milky Way's formation and evolution.
+first \gaia\ data release.  In total we derive reliable stellar atmospheric 
+parameters for \Nstarsqc, and report more than 1.69 million abundances.  Despite 
+the caveats and limitations discussed here, our validation experiments and 
+comparisons with high-resolution spectroscopic studies suggests that our results 
+have sufficient accuracy and precision to be useful for chemo-dynamic studies 
+that become imminently feasible only in the era of \gaia\ data.  Indeed, we
+are optimistic that the \unrave\ catalog will advance understanding of the
+Milky Way's formation and evolution.
 
 
 \subsection*{Access the results electronically}
