@@ -5,109 +5,158 @@ Compare the results from stacked spectra to individual visits.
 """
 
 import os
+import cPickle as pickle
 from astropy.table import Table, join
+from matplotlib.ticker import MaxNLocator
 
-DATA_PATH = "/data/gaia-eso/arc/rave-data-files/"
+DATA_PATH = "../../"
 
-stacked_results = Table.read(os.path.join(DATA_PATH, "stacked-spectra-v44.fits.gz"))
-individual_results = Table.read(os.path.join(DATA_PATH, "rave-tgas-v44.fits.gz"))
-stacked_results["RAVEID"] \
-    = [os.path.basename(p).split("-result-")[0] for p in stacked_results["FILENAME"]]
-
-individual_results["RAVE_OBS_ID"] \
-    = [each.split("/")[-2] + "_" + each.split("/")[-1].split(".rvsun.")[0] + "_" + each.split(".rvsun.")[1].split("-")[0] for each in individual_results["FILENAME"]]
+stacked_results = Table.read(os.path.join(DATA_PATH, "stacked-unrave-v0.95.fits.gz"))
+individual_results = Table.read(os.path.join(DATA_PATH, "unrave-v0.95.fits.gz"))
 
 
-# Match the individual results to RAVE DR5.
-dr5_catalog = Table.read(
-    os.path.join(DATA_PATH, "RAVEDR5_PublicCut_20160905.csv.gz"), format="csv")
-individual_results = join(individual_results, dr5_catalog, keys=("RAVE_OBS_ID", ))
+pickled_filename = "individual-visits.pkl"
+label_names = ("TEFF", "LOGG", "FE_H", "O_H", "MG_H", "AL_H", "SI_H", "CA_H", "NI_H")
+
+if not os.path.exists(pickled_filename):
 
 
+    # Match the individual results to RAVE DR5.
+    dr5_catalog = Table.read(
+        os.path.join(DATA_PATH, "RAVEDR5_PublicCut_20160905.csv.gz"), format="csv")
+    individual_results = join(individual_results, dr5_catalog, keys=("RAVE_OBS_ID", ))
 
-label_names = ("TEFF", "LOGG", "FE_H")
+    individual_results = individual_results[individual_results["QC"]]
 
 
-# Get the list of results for the stacked spectra.
-snrs = []
-differences = {}
-for label_name in label_names:
-    differences[label_name] = []
-
-# Metadata
-matches = []
-stacked_snrs = []
-
-for i, rave_id in enumerate(stacked_results["RAVEID"]):
-
-    match = (individual_results["RAVEID"] == rave_id)
-    N = sum(match)
-    print(i, rave_id, N)
-    stacked_snrs.extend([stacked_results["snr"][i]] * N)
-    assert N > 0
-
-    # Store a list of matches, so each entry in snrs 
-    snrs.extend(individual_results["snr"][match])
+    # Get the list of results for the stacked spectra.
+    snrs = []
+    differences = {}
     for label_name in label_names:
-        # Stacked result - individual result
-        differences[label_name].extend(
-            stacked_results[label_name][i] - individual_results[label_name][match])
+        differences[label_name] = []
 
-    matches.extend([N] * N)
-    stacked_snrs.extend([stacked_results["snr"][i]] * N)
+    # Metadata
+    matches = []
+    stacked_snrs = []
 
+    for i, rave_id in enumerate(stacked_results["RAVEID"]):
 
-snrs = np.array(snrs)
-for label_name in label_names:
-    differences[label_name] = np.array(differences[label_name])
+        match = (individual_results["RAVEID"] == rave_id)
+        N = sum(match)
+        print(i, rave_id, N)
+        #assert N > 0
 
-matches = np.array(matches)
-stacked_snrs = np.array(stacked_snrs)
+        if 1 > N:
+            continue
 
-assert snrs.size == matches.size == stacked_snrs.size
+        # Store a list of matches, so each entry in snrs 
+        snrs.extend(individual_results["SNR"][match])
+        for label_name in label_names:
+            # Stacked result - individual result
+            differences[label_name].extend(
+                stacked_results[label_name][i] - individual_results[label_name][match])
 
+        matches.extend([N] * N)
+        stacked_snrs.extend([stacked_results["SNR"][i]] * N)
+        
+
+    snrs = np.array(snrs)
+    for label_name in label_names:
+        differences[label_name] = np.array(differences[label_name])
+
+    matches = np.array(matches)
+    stacked_snrs = np.array(stacked_snrs)
+
+    assert snrs.size == matches.size == stacked_snrs.size
+
+    with open(pickled_filename, "wb") as fp:
+        pickle.dump((snrs, differences, stacked_snrs, matches), fp, -1)
+
+else:
+    with open(pickled_filename, "rb") as fp:
+        snrs, differences, stacked_snrs, matches = pickle.load(fp)
 
 
 # Plot the average RMS in the difference as a function of SNR.
 K = len(label_names)
 
 # Chose the metric to apply in each SNR bin.
-metric = lambda _: np.nanmean(np.abs(_))
+metric = lambda _: np.nanstd(_)
 
-snr_bins = np.linspace(0, 100, 11)
-snr_limits = [min(snr_bins), max(snr_bins)]
-
-
-ok = np.isfinite(snrs) * (snr_limits[1] >= snrs) * (snrs >= snr_limits[0]) \
-    * (matches > 2) * (stacked_snrs >= 100)
+snr_bins = np.arange(0, 101, 10)
 
 
-common_kwds = dict(gridsize=20, cmap="Blues", extent=snr_limits + [0, 1])
-
-specific_kwds = {
-    "TEFF": dict(extent=snr_limits + [0, 300]),
-    "LOGG": dict(extent=snr_limits + [0, 2.5]),
-    "FE_H": dict(extent=snr_limits + [0, 2.5])
+latex_labels = {
+    "TEFF": r"$\sigma_{T_{\rm eff}}$ $[{\rm K}]$",
+    "LOGG": r"$\sigma_{\log{g}}$ $[{\rm dex}]$",
+    "FE_H": r"$\sigma_{[{\rm Fe/H}]}$ $[{\rm dex}]$",
+    "O_H": r"$\sigma_{[{\rm O/H}]}$ $[{\rm dex}]$",
+    "MG_H": r"$\sigma_{[{\rm Mg/H}]}$ $[{\rm dex}]$",
+    "AL_H": r"$\sigma_{[{\rm Al/H}]}$ $[{\rm dex}]$",
+    "SI_H": r"$\sigma_{[{\rm Si/H}]}$ $[{\rm dex}]$",
+    "CA_H": r"$\sigma_{[{\rm Ca/H}]}$ $[{\rm dex}]$",
+    "NI_H": r"$\sigma_{[{\rm Ni/H}]}$ $[{\rm dex}]$",
 }
 
+ok = (matches > 1) * (stacked_snrs >= 100)
 
-fig, axes = plt.subplots(K)
-for j, (ax, label_name) in enumerate(zip(axes, label_names)):
 
-    kwds = common_kwds.copy()
-    kwds.update(specific_kwds[label_name])
+fig, axes = plt.subplots(3, 3)
+for j, label_name in enumerate(label_names):
+    #if j >= len(axes) - 1:
+    #    ax = axes[-1]
+    #    label = r"${\rm " + label_name.split("_")[0].title() + r"}$"
+
+    #else:
+    #    ax = axes[j]
+    #    label = None
+    ax = axes.flatten()[j]
 
     x = snrs[ok]
     y = differences[label_name][ok]
 
-    indices = np.digitize(x, list(snr_bins) + [np.inf])
-    y_aggregate = np.array([metric(y[indices == k]) for k in range(0, 1 + max(indices))])
+    # Aggregate into each bin.
+    y_aggregate = []
+    for k, s in enumerate(snr_bins[:-1]):
+        e = snr_bins[k + 1]
 
-    ax.hexbin(x, np.abs(y), **kwds)
+        in_bin = (e >= x) * (x > s)
+        y_aggregate.append(metric(y[in_bin]))
 
-    ax.scatter(snr_bins, y_aggregate, facecolor="r")
-    ax.plot(snr_bins, y_aggregate, drawstyle="steps-mid")
 
-    ax.set_xlim(snr_limits)
-    ax.set_ylim(kwds["extent"][2:])
+    y_aggregate = np.array(y_aggregate)
+
+
+    x2 = np.repeat(snr_bins[1:], 2)
+    y2 = np.repeat(y_aggregate[1:], 2)
+
+    ax.fill_between(
+        x2[1:-1], np.zeros_like(y2),
+        y2, facecolor="#CCCCCC", edgecolor="#CCCCCC")
+    ax.plot(snr_bins[:-1] + np.diff(snr_bins)[0], y_aggregate, drawstyle="steps",
+        linewidth=2, c="#666666")
+
+
+
+    ax.set_xlim(min(snr_bins), max(snr_bins))
+    ax.xaxis.set_major_locator(MaxNLocator(6))
+
+    ax.set_ylim(0, ax.get_ylim()[1])
+    ax.yaxis.set_major_locator(MaxNLocator(4))
+
+    if ax.is_last_row():
+        ax.set_xlabel(r"$S/N$ $[{\rm pixel}^{-1}]$")
+    else:
+        ax.set_xticklabels([])
+
+    ax.set_ylabel(latex_labels[label_name])
+
+    if j > 1:
+        ax.set_ylim(0, 0.35)
+        ax.set_yticks([0, 0.1, 0.2, 0.3])
+
+
+fig.tight_layout()
+fig.savefig("repeat-visits.pdf", dpi=300)
+fig.savefig("repeat-visits.png")
 
