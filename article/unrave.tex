@@ -177,7 +177,7 @@ motions, and parallaxes for approximately two million stars in the Tycho-2
 surveys\footnote{Specifically we cross-matched the Tycho-2 catalog against the 
 \apogee\ \citep{Zasowski_2013}, \ges\ \citep{Gilmore_2012,Randich_2013}, 
 \galah\ \citep{DeSilva_2015}, \lamost\ \citep{Cui_2012}, and \rave\ 
-\citep{Steinmetz_2006} surveys}, we found that the RAdial Velocity Experiment 
+\citep{Steinmetz_2006} surveys.}, we found that the RAdial Velocity Experiment 
 (\rave) survey is expected to have the largest overlap with the first \gaia\ 
 data release: up to 292,036 stars.  We used the \gaia\ universe model snapshot 
 \citep{Robin_2012} to estimate the precision in parallax and proper motions that
@@ -211,7 +211,7 @@ for how to access our results electronically.
 \rave\ is a magnitude-limited stellar spectroscopic survey of the (nearby) Milky Way,
 principally designed to measure radial velocities for up to $10^6$ stars.
 Observations were conducted on the 1.2~m UK Schmidt telescope at the Australian 
-Astronomical Observatory\footnote{Formerly the Anglo-Australian Observatory} from 
+Astronomical Observatory\footnote{Formerly the Anglo-Australian Observatory.} from 
 2003--2013.  A large 5.7~degree field-of-view and robotic fibre positioner made for 
 very efficient observing:  spectra for up to 150 targets could be simultaneously
 acquired.  When observations concluded in April 2013, at least \Nspectra\ useful 
@@ -292,7 +292,7 @@ makes use of all available information in the spectrum and lowers the S/N ratio
 at which systematic effects begin to dominate.  In other words, in the low S/N
 regime, a well-constructed data-driven model will yield more precise \emph{labels}
 (e.g., stellar parameters and chemical abundances) than most physics-driven 
-models\footnote{However, see \citet{Casey_2016a}}.  This is particularly relevant 
+models\footnote{However, see \citet{Casey_2016a}.}.  This is particularly relevant 
 for the low-resolution \rave\ data analysed here, because about half of the 
 spectra have S/N $\lesssim 50$~pixel$^{-1}$.
 
@@ -417,7 +417,7 @@ stars that overlap with \lamost\ --- of which 2,213 have positive S/N ratios in 
 $g$-band (\texttt{snrg}).  However, the labels are expectedly less precise given the
 lower resolution, there are no elemental abundances available for the main-sequence 
 stars\footnote{Abundance information is available for \lamost\ stars from \citet{Ho_2016},
-but that sample contains only giant stars}, and the \lamost\ lower main-sequence suffers
+but that sample contains only giant stars.}, and the \lamost\ lower main-sequence suffers
 from the same systematic effects seen in \apogee\ data. 
 
 
@@ -588,7 +588,7 @@ $0.29$~dex for $\logg$, with $0.03$~dex and $0.17$~dex for [Fe/H].
 
 We inferred labels for all \rave\ spectra using this main-sequence/sub-giant star model.  
 The results for the survey sample are shown in the centre panel of Figure \ref{fig:test-set-density}.  
-The increased density of Solar-type stars is consistent with \rave\
+The increased density of solar-type stars is consistent with \rave\
 observing stars in the local neighbourhood, and the high number of turn-off
 and main-sequence stars relative to the sub-giant branch is expected from 
 the relative lifetimes of these evolutionary phases.  An over-density
@@ -600,7 +600,7 @@ model is (poorly) extrapolating outside the convex hull of the training set.
 \subsection{A 9-label model for detailed abundances of giant stars}
 \label{sec:evolved-star-model}
 
-The red giant branch stars in our training set have have stellar parameters 
+The red giant branch stars in our training set have stellar parameters 
 ($\teff$, $\logg$) and up to 15 elemental abundances from the \aspcap\ 
 \citep{Garcia_Perez_2016}.  A subset of these elements have atomic transitions in the 
 \rave\ wavelength region: \ion{O}{1}, \ion{Mg}{1}, \ion{Al}{1}, \ion{Si}{1}, 
@@ -808,11 +808,11 @@ principal morphological flags \texttt{c1}, \texttt{c2}, \texttt{c3}, from
 \citet{Matijevic_2012} all indicate `n' for a normal FGK-type star.
 There is good agreement in $\teff$, with a bias and RMS of just 4~K and 240~K,
 respectively. The offset in $\logg$ on the giant branch between this study and 
-\citet{Kordopatis_2013} has been noted in other studies (e.g., \apogee), and this has issue
+\citet{Kordopatis_2013} has been noted in other studies (e.g., \apogee), and this issue
 has been resolved in the fifth \rave\ data release by correcting $\logg$
 values with a calibration sample consisting of asteroseismic targets and the
 \gaia\ benchmark stars.  There is also a
-slight discrepancy in the $\log$ values along the main-sequence, where our
+slight discrepancy in the $\logg$ values along the main-sequence, where our
 work tends to taper down towards higher $\logg$ values at cooler temperatures,
 and the \rave\ DR4 sample tends to have a slightly flatter lower main-sequence.
 This difference is not likely to have a very significant effect on the detailed
@@ -837,7 +837,7 @@ to evaluate the accuracy of our results on the main-sequence and sub-giant branc
 We compare the stellar parameters ($\teff$, $\logg$, [Fe/H]) of stars that
 overlap these literature studies in Figure~\ref{fig:gold-standard-comparison}.
 We only include stars with $\chi_r^2 < 3$ and $S/N > 10$~pixel$^{-1}$, although the latter
-cut removed only few stars because the average S/N in the \rave\ spectra for
+cut removed only a few stars because the average S/N in the \rave\ spectra for
 these stars is relatively high ($\gtrsim{}50$~pixel$^{-1}$). When considering the relative 
 information content available in \rave\ (945~pixels in the near infrared with
 $\mathcal{R} \approx 7{,}500$) compared to these literature studies that use
@@ -910,7 +910,7 @@ factors.  The absolute bias for individual elements varies from as low as
 is likely a consequence of an offset between [Si/H] abundances in \ges\ and
 \apogee, the source of our training set for giant star abundances.  
 The RMS deviation in each
-label is small for stars with [X/H] $\sim -0.5$, before increasing at lower
+label is small for stars with [X/H] $> -0.5$, before increasing at lower
 metallicities.  If we consider all stars, the smallest abundance RMS we see
 with respect to \ges\ is 0.18~dex for [Ca/H].  The increasing RMS at low 
 metallicity is likely a consequence of multiple factors, namely: inaccurate
@@ -964,7 +964,7 @@ even for stars with low S/N ratios.
 \label{sec:open-cluster-validation}
 
 The \rave\ survey observed $\sim$160 highly probable members of several open clusters:
-78 stars in the Pleiades, 26 in Hyades, 30 stars in the Solar-metallicity cluster
+78 stars in the Pleiades, 26 in Hyades, 30 stars in the solar-metallicity cluster
 M67 and 13 stars in IC4651. Details on the open cluster membership and selection can 
 be found in \cite{Kunder_2016}.  We show the effective temperature $\teff$ and surface
 gravity $\logg$ for these stars in Figure \ref{fig:open-cluster-HRD}.  The isochrones
@@ -1110,7 +1110,7 @@ The fibre fringing is another example of how test spectra that are
 unusual from the training set can be projected as peculiar artefacts in the
 label space.  In other words, unusual spectra can appear as `clumps' in
 regions of parameter space that we could consider as being normal 
-(e.g., Solar-type stars).  We addressed this issue for the main-sequence
+(e.g., solar-type stars).  We addressed this issue for the main-sequence
 and giant models by using a joint model to calculate relative weights.
 However, spectra that are unusual from the joint model training set can
 still project as systematic artefacts.  
@@ -1466,7 +1466,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \begin{figure}[p]
 \center
 \includegraphics[width=0.65\textwidth]{figures/gce.pdf}
-\caption{Detailed chemical abundances ([X/Fe]) for giant stars in \unrave\ with respect to [Fe/H], showing the Galactic chemical evolution derived for each element. Note that the y-axes limits vary for each panel, however for clarity we show the scaled-Solar position by dashed lines, and have common tick mark spacing on the y-axis for all panels. Only stars with S/N $> 10$ and $\chi_r^2 < 3$ are shown.\label{fig:gce}}
+\caption{Detailed chemical abundances ([X/Fe]) for giant stars in \unrave\ with respect to [Fe/H], showing the Galactic chemical evolution derived for each element. Note that the y-axis limits vary for each panel, however for clarity we show the scaled-solar position by dashed lines, and have common tick mark spacing on the y-axis for all panels. Only stars with S/N $> 10$ and $\chi_r^2 < 3$ are shown.\label{fig:gce}}
 \end{figure}
 
 
