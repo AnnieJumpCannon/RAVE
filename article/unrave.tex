@@ -784,7 +784,7 @@ of unity.  However, our formal errors are likely to be under-estimated,
 and therefore we introduce a systematic error floor for each label, which
 is added in quadrature to every observation such that (for example, $\logg$),
 \begin{eqnarray}
-	\eta_{\logg} & = & \frac{\logg_a - \logg_b}{\sqrt{(\sigma_{\logg,a} + \sigma_{\logg,floor})^2 + (\sigma_{\logg,b} + \sigma_{\logg,floor})^2}} \quad .
+	\eta_{\logg} & = & \frac{\logg_a - \logg_b}{\sqrt{{\sigma_{\logg,a}}^2 + {\sigma_{\logg,b}}^2 + 2{\sigma_{\logg,floor}}^2}} \quad .
 \end{eqnarray}
 
 
