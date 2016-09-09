@@ -816,8 +816,8 @@ ratios is comparable to the minimum error floors we adopted in Section
 \subsubsection{Comparison with \rave\ DR4}
 \label{sec:validation-kordopatis}
 
-As an initial point of external comparison, we cross-matched our results against the 
-official fourth \rave\ data release (Figure \ref{fig:rave-dr4-comparison}).
+We cross-matched our results against the official fourth \rave\ data release 
+as an initial point of external comparison (Figure \ref{fig:rave-dr4-comparison}).
 In order to provide a fair comparison, we only show stars that meet a number
 of quality flags in \emph{both} samples.  Our constraints require that the
 S/N ratio exceeds 10~pixel$^{-1}$, and $\chi_r^2 < 3$.  For this comparison
@@ -847,13 +847,14 @@ abundance or spectrophotometric distance determinations between these studies
 
 We searched the literature for studies that overlap with \rave, and which base
 their analysis on high-resolution, high S/N spectra.  We found four notable
-studies with a sufficient level of overlap: the disk studies by \citet{Reddy_2003,
-Reddy_2006} and \citet{Bensby_2014}, as well as the \citet{Valenti_Fischer_2005} 
-work on exoplanet host star candidates.  These studies perform a careful (manual;
-expert) analysis using extremely high-resolution, high S/N spectra, and make use 
-of \project{Hipparcos} parallaxes where possible.  Most of the stars in these 
-samples are main-sequence or sub-giant stars.  Therefore, these works constitute 
-an excellent comparison to evaluate the accuracy of our results on the 
+studies with a sufficient level of overlap: the Milky Way disk studies by 
+\citet{Reddy_2003,Reddy_2006} and \citet{Bensby_2014}, as well as the 
+\citet{Valenti_Fischer_2005} work on exoplanet host star candidates.  These 
+studies perform a careful (manual; expert) analysis using extremely 
+high-resolution, high S/N spectra, and make use of \project{Hipparcos} 
+parallaxes where possible.  Most of the stars in these samples are 
+main-sequence or sub-giant stars.  Therefore, these works constitute an 
+excellent comparison to evaluate the accuracy of our results on the 
 main-sequence and sub-giant branch.
 
 
@@ -915,8 +916,10 @@ branch stars.
 
 The metallicity agreement between this work and \ges\ extends down to low
 metallicity, near $[{\rm Fe/H}] \approx -1.5$.  The scatter increases for
-the four stars in the overlap sample with [Fe/H] $< -1$, however these
-spectra have low S/N ratios, which is reflected in the larger uncertainties
+the few stars in the overlap sample with $[{\rm Fe/H}] < -1$, in the regime
+where the influence from atomic transitions of these elements becomes very
+small in \rave\ spectra. Moreover, these particular stars have lower S/N
+ratios, which is reflected in the larger uncertainties
 reported for these metallicities. 
 
 
@@ -929,22 +932,22 @@ S/N of the \rave\ spectrum.  The number of stars available in each abundance
 comparison varies due to what is available in the \ges\ data release, which
 is itself a function of the instrument used, the spectral type, and other
 factors.  The absolute bias for individual elements varies from as low as
-0.01~dex ([Al/H]) to as high as 0.22~dex ([Si/H]), where we over-estimate 
+0.06~dex ([Al,Mg/H]) to as high as 0.26~dex ([Si/H]), where we over-estimate 
 [Si/H] abundances relative to the \ges\ survey.  The large bias in [Si/H]
 is likely a consequence of an offset between [Si/H] abundances in \ges\ and
 \apogee, the source of our training set for giant star abundances.  
-The RMS deviation in each
-label is small for stars with [X/H] $> -0.5$, before increasing at lower
-metallicities.  If we consider all stars, the smallest abundance RMS we see
-with respect to \ges\ is 0.18~dex for [Ca/H].  The increasing RMS at low 
-metallicity is likely a consequence of multiple factors, namely: inaccurate
-abundance labels for metal-poor stars (Section~\ref{sec:the-training-set});
-only weak, blended lines being available in \rave, which cease to be visible
-in hot and/or metal-poor stars; and to a lesser extent, low S/N ratios for 
-those particular stars being compared.  Unfortunately not all of these
-factors are represented by the quoted errors in each label.  For these reasons, 
-although it affects only a small number of stars, we recommend caution when 
-using individual abundances for very metal-poor giant stars in our sample.
+The RMS deviation in each label is small for stars with [X/H] $> -0.5$, 
+before increasing at lower metallicities.  If we consider all stars, the 
+smallest abundance RMS we see with respect to \ges\ is 0.16~dex for [Ca/H] 
+and [Al/H].  The increasing RMS at low metallicity is likely a consequence
+of multiple factors, namely: inaccurate abundance labels for metal-poor stars
+(Section~\ref{sec:the-training-set}); only weak, blended lines being available
+in \rave, which cease to be visible in hot and/or metal-poor stars; and to a 
+lesser extent, low S/N ratios for those particular stars being compared.  
+Unfortunately not all of these factors are represented by the quoted errors 
+in each label.  For these reasons, although it affects only a small number of
+stars, we recommend caution when using individual abundances for very 
+metal-poor giant stars in our sample.
 
 
 \subsubsection{Comparison with the \rave\ DR4 calibration sample}
