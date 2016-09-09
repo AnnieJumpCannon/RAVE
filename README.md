@@ -1,46 +1,42 @@
-The *unRAVE* catalog
-==================
+The *RAVE*-on catalog
+=====================
 
 [![Build Status](https://travis-ci.org/AnnieJumpCannon/RAVE.svg?branch=master)](https://travis-ci.org/AnnieJumpCannon/RAVE)
 
 An independent data-driven analysis of *RAVE* spectra in anticipation of the *Gaia/TGAS* data release. 
 
-
 **[You can access the most recent version of the PDF here](https://github.com/AnnieJumpCannon/RAVE/raw/master-pdf/article/unrave.pdf)**.
 
-If you wish to make a contribution to the text, please follow the instructions below. If you have trouble following the instructions then create a [GitHub issue](https://github.com/AnnieJumpCannon/RAVE/issues/new) with your comments. Suggested changes sent by email take longer to implement, and makes it harder for all co-authors to see the contributions of others.
+Authors
+=======
 
-
-Instructions for making changes directly to the LaTeX
-=====================================================
-
-- [Sign up for a free GitHub account](https://github.com/join), then install `git` and [follow these instructions](https://help.github.com/articles/set-up-git/) to get your local `git` configuration set up with your GitHub account 
-
-- Fork this repository on GitHub by clicking the 'Fork' button at the top of this page. Now you have your own parallel version of this repository on GitHub
-
-- Create a local copy of your freshly-forked repository by using `git clone` in your terminal:
-
-````
-  git clone https://github.com/<your_username>/RAVE.git rave
-````
-
-- Make your changes to the `unrave.tex` document and ensure it compiles with `make`.
-
-- Commit your changes using the following terminal commands (and if in doubt, commit often!):
-
-````
-git add article/unrave.tex
-git commit -m "<short_summary_of_your_changes>"
-````
-
-- Now `push` your commited changes to your forked GitHub repository with this command:
-
-````
-git push
-````
-
-- Open a pull request on this repository by clicking the 'New pull request' button on the `AnnieJumpCannon/RAVE` repository page, which will ask me to accept the changes you have committed.
-
+- Andrew R. Casey
+- Keith Hawkins
+- David W. Hogg
+- Melissa Ness
+- Hans Walter-Rix
+- Georges Kordopatis
+- Andrea Kunder
+- Matthias Steinmetz
+- Sergey Koposov
+- Harry Enke
+- Jason Sanders
+- Gerry Gilmore
+- Tomaz Zwitter
+- Kenneth C. Freeman
+- Luca Casagrande
+- Gal Matijevic
+- George Seabroke
+- Olivier Bienayme
+- Joss Bland-Hawthorn
+- Brad K. Gibson
+- Eva K. Grebel
+- Amina Helmi
+- Ulisse Munari
+- Julio F. Navarro
+- Warren Reid
+- Arnaud Siebert
+- Rosemary Wyse
 
 License
 ======= 
