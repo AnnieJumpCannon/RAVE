@@ -955,16 +955,16 @@ metal-poor giant stars in our sample.
 
 
 The fourth \rave\ data release made use of a number of high-resolution studies
-to verify the accuracy of the reported stellar atmospheric parameters.  These
+to verify the accuracy of their derived stellar atmospheric parameters.  These
 samples include main-sequence stars, giant stars, with a particular focus to
 include metal-poor stars to identify (and correct) any deviations at low
-and high metallicities.  We refer the reader to \citet{Kordopatis_2013} for
-the full compilation of literature sources.  Although the stellar atmospheric 
-parameters in this compilation come from multiple (heterogeneous) sources, we 
-find generally good agreement with these works (Figure 
-\ref{fig:kordopatis-calibration}).  However, some reservation is warranted 
-when evaluating this comparison, as some of the metal-poor stars in this 
-calibration sample formed part of our training set.  
+metallicities.  We refer the reader to \citet{Kordopatis_2013} for the full 
+compilation of literature sources.  Although the stellar atmospheric parameters
+in this compilation come from multiple (heterogeneous) sources, we find 
+generally good agreement with these works 
+(Figure \ref{fig:kordopatis-calibration}).  However, we note that some 
+reservation is warranted when evaluating this comparison, as some of the 
+metal-poor stars in this calibration sample formed part of our training set.  
 
 
 \subsection{Astrophysical validation}
@@ -975,10 +975,10 @@ calibration sample formed part of our training set.
 
 
 After verifying that our atmospheric parameters and abundances are comparable 
-with other high-resolution studies, here we verify that the abundances we find
-are consistent with expectations from astrophysics.  In the \rave\ survey, 
-\cite{Anguiano_2015} identified 70 stars with positions and radial velocities that are
-consistent with being members of globular clusters: 49 stars belonging to NGC~5139
+with high-resolution studies, here we verify that our results are consistent
+with expectations from astrophysics.  In the \rave\ survey, \cite{Anguiano_2015}
+identified 70 stars with positions and radial velocities that are consistent 
+with being members of globular clusters: 49 stars belonging to NGC~5139
 ($\omega$~Centauri), 11 members of the retrograde globular cluster NGC~3201, and 10 
 members of NGC~362. In addition, \citet{Kunder_2014} compiled 12 stars thought to 
 belong to NGC~1851, and a further 10 stars in NGC~6752.  We refer the reader to 
@@ -992,15 +992,16 @@ purposes we have included the results from the fourth \rave\ data release in the
 left-hand panels.  We show representative \project{PARSEC} isochrones 
 \citep{Bressan_2012} in all panels, where the isochrone ages and metallicities 
 are adopted from \citet{Kunder_2016,Marin-Franch_2009}, and the 
-\citet[][accessed 6 September 2016]{Harris_1996} online catalog of globular 
+\citet[][accessed 6 September 2016]{Harris_1996} catalog of globular 
 cluster properties.  The globular cluster with the most number of members is 
 NGC~5139 ($\omega$-Centauri), where we find a significant metallicity spread
-consistent with high-resolution studies \citep{Marino_2011,Carretta_2009,Carretta_2013}. 
-Based on the pre-defined membership criteria, we find the mean metallicity
-of $\omega$-Centauri to be $[{\rm Fe/H}] = -0.85$.  However, it is clear that the 
-membership criteria could be improved with our revised metallicities and 
-detailed chemical abundances.  Indeed, our individual abundance labels could 
-be used to identify globular cluster members that are now tidally disrupted 
+that is consistent with high-resolution studies \citep{Marino_2011,Carretta_2009,
+Carretta_2013}. Based on the pre-defined membership criteria, we find the mean 
+metallicity of $\omega$-Centauri to be $[{\rm Fe/H}] = -0.85$.  However, it 
+is clear that the membership criteria could be improved with our revised 
+metallicities and detailed chemical abundances.  Indeed, our individual abundance
+labels could be further used to identify globular cluster members --- at least, of
+relatively metal-rich clusters ---  that are now tidally disrupted 
 \citep{Anguiano_2016,Kuzma_2016,Navin_2016}, even for stars with low S/N ratios.
 
 
@@ -1008,13 +1009,27 @@ be used to identify globular cluster members that are now tidally disrupted
 \label{sec:open-cluster-validation}
 
 
-The \rave\ survey observed $\sim$160 highly probable members of several open clusters:
-78 stars in the Pleiades, 26 in Hyades, 30 stars in the solar-metallicity cluster
-M67, and 13 stars in IC4651. Details on the open cluster membership and selection can 
-be found in \cite{Kunder_2016}.  We show the effective temperature $\teff$ and surface
-gravity $\logg$ for these stars in Figure \ref{fig:open-cluster-HRD}.  The isochrones
-are sourced from \citet{Bressan_2012}, with cluster properties adopted from 
-\cite{Kunder_2016} and \cite{Kharchenko_2013}.  
+Using positions, proper motions, and metallicities from the \rave\ official
+data release (such that they can be used as comparison), we identify $\sim$160 
+probable members of four open clusters that were observed by \rave.  
+Upon requiring $(\alpha,\delta) = (51.5^\circ$ to $57.5^\circ$, 21.5$^\circ$ to 28$^\circ)$,
+have error in metallicity \texttt{e\_M\_H\_K} $< 0.5$~dex, and radial
+velocities between $-10$~km~s$^{-1}$ and 20~km~s$^{-1}$, we identify 78 
+Pleiades members.  For the Hyades, by requiring stars within $3.5^\circ$ of the
+cluster centre to have: radial velocities between 36~km~s$^{-1}$ and 44~km~s$^{-1}$,
+$[{\rm M/H}]_{RAVE}$ within $-0.15$ and 0.35, and \rave\ metallicity errors
+$<0.12$~dex, we identify 26 potential members.  Similarly for IC4561 we select
+13 stars by requiring: radial velocities within $-20$~km~s$^{-1}$ to $-40$~km~s$^{-1}$,
+an error in radial velocity $<3$~km~s$^{-1}$; $[{\rm M/H}]_{RAVE}$ within $-0.15$ and 0.35;
+$\alpha$ between $261.1^\circ$ and $261.6^\circ$; and $\delta$ within $-49.7^\circ$
+and $-50.1^\circ$.  For the solar-metallicity open cluster member, we 30 select stars solely on
+position: $(\alpha,\delta) = (133.1^\circ$ to $132.5^\circ$, $11.6^\circ$ to $12^\circ)$.
+We show the effective temperature $\teff$ and surface gravity $\logg$ for these
+cluster candidates in Figure \ref{fig:open-cluster-HRD}.  The isochrones are 
+sourced from \citet{Bressan_2012}, with cluster properties adopted from 
+\cite{Kharchenko_2013}.  
+
+
 
 
 We find good agreement between our atmospheric parameters (right-hand panels) and the 
