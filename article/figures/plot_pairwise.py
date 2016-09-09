@@ -10,7 +10,7 @@ from matplotlib.ticker import MaxNLocator
 
 DATA_PATH = "../../"
 
-individual_results = Table.read(os.path.join(DATA_PATH, "unrave-v0.96.fits.gz"))
+individual_results = Table.read(os.path.join(DATA_PATH, "unrave-v0.97.fits.gz"))
 
 OK = individual_results["QC"]
 individual_results = individual_results[OK]
@@ -34,15 +34,15 @@ individual_results = individual_results.group_by("RAVEID")
 
 
 error_floor = {
-    "TEFF": 50, #100,
-    "LOGG": 0.10, #0.15,
-    "FE_H": 0.05, #0.08,
-    "MG_H": 0.06, #0.08,
-    "O_H": 0.06, #0.08,
-    "AL_H": 0.07, #0.08,
-    "CA_H": 0.06, #0.08,
-    "SI_H": 0.06, #0.08,
-    "NI_H": 0.05, #0.08,
+    "TEFF": 70, #100,
+    "LOGG": 0.12, #0.15,
+    "FE_H": 0.06, #0.08,
+    "MG_H": 0.07, #0.08,
+    "O_H": 0.07, #0.08,
+    "AL_H": 0.08, #0.08,
+    "CA_H": 0.07, #0.08,
+    "SI_H": 0.07, #0.08,
+    "NI_H": 0.06, #0.08,
 }
 
 pairwise_metrics = {}
@@ -62,7 +62,7 @@ for j, si in enumerate(indices[:-1]):
         error = np.repeat(individual_results["E_{}".format(label_name)].data[si:ei], N).reshape(-1, N)
 
         diff = value - value.T
-        summed_error = (error**2 + error.T**2 + 2*error_floor[label_name]**2 + 2*error**2 + 2*error.T**2)**0.5
+        summed_error = (error**2 + error.T**2 + 2*error_floor[label_name]**2)**0.5
 
         # Just take the upper diagonal of the matrix so we get all pair-wise
         # comparisons, just once.

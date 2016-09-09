@@ -92,7 +92,7 @@ useful for chemo-dynamic studies, the Tycho-Gaia Astrometric Solution
 complement that includes radial velocities, stellar atmospheric parameters, and 
 elemental abundances.  Among existing spectroscopic samples, the RAdial 
 Velocity Experiment (\rave) survey has the largest overlap with \tgas: 
-$\approx$250,000 stars.  We present a data-driven re-analysis of \rave\ 
+up to about 264,000 stars.  We present a data-driven re-analysis of \rave\ 
 spectra using \thecannon, and we provide more precise and accurate stellar
 parameters and abundances than available in previous \rave\ data releases. 
 We constructed our model using high-fidelity \apogee\ stellar parameters 
@@ -306,7 +306,7 @@ with a low-order polynomial in label space.
 \item The training set (Section~\ref{sec:the-training-set}) has mean accurate labels
 for most, but not all stars. That is to say that we do not assume that \emph{every} 
 label in the training is accurate. We can afford to have a small fraction of 
-inaccurate labels; few obvious misclassifications in the training set are affordable.
+inaccurate labels; a few obvious misclassifications in the training set are affordable.
 \item We assume that the training data are similar (in spectra) to the test data 
 where they overlap in label space, and we assume that the training data spans enough
 of the label space to capture the variation in the test-set spectra.
@@ -328,7 +328,7 @@ $\ell_n$ for star $n$ and outputs functions of those labels as a vector of lengt
 $D>K$, $\vectheta_j$ is a vector of length $D$ of parameters influencing the model at
 wavelength pixel $j$, and $e_{jn}$ is the residual (noise).  Here we will only consider
 vectorizing functions with second-order polynomial expansions (e.g., $\teff^2$, see Sections 
-\ref{sec:a-simple-model}-\ref{sec:evolved-star-model}).  The noise values $e_{jn}$ can 
+\ref{sec:a-simple-model}--\ref{sec:evolved-star-model}).  The noise values $e_{jn}$ can 
 be considered to be drawn from a Gaussian distribution with zero mean and variance 
 $\sigma_{jn}^2 + s_j^2$, where $\sigma_{jn}^2$ is the variance in flux $y_{jn}$ and 
 $s_j^2$ describes the excess variance at the $j$-th wavelength pixel. 
@@ -401,7 +401,7 @@ $g$-band (\texttt{snrg}).  However, the labels are expectedly less precise given
 lower resolution, there are no elemental abundances available for the main-sequence 
 stars\footnote{Abundance information is available for \lamost\ stars from \citet{Ho_2016},
 but that sample contains only giant stars.}, and the \lamost\ lower main-sequence suffers
-from the same systematic effects seen in \apogee\ data. 
+from the same systematic effects seen in the \apogee\ data. 
 
 
 These constraints forced us to construct a heterogeneous training set.  Given previous
@@ -411,7 +411,7 @@ overlap sample for giant star labels in the training set.  Of these, about 900 a
 giants according to \apogee.  From this sample we selected stars to have: 
 determinations in all abundances of interest ([X/H] $> -5$ for O, Mg, Al, Si, Ca, Fe, 
 and Ni); S/N ratios of $>$200~pixel$^{-1}$ in \apogee\ and $>$25~pixel$^{-1}$ in \rave; 
-and we further required that \aspcap\ did not report any peculiar flags 
+and we further required that the \aspcap\ did not report any peculiar flags 
 (\texttt{ASPCAPFLAG = 0}).  These restrictions left us with 536 stars along the giant 
 branch, with metallicities ranging from $[{\rm Fe/H}] = -1.79$ to 0.26.  Intermediate 
 tests with globular cluster members showed that the metallicity range of the training 
@@ -430,15 +430,15 @@ that this decision is made solely to ensure that our overall metallicity scale r
 that of the \rave\ survey, down to $[{\rm Fe/H}] \sim -4$.  Indeed, it is likely that 
 for most of these elements, these abundances cannot be measured from \rave\ spectra for 
 ultra metal-poor stars: the atomic transitions in the \rave\ spectral region are simply
-too weak.  For this reason, our adopted abundances for these very metal-poor stars
-represent an `anchor point' in order to ensure our overall metallicity scale is
-correct.  We do not recommend the use of our individual abundance labels at 
-$[{\rm Fe/H}] \sim -4$.  We discuss this issue in more detail in Section~\ref{sec:discussion}.
+too weak to influence the spectrum.  For this reason, our adopted abundances for these
+very metal-poor stars represent an `anchor point' in order to ensure our overall 
+metallicity scale is correct.  We do not recommend the use of our individual abundance
+labels at $[{\rm Fe/H}] \sim -4$.  We discuss this issue in more detail in Section~\ref{sec:discussion}.
 
 
 Assembling a suitable training set for the main-sequence and sub-giant branch was less
 trivial.  There are no spectroscopic studies that extend the range of stellar types we 
-are interested in (e.g., FGKM-type stars), and which have a large enough sample size 
+are interested in (e.g., FGKM-type stars), and which also have a large enough sample size 
 that overlaps with \rave.  Moreover, most of the spectroscopic studies we considered also 
 showed a flat lower main-sequence, a systematic consequence of the analysis method adopted 
 \citep[see][for discussion on this issue]{Bensby_2014}.  For these reasons we chose to make 
@@ -462,11 +462,11 @@ probability of misclassification is usually quantified in the uncertainties give
 for each star; most dwarfs that have a higher possibility of being sub-giants have
 large confidence intervals.  Therefore, requiring low uncertainties will decrease 
 the total sample size, but in practice it removes most misclassifications.  The 
-situation is far more favourable for dwarfs and giants.  Only $1-4$\% of giant 
+situation is far more favourable for dwarfs and giants.  Only 1--4\% of giant 
 stars are misclassified as dwarfs, and about 7\% of dwarfs are misclassified as 
 giants.  To summarise, the \epic\ labels with narrow confidence intervals are 
 usually of high fidelity, and given that we have spectra, we can identify any
-spurious misclassifications.
+obvious misclassifications.
 
 
 We sought to have a small overlap between our giant and main-sequence star training
@@ -476,7 +476,7 @@ required $\logg > 3.5$ for the \epic\ main-sequence/sub-giant star training set,
 allowing for $\approx0.5$~dex of overlap between the two training sets.  We further
 employed the following quality constraints on the \epic\ catalog: the upper and lower 
 confidence intervals in $\teff$ must be below 150~K; the upper and lower confidence 
-intervals in $\logg$ must be less than 0.15~dex; the $S/N$ of the \rave\ spectra must
+intervals in $\logg$ must be less than 0.15~dex; the S/N of the \rave\ spectra must
 exceed 30~pixel$^{-1}$; and $\teff \leqslant 6750$~K.  Unfortunately these strict 
 constraints removed most metal-poor stars, which we later found to cause the test 
 labels to have under-predicted abundances for dwarfs of low metallicity.  For this 
@@ -486,25 +486,25 @@ $-1.6 \gtrsim [{\rm Fe/H}] \gtrsim -2.1$ from \citet{Ruchti_2011}.  After traini
 a model based on main-sequence and giant stars (Section \ref{sec:the-model}), we found 
 we could identify misclassifications by leave-one-out cross-validation.  However, we 
 chose not to do this because the number of likely misclassifications in the training
-set was negligible ($\approx1$\%), and the improvement in main-sequence test set labels
+set was negligible ($\approx$1\%), and the improvement in main-sequence test set labels
 was minimal.  The distilled sample of the \rave--\epic\ overlap catalog contains 595 
 stars (583 of 4,611 from \epic).  The full training set for each model (see next 
 sections) is shown in Figure~\ref{fig:training-set-hrd}.
 
 
-\subsection{A 3-label model ($\teff$, $\logg$, $\feh$) for all stars}
+\subsection{The simple model: a 3-label model ($\teff$, $\logg$, $\feh$) for all stars}
 \label{sec:a-simple-model}
 
 
 We have constructed a justified training set for stars across the main-sequence, sub-giant,
 and red giant branch.  However the lack of overlap between \rave\ and other works have
 resulted in a somewhat peculiar situation.  Detailed abundances are available from \apogee\
-for all giant stars in our sample, but only imprecise metallicities are available from
-\epic\ for stars on the main-sequence and the sub-giant branch.  Here we will construct 
-a simple model for \emph{all} stars that only makes use of three labels ($\teff$, $\logg$, 
-[Fe/H]), before we outline how we derive abundances for giant branch stars.  The complexity
-for this model will be quadratic ($\teff^2$ is the highest term), where the vectorizer 
-$\vecv(\ell_n)$ expands as,
+for all giant stars in our sample, however only imprecise (but accurate on expectation)  
+metallicities are available from \epic\ for stars on the main-sequence and the sub-giant 
+branch.  Here we will construct a simple model for \emph{all} stars that only makes use 
+of three labels ($\teff$, $\logg$, [Fe/H]), before we outline how we derive abundances 
+for giant branch stars.  The complexity for this model will be quadratic ($\teff^2$
+is the highest term), where the vectorizer $\vecv(\ell_n)$ expands as,
 \begin{eqnarray}\label{eq:vectorizer-three-label}
 \vecv(\ell_n) \rightarrow \left[1, T_{{\rm eff},n}, \logg_n, [{\rm Fe/H}]_n, T_{{\rm eff},n}^2, \logg_n\,T_{{\rm eff},n}, \feh_n\,T_{{\rm eff},n}, \logg_n^2, \feh_n\,\logg_n, \feh_n^2\right]
 \end{eqnarray}
@@ -534,10 +534,9 @@ stellar parameters for stars on the main-sequence and sub-giant branch, as well 
 detailed elemental abundances for red giant branch stars.  However, adopting two separate
 models introduces the challenge of how to combine the results from two models, or how to
 assign one star as `belonging' to a single model.  In Section~\ref{sec:joining-the-models}
-we describe how we will use the 3-label model of the main-sequence and giant branch
-(introduced in this section) to discriminate between results from a 3-label main-sequence 
-model in Section \ref{sec:unevolved-star-model} and a 9-label giant star model in Section 
-\ref{sec:evolved-star-model}.
+we describe how we will use the simple model introduced in this section to discriminate
+between results from a 3-label main-sequence model in Section \ref{sec:unevolved-star-model} 
+and a 9-label giant star model in Section \ref{sec:evolved-star-model}.
 
 
 \subsection{A 3-label model ($\teff$, $\logg$, $\feh$) for unevolved stars}
@@ -614,9 +613,9 @@ of $\vectheta$, with $\approx20$\% more terms (mostly cross-terms) having zero-v
 Based on the increased model sparsity and decreasing RMS deviation in the labels, 
 we adopt $\Lambda = 0.57$ ($10^{-0.25}$) for the giant star model.  The bias in 
 labels from a regularized model with $\Lambda = 0.57$ is negligible: $-0.3$~K in 
-$\teff$, and $<$0.007~dex in magnitude for $\logg$ and all seven elements.  The RMS
-at this regularization strength is 69~K in $\teff$, 0.18~dex in $\logg$, and varies
-between $0.07-0.09$~dex depending on the elemental abundance.  
+$\teff$, and $<$0.007~dex in magnitude for $\logg$ and all seven elemental
+abundances.  The RMS at this regularization strength is 69~K in $\teff$, 0.18~dex 
+in $\logg$, and varies between $0.07-0.09$~dex depending on the elemental abundance.  
 
 
 We inferred labels for all \Nspectra\ \rave\ spectra using this model, again without
@@ -627,7 +626,7 @@ calibration.  However, artefacts due to dwarf stars being present in the test se
 and not in the training set, are also present.
 
 
-\subsection{Deriving joint estimates from all models}
+\subsection{Deriving joint estimates from multiple models}
 \label{sec:joining-the-models}
 
 
@@ -670,9 +669,9 @@ of the two.
 
 In Figure \ref{fig:joint-model-differences} we show the differences in effective 
 temperature $\teff$ and surface gravity $\logg$ between: the main-sequence model 
-(Section~\ref{sec:unevolved-star-model}) and the simplest model (Section~
+(Section~\ref{sec:unevolved-star-model}) and the simple model (Section 
 \ref{sec:a-simple-model}); and the differences between the red giant branch model 
-(Section~\ref{sec:evolved-star-model}) and the simplest model (Section 
+(Section~\ref{sec:evolved-star-model}) and the simple model (Section 
 \ref{sec:a-simple-model}).  We have scaled the differences in $\teff$ and $\logg$ 
 to make the central peak near $(0, 0)$ to be approximately isotropic by setting
 	$\delta_{T_{\rm eff}} = 90$~K for the main-sequence model, 
@@ -689,14 +688,14 @@ objects where the simple model and the comparison model both report similar labe
 The artefacts seen in the Hertzsprung-Russell diagrams in Figure \ref{fig:test-set-density} 
 are also present in Figure \ref{fig:joint-model-differences} as over-densities far away
 from the central peak.  Therefore, we can adopt the scaled distance in labels 
-$\teff$ and $\logg$ from the simplest model to the main-sequence model $d_{ms}$,
+$\teff$ and $\logg$ from the simple model to the main-sequence model $d_{ms}$,
 \begin{eqnarray}
-	d_{ms} & = & \left(\frac{T_{{\rm eff},ms} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},ms}}}\right)^2 + \left(\frac{\log{g}_{ms} - \log{g}_{joint}}{\delta_{\log{g},ms}}\right)^2 \quad ,
+	d_{ms} & = & \left(\frac{T_{{\rm eff},ms} - T_{{\rm eff},simple}}{\delta_{T_{{\rm eff},ms}}}\right)^2 + \left(\frac{\log{g}_{ms} - \log{g}_{simple}}{\delta_{\log{g},ms}}\right)^2 \quad ,
 \end{eqnarray}
 
-\noindent{}and the scaled distance from the simplest model to the giant model $d_{giant}$,
+\noindent{}and the scaled distance from the simple model to the giant model $d_{giant}$,
 \begin{eqnarray}
-	d_{giant} & = & \left(\frac{T_{{\rm eff},giant} - T_{{\rm eff},joint}}{\delta_{T_{{\rm eff},giant}}}\right)^2 + \left(\frac{\log{g}_{giant} - \log{g}_{joint}}{\delta_{\log{g},giant}}\right)^2  \quad ,
+	d_{giant} & = & \left(\frac{T_{{\rm eff},giant} - T_{{\rm eff},simple}}{\delta_{T_{{\rm eff},giant}}}\right)^2 + \left(\frac{\log{g}_{giant} - \log{g}_{simple}}{\delta_{\log{g},giant}}\right)^2  \quad ,
 \label{eq:d_giant}
 \end{eqnarray}
 
@@ -712,8 +711,10 @@ $\teff$ and $\logg$ from the simplest model to the main-sequence model $d_{ms}$,
 
 We calculate weighted errors of $\hat\ell$ in the same manner.  
 In Figure \ref{fig:model-weights} we show the mean relative
-weight $w_{ms}/(w_{ms} + w_{giant})$ within each two-dimensional bin of 
-$\hat\teff$ and $\hat\logg$.  For giant stars the relative weight of 
+weight $w_{ms}/(w_{ms} + w_{giant})$ within each two-dimensional hexagonal bin of 
+$\hat\teff$ and $\hat\logg$.  Hereafter when we refer to labels (e.g., $\teff$),
+we refer to those from the joint estimate $\hat\ell$, not individual estimates 
+from separate models.  For giant stars the relative weight of 
 the main-sequence model is zero, and vice-versa for main-sequence stars.
 The relative weights smoothly transition from 0 to 1 on the sub-giant branch
 near $\log{g} \approx 3.5$, in the training set overlap region of both models.
@@ -726,8 +727,8 @@ The weighted $\teff$ and $\logg$ values for stars meeting different S/N
 constraints are shown in Figure \ref{fig:test-set-hrd}, both in logarithmic 
 density and mean metallicity.  The artefacts from individual models are no 
 longer apparent, and the complete structure of the Hertzsprung-Russell diagram
-is visible.  However, there are a number of caveats introduced by the choices 
-we have made to combine estimates from multiple models.  We discuss these 
+is visible.  However, there are a number of caveats introduced by the decisions
+we have made on how to combine estimates from multiple models. We discuss these 
 issues in detail in Section \ref{sec:discussion}.
 
 
@@ -759,7 +760,7 @@ We calculated all possible pair-wise differences between the labels we
 derived from multiple visits.  If \rave\ observed a star $H$ times, there 
 are $H!/2(H-2)!$ possible $a$-to-$b$ pair-wise combinations where we can calculate 
 the difference between the derived label (for example, $\logg$) over the
-quadrature sum of their formal uncertainties $(\logg_a - \logg_b)/\sqrt{{\sigma_{\logg,a}}^2 + {\sigma_{\logg,b}}^2}$.  If our derived labels were unbiased and our formal
+quadrature sum of their formal errors $(\logg_a - \logg_b)/\sqrt{{\sigma_{\logg,a}}^2 + {\sigma_{\logg,b}}^2}$.  If our derived labels were unbiased and our formal
 errors were correct, the distribution of these pair-wise comparisons would be
 well-represented by a Gaussian distribution with zero mean and variance
 of unity.  However, our formal errors are likely to be under-estimated,
@@ -770,13 +771,14 @@ is added in quadrature to every observation such that (for example, $\logg$),
 \end{eqnarray}
 
 
-We increased the minimum label error until the distribution of $\eta$ 
-values for a given label approximately reached unity.  The minimum error
-values for each label are shown with the distribution of $\eta$
-values in Figure \ref{fig:pairwise-comparison}.  These minimum values form
-part of our error model, and \emph{have} been added in quadrature with 
-the formal errors; the quoted errors in our labels already incorporate
-these minimum errors.
+We increased the minimum label error until the \emph{variance} of the $\eta$ 
+distribution approximately reached unity.  We found the minimum error in
+$\teff$ to be 70~K, 0.12~dex in $\logg$, and varied between 0.06--0.08~dex
+for individual elements.  The minimum errors are given with the 
+distributions of $\eta$ for each label in Figure \ref{fig:pairwise-comparison}.
+These minimum values form part of our error model, such that they \emph{have} 
+been added in quadrature with the formal errors; the quoted label errors 
+in our catalog include these minimum errors.
 
 
 \subsubsection{Precision as a function of S/N ratio}
@@ -804,8 +806,8 @@ by systematic uncertainties.  The precision in all labels tends to
 flatten out past S/N $> 40$~pixel$^{-1}$, and the precision at high S/N
 ratios is comparable to the minimum error floors we adopted in Section
 \ref{sec:repeat-observations}.  The median S/N of \rave\ spectra is
-50~pixel$^{-1}$, at which point our abundance precision is $\approx0.1$~dex,
-varying a few tenths of a dex between elements.
+50~pixel$^{-1}$, at which point our abundance precision is about 
+0.07~dex, varying a few tenths of a dex between different elements.
 
 
 \subsection{External validation}
@@ -814,7 +816,7 @@ varying a few tenths of a dex between elements.
 \subsubsection{Comparison with \rave\ DR4}
 \label{sec:validation-kordopatis}
 
-As an initial point of comparison, we cross-matched our results against the 
+As an initial point of external comparison, we cross-matched our results against the 
 official fourth \rave\ data release (Figure \ref{fig:rave-dr4-comparison}).
 In order to provide a fair comparison, we only show stars that meet a number
 of quality flags in \emph{both} samples.  Our constraints require that the
@@ -1141,7 +1143,7 @@ regions of parameter space that we could consider as being normal (e.g.,
 an over-density of solar-type stars).  We addressed this issue for the main-sequence
 and giant models by using a third model (Section \ref{sec:a-simple-model}) to
 calculate relative weights.  However, spectra that are unusual from the 
-training set used in the simplest model still project as systematic artefacts.  
+training set used in the simple model still project as systematic artefacts.  
 
 
 Indeed, there are two known artefacts in our data that are relevant to this 
@@ -1388,13 +1390,13 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure}[p]
 \includegraphics[width=\textwidth]{figures/hrd-train-set.pdf}
-\caption{Effective temperature $\teff$ and surface gravity $\logg$ for all stars in the training sets. Stars are colored by their metallicity [Fe/H], and the three panels show stars in the simplest model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (middle panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}).\label{fig:training-set-hrd}}
+\caption{Effective temperature $\teff$ and surface gravity $\logg$ for all stars in the training sets. Stars are colored by their metallicity [Fe/H], and the three panels show stars in the simple model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (middle panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}).\label{fig:training-set-hrd}}
 \end{figure}
 
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/test-set-density.pdf}
-\caption{The logarithmic density of effective temperature $\teff$ and surface gravity $\logg$ for all \Nspectra\ \rave\ spectra, as derived using the simplest model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (center panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}). These panels demonstrate how a single quadratic model is insufficient for all \rave\ stars (left panel), and illustrate some of the systematic artefacts that can result from testing on stars outside of the training set (center and right panel).  These panels do not represent our final results, which are shown in Figure~\ref{fig:test-set-hrd}.\label{fig:test-set-density}}
+\caption{The logarithmic density of effective temperature $\teff$ and surface gravity $\logg$ for all \Nspectra\ \rave\ spectra, as derived using the simple model (left panel; Section~\ref{sec:a-simple-model}), the main-sequence star model (center panel; Section~\ref{sec:unevolved-star-model}), and the giant star model (right panel; Section~\ref{sec:evolved-star-model}). These panels demonstrate how a single quadratic model is insufficient for all \rave\ stars (left panel), and illustrate some of the systematic artefacts that can result from testing on stars outside of the training set (center and right panel).  These panels do not represent our final results, which are shown in Figure~\ref{fig:test-set-hrd}.\label{fig:test-set-density}}
 \end{figure*}
 
 
@@ -1408,7 +1410,7 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \begin{figure}[p]
 \center
 \includegraphics[width=0.5\textwidth]{figures/joint-model-differences.pdf}
-\caption{The normalized differences in effective temperature $\teff$ and surface gravity $\logg$ between the main-sequence model and the simplest model (top panel), and the giant model and the simplest model (bottom panel).  The density scaling is logarithmic, and the differences in $\teff$ and $\logg$ are scaled to make them approximately isotropic (see text for details).  The peak at $(0, 0)$ represents good agreement between the simplest model and comparison model, whereas the over-densities elsewhere are a consequence of testing the model on stars very different to the training set (e.g., dwarf stars tested on a model trained with only giant stars).\label{fig:joint-model-differences}}
+\caption{The normalized differences in effective temperature $\teff$ and surface gravity $\logg$ between the main-sequence model and the simple model (top panel), and the giant model and the simple model (bottom panel).  The density scaling is logarithmic, and the differences in $\teff$ and $\logg$ are scaled to make them approximately isotropic (see text for details).  The peak at $(0, 0)$ represents good agreement between the simple model and comparison model, whereas the over-densities elsewhere are a consequence of testing the model on stars very different to the training set (e.g., dwarf stars tested on a model trained with only giant stars).\label{fig:joint-model-differences}}
 \end{figure}
 
 
