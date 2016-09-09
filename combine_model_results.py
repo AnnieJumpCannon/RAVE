@@ -19,7 +19,7 @@ RESULTS_PATH = ""
 
 ms_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v43.fits.gz"))
 giant_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v42.fits.gz"))
-joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v45.fits.gz"))
+joint_results = Table.read(os.path.join(RESULTS_PATH, "rave-tgas-v46.fits.gz"))
 
 
 for t in (ms_results, giant_results, joint_results):
@@ -426,7 +426,24 @@ del combined_table["Teff_SPARV"]
 #    combined_table[column][hot] = np.nan
 #    combined_table["E_{}".format(column)] = np.nan
 
-combined_table.write("unrave-v0.96.fits.gz", overwrite=True)
+
+
+error_floor = {
+    "TEFF": 70, #100,
+    "LOGG": 0.12, #0.15,
+    "FE_H": 0.06, #0.08,
+    "MG_H": 0.07, #0.08,
+    "O_H": 0.07, #0.08,
+    "AL_H": 0.08, #0.08,
+    "CA_H": 0.07, #0.08,
+    "SI_H": 0.07, #0.08,
+    "NI_H": 0.06, #0.08,
+}
+
+for label_name, floor in error_floor.items():
+    combined_table["E_{}".format(label_name)] = np.sqrt(combined_table["E_{}".format(label_name)]**2 + floor**2)
+
+combined_table.write("unrave-v0.97.fits.gz", overwrite=True)
 
 
 

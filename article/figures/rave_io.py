@@ -26,7 +26,7 @@ def get_kordopatis_comparisons():
 
 def get_cannon_dr1(filename=None):
 
-    filename = filename or os.path.join(DATA_PATH, "../../unrave-v0.96.fits.gz")
+    filename = filename or os.path.join(DATA_PATH, "../../unrave-v0.97.fits.gz")
 
     rave_cannon_dr1 = Table.read(os.path.join(DATA_PATH, filename))
 
