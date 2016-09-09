@@ -1,32 +1,10 @@
-%% This file is part of the UNRAVE Project 
+%% This file is part of the unRAVE Project 
 %% Copyright 2016 the authors.  All rights reserved.
 
-
-%% TODO:
-%% Co-authors: Look for \stub{}s. If you can expand it, do so!
-
-\documentclass[preprint,trackchanges]{aastex}
+\documentclass[preprint]{aastex}
 
 \usepackage{amsmath}
 \usepackage{bm}
-
-%\usepackage{xcolor}
-%\definecolor{unoffensive-warning}{HTML}{B4DCED}
-
-% This section can be removed at submission.
-% ------------------------------------------
-\usepackage{color}
-\usepackage{datenumber}
-
-\newcounter{dateone}
-\newcounter{datetwo}
-
-\newcommand{\difftoday}[3]{%
-  \setmydatenumber{dateone}{\the\year}{\the\month}{\the\day}%
-  \setmydatenumber{datetwo}{#1}{#2}{#3}%
-  \addtocounter{datetwo}{-\thedateone}%
-  \the\numexpr(\thedatetwo)\relax\space days}
-% ------------------------------------------
 
 \IfFileExists{vc.tex}{\input{vc.tex}}{\newcommand{\githash}{UNKNOWN}\newcommand{\giturl}{UNKNOWN}}
 
@@ -53,8 +31,10 @@
 \newcommand{\logg}{\log g}
 \newcommand{\feh}{[\mathrm{Fe/H}]}
 
-\newcommand{\Nspectra}{520,782}
-\newcommand{\Nstars}{457,589}
+\newcommand{\Nspectra}{520,781}
+\newcommand{\Nstars}{457,588}
+
+% TODO: Final checks based on released version.
 \newcommand{\Nstarsqc}{447,207} % v0.95 finite values
 \newcommand{\Nabundances}{1,692,825} %v0.95 finite values
 
@@ -65,44 +45,17 @@
 \newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\,}
 
 
-% For AASTeX v6
-%\AuthorCallLimit=10
-%\fullcollaborationName{The \rave\ Collaboration}
-
 \begin{document}
-% Remove at submission:
-\slugcomment{{\color{red} \textbf{To appear on arXiv on 13 Sep 2016 (submission in \difftoday{2016}{9}{9})}}}
+\title{The \project{unRAVE} catalog of stellar atmospheric parameters and\\
+chemical abundances for chemo-dynamic studies in the \gaia\ era}
 
+\author{Andrew R. Casey\altaffilmark{1}, Keith Hawkins\altaffilmark{1}, David W. Hogg\altaffilmark{2,3,4,5}, Melissa Ness\altaffilmark{5}, Hans Walter-Rix\altaffilmark{5}, Georges Kordopatis\altaffilmark{6}, Andrea Kunder\altaffilmark{6}, Matthias Steinmetz\altaffilmark{6}, Harry Enke\altaffilmark{6}, Jason Sanders\altaffilmark{1}, Sergey Koposov\altaffilmark{1}, Gerry Gilmore\altaffilmark{1}, Toma\v{z} Zwitter\altaffilmark{6}, Kenneth C. Freeman\altaffilmark{7}, Luca Casagrande\altaffilmark{7}, 
+Gal Matijevic\altaffilmark{6}, George Seabroke\altaffilmark{8}, Olivier Bienayme\altaffilmark{9}, 
+Joss Bland-Hawthorn\altaffilmark{10}, Brad K. Gibson\altaffilmark{11}, Eva~K.~Grebel\altaffilmark{12}, Amina Helmi\altaffilmark{13}, Ulisse Munari\altaffilmark{14}, Julio F. Navarro\altaffilmark{15,16}, Warren Reid\altaffilmark{17,18}, Arnaud Siebert\altaffilmark{19}, Rosemary Wyse\altaffilmark{20}\\
+\vspace{2em}
+\emph{(Affiliations can be found at the end of the article)}
+}
 
-\title{The \project{unRAVE} catalog}
-
-\author{Andrew R. Casey}
-\affil{Institute of Astronomy, Madingley Road, Cambridge CB3 0HA}
-
-% Gilmore, Matijevic, McMillan, Siviero, Wojno
-
-% Specific contributors to this work:
-% There is some order already in mind, but final order will be determined by  contribution.
-\author{Some combination of: Harry Enke, Kenneth C. Freeman, Gerry Gilmore, Keith Hawkins, David W. Hogg, Sergey Koposov, Georges Kordopatis, Gal Matijevic, Melissa Ness, Jason Sanders, Matthias Steinmetz, Hans Walter-Rix}
-
-% RAVE DR5 core team:
-\author{Luca Casagrande, Andrea Kunder, Paul McMillan, Alessandro Siviero, Jennifer Wojno, Toma\v{z} Zwitter}
-% Zwitter:  University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia
-
-% RAVE builders
-\author{Joss Bland-Hawthorn, Brad K. Gibson, Arnaud Siebert, Olivier Bienayme, Julio F. Navarro, Ulisse Munari, Warren Reid, Rosemary Wyse, Amina Helmi, George Seabroke}
-% Bland-Hawthorn: Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia.
-% Gibson: E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom.
-% Siebert: Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
-% Bienayme: Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France
-% Navarro: Senior CIfAR Fellow; Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2
-% Munari: INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy
-% Reid (1/2): Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia
-% Reid (1/2): Western Sydney University, Penrith South DC, NSW 1797
-% Wyse: Johns Hopkins University, Baltimore, MD, USA
-% Helmi: Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands
-% Seabroke: Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK
-\author{and the \rave\ collaboration}
 
 \begin{abstract}
 The Milky Way is a powerful laboratory for understanding galaxy formation,
@@ -111,10 +64,10 @@ abundances for vast sets of individual stars.  These inferences require
 both astrometric and spectroscopic data.  Indeed, in order to be maximally
 useful for chemo-dynamic studies, the Tycho-Gaia Astrometric Solution 
 (\tgas) sample in the first \gaia\ data release requires a spectroscopic 
-complement that includes radial velocities, stellar parameters, and 
+complement that includes radial velocities, stellar atmospheric parameters, and 
 elemental abundances.  Among existing spectroscopic samples, the RAdial 
 Velocity Experiment (\rave) survey has the largest overlap with \tgas: 
-up to 292,036 stars.  We present a data-driven re-analysis of \rave\ 
+$\approx$250,000 stars.  We present a data-driven re-analysis of \rave\ 
 spectra using \thecannon, and we provide more precise and accurate stellar
 parameters and abundances than available in previous \rave\ data releases. 
 We constructed our model using high-fidelity \apogee\ stellar parameters 
@@ -126,12 +79,14 @@ and chemical abundances of up to seven elements (O, Mg, Al, Si, Ca, Fe, Ni)
 for \Nstarsqc\ stars.  In total we report \Nabundances\ elemental 
 abundances, with a typical precision of 0.07~dex.  The \unrave\ catalog 
 presented here, in conjunction with \tgas, represents the most powerful 
-data set for chemo-orbital analysis at the dawn of broadly available 
+data set for chemo-dynamic analysis at the dawn of broadly available 
 \gaia\ data.
 \end{abstract}
 
-\keywords{stars: fundamental parameters --- stars: abundances}
 
+\keywords{stars: fundamental parameters --- stars: abundances
+% Clear rest of page
+\clearpage}
 
 
 \section{Introduction} 
@@ -175,25 +130,27 @@ The first \gaia\ data release will include the Tycho-Gaia Astrometric Solution
 motions, and parallaxes for approximately two million stars in the Tycho-2 
 \citep{Hog_2000} catalog.  After cross-matching all major stellar spectroscopic 
 surveys\footnote{Specifically we cross-matched the Tycho-2 catalog against the 
-\apogee\ \citep{Zasowski_2013}, \ges\ \citep{Gilmore_2012,Randich_2013}, 
-\galah\ \citep{DeSilva_2015}, \lamost\ \citep{Cui_2012}, and \rave\ 
-\citep{Steinmetz_2006} surveys.}, we found that the RAdial Velocity Experiment 
-(\rave) survey is expected to have the largest overlap with the first \gaia\ 
-data release: up to 292,036 stars.  We used the \gaia\ universe model snapshot 
+\apogee\ DR13 \citep{Zasowski_2013}, \ges\ internal DR4 
+\citep{Gilmore_2012,Randich_2013}, \galah\ internal DR1 \citep{DeSilva_2015}, 
+\lamost\ DR1 \citep{Cui_2012}, and \rave\ DR4 \citep{Steinmetz_2006} catalogs.}, 
+we found that the RAdial Velocity Experiment \citep[\rave;][]{Steinmetz_2006} 
+survey is expected to have the largest overlap with the first \gaia\ 
+% TODO: Sanders: 292,036; Kunder: 264,276
+data release: up to 264,276 stars.  We used the \gaia\ universe model snapshot 
 \citep{Robin_2012} to estimate the precision in parallax and proper motions that
 could be available in the first \gaia\ data release (DR1) for stars in those 
 overlap samples.  Comparing the expected precision to what is currently available, 
 we further found that the \rave\ survey will benefit most from \gaia\ DR1: the
-distances of 63\%of stars in the \rave--\gaia\ DR1 overlap sample 
-($\approx$182,862 stars) are expected to improve with the first \gaia\ data release, 
-and 47\% of stars ($\approx$137,211 stars) are likely to have better proper motions. 
-Although the \gaia\ universe model assumes end-of-mission uncertainties --- and does 
-not account for systematics in the first data release --- this calculation still 
-provides intuition for the relative improvement that the first \gaia\ data release 
-can make to ground-based surveys.  The expected improvements for \rave\ motivated 
-us to examine what chemical abundances were available from those data, and to 
-evaluate whether we could enable new chemo-dynamic studies by contributing to the
-existing set of chemical abundances.
+distances of 63\% of stars in the \rave--\gaia\ DR1 overlap sample are expected 
+to improve with the first \gaia\ data release, and 47\% of stars are likely to
+have better proper motions.  Although the \gaia\ universe model assumes 
+end-of-mission uncertainties --- and does not account for systematics in the 
+first data release --- this calculation still provides intuition for the relative
+improvement that the first \gaia\ data release can make to ground-based surveys.  
+The expected improvements for \rave\ motivated us to examine what chemical 
+abundances were available from those data, and to evaluate whether we could 
+enable new chemo-dynamic studies by contributing to the existing set of chemical
+abundances.
 
 
 We briefly describe the \rave\ data in Section~\ref{sec:data}, before explaining
@@ -227,10 +184,10 @@ wavelength coverage of \rave\ is comparable to the Radial Velocity Spectrometer 
 board the \gaia\ space telescope \citep{Munari_2005,Kordopatis_2011,Recio-Blanco_2016}, 
 and the wavelength range overlaps with one of the key setups used for the ground-based 
 high-resolution \ges\ survey \citep{Gilmore_2012,Randich_2013}.  The spectral region 
-also includes the \ion{Ca}{2} near infrared triplet lines --- strong transitions that 
+includes the \ion{Ca}{2} near infrared triplet lines --- strong transitions that 
 are dominated by pressure broadening --- which are visible even in metal-poor stars
 or spectra with very low signal-to-noise (S/N) ratios.  Atomic transitions of 
-light-, $\alpha$-, and Fe-peak elements are present as well, allowing for detailed 
+light-, $\alpha$-, and Fe-peak elements are also present, allowing for detailed 
 chemical abundance studies.
 
 
@@ -788,10 +745,6 @@ is added in quadrature to every observation such that (for example, $\logg$),
 \end{eqnarray}
 
 
-%\begin{eqnarray}
-%\eta_{\logg} & = & \frac{\logg_a - \logg_b}{\sqrt{{\sigma_{\logg,a}}^2 + {\sigma_{\logg,b}}^2}} \quad .
-%\end{eqnarray}
-
 We increased the minimum label error until the distribution of $\eta$ 
 values for a given label approximately reached unity.  The minimum error
 values for each label are shown with the distribution of $\eta$
@@ -850,7 +803,7 @@ principal morphological flags \texttt{c1}, \texttt{c2}, \texttt{c3}, from
 There is good agreement in $\teff$, with a bias and RMS of just 4~K and 240~K,
 respectively. The offset in $\logg$ on the giant branch between this study and 
 \citet{Kordopatis_2013} has been noted in other studies (e.g., \apogee), and this issue
-has been resolved in the fifth \rave\ data release by correcting $\logg$
+has been minimized in the fifth \rave\ data release by correcting $\logg$
 values with a calibration sample consisting of asteroseismic targets and the
 \gaia\ benchmark stars.  There is also a
 slight discrepancy in the $\logg$ values along the main-sequence, where our
@@ -1194,21 +1147,21 @@ the morphological classifications \citep{Matijevic_2012} or additional
 metadata from the \rave\ pre-processing pipelines is strongly encouraged.
 
 
-We have presented the largest collection of stellar abundances for stars in the 
-first \gaia\ data release.  In total we derive reliable stellar atmospheric 
-parameters for \Nstarsqc, and report more than 1.69 million abundances.  Despite 
-the caveats and limitations discussed here, our validation experiments and 
-comparisons with high-resolution spectroscopic studies suggests that our results 
-have sufficient accuracy and precision to be useful for chemo-dynamic studies 
-that become imminently feasible only in the era of \gaia\ data.  Indeed, we
-are optimistic that the \unrave\ catalog will advance understanding of the
-Milky Way's formation and evolution.
+We have presented a comprehensive collection of precise stellar abundances 
+for stars in the first \gaia\ data release.  In total we derive reliable 
+stellar atmospheric parameters for \Nstarsqc, and report more than 1.69 
+million abundances.  Despite the caveats and limitations discussed here, 
+our validation experiments and comparisons with high-resolution 
+spectroscopic studies suggests that our results have sufficient accuracy 
+and precision to be useful for chemo-dynamic studies that become imminently 
+feasible only in the era of \gaia\ data.  Indeed, we are optimistic that 
+the \unrave\ catalog will advance understanding of the Milky Way's 
+formation and evolution.
 
 
 \subsection*{Access the results electronically}
 
 % TODO: Replace ZENODO-URL with a data url
-%\noindent\colorbox{unoffensive-warning}{\parbox{\dimexpr\linewidth-2\fboxsep}{
 \noindent{}Source code for this project is available at \texttt{\giturl}\hspace{-0.5em},
 and this document was compiled from revision hash \texttt{\githash} in that repository.
 Inferred labels, associated errors, and relevant metadata are available electronically
@@ -1217,7 +1170,6 @@ through the \rave\ DR5 database \citep{Kunder_2016}. Please note that it is a co
 of using these results that the fifth \rave\ data release by \citet{Kunder_2016} must 
 also be cited, as the work presented here would not have been possible without the 
 tireless efforts of the entire \rave\ collaboration, past and present.
-%}}
 
 
 \acknowledgements
@@ -1405,6 +1357,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \end{thebibliography}
 
+
+
 \clearpage
 
 \begin{figure}[p]
@@ -1514,14 +1468,39 @@ precision flattens out at S/N $\gtrsim 40$~pixel$^{-1}$, where our results becom
 \begin{figure}[p]
 \center
 \includegraphics[width=0.65\textwidth]{figures/gce.pdf}
-\caption{Detailed chemical abundances ([X/Fe]) for giant stars in \unrave\ with respect to [Fe/H], showing the Galactic chemical evolution derived for each element. Note that the y-axis limits vary for each panel, however for clarity we show the scaled-solar position by dashed lines, and have common tick mark spacing on the y-axis for all panels. Only stars meeting our quality constraints are shown (see Section \ref{sec:discussion}).\label{fig:gce}}
+\caption{Detailed chemical abundances ([X/Fe]) for giant stars in \unrave\ with respect to [Fe/H], showing the Galactic chemical evolution derived for each element. Bin densities are scaled logarithmically. Note that the y-axis limits vary for each panel, however for clarity we show the scaled-solar position by dashed lines, and have common tick mark spacing on the y-axis for all panels. Only stars meeting our quality constraints are shown (see Section \ref{sec:discussion}).\label{fig:gce}}
 \end{figure}
 
 
 \begin{figure}[p]
 \center
 \includegraphics[width=0.65\textwidth]{figures/hot-stars.pdf}
-\caption{Effective temperatures $\teff$ and surface gravities $\logg$ from this work, where each hexagonal bin is colored by the \emph{maximum} temperature for any star in that bin, as reported by the \rave\ pre-processing pipeline \texttt{SPARV} \citep{Steinmetz_2006,Zwitter_2008}.  Hot stars are not included in our training set, and appear above the turnoff in our labels.  For this reason, we supply a boolean quality control flag \texttt{QC} that flags stars with $\teff > 8000$~K (as reported by \texttt{SPARV}), and other results that are known to be erroneous.\label{fig:hot-stars}}
+\caption{Effective temperatures $\teff$ and surface gravities $\logg$ from this work, where each hexagonal bin is colored by the \emph{maximum} temperature for any star in that bin, as reported by the \rave\ pre-processing pipeline \texttt{SPARV} \citep{Steinmetz_2006,Zwitter_2008}.  Hot stars are not included in our training set, and appear above the turnoff in our labels.  For this reason, we supply a boolean quality control flag \texttt{QC} that flags stars with $\teff > 8000$~K (as reported by \texttt{SPARV}), and other results that are of poor quality.\label{fig:hot-stars}}
 \end{figure}
+ 
+\clearpage
 
+
+\altaffiltext{1}{Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge CB3 0HA, UK}
+\altaffiltext{2}{Simons Center for Data Analysis, 160 Fifth Avenue, 7th floor, New York, NY 10010, USA}
+\altaffiltext{3}{Center for Cosmology and Particle Physics, Department of Physics, New York University, 4 Washington Pl., room 424, New York, NY 10003, USA}
+\altaffiltext{4}{Center for Data Science, New York University, 726 Broadway, 7th floor, New York, NY 10003, USA}
+\altaffiltext{5}{Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany}
+\altaffiltext{6}{University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia}
+\altaffiltext{7}{Research School of Astronomy and Astrophysics, Mount Stromlo Observatory, The Australian National University, ACT 2611, Australia}
+\altaffiltext{8}{Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK}
+\altaffiltext{9}{Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France}
+\altaffiltext{10}{Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia}
+\altaffiltext{11}{E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom}
+\altaffiltext{12}{Astronomisches Rechen-Institut, Zentrum f\"ur Astronomie der Universit\"at Heidelberg, M\"onchhofstr.\ 12--14, 69120 Heidelberg, Germany}
+\altaffiltext{13}{Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands}
+\altaffiltext{14}{INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy}
+\altaffiltext{15}{Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2}
+\altaffiltext{16}{Senior CIfAR Fellow}
+\altaffiltext{17}{Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia}
+\altaffiltext{18}{Western Sydney University, Penrith South DC, NSW 1797}
+\altaffiltext{19}{Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l?Universit\'e, F-67000 Strasbourg, France}
+\altaffiltext{20}{Johns Hopkins University, Baltimore, MD, USA}
+
+ 
 \end{document}
