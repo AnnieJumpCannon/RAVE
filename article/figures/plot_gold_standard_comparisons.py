@@ -189,7 +189,7 @@ for ax, label_name in zip(axes, list(label_names) + list(label_names)):
         allx.extend(x)
         ally.extend(y)
         if ax.is_first_row():
-            #ax.errorbar(x, y - y, yerr=yerr, fmt=None, ecolor="#666666", zorder=-1)
+            ax.errorbar(x, y - x, yerr=yerr, fmt=None, ecolor="#666666", zorder=-1)
             _ = ax.scatter(x, y - x, c=c0, cmap="plasma", **kwds)
             diffs.extend(y-x)
 
@@ -197,7 +197,7 @@ for ax, label_name in zip(axes, list(label_names) + list(label_names)):
                 handles.append(ax.scatter([-10000], [-10000], facecolor="#cccccc", **kwds))
 
         else:
-            #ax.errorbar(x, y, yerr=yerr, fmt=None, ecolor="#666666", zorder=-1)
+            ax.errorbar(x, y, yerr=yerr, fmt=None, ecolor="#666666", zorder=-1)
             scat = ax.scatter(x, y, c=c0, cmap="plasma", **kwds)
     print(label_name, np.nanmedian(diffs), np.nanstd(diffs), np.isfinite(diffs).sum())
 

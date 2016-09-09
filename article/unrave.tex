@@ -65,7 +65,7 @@ Gerry Gilmore\altaffilmark{1},
 Toma\v{z} Zwitter\altaffilmark{6}, 
 Kenneth C. Freeman\altaffilmark{7}, 
 Luca Casagrande\altaffilmark{7}, 
-Gal~Matijevic\altaffilmark{6}, 
+Gal~Matijevi\v{c}\altaffilmark{6}, 
 George Seabroke\altaffilmark{8}, 
 Olivier Bienayme\altaffilmark{9}, 
 Joss Bland-Hawthorn\altaffilmark{10}, 
@@ -92,7 +92,7 @@ useful for chemo-dynamic studies, the Tycho-Gaia Astrometric Solution
 complement that includes radial velocities, stellar atmospheric parameters, and 
 elemental abundances.  Among existing spectroscopic samples, the RAdial 
 Velocity Experiment (\rave) survey has the largest overlap with \tgas: 
-up to 264,276 stars.  We present a data-driven re-analysis of \rave\ 
+over 200,000 stars.  We present a data-driven re-analysis of \rave\ 
 spectra using \thecannon, and we provide more precise and accurate stellar
 parameters and abundances than available in previous \rave\ data releases. 
 We constructed our model using high-fidelity \apogee\ stellar parameters 
@@ -574,7 +574,7 @@ $0.29$~dex for $\logg$, with $0.03$~dex and $0.17$~dex for [Fe/H].
 We inferred labels for all \Nspectra\ \rave\ spectra using this main-sequence/sub-giant
 star model; we made no \emph{a priori} decisions as to whether a star was likely a
 main-sequence/sub-giant star or not.  The results for the entire survey sample are shown
-in the centre panel of Figure \ref{fig:test-set-density}.  The increased density of 
+in the center panel of Figure \ref{fig:test-set-density}.  The increased density of 
 solar-type stars is consistent with \rave\ observing stars in the local neighbourhood, 
 and the high number of turn-off and main-sequence stars relative to the sub-giant branch 
 is expected from the relative lifetimes of these evolutionary phases.  An over-density
@@ -1009,8 +1009,8 @@ relatively metal-rich clusters ---  that are now tidally disrupted
 \label{sec:open-cluster-validation}
 
 
-Using positions, proper motions, and metallicities from the \rave\ official
-data release (such that they can be used as comparison), we identify $\sim$160 
+Using positions, proper motions, and metallicities from the \rave\ survey
+(i.e., not ours, such that they can be used as comparison), we identify $\sim$160 
 probable members of four open clusters that were observed by \rave.
 Specifically we identify 78 potential Pleiades members, 26 candidates in the
 Hyades, another 13 in IC4561, and 30 stars in the solar-metallicity open
@@ -1019,7 +1019,7 @@ cluster M67.
 %have error in metallicity \texttt{e\_M\_H\_K} $< 0.5$~dex, and radial
 %velocities between $-10$~km~s$^{-1}$ and 20~km~s$^{-1}$, we identify 78 
 %Pleiades members.  For the Hyades, by requiring stars within $3.5^\circ$ of the
-%cluster centre to have: radial velocities between 36~km~s$^{-1}$ and 44~km~s$^{-1}$,
+%cluster center to have: radial velocities between 36~km~s$^{-1}$ and 44~km~s$^{-1}$,
 %$[{\rm M/H}]_{RAVE}$ within $-0.15$ and 0.35, and \rave\ metallicity errors
 %$<0.12$~dex, we identify 26 potential members.  Similarly for IC4561 we select
 %13 stars by requiring: radial velocities within $-20$~km~s$^{-1}$ to $-40$~km~s$^{-1}$,
@@ -1080,8 +1080,8 @@ interpretation as a likelihood or belief (in any sense): it was introduced for
 practical reasons to identify systematic errors and combine results for multiple
 models.  Because the relative weights have no formal interpretation, it is reasonable
 to consider this method is as \emph{ad hoc} as any other approach.  The relative 
-weighting has no warranty to be (formally) correct, and may introduce inconsistencies
-or systematic errors rather than minimizing them.  
+weighting has no warranty to be (formally) correct, and therefore may introduce 
+inconsistencies or systematic errors rather than minimizing them.  
 
 
 If we only consider the results from individual models, there are a number of cautionary
@@ -1094,9 +1094,9 @@ a tapering-off in the test set --- where \emph{no} stars had reliably reported m
 below that of the training set --- which forced us to construct a heterogeneous training
 set.  The metal-poor stars included in this sample are from high-resolution studies
 \citep{Fulbright_2010,Ruchti_2011}, but it is not known if the stellar parameters are
-of high fidelity because we have limited quality metrics available.  Moreover, there
-is no guarantee that the stellar parameters \emph{or} abundances are on the same scale
-as \apogee\ \citep[and good reasons to believe they will not be; see][]{Smiljanic_2014}.
+of high fidelity because we have a limited number of quality statistics available. 
+Moreover, there is no guarantee that the stellar parameters \emph{or} abundances are 
+on the same scale as \apogee\ \citep[and good reasons to believe they will not be; see][]{Smiljanic_2014}.
 
 
 If the metallicities of metal-poor giant stars were on the same scale as the \apogee\
@@ -1135,9 +1135,7 @@ CD-38~245, the individual abundances for all extremely metal-poor stars aggregat
 stars in our sample.  Thus, while the overall metallicities appear reliable, the 
 individual abundances for extremely metal-poor stars in the test set cannot be
 considered trustworthy in any sense.  For this reason we have updated the electronic
-catalog to discard these results, and included a quality control flag to indicate
-the result was discarded (see catalog \texttt{README} file for specifics related to
-the data structure and content).
+catalog to discard these results as erroneous.
 
 
 In Section~\ref{sec:method} we assumed that any fibre- or time-dependent variations
@@ -1164,7 +1162,8 @@ regions of parameter space that we could consider as being normal (e.g.,
 an over-density of solar-type stars).  We addressed this issue for the main-sequence
 and giant models by using a third model (Section \ref{sec:a-simple-model}) to
 calculate relative weights.  However, spectra that are unusual from the 
-training set used in the simple model still project as systematic artefacts.  
+training set used in the simple model could still project as systematic 
+artefacts in label space.  
 
 
 Indeed, there are two known artefacts in our data that are relevant to this 
@@ -1182,17 +1181,20 @@ reported by \texttt{SPARV} for any star in that bin.  We show the maximum
 temperature reported by \texttt{SPARV} to demonstrate that hot stars project
 into a single clump in our label space --- near the turn-off --- in a region
 where we may otherwise be deceived into thinking the observed over-density
-is consistent with expectations from astrophysics. 
+is consistent with expectations from astrophysics.  
 
 
-We have included a boolean flag column in our catalog for quality control,
-to signify whether a result is thought to be reasonable.  Specifically, 
-stars where \texttt{SPARV} indicates a $\teff > 8000$~K do not meet our quality 
-control flag.  For all other stars, we further require $\chi_r^2 < 3$ and
-$S/N >10$~pixel$^{-1}$.  These quality constraints represent the minimum
-acceptable constraints and should not be taken verbatim: judicious use of
-the morphological classifications \citep{Matijevic_2012} or additional 
-metadata from the \rave\ pre-processing pipelines is strongly encouraged.
+This line of reasoning extends to spectra with other peculiar characteristics 
+(e.g., chromospheric emission), and for these reasons we recommend the use of
+additional metadata to investigate possible artefacts.  In our catalog we have
+included a column containing a boolean flag to indicate whether the labels pass
+very weak quality constraints.  Specifically, we flag results as failing our
+quality constraints if \texttt{SPARV} indicates a $\teff > 8000$~K, or if 
+$\chi_r^2 > 3$, or if $S/N < 10$~pixel$^{-1}$.  These quality constraints 
+represent the minimum acceptable conditions and should not be taken verbatim: 
+judicious use of the morphological classifications \citep{Matijevic_2012} or 
+additional metadata from the \rave\ pre-processing pipelines is strongly 
+encouraged.
 
 
 We have presented a comprehensive collection of precise stellar abundances 
@@ -1450,8 +1452,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \begin{figure*}[p]
 \includegraphics[width=\textwidth]{figures/pairwise-metrics.pdf}
-\caption{Distribution of differences in label estimates from multiple visits, divided by the quadrature sum of their formal errors, and a minimum error value for each observation.  If our measurements were unbiased and our errors were representative, no minimum error floor would be required and this distribution would by normally-distributed with zero mean and unity variance. 
-We increased the error floor for a given label until the distribution variance approximately reached unity. The error floors are given for each label.\label{fig:pairwise-comparison}}
+\caption{Distribution of differences in label estimates from multiple visits, divided by the quadrature sum of their formal errors, and a minimum error value for each observation.  If our measurements were unbiased and our errors were representative, no minimum error floor would be required and the distribution of $\eta$ would by normally-distributed with zero mean and unity variance. 
+We increased the error floor for each label until the variance in the distribution of $\eta$ approximately reached unity. Derived error floors are shown for each label.\label{fig:pairwise-comparison}}
 \end{figure*}
 
 
@@ -1523,7 +1525,7 @@ precision flattens out at S/N $\gtrsim 40$~pixel$^{-1}$, where our results becom
 \begin{figure}[p]
 \center
 \includegraphics[width=0.65\textwidth]{figures/hot-stars.pdf}
-\caption{Effective temperatures $\teff$ and surface gravities $\logg$ from this work, where each hexagonal bin is colored by the \emph{maximum} temperature for any star in that bin, as reported by the \rave\ pre-processing pipeline \texttt{SPARV} \citep{Steinmetz_2006,Zwitter_2008}.  Hot stars are not included in our training set, and appear above the turnoff in our labels.  For this reason, we supply a boolean quality control flag \texttt{QC} that flags stars with $\teff > 8000$~K (as reported by \texttt{SPARV}), and other results that are of poor quality.\label{fig:hot-stars}}
+\caption{Effective temperatures $\teff$ and surface gravities $\logg$ from this work, where each hexagonal bin is colored by the \emph{maximum} temperature for any star in that bin, as reported by the \rave\ pre-processing pipeline \texttt{SPARV} \citep{Steinmetz_2006,Zwitter_2008}.  Hot stars are not included in our training set, and appear above the turnoff in our labels.  For this reason, we supply a boolean quality control flag \texttt{QC} that flags stars (as \texttt{False}, for failing to meet our quality constraints) with $\teff > 8000$~K (as reported by \texttt{SPARV}), or results that do not meet other minimum constraints (see Section \ref{sec:discussion} for details).\label{fig:hot-stars}}
 \end{figure}
  
 \clearpage

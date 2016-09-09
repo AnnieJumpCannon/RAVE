@@ -49,7 +49,7 @@ for i, snr in enumerate(snrs):
     # On top figure show density.
     # On bottom axes show metallicity.
     
-    ok = cannon_dr1["QC"]
+    ok = cannon_dr1["QC"] * (cannon_dr1["SNR"] > snr)
 
     ax = axes[0, i]
 

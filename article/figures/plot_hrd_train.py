@@ -20,17 +20,18 @@ else:
 
 """
 names = (
-    r"${\rm Joint}$ ${\rm model}$",
+    r"${\rm Simple}$ ${\rm model}$",
     r"${\rm Main{-}sequence}$ ${\rm model}$", 
     r"${\rm Giant}$ ${\rm model}$", 
 )
 
 import AnniesLasso as tc
 labelled_sets = (
-    tc.load_model("rave-tgas-v41.model").labelled_set, # joint
-    tc.load_model("rave-tgas-v16b.model").labelled_set, # ms result
+    tc.load_model("rave-tgas-v46.model").labelled_set, # joint
+    tc.load_model("rave-tgas-v43.model").labelled_set, # ms result
     tc.load_model("rave-tgas-v42.model").labelled_set, # giant result
 )
+
 labelled_sets[1]["TEFF"] = labelled_sets[1]["EPIC_TEFF"]
 labelled_sets[1]["LOGG"] = labelled_sets[1]["EPIC_LOGG"]
 labelled_sets[1]["FE_H"] = labelled_sets[1]["EPIC_FEH"]

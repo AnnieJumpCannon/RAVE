@@ -86,6 +86,8 @@ for i, (model, filenames, base_filename, color, title) in enumerate(comparisons)
         x.append(Lambda)
         y.append(np.nanstd(model.labels_array - test_set, axis=0))
 
+        if i == 0 and "-5.736" in filename:
+            print(i, filename, np.nanmean(model.labels_array - test_set, axis=0), np.nanstd(model.labels_array - test_set, axis=0))
 
     x = np.array(x)
     y = np.array(y)

@@ -67,7 +67,7 @@ for i, (row, cluster_name) in enumerate(zip(axes, cluster_names)):
 
     isochrone, isochrone_path = (None, "{}_padova_iso.dat".format(cluster_name))
     if os.path.exists(isochrone_path):
-        isochrone = Table.read(isochrone_path, format="ascii", header_start=12)
+        isochrone = Table.read(isochrone_path, format="ascii")
         isochrone[iso_teff] = 10**isochrone["logTe"]
 
     match = (dr4["Cluster"] == cluster_name) * dr4_ok
