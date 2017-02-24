@@ -7,7 +7,7 @@ An independent data-driven analysis of *RAVE* spectra in anticipation of the *Ga
 
 **[You can access the most recent version of the PDF here](https://github.com/AnnieJumpCannon/RAVE/raw/master-pdf/article/unrave.pdf)**.
 
-**[You can access the results table through Zenodo here](zenodo.org/record/154381#.V9-xeZMrLEY)**.
+**[You can access the results table through Zenodo here](http://zenodo.org/record/154381#.V9-xeZMrLEY)**.
 
 Authors
 =======
