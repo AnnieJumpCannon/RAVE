@@ -9,7 +9,7 @@
 \IfFileExists{vc.tex}{\input{vc.tex}}{\newcommand{\githash}{UNKNOWN}\newcommand{\giturl}{UNKNOWN}}
 
 \newcommand{\acronym}[1]{{\small{#1}}}
-
+\newcommand{\article}{\emph{Article}}
 \newcommand{\project}[1]{\textsl{#1}}
 \newcommand{\gaia}{\project{Gaia}}
 \newcommand{\thecannon}{\project{The~Cannon}}
@@ -60,21 +60,21 @@ Sergey~Koposov\altaffilmark{1},
 Harry~Enke\altaffilmark{6},
 Jason~Sanders\altaffilmark{1},
 Gerry~Gilmore\altaffilmark{1},
-Toma\v{z}~Zwitter\altaffilmark{6},
-Kenneth~C.~Freeman\altaffilmark{7},
-Luca~Casagrande\altaffilmark{7},
-Gal~Matijevi\v{c}\altaffilmark{6},
-George~Seabroke\altaffilmark{8},
-Olivier~Bienaym\'e\altaffilmark{9},
-Joss~Bland-Hawthorn\altaffilmark{10},
-Brad~K.~Gibson\altaffilmark{11},
-Eva~K.~Grebel\altaffilmark{12},
-Amina~Helmi\altaffilmark{13},
-Ulisse~Munari\altaffilmark{14},
-Julio~F.~Navarro\altaffilmark{15,16},
-Warren~Reid\altaffilmark{17,18},
-Arnaud~Siebert\altaffilmark{9},
-Rosemary~Wyse\altaffilmark{19}\\
+Toma\v{z}~Zwitter\altaffilmark{7},
+Kenneth~C.~Freeman\altaffilmark{8},
+Luca~Casagrande\altaffilmark{8},
+Gal~Matijevi\v{c}\altaffilmark{7},
+George~Seabroke\altaffilmark{9},
+Olivier~Bienaym\'e\altaffilmark{10},
+Joss~Bland-Hawthorn\altaffilmark{11},
+Brad~K.~Gibson\altaffilmark{12},
+Eva~K.~Grebel\altaffilmark{13},
+Amina~Helmi\altaffilmark{14},
+Ulisse~Munari\altaffilmark{15},
+Julio~F.~Navarro\altaffilmark{16,17},
+Warren~Reid\altaffilmark{18,19},
+Arnaud~Siebert\altaffilmark{10},
+Rosemary~Wyse\altaffilmark{20}\\
 \vspace{2em}
 \emph{(Affiliations can be found at the end of the article)}
 }
@@ -137,7 +137,7 @@ parallaxes and proper motions for more than $10^9$ stars in its final data
 release in 2022.  While this is a sample size about four orders of magnitude 
 larger than its predecessor \hipparcos, both astrometry and chemistry are 
 required to fully characterize the formation and evolution of the Milky Way. 
-\gaia\ will also provide radial velocities, stellar parameters and chemical 
+\gaia\ will also provide radial velocities, stellar parameters, and chemical 
 abundances for a subset of brighter stars, but these measurements will not be 
 available in the first few data releases. Until those abundances are available,
 astronomers seeking to simultaneously use chemical and dynamical information are
@@ -200,7 +200,7 @@ $9 < I < 12$, with a weak $J - K_s > 0.5$ cut near the disk and bulge \citep{Woj
 The $I$ band was used for the target selection because it has a good overlap with the
 wavelength range that \rave\ operates in:  8410--8795~\AA.  The resolution and 
 wavelength coverage of \rave\ is comparable to the Radial Velocity Spectrometer on
-board the \gaia\ space telescope \citep{Munari_2005,Kordopatis_2011,Recio-Blanco_2016}, 
+board the \gaia\ space telescope \citep{Munari_2005,Kordopatis_2011},
 and the wavelength range overlaps with one of the key setups used for the ground-based 
 high-resolution \ges\ survey \citep{Gilmore_2012,Randich_2013}.  The spectral region 
 includes the \ion{Ca}{2} near infrared triplet lines --- strong transitions that 
@@ -267,11 +267,22 @@ choice complicated the construction of our model (e.g., see Section
 \ref{sec:the-training-set}), a data-driven approach makes use of all available 
 information in the spectrum and lowers the S/N ratio at which systematic effects 
 begin to dominate.  In other words, in the low S/N regime, a well-constructed 
-data-driven model will yield more precise \emph{labels} (e.g., stellar parameters 
-and chemical abundances) than most physics-driven models\footnote{However, see 
-\citet{Casey_2016a}.}.  This is particularly relevant for the low-resolution 
-\rave\ data analysed here, because about half of the spectra have S/N 
-$\lesssim 50$~pixel$^{-1}$.
+data-driven model will yield more precise \emph{labels}\footnote{In order to 
+dispel any (well founded) terminology confusion, we note that throughout this
+\article\ we follow the terminology introduced by \citet{Ness_2015}, where 
+\emph{continuous} values of stellar parameters and chemical abundances are 
+collectively described as stellar \emph{labels}. This varies from the machine 
+learning literature where the term `label' is more frequently used to describe
+discrete or categorical values. Here we have opted to follow the \citet{Ness_2015} 
+terminology in order to be consistent with other papers making use of \thecannon.
+Similarly, when we refer to a \emph{label misclassification}, we qualitatively
+refer to a scenario when a `significantly' incorrect label (from The Truth) has
+been assigned. In other words, we will use the term \emph{label misclassification}
+as a qualitative description, not as a quantitative definition.}
+(stellar parameters and chemical abundances) than most physics-driven 
+models\footnote{However, see \citet{Casey_2016a}.}.  This is particularly relevant 
+for the low-resolution \rave\ data analysed here, because about half of the 
+spectra have S/N $\lesssim 50$~pixel$^{-1}$.
 
 
 There are two main analysis steps when using \thecannon: the \emph{training} 
@@ -339,8 +350,9 @@ by optimizing the penalized likelihood function
   \quad ,
 \end{eqnarray}
 
-\noindent{}where $\Lambda$ is a regularization parameter which we will heuristically set
-in later sections, and $Q(\vectheta)$ is a L1 regularizing function that encourages 
+\noindent{}where $\Lambda$ is a regularization parameter which we will set by leave-one-out 
+cross-validation in later sections, and $Q(\vectheta)$ is a L1 regularizing function 
+\citep[e.g., see \emph{LASSO} in][and related literature]{Tibshirani_1996} that encourages 
 $\vectheta$ values to take on zero values without breaking convexity \citep{Casey_2016b}:
 \begin{eqnarray}\label{eq:regularization-function}
 	Q(\vectheta) = \sum_{d=1}^{D-1} |{\theta_d}| \quad .
@@ -565,7 +577,18 @@ cross validation are, respectively: $38$~K and $256$~K for $\teff$, $0.05$~dex a
 $0.29$~dex for $\logg$, with $0.03$~dex and $0.17$~dex for [Fe/H].
 
 
-We inferred labels for all \Nspectra\ \rave\ spectra using this main-sequence/sub-giant
+We note that while leave-one-out cross-validation has been used to choose a justified
+regularization strength, it cannot be used to find the \emph{optimal} regularization
+strength across all pixels. In the same sense, the regularization strength $\Lambda$
+could -- in principle -- differ for each pixel \emph{and} each label. A penalized
+likelihood function of that description could qualitatively be similar to a
+Bayesian hierarchical model with strong priors on the spectral derivatives $\vectheta$ being
+zero. Rather, in this case we have performed 30 iterations of leave-one-out
+cross-validation and we have fixed one global $\Lambda$ value based on the RMS 
+improvement in our 30 pre-selected regularization strengths.
+
+
+We inferred labels for all \Nspectra\ \rave\ spectra using this regularized main-sequence/sub-giant
 star model; we made no \emph{a priori} decisions as to whether a star was likely a
 main-sequence/sub-giant star or not.  The results for the entire survey sample are shown
 in the center panel of Figure \ref{fig:test-set-density}.  The increased density of 
@@ -672,11 +695,18 @@ to make the central peak near $(0, 0)$ to be approximately isotropic by setting
 	$\delta_{T_{\rm eff}} = 50$~K for the giant model, and 
 	$\delta_{\log{g}} = 0.15$~dex for both models.
 It is important to note that these $\delta$ values do not represent any kind of 
-intrinsic uncertainty or precision: they are merely normalization factors.  Adopting
-substantially different scaling factors would produce in clear inconsistencies in our
-results (e.g., sub-giants being misclassified as giants).  Therefore we chose these 
-factors empirically to make the distributions in Figure \ref{fig:joint-model-differences}
-approximately isotropic, and to some extent, comparable.  In Figure 
+intrinsic uncertainty or precision: they are merely normalization factors.  
+Empirically, we found that adopting substantially different scaling factors (e.g.,
+a relative factor of two change) would produce clear inconsistencies in our results (e.g.,
+sub-giants being misclassified as giants). Thus while the normalization factors
+are likely sensitive at the 100\% level, our tests suggested they were not
+sensitive within the $\approx$30\% level (e.g., 120~K and 65~K, respectively). Therefore we 
+chose these factors empirically to make the distributions in Figure \ref{fig:joint-model-differences}
+approximately isotropic, and to some extent, comparable. We also note that
+these normalization factors are comparable to the RMS scatter in the training sets
+of the giant model and the main-sequence model, which qualitatively describes why 
+differences with respect to the simple model become approximately isotropic when
+scaled with these normalization factors.  In Figure 
 \ref{fig:joint-model-differences} the stars within the peak at $(0, 0)$ represent 
 objects where the simple model and the comparison model both report similar labels.  
 The artefacts seen in the Hertzsprung-Russell diagrams in Figure \ref{fig:test-set-density} 
@@ -715,6 +745,17 @@ near $\log{g} \approx 3.5$, in the training set overlap region of both models.
 For abundance labels in the giant model that are not in the main-sequence
 model (e.g., [O/H], [Mg/H]), we only report abundances for objects if
 $w_{ms} < 0.05$.
+
+
+The weighted labels for all stars are shown as normalized historgrams in
+Figure \ref{fig:label-histograms}. The normalization in each axis is arbitrary, 
+since main-sequence stars do not have detailed abundances here, there are fewer
+stars with -- for example, [Ni/H] labels -- than there are stars with $\teff$
+labels. The [X/H] abundance distributions peak near Solar values, and the peaks
+in the $\teff$ and $\logg$ histograms are consistent with our expectations from
+astrophysics: the build of clump stars is visible for cool giant stars 
+($\logg \approx 2.5$ and $\teff \approx 4750$~K), and the increase in turn-off stars
+at $\teff \approx 6000$~K is expected given the longer timescales for the turnoff.
 
 
 The weighted $\teff$ and $\logg$ values for stars meeting different S/N 
@@ -1052,7 +1093,6 @@ any of the aforementioned clusters.  We note however, that the same discrepancy
 with the isochrone appears present in the fourth \rave\ data release \citet{Kordopatis_2013}.
 
 
-
 \section{Discussion}
 \label{sec:discussion}
 
@@ -1061,10 +1101,13 @@ We have performed an independent re-analysis of \Nspectra\ \rave\ spectra,
 having derived atmospheric parameters ($\teff$, $\logg$, [Fe/H]) for all stars,
 as well as detailed chemical abundances for red giant branch stars.  When 
 combined with the \tgas\ sample, these results amount to a powerful compendium 
-for chemo-dynamic studies of the Milky Way.  However, our analysis has caveats.
-Inferences based on these results should recognize those caveats, and acknowledge 
-that these results are subject to our explicit assumptions, some of which are provably
-incorrect.
+for chemo-dynamic studies of the Milky Way.  However, \emph{all} statistical 
+inferences -- in any study -- are crucially reliant on assumptions, and any 
+number of decisions that can be called into question. Our analysis, and our
+results, are no different. 
+Inferences based on these results should recognize those caveats, and acknowledge
+that these results are subject to our explicit assumptions, some of which are 
+provably incorrect.
 
 
 For practical purposes we adopted separate models: one for the giant branch and one
@@ -1075,7 +1118,11 @@ practical reasons to identify systematic errors and combine results for multiple
 models.  Because the relative weights have no formal interpretation, it is reasonable
 to consider this method is as \emph{ad hoc} as any other approach.  The relative 
 weighting has no warranty to be (formally) correct, and therefore may introduce 
-inconsistencies or systematic errors rather than minimizing them.  
+inconsistencies or systematic errors rather than minimizing them.  While Bayesian
+model averaging \citep[e.g., ][and similar methods]{Hoeting_1999} repreresent more
+formal and considered approaches to weighting -- or deciding between -- multiple 
+models, these approaches were not considered here due in part to their higher 
+computational cost.
 
 
 If we only consider the results from individual models, there are a number of cautionary
@@ -1207,7 +1254,8 @@ advance understanding of the Milky Way's formation and evolution.
 \noindent{}Source code for this project is available at \texttt{\giturl}\hspace{-0.5em},
 and this document was compiled from revision hash \texttt{\githash} in that repository.
 Derived labels, associated errors, and relevant metadata are available electronically
-through the \rave\ database from 19 September 2016 onwards. Please note that it is a 
+from Zenodo \citep{Zenodo} at \url{http://doi.org/10.5281/zenodo.154381}, or 
+from the \rave\ online database. Please note that it is a 
 condition of using these results that the \rave\ data release by \citet{Kunder_2016} 
 must also be cited, as the work presented here would not have been possible without the 
 tireless efforts of the entire \rave\ collaboration, past and present.
@@ -1283,9 +1331,11 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Casey \& Schlaufman(2015)]{Casey_Schlaufman_2015} Casey, A.~R., \& Schlaufman, K.~C.\ 2015, \apj, 809, 110 
 
-\bibitem[Casey(2016)]{Casey_2016a} Casey, A.~R.\ 2016, \apjs, 223, 8 
+\bibitem[Casey(2016a)]{Casey_2016a} Casey, A.~R.\ 2016, \apjs, 223, 8 
 
-\bibitem[Casey et al.(2016)]{Casey_2016b} Casey, A.~R., Hogg, D.~W., Ness, M., et al.\ 2016, arXiv:1603.03040 
+\bibitem[Casey et al.(2016b)]{Casey_2016b} Casey, A.~R., Hogg, D.~W., Ness, M., et al.\ 2016, arXiv:1603.03040 
+
+\bibitem[Casey et al. (2016c)]{Zenodo} Casey, A.~R., et al.\ 2016, Zenodo, 10.5281/zenodo.154381
 
 \bibitem[Cui et al.(2012)]{Cui_2012} Cui, X.-Q., Zhao, Y.-H., Chu, Y.-Q., et al.\ 2012, Research in Astronomy and Astrophysics, 12, 1197 
 
@@ -1309,6 +1359,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Ho et al.(2016)]{Ho_2016} Ho, A.~Y.~Q., Ness, M.~K., Hogg, D.~W., et al.\ 2016, arXiv:1602.00303 
  
+\bibitem[Hoeting et al.(1999)]{Hoeting_1999} Hoeting, J.~A., et al.\ 1999, Statistical Science, 14, 4, 382--417
+
 \bibitem[H{\o}g et al.(2000)]{Hog_2000} H{\o}g, E., Fabricius, C., Makarov, V.~V., et al.\ 2000, \aap, 355, L27 
 
 \bibitem[Huber et al.(2016)]{Huber_2016} Huber, D., Bryson, S.~T., Haas, M.~R., et al.\ 2016, \apjs, 224, 2 
@@ -1363,8 +1415,6 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Randich et al.(2013)]{Randich_2013} Randich, S., Gilmore, G., \& Gaia-ESO Consortium 2013, The Messenger, 154, 47 
 
-\bibitem[Recio-Blanco et al.(2016)]{Recio-Blanco_2016} Recio-Blanco, A., de Laverny, P., Allende Prieto, C., et al.\ 2016, \aap, 585, A93 
-
 \bibitem[Reddy et al.(2003)]{Reddy_2003} Reddy, B.~E., Tomkin, J., Lambert, D.~L., \& Allende Prieto, C.\ 2003, \mnras, 340, 304 
 
 \bibitem[Reddy et al.(2006)]{Reddy_2006} Reddy, B.~E., Lambert, D.~L., \& Allende Prieto, C.\ 2006, \mnras, 367, 1329 
@@ -1384,6 +1434,8 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \bibitem[Steinmetz et al.(2006)]{Steinmetz_2006} Steinmetz, M., Zwitter, T., Siebert, A., et al.\ 2006, \aj, 132, 1645 
 
 \bibitem[Taylor(2005)]{Taylor_2005} Taylor, M.~B.\ 2005, Astronomical Data Analysis Software and Systems XIV, 347, 29 
+
+\bibitem[Tibshirani(1996)]{Tibshirani_1996} Tibshirani, R.\ 1996, Journal of the Royal Statistical Society. Series B (Methodological), 58, 267-288
 
 \bibitem[Valenti \& Fischer(2005)]{Valenti_Fischer_2005} Valenti, J.~A., \& Fischer, D.~A.\ 2005, \apjs, 159, 141 
 
@@ -1431,6 +1483,13 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 \center
 \includegraphics[width=0.5\textwidth]{figures/model-weights.pdf}
 \caption{The mean relative main-sequence model weight $w_{ms}/(w_{ms} + w_{giant})$ at each hexagonal bin of weighted effective temperature $\teff$ and surface gravity $\logg$.  The relative weighting illustrates how only results from the main-sequence model are adopted for unevolved stars, and there is a gradual transition to using results from the giant model, before only results from the giant model are used for evolved stars.\label{fig:model-weights}}
+\end{figure}
+
+
+\begin{figure}[p]
+\center
+\includegraphics[width=0.5\textwidth]{figures/label-histograms.pdf}
+\caption{Normalized histograms showing the derived labels for all \rave\ stars after combining labels from the main-sequence and giant star models. Only results meeting our quality constraints are shown (see Section~\ref{sec:discussion}). The abundance labels peak near Solar values, and the overdensities in $\teff$ and $\logg$ labels is expected given the longer phases of the giant branch clump and turn-off.\label{fig:label-histograms}}
 \end{figure}
 
 
@@ -1527,19 +1586,21 @@ $^{2}${Simons Center for Data Analysis, 160 Fifth Avenue, 7th floor, New York, N
 $^{3}${Center for Cosmology and Particle Physics, Department of Physics, New York University, 4 Washington Pl., room 424, New York, NY 10003, USA} \\
 $^{4}${Center for Data Science, New York University, 726 Broadway, 7th floor, New York, NY 10003, USA} \\
 $^{5}${Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany} \\
-$^{6}${University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia} \\
-$^{7}${Research School of Astronomy and Astrophysics, Mount Stromlo Observatory, The Australian National University, ACT 2611, Australia} \\
-$^{8}${Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK} \\
-$^{9}${Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l'Universit\'e, F-67000 Strasbourg, France} \\
-$^{10}${Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia} \\
-$^{11}${E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom} \\
-$^{12}${Astronomisches Rechen-Institut, Zentrum f\"ur Astronomie der Universit\"at Heidelberg, M\"onchhofstr.\ 12--14, 69120 Heidelberg, Germany} \\
-$^{13}${Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands} \\
-$^{14}${INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy} \\
-$^{15}${Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2} \\
-$^{16}${Senior CIfAR Fellow} \\
-$^{17}${Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia} \\
-$^{18}${Western Sydney University, Penrith South DC, NSW 1797} \\
-$^{19}${Johns Hopkins University, Baltimore, MD, USA} \\
+$^{6}$Leibniz-Institut für Astrophysik Potsdam (AIP), An der Sternwarte 16, D-14482 Potsdam, Germany \\
+$^{7}${University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia} \\
+$^{8}${Research School of Astronomy and Astrophysics, Mount Stromlo Observatory, The Australian National University, ACT 2611, Australia} \\
+
+$^{9}${Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK} \\
+$^{10}${Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l'Universit\'e, F-67000 Strasbourg, France} \\
+$^{11}${Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia} \\
+$^{12}${E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom} \\
+$^{13}${Astronomisches Rechen-Institut, Zentrum f\"ur Astronomie der Universit\"at Heidelberg, M\"onchhofstr.\ 12--14, 69120 Heidelberg, Germany} \\
+$^{14}${Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands} \\
+$^{15}${INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy} \\
+$^{16}${Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2} \\
+$^{17}${Senior CIfAR Fellow} \\
+$^{18}${Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia} \\
+$^{19}${Western Sydney University, Penrith South DC, NSW 1797} \\
+$^{20}${Johns Hopkins University, Baltimore, MD, USA} \\
 
 \end{document}

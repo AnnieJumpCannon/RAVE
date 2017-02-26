@@ -1,0 +1,128 @@
+Statistical Reviewer's comments (Reviewer #2):
+
+The following comments concern the statistical content of the article. They are all relatively minor, and as whole the article is well written and was enjoyable to review.
+
+
+1. The authors use the term "labels" throughout to refer to e.g. stellar parameters and chemical abundances, and refer to "misclassification" (e.g. the second-to-last bullet point prior to Section 3.1). However, the quantities referred to are continuous parameters, not discrete/categorical, and so I find the label/misclassification terminology to be a bit confusing. What is meant by a "misclassification" when considering a continuous parameter?
+
+-- Author's response:
+
+    This is a very valid point, one which we failed to clarify.
+
+    In this paper we have opted to follow the terminology introduced by Ness et al. (2015)
+    where stellar parameters and chemical abundances are collectively described as stellar
+    *labels*. There are similar examples in the astrophysics literature where continuous
+    values have been described as labels, but this no doubt differs from the machine
+    learning community where the term *label* is used to describe a discrete or catagorical
+    value.
+
+    Because this point raises valid confusion, we have added a footnote to the manuscript
+    which explains the origin of the terminology, and gives a better description of what
+    a label represents in the context of this paper. The following footnote has been
+    added at the start of Section 3 (Method), in the first instance where *label* is 
+    introduced in the paper:
+
+        In order to dispel any (well founded) terminology confusion, we note that throughout
+        this \article\ we follow the terminology introduced by \citet{Ness_2015}, where 
+        \emph{continuous} values of stellar parameters and chemical abundances are 
+        collectively described as stellar \emph{labels}. This varies from the machine 
+        learning literature where the term `label' is more frequently used to describe
+        discrete or categorical values. Here we have opted to follow the \citet{Ness_2015} 
+        terminology in order to be consistent with other papers making use of \thecannon.
+        Similarly, when we refer to a \emph{label misclassification}, we qualitatively
+        refer to a scenario when a `significantly' incorrect label (from The Truth) has
+        been assigned. In other words, we will use the term \emph{label misclassification}
+        as a qualitative description, not as a quantitative definition.
+
+    We thank the referee for raising this point, and ask their forgiveness for this
+    initial confusion in terminology.
+
+2. In Section 3.1 the authors state that Lambda is "a regularization parameter which [they] will heuristically set in later sections." I suggest that it be stated here that leave-one-out cross-validation is used (and which I encourage!), even if a full explanation is not given until Section 3.4; I found myself skipping to the later sections to learn what was meant by "heuristically." The authors may also want to mention, perhaps in Section 3.4, that leave-one-out cross-validation cannot be
+used to determine the "best" value of Lambda in a global sense, but rather that it is used to select between the 30 pre-specified values (which is known to those familiar with LOOCV but is nonetheless a caveat).
+
+-- Author's response:
+
+    We have removed the "heuristic" sentence and replaced it with: "where $\Lambda$ is a regularization parameter which we will set by leave-one-out cross-validation in later sections,"
+
+
+    We have also added the following paragraph to Section 3.4, which describes the
+    performance of leave-one-out cross-validation, and comments on the qualitatively
+    similar approach of a Bayesian hierarchical model (thereby addressing #4 below):
+
+
+        We note that while leave-one-out cross-validation has been used to choose a justified
+        regularization strength, it cannot be used to find the \emph{optimal} regularization
+        strength across all pixels. In the same sense, the regularization strength $\Lambda$
+        could -- in principle -- differ for each pixel \emph{and} each label. A penalized
+        likelihood function of that description could qualitatively be similar to a
+        Bayesian hierarchical model with strong priors on the spectral derivatives $\theta$ being
+        zero. Rather, in this case we have performed 30 iterations of leave-one-out
+        cross-validation and we have fixed one global $\Lambda$ value based on the RMS 
+        improvement in our 30 pre-selected regularization strengths.
+
+
+3. Given the statistical methods adopted, as described in Section 3.1 and elsewhere, the authors should cite the wealth of statistics literature on fitting penalized likelihood functions. For example, their methodology is closely related to the well-known LASSO (Tibshirani 1996: http://www.jstor.org/stable/2346178?seq=1#page_scan_tab_contents).
+
+-- Author's response:
+
+    Good catch! We have added in the citation to Tibshirani (1996), which we should have included earlier.
+
+4. I would welcome in Section 3.1 some comments on other potential modeling approaches and their strengths/limitations. For example, a Bayesian hierarchical model would naturally provide regularization and the "borrowing of strength" across the population, but I would guess that the size of the data leads to computational challenges that (currently) prohibit fitting such a model. If the authors see fit, such comments may also lead into a brief discussion of the connection between penalized
+likelihood approaches and Bayesian methods (e.g. one can consider the penalization term to be a prior distribution on the parameters, and the penalized-likelihood estimates to be the maximum a posteriori, MAP, estimates); this may helpful to readers familiar with Bayesian methods (as their use in astrophysics is increasing) but not with penalized likelihood approaches.
+
+-- Author's response:
+
+    We have addressed this in our answer to item #2 above. If requested we can expand on this discussion, but we thought it fit more appropriately in Section 3.4 rather than Section 3.1, because our penalized likelihood (and decisions based on different regularization strengths) is not fully introduced until Section 3.4 
+
+
+5. In Section 3.6, the authors introduce scaling factors that are chosen empirically to derive weighted "labels." Some discussion of the sensitivity to the choice of factors would be welcome. Presumably other values of the factors than those ultimately adopted were examined during the empirical fitting, so some discussion of the sensitivity should be feasible.
+
+-- Author's response:
+
+    We have added a paragraph of discussion on this topic. In practice, the normalization factors were not sensitive past the ~30% level. The paragraph we have added reads:
+
+        It is important to note that these $\delta$ values do not represent any kind of 
+        intrinsic uncertainty or precision: they are merely normalization factors.  
+        Empirically, we found that adopting substantially different scaling factors (e.g.,
+        a relative factor of two change) would produce clear inconsistencies in our results (e.g.,
+        sub-giants being misclassified as giants). Thus while the normalization factors
+        are likely sensitive at the 100\% level, our tests suggested they were not
+        sensitive within the $\approx$30\% level (e.g., 120~K and 65~K, respectively). Therefore we 
+        chose these factors empirically to make the distributions in Figure \ref{fig:joint-model-differences}
+        approximately isotropic, and to some extent, comparable. We also note that
+        these normalization factors are comparable to the RMS scatter in the training sets
+        of the giant model and the main-sequence model, which qualitatively describes why 
+        differences with respect to the simple model become approximately isotropic when
+        scaled with these normalization factors. 
+
+
+6. In the first paragraph of Section 5 the authors state: "However, our analysis has caveats. Inferences based on these results should recognize those caveats, and acknowledge that these result are subject to our explicit assumptions, some of which are provably incorrect." I would go a step further and claim that all statistical inferences are based on assumptions and decisions that can be called into question (e.g. what data to use and any preprocessing of the data that is performed, how to
+treat missing data and/or outliers, etc.). That the authors shine a light on their decisions/assumptions and acknowledge potential shortcomings that result is commendable.
+
+-- Author's response:
+
+    We agree! We have amended the paragraph in question to read:
+
+        However, \emph{all} statistical inferences -- in any study --
+        are crucially reliant on assumptions, and any number of decisions that can be
+        called into question. Our analysis, and our results, are no different. Inferences based on these 
+        results should recognize those caveats, and acknowledge that these results are 
+        subject to our explicit assumptions, some of which are provably incorrect.
+
+7. The authors discuss the weighting of the giant-branch and main-sequence models in the second paragraph of Section 5, noting that the "relative weighting has no warranty to be (formally) correct, and therefore may introduce inconsistencies or systematic errors rather than minimizing them." A more formal method for determining the weighting is Bayesian Model Averaging (e.g. Hoeting et al. 1999: http://www.stat.colostate.edu/~jah/papers/statsci.pdf), among others. While such approaches
+may not be computationally feasible, or not preferable for other reasons, some discussion of their unsuitability for this particular analysis would be beneficial. Were any other approaches considered?
+
+-- Author's response:
+
+    The referee is correct. We did not consider Bayesian Model Averaging here in
+    part due to computational cost. We have added some text to Section 5 which
+    remarks on this:
+
+        Because the relative weights have no formal interpretation, it is reasonable
+        to consider this method is as \emph{ad hoc} as any other approach.  The relative 
+        weighting has no warranty to be (formally) correct, and therefore may introduce 
+        inconsistencies or systematic errors rather than minimizing them.  While Bayesian
+        model averaging \citep[e.g., ][and similar methods]{Hoeting_1999} repreresent more
+        formal and considered approaches to weighting -- or deciding between -- multiple 
+        models, these approaches were not considered here due in part to their higher 
+        computational cost.

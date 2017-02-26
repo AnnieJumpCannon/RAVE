@@ -1,0 +1,53 @@
+I have carefully reviewed the manuscript by Casey et al. "The RAVE-on
+catalog of stellar atmospheric chemical abundances..." and have the
+following recommendations.
+
+This paper presents the results of a valuable and comprehensive effort
+to obtain greatly improved estimates of stellar parameters and elemental
+abundances for the over 500K stars from RAVE DR5. It is clearly worthy
+of publication in the ApJ, and I urge rapid acceptance.
+
+The paper is extremely well written, and describes the procedures and
+cautions in interpretation of the results very well indeed. In fact, I
+have only one primary recommendation for the authors to consider.
+
+That is, the figure I was hoping to see is one that provides the reader
+a quick way to assess the distributions of the derived params and
+abundances (including [Fe/H]) in the form of panels of histograms.
+Basically, what I found myself wanting to see was a single set of panels
+which show the full set of derived Teff, logg, [Fe/H], and [X/Fe] for
+the > 500K stars that the authors have made available electronically.
+This would be quite useful for other workers considering these data, and
+are of course trivial to produce.
+
+My apologies for the slight delay in responding to this manuscript, but
+I was on travel, and only now carved out the time to take care of this
+review. This is an extremely important paper, and one that sets a high
+standard for those to follow, based on the ever-expanding data now
+coming available from other surveys.
+
+-- Author's response:
+
+    We kindly thank the referee for their positive review of our manuscript.
+
+    We have included the figure requested by the referee, and added a paragraph
+    to the text that references this figure in the appropriate section of the
+    manuscript:
+
+        The weighted labels for all stars are shown as normalized historgrams in
+        Figure \ref{fig:label-histograms}. The normalization in each axis is arbitrary, 
+        since main-sequence stars do not have detailed abundances here, there are fewer
+        stars with -- for example, [Ni/H] labels -- than there are stars with $\teff$
+        labels. The [X/H] abundance distributions peak near Solar values, and the peaks
+        in the $\teff$ and $\logg$ histograms are consistent with our expectations from
+        astrophysics: the build of clump stars is visible for cool giant stars 
+        ($\logg \approx 2.5$ and $\teff \approx 4750$~K), and the increase in turn-off stars
+        at $\teff \approx 6000$~K is expected given the longer timescales for the turnoff.
+
+    Unfortunately the earliest that we could reasonably include this Figure is 
+    in Section 3.6 (making this new figure, Figure 6) without disturbing the
+    explanatory flow of the paper.
+
+    As a side-note: there is no need to apologise for the delay, as the lead
+    author was moving internationally during this period and would have been
+    unable to immediately attend to this referee response anyway.
