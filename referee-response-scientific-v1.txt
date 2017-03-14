@@ -48,6 +48,22 @@ coming available from other surveys.
     in Section 3.6 (making this new figure, Figure 6) without disturbing the
     explanatory flow of the paper.
 
+    We have also included an additional paragraph that outlines how our assumption of 
+    pixel independence is violated, and the (negligible) impact that has on our results.
+    The added text reads:
+
+	One of these assumptions is that the noise in individual pixels is independent
+	(between adjacent pixels). The description of the data reduction in the fifth 
+	\rave\ data release paper \citep{Kunder_2016} shows that this assumption is
+	incorrect.  The noise in neighbouring pixels is correlated in two ways: first
+	due to the oversampling by the CCD pixels in the spectrograph's point spread
+	function, and due to a 3-pixel boxcar smoothing that was later applied
+	to the data.  While it is unlikely that our assumption of pixel independence
+	violates any of our results, it explains in part why our original errors were
+	underestimated.  However, there are other assumptions made that potentially
+	have more serious consequences on the validity or utility of our results.
+
+
     As a side-note: there is no need to apologise for the delay, as the lead
     author was moving internationally during this period and would have been
     unable to immediately attend to this referee response anyway.

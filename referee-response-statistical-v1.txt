@@ -126,3 +126,18 @@ may not be computationally feasible, or not preferable for other reasons, some d
         formal and considered approaches to weighting -- or deciding between -- multiple 
         models, these approaches were not considered here due in part to their higher 
         computational cost.
+
+-- Author's note:
+
+    We note that we have included an additional paragraph that outlines how our assumption of pixel independence is violated, and the (negligible) impact that has on our results. The added text reads:
+
+	One of these assumptions is that the noise in individual pixels is independent
+	(between adjacent pixels). The description of the data reduction in the fifth 
+	\rave\ data release paper \citep{Kunder_2016} shows that this assumption is
+	incorrect.  The noise in neighbouring pixels is correlated in two ways: first
+	due to the oversampling by the CCD pixels in the spectrograph's point spread
+	function, and due to a 3-pixel boxcar smoothing that was later applied
+	to the data.  While it is unlikely that our assumption of pixel independence
+	violates any of our results, it explains in part why our original errors were
+	underestimated.  However, there are other assumptions made that potentially
+	have more serious consequences on the validity or utility of our results.
