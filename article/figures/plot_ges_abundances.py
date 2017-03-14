@@ -104,7 +104,7 @@ for i, (ax, species) in enumerate(zip(axes.flatten(), ges_species)):
     if not ax.is_first_col():
         ax.set_yticklabels([])
     else:
-        ax.set_ylabel(r"$[{\rm X/H}]$ $(RAVE{\rm -on})$")
+        ax.set_ylabel(r"$[{\rm X/H}]$ $({\rm \it{RAVE}}{\rm -on})$")
 
     if not ax.is_last_row():
         ax.set_xticklabels([])

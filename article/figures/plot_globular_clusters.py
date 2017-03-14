@@ -141,7 +141,7 @@ for ax in axes.flatten():
         if ax.is_first_col():
             ax.set_title(r"${\rm RAVE}$ ${\rm DR4}$")
         else:
-            ax.set_title(r"$RAVE{\rm -on}$")
+            ax.set_title(r"${\rm \it{RAVE}}{\rm -on}$")
 
 fig.subplots_adjust(top=0.9)
 cbar = plt.colorbar(scat, 

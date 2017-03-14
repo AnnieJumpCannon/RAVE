@@ -77,7 +77,7 @@ for i, (ax, columns, latex_label) in enumerate(zip(axes, all_columns, latex_labe
     ax.set_ylim(limits)
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))
-    ax.set_ylabel(" ".join([latex_label, r"$(RAVE{\rm -on})$"]))
+    ax.set_ylabel(" ".join([latex_label, r"$({\rm \it{RAVE}}{\rm -on})$"]))
     ax.set_xlabel(" ".join([latex_label, r"$({\rm RAVE}$ ${\rm DR4})$"]))
 
     diff = y - x

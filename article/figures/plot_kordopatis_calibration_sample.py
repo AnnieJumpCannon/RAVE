@@ -34,10 +34,10 @@ ok = data_table["QC"]# * (data_table["R"] > 10)
 
 latex_labels = {
     "TEFF_2": r"$T_{\rm eff}$ $[{\rm K}]$ $({\rm Literature})$",
-    "TEFF_1": r"$T_{\rm eff}$ $[{\rm K}]$ $(RAVE{\rm -on})$",
-    "LOGG_1": r"$\log{g}$ $(RAVE{\rm -on})$",
+    "TEFF_1": r"$T_{\rm eff}$ $[{\rm K}]$ $({\rm \it{RAVE}}{\rm -on})$",
+    "LOGG_1": r"$\log{g}$ $({\rm \it{RAVE}}{\rm -on})$",
     "LOGG_2": r"$\log{g}$ $({\rm Literature})$",
-    "FE_H": r"$[{\rm Fe/H}]$ $(RAVE{\rm -on})$",
+    "FE_H": r"$[{\rm Fe/H}]$ $({\rm \it{RAVE}}{\rm -on})$",
     "FEH": r"$[{\rm Fe/H}]$ $({\rm Literature})$"
 }
 

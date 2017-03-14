@@ -108,7 +108,7 @@ for i, (ax, label_name) in enumerate(zip(axes, label_names)):
     ax.set_ylim(limits)
     ax.xaxis.set_major_locator(MaxNLocator(6))
     ax.yaxis.set_major_locator(MaxNLocator(6))
-    ax.set_ylabel(" ".join([latex_labels[label_name], r"$(RAVE{\rm -on})$"]))
+    ax.set_ylabel(" ".join([latex_labels[label_name], r"$({\rm \it{RAVE}}{\rm -on})$"]))
     ax.set_xlabel(" ".join([latex_labels[label_name], r"$({\rm GES})$"]))
 
 
