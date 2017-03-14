@@ -14,7 +14,7 @@ try:
 except NameError:
     from rave_io import get_cannon_dr1, get_rave_kordopatis_dr4
 
-    clusters = Table.read("RAVEDR4_GC_v3.fits")
+    clusters = Table.read("../../RAVEDR4_GC_v3.fits")
 
     unrave = join(get_cannon_dr1(), clusters, keys=("Name",))
     dr4 = join(get_rave_kordopatis_dr4(), clusters, keys=("Name",))
@@ -94,7 +94,7 @@ for i, (row, cluster_name) in enumerate(zip(axes, cluster_names)):
     match = (unrave["Cluster"] == cluster_name) * unrave_ok
     assert sum(match) > 0
 
-    # Show RHS unRAVE
+    # Show RHS RAVE-on 
     ax = row[1]
     ax.text(0.15, 0.82, r"${{\rm {0}}}$".format(cluster_name.strip().replace("NGC", "NGC\,")),
         horizontalalignment="left", transform=ax.transAxes, fontsize=16)
@@ -141,7 +141,7 @@ for ax in axes.flatten():
         if ax.is_first_col():
             ax.set_title(r"${\rm RAVE}$ ${\rm DR4}$")
         else:
-            ax.set_title(r"${\rm unRAVE}$")
+            ax.set_title(r"$RAVE{\rm -on}$")
 
 fig.subplots_adjust(top=0.9)
 cbar = plt.colorbar(scat, 

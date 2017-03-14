@@ -5,7 +5,7 @@ from astropy.table import Table
 from scipy.io import readsav
 
 DATA_PATH = "/data/gaia-eso/arc/rave-data-files/"
-DATA_PATH = ""
+DATA_PATH = "/Users/arc/research/rave/"
 
 def get_rave_kordopatis_dr4():
     return Table.read(os.path.join(DATA_PATH, "RAVE-DR4.fits"))
@@ -26,7 +26,7 @@ def get_kordopatis_comparisons():
 
 def get_cannon_dr1(filename=None):
 
-    filename = filename or os.path.join(DATA_PATH, "../../unrave-v0.97.fits.gz")
+    filename = filename or os.path.join(DATA_PATH, "RAVE-on-v1.0.fits")
 
     rave_cannon_dr1 = Table.read(os.path.join(DATA_PATH, filename))
 

@@ -148,7 +148,7 @@ def latexify(label_name, axis):
         "FE_H": r"$[{\rm Fe/H}]$"
     }[label_name]
 
-    suffix = r"$({\rm Literature})$" if axis == "x" else r"$({\rm unRAVE})$"
+    suffix = r"$({\rm Literature})$" if axis == "x" else r"$(RAVE{\rm -on})$"
 
     return " ".join([latex, suffix])
 

@@ -14,7 +14,7 @@ try:
 except NameError:
     from rave_io import get_cannon_dr1, get_rave_kordopatis_dr4
 
-    clusters = Table.read("RAVEDR4_OC.fits")
+    clusters = Table.read("../../RAVEDR4_OC.fits")
 
     unrave = join(get_cannon_dr1(), clusters, keys=("Name",))
     dr4 = join(get_rave_kordopatis_dr4(), clusters, keys=("Name",))
@@ -141,7 +141,7 @@ for ax in axes.flatten():
         if ax.is_first_col():
             ax.set_title(r"${\rm RAVE}$ ${\rm DR4}$")
         else:
-            ax.set_title(r"${\rm unRAVE}$")
+            ax.set_title(r"$RAVE{\rm -on}$")
 
 fig.subplots_adjust(top=0.9)
 cbar = plt.colorbar(scat, 

@@ -136,7 +136,7 @@ def latexify(label_name, axis):
         "FE_H": r"$[{\rm Fe/H}]$"
     }[label_name]
 
-    suffix = r"$({\rm Literature})$" if axis == "x" else r"$({\rm unRAVE})$"
+    suffix = r"$({\rm Literature})$" if axis == "x" else r"$(RAVE{\rm -on})$"
 
     return " ".join([latex, suffix])
 
@@ -147,7 +147,7 @@ def latexify(label_name, axis):
 
 
 # Make another 4-panel plot showing the HRD for:
-# Bensby, Reddy, Valenti & Fishcer, unRAVE.
+# Bensby, Reddy, Valenti & Fishcer, .
 
 
 comparison_labels = (
@@ -155,7 +155,7 @@ comparison_labels = (
     r"${\rm Reddy}$ ${\rm et}$ ${\rm al.}$ $(2003,2006)$", 
     r"${\rm Valenti}$ ${\rm +}$ ${\rm Fischer}$ $(2005)$",
     #r"${\rm Kordopatis}$ ${\rm et}$ ${\rm al.}$ $(2013{\rm ;}$ ${\rm RAVE}$ ${\rm DR4})$",
-    r"${\rm unRAVE}$"
+    r"$RAVE{\rm -on}$"
     )
 M = len(comparison_labels)
 
