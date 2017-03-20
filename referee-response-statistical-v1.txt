@@ -72,7 +72,7 @@ likelihood approaches and Bayesian methods (e.g. one can consider the penalizati
 
 -- Author's response:
 
-    We have addressed this in our answer to item #2 above. If requested we can expand on this discussion, but we thought it fit more appropriately in Section 3.4 rather than Section 3.1, because our penalized likelihood (and decisions based on different regularization strengths) is not fully introduced until Section 3.4 
+    We have addressed this in our answer to item #2 above. 
 
 
 5. In Section 3.6, the authors introduce scaling factors that are chosen empirically to derive weighted "labels." Some discussion of the sensitivity to the choice of factors would be welcome. Presumably other values of the factors than those ultimately adopted were examined during the empirical fitting, so some discussion of the sensitivity should be feasible.

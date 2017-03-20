@@ -40,7 +40,7 @@ coming available from other surveys.
         stars with -- for example, [Ni/H] labels -- than there are stars with $\teff$
         labels. The [X/H] abundance distributions peak near Solar values, and the peaks
         in the $\teff$ and $\logg$ histograms are consistent with our expectations from
-        astrophysics: the build of clump stars is visible for cool giant stars 
+        astrophysics: the bulk of clump stars is visible for cool giant stars 
         ($\logg \approx 2.5$ and $\teff \approx 4750$~K), and the increase in turn-off stars
         at $\teff \approx 6000$~K is expected given the longer timescales for the turnoff.
 

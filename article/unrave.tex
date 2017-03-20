@@ -54,27 +54,27 @@ David~W.~Hogg\altaffilmark{2,3,4,5},
 Melissa~Ness\altaffilmark{5},
 Hans~Walter-Rix\altaffilmark{5},
 Georges~Kordopatis\altaffilmark{6},
-Andrea~Kunder\altaffilmark{6},
+Andrea~Kunder\altaffilmark{6,7},
 Matthias~Steinmetz\altaffilmark{6},
 Sergey~Koposov\altaffilmark{1},
 Harry~Enke\altaffilmark{6},
 Jason~Sanders\altaffilmark{1},
 Gerry~Gilmore\altaffilmark{1},
-Toma\v{z}~Zwitter\altaffilmark{7},
-Kenneth~C.~Freeman\altaffilmark{8},
-Luca~Casagrande\altaffilmark{8},
-Gal~Matijevi\v{c}\altaffilmark{7},
-George~Seabroke\altaffilmark{9},
-Olivier~Bienaym\'e\altaffilmark{10},
-Joss~Bland-Hawthorn\altaffilmark{11},
-Brad~K.~Gibson\altaffilmark{12},
-Eva~K.~Grebel\altaffilmark{13},
-Amina~Helmi\altaffilmark{14},
-Ulisse~Munari\altaffilmark{15},
-Julio~F.~Navarro\altaffilmark{16,17},
-Warren~Reid\altaffilmark{18,19},
-Arnaud~Siebert\altaffilmark{10},
-Rosemary~Wyse\altaffilmark{20}\\
+Toma\v{z}~Zwitter\altaffilmark{8},
+Kenneth~C.~Freeman\altaffilmark{9},
+Luca~Casagrande\altaffilmark{9},
+Gal~Matijevi\v{c}\altaffilmark{8},
+George~Seabroke\altaffilmark{10},
+Olivier~Bienaym\'e\altaffilmark{11},
+Joss~Bland-Hawthorn\altaffilmark{12},
+Brad~K.~Gibson\altaffilmark{13},
+Eva~K.~Grebel\altaffilmark{14},
+Amina~Helmi\altaffilmark{15},
+Ulisse~Munari\altaffilmark{16},
+Julio~F.~Navarro\altaffilmark{17,18},
+Warren~Reid\altaffilmark{19,20},
+Arnaud~Siebert\altaffilmark{11},
+Rosemary~Wyse\altaffilmark{21}\\
 \vspace{2em}
 \emph{(Affiliations can be found at the end of the article)}
 }
@@ -152,7 +152,7 @@ motions, and parallaxes for approximately two million stars in the Tycho-2
 surveys\footnote{Specifically we cross-matched the Tycho-2 catalog against the 
 \apogee\ DR13 \citep{Zasowski_2013}, \ges\ internal DR4 
 \citep{Gilmore_2012,Randich_2013}, \galah\ internal DR1 \citep{DeSilva_2015}, 
-\lamost\ DR1 \citep{Cui_2012}, and \rave\ DR4 \citep{Steinmetz_2006} catalogs.}, 
+\lamost\ DR1 \citep{Cui_2012}, and \rave\ DR4 \citep{Kordopatis_2013} catalogs.}, 
 we found that the RAdial Velocity Experiment \citep[\rave;][]{Steinmetz_2006} 
 survey is expected to have the largest overlap with the first \gaia\ 
 data release: up to 264,276 stars.  We used the \gaia\ universe model snapshot 
@@ -313,7 +313,7 @@ for most, but not all stars. That is to say that we do not assume that \emph{eve
 label in the training is accurate. We can afford to have a small fraction of 
 inaccurate labels; a few obvious misclassifications in the training set are affordable.
 \item We assume that the training data are similar (in spectra) to the test data 
-where they overlap in label space, and we assume that the training data spans enough
+where they overlap in label space, and we assume that the training data span enough
 of the label space to capture the variation in the test-set spectra.
 \end{itemize}
 
@@ -753,7 +753,7 @@ since main-sequence stars do not have detailed abundances here, there are fewer
 stars with -- for example, [Ni/H] labels -- than there are stars with $\teff$
 labels. The [X/H] abundance distributions peak near Solar values, and the peaks
 in the $\teff$ and $\logg$ histograms are consistent with our expectations from
-astrophysics: the build of clump stars is visible for cool giant stars 
+astrophysics: the bulk of clump stars is visible for cool giant stars 
 ($\logg \approx 2.5$ and $\teff \approx 4750$~K), and the increase in turn-off stars
 at $\teff \approx 6000$~K is expected given the longer timescales for the turnoff.
 
@@ -852,6 +852,7 @@ ratios is comparable to the minimum error floors we adopted in Section
 \label{sec:validation-kordopatis}
 
 We cross-matched our results against the official fourth \rave\ data release 
+\citep{Kordopatis_2013}
 as an initial point of external comparison (Figure \ref{fig:rave-dr4-comparison}).
 In order to provide a fair comparison, we only show stars that meet a number
 of quality flags in \emph{both} samples.  Our constraints require that the
@@ -904,7 +905,7 @@ the turn-off and sub-giant branch in all studies.  If we treat all three
 studies as a single point of comparison, the bias between our work and these 
 studies is $-89$~K in $\teff$, just $-0.06$~dex in $\logg$, and $-0.03$~dex 
 in [Fe/H] (see Figure~\ref{fig:gold-standard-comparison}).  The RMS deviation
-in labels is 237~K, 0.30~dex, and 0.15~dex, respectively.  When considering 
+in labels are 237~K, 0.30~dex, and 0.15~dex, respectively.  When considering 
 the relative information content available in \rave\ (945~pixels in the near 
 infrared with $\mathcal{R} \approx 7{,}500$) compared to these literature 
 studies that use \project{Hipparcos} parallaxes where possible, and base 
@@ -913,7 +914,7 @@ their inferences on spectra with resolving power $\mathcal{R}$ between
 to be very satisfactory.  Indeed, given the metallicity precision available
 in the \raveon\ catalog, these results will likely be useful for future 
 studies based on exoplanet host star properties (e.g., 
-\project{TESS}\footnote{At present, however, there are just $\approx$30 
+the Transiting Exoplanet Survey Satellite, \project{TESS}\footnote{At present, however, there are just $\approx$30 
 stars in \rave\ that overlap with the compilations of exoplanet host star 
 properties listed at \texttt{exoplanets.org} and \texttt{exoplanets.eu}.}).
 
@@ -937,7 +938,7 @@ The RMS in effective temperature, surface gravity and metallicity is 233~K,
 Based on this comparison, we find no evidence for a systematic offset in
 metallicities between stars on the main-sequence and those on the giant branch. 
 This is a crucial observation, as the metallicities for stars in our 
-main-sequence training set have a principally different source to those on 
+main-sequence training set have a principally different source than those on 
 the giant branch.  We cannot make these same inferences based on other 
 surveys, like \apogee, because (1) \apogee\ stars formed part of the 
 training set, and (2) they do not include main-sequence stars.  Even if we 
@@ -991,7 +992,7 @@ metal-poor giant stars in our sample.
 
 The fourth \rave\ data release made use of a number of high-resolution studies
 to verify the accuracy of their derived stellar atmospheric parameters.  These
-samples include main-sequence stars, giant stars, with a particular focus to
+samples include main-sequence stars and giant stars, with a particular focus to
 include metal-poor stars to identify (and correct) any deviations at low
 metallicities.  We refer the reader to \citet{Kordopatis_2013} for the full 
 compilation of literature sources.  Although the stellar atmospheric parameters
@@ -1028,7 +1029,7 @@ left-hand panels.  We show representative \project{PARSEC} isochrones
 \citep{Bressan_2012} in all panels, where the isochrone ages and metallicities 
 are adopted from \citet{Kunder_2016,Marin-Franch_2009}, and the 
 \citet[][accessed 6 September 2016]{Harris_1996} catalog of globular 
-cluster properties.  The globular cluster with the most number of members is 
+cluster properties.  The globular cluster with the highest number of members is 
 NGC~5139 ($\omega$-Centauri), where we find a significant metallicity spread
 that is consistent with high-resolution studies \citep{Marino_2011,Carretta_2009,
 Carretta_2013}. Based on the pre-defined membership criteria, we find the mean 
@@ -1131,7 +1132,7 @@ models.  Because the relative weights have no formal interpretation, it is reaso
 to consider this method is as \emph{ad hoc} as any other approach.  The relative 
 weighting has no warranty to be (formally) correct, and therefore may introduce 
 inconsistencies or systematic errors rather than minimizing them.  While Bayesian
-model averaging \citep[e.g., ][and similar methods]{Hoeting_1999} repreresent more
+model averaging \citep[e.g., ][and similar methods]{Hoeting_1999} represent more
 formal and considered approaches to weighting -- or deciding between -- multiple 
 models, these approaches were not considered here due in part to their higher 
 computational cost.
@@ -1168,7 +1169,7 @@ abundance scale.
 
 For some of the most metal-poor giant stars in \rave\, we \emph{know} the abundances 
 are not on the same scale as \apogee, because we were forced to adopt abundances for 
-specific elements when they were unavailable.  Although we sought to adopt mean
+specific elements when they were unavailable.  Although we sought to adopt the mean
 level of Galactic chemical enrichment at a given overall metallicity, this is not a
 representative abundance. Even if that is the \emph{mean} enrichment at that Galactic
 metallicity, there is no requirement for zero abundance spread.  More fundamentally, 
@@ -1208,7 +1209,7 @@ this issue.
 
 
 We have shown some potential outcomes when the test set spectra differ 
-significantly from the spectra in the training set.  Test set spectra that is
+significantly from the spectra in the training set.  Test set spectra that are
 `unusual' from the training set can be projected as peculiar artefacts in 
 label space.  In other words, unusual spectra can appear as `clumps' in
 regions of parameter space that we could consider as being normal (e.g.,
@@ -1298,10 +1299,11 @@ Council (ERC-StG 240271 Galactica); the Istituto Nazionale di Astrofisica at
 Padova; The Johns Hopkins University; the National Science Foundation of the USA
 (AST-0908326); the W. M. Keck foundation; the Macquarie University; the 
 Netherlands Research School for Astronomy; the Natural Sciences and Engineering 
-Research Council of Canada; the Slovenian Research Agency; the Swiss National 
-Science Foundation; the Science \& Technology Facilities Council of the UK; 
-Opticon; Strasbourg Observatory; and the Universities of Groningen, Heidelberg 
-and Sydney. The RAVE web site is https://www.rave-survey.org.  
+Research Council of Canada; the Slovenian Research Agency (research core funding 
+No. P1-0188); the Swiss National Science Foundation; the Science \& Technology 
+Facilities Council of the UK; Opticon; Strasbourg Observatory; and the 
+Universities of Groningen, Heidelberg and Sydney. The RAVE web site is 
+https://www.rave-survey.org.  
 
 \begin{thebibliography}{dummy}
 \bibitem[Anguiano et al.(2015)]{Anguiano_2015} Anguiano, B., Zucker, D.~B., Scholz, R.-D., et al.\ 2015, \mnras, 451, 1229 
@@ -1365,11 +1367,11 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Harris(1996)]{Harris_1996} Harris, W.~E.\ 1996, \aj, 112, 1487 
 
-\bibitem[Hawkins et al.(2016)]{Hawkins_2016} Hawkins, K., Masseron, T., Jofre, P., et al.\ 2016, arXiv:1604.08800 
+\bibitem[Hawkins et al.(2016)]{Hawkins_2016} Hawkins, K., Masseron, T., Jofr{\'e}, P., et al.\ 2016, \aap, 594, A43 
 
 \bibitem[Holtzman et al.(2015)]{Holtzman_2015} Holtzman, J.~A., Shetrone, M., Johnson, J.~A., et al.\ 2015, \aj, 150, 148 
 
-\bibitem[Ho et al.(2016)]{Ho_2016} Ho, A.~Y.~Q., Ness, M.~K., Hogg, D.~W., et al.\ 2016, arXiv:1602.00303 
+\bibitem[Ho et al.(2017)]{Ho_2016} Ho, A.~Y.~Q., Ness, M.~K., Hogg, D.~W., et al.\ 2017, \apj, 836, 5
  
 \bibitem[Hoeting et al.(1999)]{Hoeting_1999} Hoeting, J.~A., et al.\ 1999, Statistical Science, 14, 4, 382--417
 
@@ -1387,13 +1389,14 @@ al.(2013)]{astropy} Astropy Collaboration, Robitaille, T.~P., Tollerud, E.~J., e
 
 \bibitem[Kordopatis et al.(2015)]{Kordopatis_2015} Kordopatis, G., Binney, J., Gilmore, G., et al.\ 2015, \mnras, 447, 3526 
 
-\bibitem[Kunder et al.(2016)]{Kunder_2016} Kunder, A., et al.\ 2016, submitted
+\bibitem[Kunder et al.(2017)]{Kunder_2016} Kunder, A., Kordopatis, G., Steinmetz, M., et al.\ 2017, \aj, 153, 75 
 
 \bibitem[Kunder et al.(2014)]{Kunder_2014} Kunder, A., Bono, G., Piffl, T., et al.\ 2014, \aap, 572, A30 
 
 \bibitem[Kuzma et al.(2016)]{Kuzma_2016} Kuzma, P.~B., Da Costa, G.~S., Mackey, A.~D., \& Roderick, T.~A.\ 2016, \mnras, 461, 3639 
 
-\bibitem[M{\"a}dler et al.(2016)]{Madler_2016} M{\"a}dler, T., Jofr{\'e}, P., Gilmore, G., et al.\ 2016, arXiv:1606.03015 
+\bibitem[M{\"a}dler et al.(2016)]{Madler_2016} M{\"a}dler, T., Jofr{\'e}, P., Gilmore, G., et al.\ 2016, \aap, 595, A59 
+
 
 \bibitem[Matijevi{\v c} et al.(2012)]{Matijevic_2012} Matijevi{\v c}, G., Zwitter, T., Bienaym{\'e}, O., et al.\ 2012, \apjs, 200, 14 
 
@@ -1601,19 +1604,20 @@ $^{3}${Center for Cosmology and Particle Physics, Department of Physics, New Yor
 $^{4}${Center for Data Science, New York University, 726 Broadway, 7th floor, New York, NY 10003, USA} \\
 $^{5}${Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany} \\
 $^{6}${Leibniz-Institut f\"ur Astrophysik Potsdam (AIP), An der Sternwarte 16, D-14482 Potsdam, Germany} \\
-$^{7}${University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia} \\
-$^{8}${Research School of Astronomy and Astrophysics, Mount Stromlo Observatory, The Australian National University, ACT 2611, Australia} \\
-$^{9}${Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK} \\
-$^{10}${Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l'Universit\'e, F-67000 Strasbourg, France} \\
-$^{11}${Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia} \\
-$^{12}${E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom} \\
-$^{13}${Astronomisches Rechen-Institut, Zentrum f\"ur Astronomie der Universit\"at Heidelberg, M\"onchhofstr.\ 12--14, 69120 Heidelberg, Germany} \\
-$^{14}${Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands} \\
-$^{15}${INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy} \\
-$^{16}${Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2} \\
-$^{17}${Senior CIfAR Fellow} \\
-$^{18}${Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia} \\
-$^{19}${Western Sydney University, Penrith South DC, NSW 1797} \\
-$^{20}${Johns Hopkins University, Baltimore, MD, USA} \\
+$^{7}${Saint Martin's University, Old Main, 5000 Abbey Way SE, Lacey, WA 98503, USA} \\
+$^{8}${University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia} \\
+$^{9}${Research School of Astronomy and Astrophysics, Mount Stromlo Observatory, The Australian National University, ACT 2611, Australia} \\
+$^{10}${Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK} \\
+$^{11}${Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l'Universit\'e, F-67000 Strasbourg, France} \\
+$^{12}${Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia} \\
+$^{13}${E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom} \\
+$^{14}${Astronomisches Rechen-Institut, Zentrum f\"ur Astronomie der Universit\"at Heidelberg, M\"onchhofstr.\ 12--14, 69120 Heidelberg, Germany} \\
+$^{15}${Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands} \\
+$^{16}${INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy} \\
+$^{17}${Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2} \\
+$^{18}${Senior CIfAR Fellow} \\
+$^{19}${Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia} \\
+$^{20}${Western Sydney University, Penrith South DC, NSW 1797} \\
+$^{21}${Johns Hopkins University, Baltimore, MD, USA} \\
 
 \end{document}
