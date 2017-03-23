@@ -1,7 +1,7 @@
 %% This file is part of the RAVE-on Project 
 %% Copyright 2016 the authors.  All rights reserved.
 
-\documentclass[preprint]{aastex}
+\documentclass[preprint]{aastex61}
 
 \usepackage{amsmath}
 \usepackage{bm}
@@ -47,37 +47,92 @@
 \title{The \raveon\ catalog of stellar atmospheric parameters and\\
 chemical abundances for chemo-dynamic studies in the \gaia\ era}
 
-\author{
-Andrew~R.~Casey\altaffilmark{1},
-Keith~Hawkins\altaffilmark{1},
-David~W.~Hogg\altaffilmark{2,3,4,5},
-Melissa~Ness\altaffilmark{5},
-Hans~Walter-Rix\altaffilmark{5},
-Georges~Kordopatis\altaffilmark{6},
-Andrea~Kunder\altaffilmark{6,7},
-Matthias~Steinmetz\altaffilmark{6},
-Sergey~Koposov\altaffilmark{1},
-Harry~Enke\altaffilmark{6},
-Jason~Sanders\altaffilmark{1},
-Gerry~Gilmore\altaffilmark{1},
-Toma\v{z}~Zwitter\altaffilmark{8},
-Kenneth~C.~Freeman\altaffilmark{9},
-Luca~Casagrande\altaffilmark{9},
-Gal~Matijevi\v{c}\altaffilmark{8},
-George~Seabroke\altaffilmark{10},
-Olivier~Bienaym\'e\altaffilmark{11},
-Joss~Bland-Hawthorn\altaffilmark{12},
-Brad~K.~Gibson\altaffilmark{13},
-Eva~K.~Grebel\altaffilmark{14},
-Amina~Helmi\altaffilmark{15},
-Ulisse~Munari\altaffilmark{16},
-Julio~F.~Navarro\altaffilmark{17,18},
-Warren~Reid\altaffilmark{19,20},
-Arnaud~Siebert\altaffilmark{11},
-Rosemary~Wyse\altaffilmark{21}\\
-\vspace{2em}
-\emph{(Affiliations can be found at the end of the article)}
-}
+\author{Andrew~R.~Casey}
+\affiliation{Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge CB3 0HA, UK}
+
+\author{Keith~Hawkins}
+\affiliation{Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge CB3 0HA, UK}
+
+\author{David~W.~Hogg}
+\affiliation{Simons Center for Data Analysis, 160 Fifth Avenue, 7th floor, New York, NY 10010, USA}
+\affiliation{Center for Cosmology and Particle Physics, Department of Physics, New York University, 4 Washington Pl., room 424, New York, NY 10003, USA}
+\affiliation{Center for Data Science, New York University, 726 Broadway, 7th floor, New York, NY 10003, USA}
+\affiliation{Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany}
+
+\author{Melissa~Ness}
+\affiliation{Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany}
+
+\author{Hans-Walter~Rix}
+\affiliation{Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany}
+
+\author{Georges~Kordopatis}
+\affiliation{Leibniz-Institut f\"ur Astrophysik Potsdam (AIP), An der Sternwarte 16, D-14482 Potsdam, Germany}
+
+\author{Andrea~Kunder}
+\affiliation{Leibniz-Institut f\"ur Astrophysik Potsdam (AIP), An der Sternwarte 16, D-14482 Potsdam, Germany}
+\affiliation{Saint Martin's University, Old Main, 5000 Abbey Way SE, Lacey, WA 98503, USA}
+
+\author{Matthias~Steinmetz}
+\affiliation{Leibniz-Institut f\"ur Astrophysik Potsdam (AIP), An der Sternwarte 16, D-14482 Potsdam, Germany}
+
+\author{Sergey~Koposov}
+\affiliation{Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge CB3 0HA, UK}
+
+\author{Harry~Enke}
+\affiliation{Leibniz-Institut f\"ur Astrophysik Potsdam (AIP), An der Sternwarte 16, D-14482 Potsdam, Germany}
+
+\author{Jason~Sanders}
+\affiliation{Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge CB3 0HA, UK}
+
+\author{Gerry~Gilmore}
+\affiliation{Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge CB3 0HA, UK}
+
+\author{Toma\v{z}~Zwitter}
+\affiliation{University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia}
+
+\author{Kenneth~C.~Freeman}
+\affiliation{Research School of Astronomy and Astrophysics, Mount Stromlo Observatory, The Australian National University, ACT 2611, Australia}
+
+\author{Luca~Casagrande}
+\affiliation{Research School of Astronomy and Astrophysics, Mount Stromlo Observatory, The Australian National University, ACT 2611, Australia}
+
+\author{Gal~Matijevi\v{c}}
+\affiliation{University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia}
+
+\author{George~Seabroke}
+\affiliation{Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK}
+
+\author{Olivier~Bienaym\'e}
+\affiliation{Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l'Universit\'e, F-67000 Strasbourg, France}
+
+\author{Joss~Bland-Hawthorn}
+\affiliation{Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia}
+
+\author{Brad~K.~Gibson}
+\affiliation{E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom}
+
+\author{Eva~K.~Grebel}
+\affiliation{Astronomisches Rechen-Institut, Zentrum f\"ur Astronomie der Universit\"at Heidelberg, M\"onchhofstr.\ 12--14, 69120 Heidelberg, Germany}
+
+\author{Amina~Helmi}
+\affiliation{Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands}
+
+\author{Ulisse~Munari}
+\affiliation{INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy}
+
+\author{Julio~F.~Navarro}
+\affiliation{Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2}
+\affiliation{Senior CIfAR Fellow}
+
+\author{Warren~Reid}
+\affiliation{Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia}
+\affiliation{Western Sydney University, Penrith South DC, NSW 1797}
+
+\author{Arnaud~Siebert}
+\affiliation{Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l'Universit\'e, F-67000 Strasbourg, France}
+
+\author{Rosemary~Wyse}
+\affiliation{Johns Hopkins University, Baltimore, MD, USA}
 
 
 \begin{abstract}
@@ -104,9 +159,7 @@ ever produced.
 \end{abstract}
 
 
-\keywords{stars: fundamental parameters --- stars: abundances
-% Clear rest of page
-\clearpage}
+\keywords{stars: fundamental parameters --- stars: abundances}
 
 
 \section{Introduction} 
@@ -1282,11 +1335,10 @@ We thank
 	Sofia Randich (INAF),
 and
 	Kevin Schlaufman (Carnegie Observatories).
-This research made use of: 
-  	NASA's Astrophysics Data System Bibliographic Services;
-  	Astropy, a community-developed core Python package for Astronomy \citep{astropy};
-and 
-  	\project{TOPCAT} \citep{Taylor_2005}.
+
+\software{Astropy, \citep{astropy}, \project{TOPCAT} \citep{Taylor_2005}}
+
+This research made use of NASA's Astrophysics Data System Bibliographic Services.
 This work was partly supported by the European Union FP7 programme through ERC 
 grant number 320360. A.~R.~C. thanks King's College of the University of Cambridge
 for their support.  Funding for K.~H.~ has been provided through the Simons 
@@ -1594,30 +1646,4 @@ precision flattens out at S/N $\gtrsim 40$~pixel$^{-1}$, where our results becom
 \caption{Effective temperatures $\teff$ and surface gravities $\logg$ from this work, where each hexagonal bin is colored by the \emph{maximum} temperature for any star in that bin, as reported by the \rave\ pre-processing pipeline \texttt{SPARV} \citep{Steinmetz_2006,Zwitter_2008}.  Hot stars are not included in our training set, and appear above the turnoff in our labels.  For this reason, we supply a boolean quality control flag \texttt{QC} that flags stars (as \texttt{False}, for failing to meet our quality constraints) with $\teff > 8000$~K (as reported by \texttt{SPARV}), or results that do not meet other minimum constraints (see Section \ref{sec:discussion} for details).\label{fig:hot-stars}}
 \end{figure}
  
-
-\clearpage
-
-% A magic, bad, hack.
-\noindent{}$^{1}${Institute of Astronomy, University of Cambridge, Madingley Road, Cambridge CB3 0HA, UK} \\
-$^{2}${Simons Center for Data Analysis, 160 Fifth Avenue, 7th floor, New York, NY 10010, USA} \\
-$^{3}${Center for Cosmology and Particle Physics, Department of Physics, New York University, 4 Washington Pl., room 424, New York, NY 10003, USA} \\
-$^{4}${Center for Data Science, New York University, 726 Broadway, 7th floor, New York, NY 10003, USA} \\
-$^{5}${Max-Planck-Institut f\"ur Astronomie, K\"onigstuhl 17, D-69117 Heidelberg, Germany} \\
-$^{6}${Leibniz-Institut f\"ur Astrophysik Potsdam (AIP), An der Sternwarte 16, D-14482 Potsdam, Germany} \\
-$^{7}${Saint Martin's University, Old Main, 5000 Abbey Way SE, Lacey, WA 98503, USA} \\
-$^{8}${University of Ljubljana, Faculty of Mathematics and Physics, Jadranska 19, 1000 Ljubljana, Slovenia} \\
-$^{9}${Research School of Astronomy and Astrophysics, Mount Stromlo Observatory, The Australian National University, ACT 2611, Australia} \\
-$^{10}${Mullard Space Science Laboratory, University College London, Holmbury St Mary, Dorking, RH5 6NT, UK} \\
-$^{11}${Observatoire astronomique de Strasbourg, Universit\'e de Strasbourg, CNRS, UMR 7550, 11 rue de l'Universit\'e, F-67000 Strasbourg, France} \\
-$^{12}${Sydney Institute for Astronomy, School of Physics, University of Sydney, NSW 2006, Australia} \\
-$^{13}${E.A. Milne Centre for Astrophysics, University of Hull, Hull, HU6 7RX, United Kingdom} \\
-$^{14}${Astronomisches Rechen-Institut, Zentrum f\"ur Astronomie der Universit\"at Heidelberg, M\"onchhofstr.\ 12--14, 69120 Heidelberg, Germany} \\
-$^{15}${Kapteyn Astronomical Institute, University of Groningen, P.O. Box 800, 9700 AV Groningen, The Netherlands} \\
-$^{16}${INAF Astronomical Observatory of Padova, 36012 Asiago (VI), Italy} \\
-$^{17}${Department of Physics and Astronomy, University of Victoria, Victoria, BC, Canada V8P 5C2} \\
-$^{18}${Senior CIfAR Fellow} \\
-$^{19}${Department of Physics and Astronomy, Macquarie University, Sydney, NSW 2109, Australia} \\
-$^{20}${Western Sydney University, Penrith South DC, NSW 1797} \\
-$^{21}${Johns Hopkins University, Baltimore, MD, USA} \\
-
 \end{document}
